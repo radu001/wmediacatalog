@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" auto-import="true" assembly="DataLayer" namespace="DataLayer.Entities">
+  <class name="TagEntity" table="tags" lazy="false">
+    <id name="ID" column="id">
+      <generator class="native" />
+    </id>
+    <property name="Name" column="name" not-null="true"/>
+    <property name="PrivateMarks" column="private_marks"/>
+    <property name="Comments" column="comments"/>
+    <property name="Description" column="description"/>
+    <property name="CreateDate" column="create_date"/>
+
+    <bag name="Albums" table="tags_albums">
+      <key column="tag_id"/>
+      <many-to-many column="album_id"
+         class="DataLayer.Entities.AlbumEntity, NHibernateManyToMany"/>
+    </bag>
+
+    <bag name="Artists" table="tags_artists">
+      <key column="tag_id"/>
+      <many-to-many column="artist_id"
+         class="DataLayer.Entities.ArtistEntity, NHibernateManyToMany"/>
+    </bag>
+  </class>
+</hibernate-mapping>

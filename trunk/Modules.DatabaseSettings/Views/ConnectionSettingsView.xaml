@@ -1,0 +1,90 @@
+﻿<UserControl x:Class="Modules.DatabaseSettings.Views.ConnectionSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:commands="clr-namespace:Microsoft.Practices.Composite.Presentation.Commands;assembly=Microsoft.Practices.Composite.Presentation"
+             xmlns:commonCommands="clr-namespace:Common.Commands;assembly=Common.Commands"
+             xmlns:controls="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
+             xmlns:dialogs="clr-namespace:Common.Dialogs;assembly=Common.Dialogs"
+             xmlns:commonConverters="clr-namespace:Common.Dialogs.Converters;assembly=Common.Dialogs"
+             Background="Transparent" commonCommands:Loaded.Command="{Binding ViewLoadedCommand}"
+             mc:Ignorable="d" d:DesignWidth="400">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Common.Dialogs;component/Styles/CommonStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <commonConverters:EmptyStringToVisibilityConverter x:Key="EmptyStringToVisibilityConverter"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <GroupBox Grid.Row="0" Header="NHibernate settings" Margin="4">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <ItemsControl Grid.Row="0" ItemsSource="{Binding NHibernateConfig.Properties}" Margin="4,10,4,4">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding Name}" 
+                                                TextTrimming="WordEllipsis" HorizontalAlignment="Left" Width="180" FontWeight="Bold">
+                                        <TextBlock.ToolTip>
+                                            <ToolTip Content="{Binding Name}"/>
+                                        </TextBlock.ToolTip>
+                                </TextBlock>
+                                <ItemsControl Grid.Column="1" ItemsSource="{Binding Values}"  Margin="4,0,0,0">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <DockPanel LastChildFill="True">
+                                                <TextBlock Width="75" TextTrimming="WordEllipsis" Text="{Binding Name}">
+                                                        <TextBlock.ToolTip>
+                                                            <ToolTip Content="{Binding Name}" Visibility="{Binding Name,Converter={StaticResource EmptyStringToVisibilityConverter}}"/>
+                                                        </TextBlock.ToolTip>
+                                                </TextBlock>
+                                                <TextBox Margin="4,0,0,0" Text="{Binding Value}" DockPanel.Dock="Right">
+                                                    <TextBox.ToolTip>
+                                                        <ToolTip Content="{Binding Value}"/>
+                                                    </TextBox.ToolTip>
+                                                </TextBox>
+                                            </DockPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="8">
+                    <!--<Button Content="Advanced settings" Style="{StaticResource DialogButtonStyle}" Width="120" Margin="4,0,0,0"
+                                commands:Click.Command="{Binding AdvancedSettingsCommand}"
+                                ToolTip="Show advanced database configuration"/>-->
+                    <Button Content="Test settings" Style="{StaticResource DialogButtonStyle}" Width="120" Margin="4,0,0,0"
+                                commands:Click.Command="{Binding TestConfigurationCommand}"
+                                ToolTip="Tests configuration against database"/>
+                    <Button Content="Save configuration" Style="{StaticResource DialogButtonStyle}" Width="120" Margin="4,0,0,0" 
+                                commands:Click.Command="{Binding SaveConfigurationCommand}"
+                                ToolTip="Creates backup and saves new configuration"/>
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+        <StackPanel Grid.Row="2" Margin="8" HorizontalAlignment="Right" Orientation="Horizontal">
+            <Button x:Name="OkButton" Content="Ok" Width="75"
+                        Style="{StaticResource DialogButtonStyle}" IsDefault="True" Margin="6"/>
+            <Button x:Name="CancelButton" Content="Cancel" Width="75" IsCancel="True" Margin="6"
+                        Style="{StaticResource DialogButtonStyle}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

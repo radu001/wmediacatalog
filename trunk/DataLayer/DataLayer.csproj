@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7AA524BE-382B-4B5B-906A-1218ACCF7C76}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DataLayer</RootNamespace>
+    <AssemblyName>DataLayer</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Mono.Security, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Npgsql\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate, Version=2.1.2.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\NHibernate\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql, Version=2.0.9.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Npgsql\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Caching\ConfigurationCache.cs" />
+    <Compile Include="Caching\IConfigurationCache.cs" />
+    <Compile Include="Entities\PlaceEntity.cs" />
+    <Compile Include="SessionFactory.cs" />
+    <Compile Include="DataProvider.cs" />
+    <Compile Include="Entities\AlbumEntity.cs" />
+    <Compile Include="Entities\ArtistEntity.cs" />
+    <Compile Include="Entities\ListeningEntity.cs" />
+    <Compile Include="Entities\MoodEntity.cs" />
+    <Compile Include="Entities\PersistentObject.cs" />
+    <Compile Include="Entities\GenreEntity.cs" />
+    <Compile Include="Entities\TagEntity.cs" />
+    <Compile Include="Entities\TrackEntity.cs" />
+    <Compile Include="Entities\UserEntity.cs" />
+    <Compile Include="Entities\UserLoginEntity.cs" />
+    <Compile Include="Entities\UserSettingsEntity.cs" />
+    <Compile Include="IDataProvider.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DbSchema\DataScripts\english_adjectives.sql" />
+    <Content Include="DbSchema\DataScripts\english_nouns.sql" />
+    <Content Include="DbSchema\DataScripts\english_surnames.sql" />
+    <Content Include="DbSchema\DataScripts\english_names.sql" />
+    <Content Include="DbSchema\db_schema.sql" />
+    <Content Include="DbSchema\Helpers\insert_test_data.sql" />
+    <Content Include="DbSchema\Helpers\insert_test_genres.sql" />
+    <Content Include="DbSchema\Helpers\insert_test_tags.sql" />
+    <Content Include="DbSchema\Helpers\insert_test_artists.sql" />
+    <Content Include="hibernate.cfg.xml" />
+    <EmbeddedResource Include="Mappings\Place.hbm.xml" />
+    <EmbeddedResource Include="Mappings\UserSettings.hbm.xml" />
+    <EmbeddedResource Include="Mappings\UserLogin.hbm.xml" />
+    <EmbeddedResource Include="Mappings\User.hbm.xml" />
+    <EmbeddedResource Include="Mappings\Listening.hbm.xml" />
+    <EmbeddedResource Include="Mappings\Track.hbm.xml" />
+    <EmbeddedResource Include="Mappings\Tag.hbm.xml" />
+    <EmbeddedResource Include="Mappings\Mood.hbm.xml" />
+    <EmbeddedResource Include="Mappings\Album.hbm.xml" />
+    <EmbeddedResource Include="Mappings\Genre.hbm.xml" />
+    <EmbeddedResource Include="Mappings\Artist.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{E66025A2-8077-40D1-B627-4D4945CEB365}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

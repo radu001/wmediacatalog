@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" auto-import="true" assembly="DataLayer" namespace="DataLayer.Entities">
+  <class name="TrackEntity" table="tracks" lazy="false">
+    <id name="ID" column="id">
+      <generator class="native" />
+    </id>
+    <property name="Name" column="name" not-null="true"/>
+    <property name="Index" column="track_index"/>
+    <property name="Length" column="length"/>
+    
+    <many-to-one name="Album" class="DataLayer.Entities.AlbumEntity, NHibernateOneToMany" column="album_id"/>
+  </class>
+</hibernate-mapping>

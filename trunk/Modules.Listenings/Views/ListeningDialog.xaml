@@ -1,0 +1,184 @@
+﻿<dialogs:DialogWindow x:Class="Modules.Listenings.Views.ListeningDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:localConverters="clr-namespace:Modules.Listenings.Converters"
+             xmlns:converters="clr-namespace:Common.Dialogs.Converters;assembly=Common.Dialogs"
+             xmlns:controls="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
+             xmlns:dialogs="clr-namespace:Common.Dialogs;assembly=Common.Dialogs"
+             xmlns:prismCommand="clr-namespace:Microsoft.Practices.Composite.Presentation.Commands;assembly=Microsoft.Practices.Composite.Presentation"
+             xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
+             mc:Ignorable="d" 
+             x:Name="dialogWindow"
+             WindowStyle="None" AllowsTransparency="True" ResizeMode="NoResize"
+             Background="Transparent" WindowStartupLocation="CenterScreen"
+             WindowResult="{Binding DialogResult}"
+             Height="489" Width="508">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Common.Dialogs;component/Styles/CommonStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <localConverters:HeaderTextConverter x:Key="HeaderTextConverter" EntityName="listening"/>
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter"/>
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+            <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter"/>
+            <converters:RatingConverter x:Key="RatingConverter"/>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid x:Name="LayoutRoot"
+          controls:BusyIndicatorBehavior.AddMargins="True" 
+          controls:BusyIndicatorBehavior.BusyState="{Binding IsBusy}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border x:Name="HeaderBorder" Grid.Row="0" BorderThickness="2,2,2,0" CornerRadius="10,10,0,0" BorderBrush="Black" Background="SteelBlue"
+                MouseDown="HeaderBorder_MouseDown">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel HorizontalAlignment="Left" Grid.Column="0">
+                    <TextBlock Text="{Binding IsEditMode,Converter={StaticResource HeaderTextConverter}}" Style="{StaticResource DialogHeaderTextStyle}"/>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Right" Grid.Column="1">
+                    <Button VerticalAlignment="Center" Margin="8" Style="{StaticResource CloseButtonStyle}"
+                            prismCommand:Click.Command="{Binding CancelCommand}">
+                        <Button.Content>
+                            <Image Source="/Common.Dialogs;component/Images/305_Close_16x16_72.png" Width="12" Height="12"/>
+                        </Button.Content>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <Border Grid.Row="1" BorderThickness="2,0,2,2" CornerRadius="0,0,4,4" BorderBrush="Black" Background="LightGray">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TabControl Grid.Row="0" TabStripPlacement="Right">
+                    <TabItem Header="General" Style="{StaticResource VeticalTabItemHeader}">
+                        <Grid x:Name="DialogContentLayout" Grid.Row="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <TextBlock Text="Date" Grid.Row="0" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
+                            <TextBox Text="{Binding Listening.Date}" Grid.Row="0" Grid.Column="1" IsReadOnly="True" 
+                                     Margin="{StaticResource DialogMargin}"
+                                     Visibility="{Binding IsEditMode,Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
+                            <DatePicker Grid.Row="0" Grid.Column="1" Margin="{StaticResource DialogMargin}"
+                                        SelectedDate="{Binding Listening.Date,Mode=TwoWay}"
+                                        Visibility="{Binding IsEditMode,Converter={StaticResource BoolToVisibilityConverter}}"/>
+                            
+                            <TextBlock Text="Rating" Grid.Row="1" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
+                            <toolkit:Rating Value="{Binding Listening.ListenRating,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource RatingConverter}}" 
+                                                Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                                Margin="{StaticResource DialogMargin}" Cursor="Hand"
+                                                IsReadOnly="{Binding IsEditMode,Converter={StaticResource InverseBoolConverter}}"
+                                                ItemCount="7"/>
+                            
+                            <TextBlock Text="Album" Grid.Row="2" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
+                            <DockPanel Grid.Row="2" Grid.Column="1" LastChildFill="True">
+                                <Button DockPanel.Dock="Right" Margin="{StaticResource DialogMargin}" Style="{StaticResource ImageButtonStyle}"
+                                        Visibility="{Binding IsEditMode,Converter={StaticResource BoolToVisibilityConverter}}"
+                                        prismCommand:Click.Command="{Binding SearchAlbumCommand}">
+                                    <Button.Content>
+                                        <Image Source="/Common.Dialogs;component/Images/ZoomHS.png" Width="16" Height="16"/>
+                                    </Button.Content>
+                                </Button>
+                                <TextBox x:Name="AlbumTextBox" Grid.Row="2" Grid.Column="1" Margin="{StaticResource DialogMargin}" IsReadOnly="True"/>
+                            </DockPanel>
+                            
+                            <TextBlock Text="Place" Grid.Row="3" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
+                            <TextBox Text="{Binding Listening.Place.Name}" Grid.Row="3" Grid.Column="1" IsReadOnly="True"
+                                     Margin="{StaticResource DialogMargin}"
+                                     Visibility="{Binding IsEditMode,Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
+                            <DockPanel Grid.Row="3" Grid.Column="1" LastChildFill="True" 
+                                       Visibility="{Binding IsEditMode,Converter={StaticResource BoolToVisibilityConverter}}">
+                                <Button DockPanel.Dock="Right" Margin="{StaticResource DialogMargin}" Style="{StaticResource ImageButtonStyle}"
+                                        prismCommand:Click.Command="{Binding CreatePlaceCommand}">
+                                    <Button.Content>
+                                        <Image Source="/Common.Dialogs;component/Images/add_15x15.png" Width="15" Height="15"/>
+                                    </Button.Content>
+                                </Button>
+                                <ComboBox Margin="{StaticResource DialogMargin}"
+                                      ItemsSource="{Binding Places}" SelectedItem="{Binding Listening.Place,Mode=TwoWay,ValidatesOnExceptions=True}" DisplayMemberPath="Name"/>
+                            </DockPanel>
+                            
+                            <TextBlock Text="Mood" Grid.Row="4" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
+                            <TextBox Text="{Binding Listening.Mood.Name}" Grid.Row="4" Grid.Column="1" IsReadOnly="True"
+                                     Margin="{StaticResource DialogMargin}"
+                                     Visibility="{Binding IsEditMode,Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
+                            <DockPanel Grid.Row="4" Grid.Column="1" LastChildFill="True"
+                                       Visibility="{Binding IsEditMode,Converter={StaticResource BoolToVisibilityConverter}}">
+                                <Button DockPanel.Dock="Right" Margin="{StaticResource DialogMargin}" Style="{StaticResource ImageButtonStyle}"
+                                        prismCommand:Click.Command="{Binding CreateMoodCommand}">
+                                    <Button.Content>
+                                        <Image Source="/Common.Dialogs;component/Images/add_15x15.png" Width="15" Height="15"/>
+                                    </Button.Content>
+                                </Button>
+                                <ComboBox Grid.Row="4" Grid.Column="1" Margin="{StaticResource DialogMargin}"
+                                      ItemsSource="{Binding Moods}" SelectedItem="{Binding Listening.Mood,Mode=TwoWay,ValidatesOnExceptions=True}" DisplayMemberPath="Name"/>
+                            </DockPanel>
+
+                            <TextBlock Text="Private marks" Grid.Row="5" Grid.Column="0" VerticalAlignment="Top" Style="{StaticResource DialogLabelStyle}"/>
+                            <TextBox Grid.Row="5" Grid.Column="1" Margin="{StaticResource DialogMargin}" AcceptsReturn="True"
+                                     Text="{Binding Listening.PrivateMarks,Mode=TwoWay}"
+                                     IsReadOnly="{Binding IsEditMode,Converter={StaticResource InverseBoolConverter}}"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Review" Style="{StaticResource VeticalTabItemHeader}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Review" Grid.Column="0" VerticalAlignment="Top" Style="{StaticResource DialogLabelStyle}"/>
+                            <TextBox Grid.Column="1" Margin="{StaticResource DialogMargin}" AcceptsReturn="True"
+                                     Text="{Binding Listening.Review,Mode=TwoWay}"
+                                     IsReadOnly="{Binding IsEditMode,Converter={StaticResource InverseBoolConverter}}"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Comments" Style="{StaticResource VeticalTabItemHeader}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Comments" Grid.Column="0" VerticalAlignment="Top" Style="{StaticResource DialogLabelStyle}"/>
+                            <TextBox Grid.Column="1" Margin="{StaticResource DialogMargin}" AcceptsReturn="True"
+                                     Text="{Binding Listening.Comments,Mode=TwoWay}"
+                                     IsReadOnly="{Binding IsEditMode,Converter={StaticResource InverseBoolConverter}}"/>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+                <StackPanel Grid.Row="1" HorizontalAlignment="Right" Orientation="Horizontal" Margin="12,0,22,12">
+                    <Button x:Name="OkButton" Content="Ok" Width="75" IsDefault="True" Margin="6"
+                            Style="{StaticResource DialogButtonStyle}"
+                            prismCommand:Click.Command="{Binding SuccessCommand}"
+                            prismCommand:Click.CommandParameter="{Binding ElementName=LayoutRoot}"
+                            />
+                    <Button x:Name="CancelButton" Content="Cancel" Width="75" IsDefault="True" Margin="6"
+                            Style="{StaticResource DialogButtonStyle}"
+                            prismCommand:Click.Command="{Binding CancelCommand}"
+                            />
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</dialogs:DialogWindow>

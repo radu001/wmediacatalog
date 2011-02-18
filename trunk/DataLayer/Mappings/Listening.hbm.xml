@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" auto-import="true" assembly="DataLayer" namespace="DataLayer.Entities">
+  <class name="ListeningEntity" table="listens" lazy="false">
+    <id name="ID" column="id">
+      <generator class="native" />
+    </id>
+    <property name="Date" column="date" not-null="true"/>
+    <property name="Review" column="review"/>
+    <property name="PrivateMarks" column="private_marks"/>
+    <property name="Comments" column="comments"/>
+    <property name="ListenRating" column="listen_rating"/>
+    
+    <many-to-one name="Mood" class="DataLayer.Entities.MoodEntity, NHibernateOneToMany" column="mood_id"/>
+    <many-to-one name="Place" class="DataLayer.Entities.PlaceEntity, NHibernateOneToMany" column="place_id"/>
+    <many-to-one name="Album" class="DataLayer.Entities.AlbumEntity, NHibernateOneToMany" column="album_id"/>
+  </class>
+</hibernate-mapping>

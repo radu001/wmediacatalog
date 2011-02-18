@@ -1,0 +1,64 @@
+﻿<UserControl x:Class="Modules.Listenings.Views.ListeningsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:commands="clr-namespace:Common.Commands;assembly=Common.Commands"
+             xmlns:commonControls="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
+             xmlns:pagerCommands="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
+             xmlns:prismCommands="clr-namespace:Microsoft.Practices.Composite.Presentation.Commands;assembly=Microsoft.Practices.Composite.Presentation"
+             mc:Ignorable="d" commands:Loaded.Command="{Binding ViewLoadedCommand}"
+             x:Name="listeningsView"
+             d:DesignHeight="178" d:DesignWidth="283">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Common.Dialogs;component/Styles/CommonStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            
+            
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ToolBar Grid.Row="0">
+            <Button Content="+" prismCommands:Click.Command="{Binding AddListeningCommand}"/>
+        </ToolBar>
+        <commonControls:FilterControl Grid.Row="1" Margin="4"
+                                          FilterFields="{Binding Fields}"
+                                          SelectedFilterField="{Binding SelectedField,Mode=TwoWay}"
+                                          SelectedFilterValue="{Binding SelectedValue,Mode=TwoWay}"
+                                          ItemContainerStyle="{StaticResource GeneralComboBoxItemStyle}"/>
+        <DataGrid x:Name="ListeningGrid" Grid.Row="2" 
+                  ItemsSource="{Binding ListeningsCollection}" SelectedItem="{Binding SelectedListening}"
+                  CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" CanUserSortColumns="False"
+                  AlternatingRowBackground="#E1E5E8" 
+                  SelectionUnit="FullRow" SelectionMode="Extended" AutoGenerateColumns="False"
+                  CellStyle="{StaticResource ListeningsDataGridCellStyle}" 
+                  HorizontalGridLinesBrush="Transparent" VerticalGridLinesBrush="Transparent"
+                  commands:MouseDoubleClick.Command="{Binding DisplayListeningCommand}">
+            <!--<DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Review}"/>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>-->
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="25*" IsReadOnly="True"
+                                            Binding="{Binding Path=Date}" Header="Date" />
+                <DataGridTextColumn Width="50*" IsReadOnly="True"
+                                            Binding="{Binding Path=Album.Name}" Header="Album" />
+                <DataGridTextColumn Width="25*" IsReadOnly="True"
+                                            Binding="{Binding Path=ListenRating}" Header="Rating" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <commonControls:DataPager Margin="4" Grid.Row="3"
+                                      HorizontalAlignment="Left"
+                                      ItemsPerPage="{Binding LoadOptions.MaxResults}" VisiblePagesCount="3" TotalItems="{Binding ListeningsCount}"
+                                      pagerCommands:PageChanged.Command="{Binding PageChangedCommand}"/>
+    </Grid>
+</UserControl>
