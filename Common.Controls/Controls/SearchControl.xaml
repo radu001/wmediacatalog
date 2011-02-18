@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="Common.Controls.Controls.SearchControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             x:Name="searchControl"
+             >
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Common.Dialogs;component/Styles/CommonStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Border BorderThickness="2" BorderBrush="Gray" Background="LightGray" CornerRadius="8">
+        <Grid Margin="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Image Source="../Images/ZoomHS.png" Grid.Column="0" Width="16" Height="16"/>
+            <TextBox x:Name="FilterValueTextBox" Grid.Column="1" 
+                     Text="{Binding ElementName=searchControl,Path=SelectedFilterValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                     Style="{StaticResource BorderlessTextBox}"
+                     KeyDown="FilterValueTextBox_KeyDown"/>
+        </Grid>
+    </Border>
+</UserControl>

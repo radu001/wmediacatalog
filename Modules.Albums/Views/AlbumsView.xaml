@@ -1,0 +1,75 @@
+﻿<UserControl x:Class="Modules.Albums.Views.AlbumsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:commands="clr-namespace:Common.Commands;assembly=Common.Commands"
+             xmlns:commonControls="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
+             xmlns:prismCommands="clr-namespace:Microsoft.Practices.Composite.Presentation.Commands;assembly=Microsoft.Practices.Composite.Presentation"
+             xmlns:pagerCommands="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
+             mc:Ignorable="d" commands:Loaded.Command="{Binding ViewLoadedCommand}"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="LocalResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid x:Name="LayoutRoot" 
+          commonControls:BusyIndicatorBehavior.BusyState="{Binding IsBusy}"
+          commonControls:BusyIndicatorBehavior.AddMargins="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ToolBarTray Grid.Row="0">
+            <ToolBar HorizontalAlignment="Left">
+                <Button Margin="2"
+                        Style="{StaticResource ToolbarImageButtonStyle}"
+                        ToolTip="Create new album"
+                        prismCommands:Click.Command="{Binding CreateAlbumCommand}">
+                    <Button.Content>
+                        <Image Source="/Common.Dialogs;component/Images/CD_add_48x48.png" Width="48" Height="48" Stretch="Fill"/>
+                    </Button.Content>
+                </Button>
+                <Button Margin="2"
+                        Style="{StaticResource ToolbarImageButtonStyle}"
+                        ToolTip="Edit selected album"
+                        prismCommands:Click.Command="{Binding EditAlbumCommand}">
+                    <Button.Content>
+                        <Image Source="/Common.Dialogs;component/Images/CD_edit_48x48.png" Stretch="Fill"/>
+                    </Button.Content>
+                </Button>
+                <Button Margin="2"
+                        Style="{StaticResource ToolbarImageButtonStyle}"
+                        ToolTip="Remove selected album"
+                        prismCommands:Click.Command="{Binding RemoveAlbumCommand}">
+                    <Button.Content>
+                        <Image Source="/Common.Dialogs;component/Images/CD_remove_48x48.png" Stretch="Fill"/>
+                    </Button.Content>
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+        <commonControls:FilterControl Grid.Row="1" Margin="4"
+                                          FilterFields="{Binding Fields}"
+                                          GroupingEnabled="{Binding GroupingEnabled}"
+                                          SelectedFilterField="{Binding SelectedField,Mode=TwoWay}"
+                                          SelectedFilterValue="{Binding SelectedValue,Mode=TwoWay}"
+                                          ItemContainerStyle="{StaticResource GeneralComboBoxItemStyle}"
+                                          />
+        <ListView x:Name="AlbumsListView" Grid.Row="2"
+                  commands:MouseDoubleClick.Command="{Binding EditAlbumCommand}"
+                  ItemsSource="{Binding AlbumsCollection}" ItemTemplate="{StaticResource AlbumTemplate}"
+                  ItemContainerStyle="{StaticResource GeneralListViewItemStyle}"
+                  SelectedItem="{Binding CurrentAlbum}">
+
+        </ListView>
+        <commonControls:DataPager Grid.Row="3" Margin="4"
+                                  HorizontalAlignment="Left"
+                                  ItemsPerPage="{Binding LoadOptions.MaxResults}" VisiblePagesCount="3" TotalItems="{Binding AlbumsCount}"
+                                  pagerCommands:PageChanged.Command="{Binding PageChangedCommand}"/>
+    </Grid>
+</UserControl>

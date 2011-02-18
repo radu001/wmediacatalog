@@ -1,0 +1,83 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:prismCommands="clr-namespace:Microsoft.Practices.Composite.Presentation.Commands;assembly=Microsoft.Practices.Composite.Presentation">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Common.Dialogs;component/Styles/CommonStyles.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+    
+    <DataTemplate x:Key="AlbumTemplate">
+        <TextBlock Text="{Binding Name}"/>
+    </DataTemplate>
+
+    <DataTemplate x:Key="GenreDataTemplate">
+        <Border BorderBrush="LightSteelBlue" Background="LightSteelBlue" BorderThickness="1" CornerRadius="8" Margin="2,1,2,1">
+            <Grid Margin="4,2,4,2" Height="24">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding Name}" FontWeight="Bold" Grid.Column="0" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+    </DataTemplate>
+
+    <DataTemplate x:Key="ArtistDataTemplate">
+        <Border BorderBrush="LightSteelBlue" Background="LightSteelBlue" BorderThickness="1" CornerRadius="8" Margin="2,1,2,1">
+            <Grid Margin="4,2,4,2" Height="24">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding Name}" FontWeight="Bold" Grid.Column="0" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+    </DataTemplate>
+
+    <DataTemplate x:Key="GenreDetachableDataTemplate">
+        <Border BorderBrush="LightSteelBlue" Background="LightSteelBlue" BorderThickness="1" CornerRadius="8" Margin="2,1,2,1">
+            <Grid Margin="4,2,4,2" Height="24">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding Name}" FontWeight="Bold" Grid.Column="0" VerticalAlignment="Center"/>
+                <Button Style="{StaticResource TransparentImageButtonStyle}" Grid.Column="1" Margin="6,0,0,0" VerticalAlignment="Center"
+                                                        ToolTip="Detach this tag from artist" Cursor="Hand"
+                                                        prismCommands:Click.Command="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.DetachGenreCommand}"
+                                                        prismCommands:Click.CommandParameter="{Binding}"
+                                                        >
+                    <Button.Content>
+                        <Image Source="/Common.Dialogs;component/Images/Remove_16x16.png" Height="16" Width="16"/>
+                    </Button.Content>
+                </Button>
+            </Grid>
+        </Border>
+    </DataTemplate>
+
+    <DataTemplate x:Key="ArtistDetachableDataTemplate">
+        <Border BorderBrush="LightSteelBlue" Background="LightSteelBlue" BorderThickness="1" CornerRadius="8" Margin="2,1,2,1">
+            <Grid Margin="4,2,4,2" Height="24">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding Name}" FontWeight="Bold" Grid.Column="0" VerticalAlignment="Center"/>
+                <Button Style="{StaticResource TransparentImageButtonStyle}" Grid.Column="1" Margin="6,0,0,0" VerticalAlignment="Center"
+                                                        ToolTip="Detach this tag from artist" Cursor="Hand"
+                                                        prismCommands:Click.Command="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.DetachArtistCommand}"
+                                                        prismCommands:Click.CommandParameter="{Binding}"
+                                                        >
+                    <Button.Content>
+                        <Image Source="/Common.Dialogs;component/Images/Remove_16x16.png" Height="16" Width="16"/>
+                    </Button.Content>
+                </Button>
+            </Grid>
+        </Border>
+    </DataTemplate>
+
+</ResourceDictionary>

@@ -1,0 +1,211 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{667EC0C4-AAA6-40FD-ADC9-414C65C1BDC6}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MediaCatalog</RootNamespace>
+    <AssemblyName>MediaCatalog</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Practices.Composite, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Prism\Microsoft.Practices.Composite.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Composite.Presentation, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Prism\Microsoft.Practices.Composite.Presentation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Composite.UnityExtensions, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Prism\Microsoft.Practices.Composite.UnityExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ObjectBuilder2, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Prism\Microsoft.Practices.ObjectBuilder2.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Prism\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=1.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Prism\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Shell.xaml.cs">
+      <DependentUpon>Shell.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SplashWindow.xaml.cs">
+      <DependentUpon>SplashWindow.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Shell.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SplashWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{E66025A2-8077-40D1-B627-4D4945CEB365}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CommonCommands\Common.Commands.csproj">
+      <Project>{AF33854B-F0F2-4207-892D-2B288E4E37D5}</Project>
+      <Name>Common.Commands</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common.Controls\Common.Controls.csproj">
+      <Project>{65BBD200-9201-46BF-877F-3AF4D68039B2}</Project>
+      <Name>Common.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataLayer\DataLayer.csproj">
+      <Project>{7AA524BE-382B-4B5B-906A-1218ACCF7C76}</Project>
+      <Name>DataLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules.Albums\Modules.Albums.csproj">
+      <Project>{8C6FC40F-7A8B-48A9-AA55-E4C1F31F4402}</Project>
+      <Name>Modules.Albums</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules.Artists\Modules.Artists.csproj">
+      <Project>{2C8F6CE7-6E38-4C96-BA54-B034F4CB5FD4}</Project>
+      <Name>Modules.Artists</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules.DatabaseSettings\Modules.DatabaseSettings.csproj">
+      <Project>{F20BE165-AEA7-444F-B1F2-773A33D04EBD}</Project>
+      <Name>Modules.DatabaseSettings</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules.Listenings\Modules.Listenings.csproj">
+      <Project>{35061300-651E-4734-BFA6-A8C69C83ED05}</Project>
+      <Name>Modules.Listenings</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules.Login\Modules.Login.csproj">
+      <Project>{EDFC7E59-293C-46A1-9DF6-92408BF45E0D}</Project>
+      <Name>Modules.Login</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules.Main\Modules.Main.csproj">
+      <Project>{C80AD635-1E58-468B-8FE5-CD5E9A27C987}</Project>
+      <Name>Modules.Main</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules.Notifications\Modules.Notifications.csproj">
+      <Project>{069B41DB-E60D-46C2-A303-EDE85A4053CD}</Project>
+      <Name>Modules.Notifications</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules.Tags\Modules.Tags.csproj">
+      <Project>{7201F129-CE32-4F17-91A0-B71FD3A257CE}</Project>
+      <Name>Modules.Tags</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules.WorkspaceSelector\Modules.WorkspaceSelector.csproj">
+      <Project>{AF810DAD-6E54-4A77-AF63-EDFE75B4179E}</Project>
+      <Name>Modules.WorkspaceSelector</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(SolutionDir)\Lib\Npgsql\Npgsql.dll" "$(TargetDir)"
+copy "$(SolutionDir)\Lib\Npgsql\Mono.Security.dll" "$(TargetDir)"
+copy "$(SolutionDir)\Lib\NHibernate\log4net.dll" "$(TargetDir)"
+copy "$(SolutionDir)\Lib\NHibernate\NHibernate.ByteCode.LinFu.dll" "$(TargetDir)"
+copy "$(SolutionDir)\Lib\NHibernate\NHibernate.dll" "$(TargetDir)"
+copy "$(SolutionDir)\Lib\NHibernate\Antlr3.Runtime.dll" "$(TargetDir)"
+copy "$(SolutionDir)\Lib\NHibernate\Iesi.Collections.dll" "$(TargetDir)"
+copy "$(SolutionDir)\Lib\NHibernate\LinFu.DynamicProxy.dll" "$(TargetDir)"
+copy "$(SolutionDir)\DataLayer\hibernate.cfg.xml" "$(TargetDir)"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

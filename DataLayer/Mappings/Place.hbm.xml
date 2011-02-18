@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" auto-import="true" assembly="DataLayer" namespace="DataLayer.Entities">
+  <class name="PlaceEntity" table="places" lazy="false">
+    <id name="ID" column="id">
+      <generator class="native" />
+    </id>
+    <property name="Name" column="name" not-null="true"/>
+    <property name="PrivateMarks" column="private_marks"/>
+    <property name="Comments" column="comment"/>
+    <property name="Description" column="description"/>
+
+    <bag name="Listens" cascade="all" lazy="true">
+      <key column="place_id"/>
+      <one-to-many
+         class="DataLayer.Entities.ListeningEntity, NHibernateOneToMany"/>
+    </bag>
+  </class>
+</hibernate-mapping>

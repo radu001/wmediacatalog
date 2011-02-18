@@ -1,0 +1,96 @@
+﻿<UserControl x:Class="Common.Controls.Controls.DateIntervalInputBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Common.Controls.Controls"
+             mc:Ignorable="d" x:Name="dateInputBox">
+    <UserControl.Resources>
+        <ToolTip x:Key="ValidationErrorToolTip" DataContext="{Binding Path=PlacementTarget,RelativeSource={x:Static RelativeSource.Self}}" Background="Red">
+            <TextBlock Text="{Binding (Validation.Errors)[0].ErrorContent}" FontWeight="Bold" Foreground="White"/>
+        </ToolTip>
+        
+        <Style x:Key="ValidationTextBoxStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Border BorderBrush="Red" BorderThickness="1">
+                            <AdornedElementPlaceholder />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip" Value="{StaticResource ValidationErrorToolTip}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="TextBoxStyle" BasedOn="{StaticResource ValidationTextBoxStyle}" TargetType="{x:Type TextBox}">
+            <Setter Property="Margin" Value="0,2,0,2"/>
+        </Style>
+        <Style x:Key="TwoDigitsStyle" BasedOn="{StaticResource TextBoxStyle}" TargetType="{x:Type TextBox}">
+            <Setter Property="Width" Value="24"/>
+        </Style>
+        <Style x:Key="FourDigitsStyle" BasedOn="{StaticResource TextBoxStyle}" TargetType="{x:Type TextBox}">
+            <Setter Property="Width" Value="36"/>
+        </Style>
+
+        <local:ControlBorderBrushConverter x:Key="ControlBorderBrushConverter"/>
+        <local:InverseBoolConverter x:Key="InverseBoolConverter"/>
+    </UserControl.Resources>
+
+    <Grid x:Name="ControlLayoutRoot">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Border BorderThickness="1" Grid.ColumnSpan="12"
+                    BorderBrush="{Binding ElementName=dateInputBox,Path=IsValid,Converter={StaticResource ControlBorderBrushConverter}}"/>
+        <Popup StaysOpen="False" HorizontalOffset="1" VerticalOffset="1" 
+               IsOpen="{Binding ElementName=dateInputBox,Path=IsValid,Mode=OneWay,Converter={StaticResource InverseBoolConverter}}" 
+               Placement="Right" PlacementTarget="{Binding ElementName=ControlLayoutRoot}">
+            <Grid Background="Red">
+                <TextBlock Text="{Binding ElementName=dateInputBox,Path=ValidationMessage}" Foreground="White" Margin="4"/>
+            </Grid>
+        </Popup>
+        <TextBlock Text="Start date:" FontWeight="Bold" VerticalAlignment="Center" Grid.Column="0" Margin="2,0,0,0"/>
+        <local:DatePartTextBox Grid.Column="1" Margin="4,2,0,2" 
+                 PartType="Day" PartDetail="{Binding ElementName=dateInputBox}" IsStart="True"
+                 Text="{Binding ElementName=dateInputBox,Path=DateInterval.StartDateParts.Day,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnExceptions=True}"
+                 Style="{StaticResource TwoDigitsStyle}"/>
+        <TextBlock Text="/" Grid.Column="2" VerticalAlignment="Center" Margin="2,0,2,0"/>
+        <local:DatePartTextBox x:Name="startMonthTextBox" Grid.Column="3" PartType="Month"
+                 Text="{Binding ElementName=dateInputBox,Path=DateInterval.StartDateParts.Month,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnExceptions=True}"
+                 Style="{StaticResource TwoDigitsStyle}"/>
+        <TextBlock Text="/" Grid.Column="4" VerticalAlignment="Center" Margin="2,0,2,0"/>
+        <local:DatePartTextBox Grid.Column="5" PartType="Year"
+                 Style="{StaticResource FourDigitsStyle}"
+                 Text="{Binding ElementName=dateInputBox,Path=DateInterval.StartDateParts.Year,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnExceptions=True}"/>
+
+        <TextBlock Text="End date:" FontWeight="Bold" VerticalAlignment="Center" Grid.Column="6" Margin="14,0,0,0"/>
+        <local:DatePartTextBox Grid.Column="7" Margin="4,2,0,2" 
+                 PartType="Day" PartDetail="{Binding ElementName=dateInputBox}"
+                 Style="{StaticResource TwoDigitsStyle}"
+                 Text="{Binding ElementName=dateInputBox,Path=DateInterval.EndDateParts.Day,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnExceptions=True}"/>
+        <TextBlock Text="/" Grid.Column="8" VerticalAlignment="Center" Margin="2,0,2,0"/>
+        <local:DatePartTextBox Grid.Column="9" PartType="Month"
+                 Style="{StaticResource TwoDigitsStyle}"
+                 Text="{Binding ElementName=dateInputBox,Path=DateInterval.EndDateParts.Month,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnExceptions=True}"/>
+        <TextBlock Text="/" Grid.Column="10" VerticalAlignment="Center" Margin="2,0,2,0"/>
+        <local:DatePartTextBox Grid.Column="11" PartType="Year" Margin="2"
+                 Style="{StaticResource FourDigitsStyle}"
+                 Text="{Binding ElementName=dateInputBox,Path=DateInterval.EndDateParts.Year,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnExceptions=True}"/>
+    </Grid>
+</UserControl>

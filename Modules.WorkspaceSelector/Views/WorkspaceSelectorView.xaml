@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="Modules.WorkspaceSelector.Views.WorkspaceSelectorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:commands="clr-namespace:Common.Commands;assembly=Common.Commands"
+             xmlns:prismCommands="clr-namespace:Microsoft.Practices.Composite.Presentation.Commands;assembly=Microsoft.Practices.Composite.Presentation"
+             xmlns:common="clr-namespace:Common.Enums;assembly=Common"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Common.Dialogs;component/Styles/CommonStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <TabControl x:Name="WorkspaceSelectorTabControl"
+                    Style="{StaticResource EmptyTabControlStyle}"
+                    commands:SelectionChanged.Command="{Binding WorkspaceChangeCommand}">
+            <TabItem Header="Listenings">
+                <TabItem.Tag>
+                    <common:WorkspaceNameEnum>Listenings</common:WorkspaceNameEnum>
+                </TabItem.Tag>
+            </TabItem>
+            <TabItem Header="Artists">
+                <TabItem.Tag>
+                    <common:WorkspaceNameEnum>Artists</common:WorkspaceNameEnum>
+                </TabItem.Tag>
+            </TabItem>
+            <TabItem Header="Albums">
+                <TabItem.Tag>
+                    <common:WorkspaceNameEnum>Albums</common:WorkspaceNameEnum>
+                </TabItem.Tag>
+            </TabItem>
+            <TabItem Header="Tags">
+                <TabItem.Tag>
+                    <common:WorkspaceNameEnum>Tags</common:WorkspaceNameEnum>
+                </TabItem.Tag>
+            </TabItem>
+            <TabItem Header="Database management">
+                <TabItem.Tag>
+                    <common:WorkspaceNameEnum>DatabaseManagement</common:WorkspaceNameEnum>
+                </TabItem.Tag>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>
