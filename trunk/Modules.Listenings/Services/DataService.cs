@@ -51,6 +51,12 @@ namespace Modules.Listenings.Services
             return provider.SavePlace(place);
         }
 
+        public bool RemoveListening(Listening listening)
+        {
+            DataProvider provider = new DataProvider();
+            return provider.RemoveListening(listening);
+        }
+
         #endregion
     }
 }

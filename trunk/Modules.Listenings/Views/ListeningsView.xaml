@@ -28,6 +28,7 @@
         </Grid.RowDefinitions>
         <ToolBar Grid.Row="0">
             <Button Content="+" prismCommands:Click.Command="{Binding AddListeningCommand}"/>
+            <Button Content="-" prismCommands:Click.Command="{Binding RemoveListeningCommand}"/>
         </ToolBar>
         <commonControls:FilterControl Grid.Row="1" Margin="4"
                                           FilterFields="{Binding Fields}"

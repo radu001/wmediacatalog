@@ -1108,5 +1108,42 @@ namespace DataServices
 
             return result;
         }
+
+        public bool RemoveListening(Listening listening)
+        {
+            bool result = false;
+
+            ISession session = SessionFactory.GetSession();
+
+            ITransaction tx = session.BeginTransaction();
+
+            try
+            {
+
+                ListeningEntity dataEntity = session.CreateCriteria<ListeningEntity>().
+                    Add(Restrictions.Eq("ID", listening.ID)).UniqueResult<ListeningEntity>();
+
+                if (dataEntity != null)
+                {
+                    session.Delete(dataEntity);
+
+                    tx.Commit();
+                }
+
+                result = true;
+            }
+            catch (Exception ex)
+            {
+                Logger.Write(ex);
+                tx.Rollback();
+            }
+            finally
+            {
+                session.Close();
+                tx.Dispose();
+            }
+
+            return result;
+        }
     }
 }

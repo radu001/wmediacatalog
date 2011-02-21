@@ -12,6 +12,8 @@ using Microsoft.Practices.Composite.Presentation.Commands;
 using Microsoft.Practices.Unity;
 using Modules.Listenings.Services;
 using Modules.Listenings.Views;
+using Common.Enums;
+using Common.Dialogs;
 namespace Modules.Listenings.ViewModels
 {
     public class ListeningsViewModel : FilterViewModelBase, IListeningsViewModel
@@ -25,6 +27,7 @@ namespace Modules.Listenings.ViewModels
 
             ViewLoadedCommand = new DelegateCommand<object>(OnViewLoadedCommand);
             AddListeningCommand = new DelegateCommand<object>(OnAddListeningCommand);
+            RemoveListeningCommand = new DelegateCommand<object>(OnRemoveListeningCommand);
             PageChangedCommand = new DelegateCommand<PageChangedArgs>(OnPageChangedCommand);
             DisplayListeningCommand = new DelegateCommand<object>(OnDisplayListeningCommand);
         }
@@ -97,6 +100,8 @@ namespace Modules.Listenings.ViewModels
 
         public DelegateCommand<object> AddListeningCommand { get; private set; }
 
+        public DelegateCommand<object> RemoveListeningCommand { get; private set; }
+
         public DelegateCommand<PageChangedArgs> PageChangedCommand { get; private set; }
 
         public DelegateCommand<object> DisplayListeningCommand { get; private set; }
@@ -140,6 +145,32 @@ namespace Modules.Listenings.ViewModels
 
             ListeningDialog dialog = new ListeningDialog(viewModel);
             dialog.ShowDialog();
+        }
+
+        private void OnRemoveListeningCommand(object parameter)
+        {
+            if (SelectedListening == null)
+                Notify("Please select listening first", NotificationType.Warning);
+            else
+            {
+                ConfirmDialog dialog = new ConfirmDialog()
+                {
+                    HeaderText = "Listening remove confirmation",
+                    MessageText = "Do you really want to remove listening: " + SelectedListening.Date.ToShortDateString() + " ?"
+                };
+
+                if (dialog.ShowDialog() == true)
+                {
+                    bool deleted = dataService.RemoveListening(SelectedListening);
+
+                    if (deleted)
+                        Notify("Listening has been successfully removed", NotificationType.Success);
+                    else
+                        Notify("Can't remove selected listening. See log for details", NotificationType.Error);
+
+                    LoadListenings();
+                }
+            }
         }
 
         private void OnPageChangedCommand(PageChangedArgs parameter)
