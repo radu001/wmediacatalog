@@ -249,7 +249,6 @@ namespace Modules.Artists.ViewModels
 
                 LoadArtists();
             }
-
         }
 
         private void OnEditArtistCommand(object parameter)

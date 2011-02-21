@@ -15,6 +15,7 @@ namespace Modules.Listenings.ViewModels
 
         DelegateCommand<object> ViewLoadedCommand { get; }
         DelegateCommand<object> AddListeningCommand { get; }
+        DelegateCommand<object> RemoveListeningCommand { get; }
         DelegateCommand<PageChangedArgs> PageChangedCommand { get; }
         DelegateCommand<object> DisplayListeningCommand { get; }
     }

@@ -13,5 +13,6 @@ namespace Modules.Listenings.Services
         bool SaveListening(Listening listening);
         bool SaveMood(Mood mood);
         bool SavePlace(Place place);
+        bool RemoveListening(Listening listening);
     }
 }
