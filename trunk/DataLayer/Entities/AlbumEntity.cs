@@ -14,6 +14,7 @@ namespace DataLayer.Entities
         public virtual DateTime Year { get; set; }
         public virtual int DiscsCount { get; set; }
         public virtual int Rating { get; set; }
+        public virtual bool IsWaste { get; set; }
 
         public virtual IList<GenreEntity> Genres
         {

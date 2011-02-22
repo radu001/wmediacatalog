@@ -63,6 +63,7 @@ namespace DataServices
                 Name = dataEntity.Name,
                 PrivateMarks = dataEntity.PrivateMarks,
                 Biography = dataEntity.Biography,
+                IsWaste = dataEntity.IsWaste
             };
 
             if (options == ArtistConvertOptions.Full)
@@ -86,7 +87,8 @@ namespace DataServices
                 ID = businessEntity.ID,
                 Name = businessEntity.Name,
                 PrivateMarks = businessEntity.PrivateMarks,
-                Biography = businessEntity.Biography
+                Biography = businessEntity.Biography,
+                IsWaste = businessEntity.IsWaste
             };
 
             if (options == ArtistConvertOptions.Full)
@@ -221,7 +223,8 @@ namespace DataServices
                 Description = dataEntity.Description,
                 Year = dataEntity.Year,
                 Rating = dataEntity.Rating,
-                DiscsCount = dataEntity.DiscsCount
+                DiscsCount = dataEntity.DiscsCount,
+                IsWaste = dataEntity.IsWaste
             };
 
             if (options == AlbumConvertOptions.Full)
@@ -268,7 +271,8 @@ namespace DataServices
                 Description = businessEntity.Description,
                 Year = businessEntity.Year,
                 Rating = businessEntity.Rating,
-                DiscsCount = businessEntity.DiscsCount
+                DiscsCount = businessEntity.DiscsCount,
+                IsWaste = businessEntity.IsWaste
             };
 
             foreach (Tag tagBusinessEntity in businessEntity.Tags)

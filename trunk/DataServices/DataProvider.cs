@@ -764,6 +764,8 @@ namespace DataServices
 
             DetachedCriteria criteria = DetachedCriteria.For<AlbumEntity>();
 
+            criteria.Add(Restrictions.Eq("IsWaste", options.IncludeWaste));
+
             switch (fieldName)
             {
                 case "Tag":

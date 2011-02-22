@@ -52,6 +52,9 @@
                     </Button.Content>
                 </Button>
             </ToolBar>
+            <ToolBar>
+                
+            </ToolBar>
         </ToolBarTray>
         <commonControls:FilterControl Grid.Row="1" Margin="4"
                                           FilterFields="{Binding Fields}"

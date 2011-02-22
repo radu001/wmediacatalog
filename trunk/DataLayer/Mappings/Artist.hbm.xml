@@ -7,6 +7,7 @@
     <property name="Name" column="name" not-null="true"/>
     <property name="PrivateMarks" column="private_marks"/>
     <property name="Biography" column="biography"/>
+    <property name="IsWaste" column="is_waste" not-null="true"/>
 
     <!--Owns relation and persists bindings into artists_albums table-->
     <bag name="Albums" table="artists_albums" lazy="true">
