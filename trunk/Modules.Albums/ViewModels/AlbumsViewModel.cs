@@ -1,10 +1,10 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using BusinessObjects;
 using Common.Controls.Controls;
-using Common.Entities;
 using Common.Entities.Pagination;
 using Common.Enums;
 using Common.Events;
@@ -13,12 +13,11 @@ using Microsoft.Practices.Composite.Events;
 using Microsoft.Practices.Composite.Presentation.Commands;
 using Microsoft.Practices.Unity;
 using Modules.Albums.Services;
-using Modules.Albums.Views;
-using System.Collections.Generic;
 using Modules.Albums.ViewModels.Common;
+using Modules.Albums.Views;
 namespace Modules.Albums.ViewModels
 {
-    public class AlbumsViewModel : FilterViewModelBase, IAlbumsViewModel
+    public class AlbumsViewModel : WasteableViewModelBase, IAlbumsViewModel
     {
         public AlbumsViewModel(IUnityContainer container, IEventAggregator eventAggregator, IDataService dataService)
             :base(container, eventAggregator)
@@ -118,6 +117,21 @@ namespace Modules.Albums.ViewModels
             LoadOptions.FilterValue = selectedValue;
 
             LoadAlbums();
+        }
+
+        public override void OnShowWasteCommand(object parameter)
+        {
+            IsWasteVisible = true;
+        }
+
+        public override void OnHideWasteCommand(object parameter)
+        {
+            IsWasteVisible = false;
+        }
+
+        public override void OnMarkAsWasteCommand(object parameter)
+        {
+            //TODO
         }
 
         #region Private methods

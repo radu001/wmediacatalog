@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:commands="clr-namespace:Common.Commands;assembly=Common.Commands"
              xmlns:commonControls="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
+             xmlns:converters="clr-namespace:Common.Controls.Converters;assembly=Common.Controls"
              xmlns:prismCommands="clr-namespace:Microsoft.Practices.Composite.Presentation.Commands;assembly=Microsoft.Practices.Composite.Presentation"
              xmlns:pagerCommands="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
              mc:Ignorable="d" commands:Loaded.Command="{Binding ViewLoadedCommand}"
@@ -14,6 +15,9 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="LocalResources.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" UseCollapsed="True"/>
+            <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter" UseCollapsed="True"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid x:Name="LayoutRoot" 
@@ -53,7 +57,30 @@
                 </Button>
             </ToolBar>
             <ToolBar>
-                
+                <Button Margin="2"
+                        Style="{StaticResource ToolbarImageButtonStyle}"
+                        ToolTip="Show waste albums"
+                        prismCommands:Click.Command="{Binding ShowWasteCommand}" Visibility="{Binding IsWasteVisible,Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                    <Button.Content>
+                        <Image Source="/Common.Dialogs;component/Images/waste_plus_48x48.png" Width="48" Height="48" Stretch="Fill"/>
+                    </Button.Content>
+                </Button>
+                <Button Margin="2"
+                        Style="{StaticResource ToolbarImageButtonStyle}"
+                        ToolTip="Hide waste albums"
+                        prismCommands:Click.Command="{Binding HideWasteCommand}" Visibility="{Binding IsWasteVisible,Converter={StaticResource BoolToVisibilityConverter}}">
+                    <Button.Content>
+                        <Image Source="/Common.Dialogs;component/Images/waste_minus_48x48.png" Width="48" Height="48" Stretch="Fill"/>
+                    </Button.Content>
+                </Button>
+                <Button Margin="2"
+                        Style="{StaticResource ToolbarImageButtonStyle}"
+                        ToolTip="Mark album as waste"
+                        prismCommands:Click.Command="{Binding MarkAsWasteCommand}">
+                    <Button.Content>
+                        <Image Source="/Common.Dialogs;component/Images/waste_arrow_48x48.png" Width="48" Height="48" Stretch="Fill"/>
+                    </Button.Content>
+                </Button>
             </ToolBar>
         </ToolBarTray>
         <commonControls:FilterControl Grid.Row="1" Margin="4"

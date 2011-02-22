@@ -1,19 +1,25 @@
 ﻿using System;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
 
-namespace Modules.Artists.Converters
+namespace Common.Controls.Converters
 {
-    public class BoolToOpacityConverter : IValueConverter
+    public class InverseBoolToVisibilityConverter : IValueConverter
     {
+        public bool UseCollapsed { get; set; }
+
         #region IValueConverter Members
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if ((bool)value)
-                return 0.3d;
+            if (!(bool)value)
+                return Visibility.Visible;
 
-            return 1d;
+            if (!UseCollapsed)
+                return Visibility.Hidden;
+            else
+                return Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
