@@ -97,6 +97,9 @@
     <Compile Include="Controls\SearchControl.xaml.cs">
       <DependentUpon>SearchControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\BoolToOpacityConverter.cs" />
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\InverseBoolToVisibilityConverter.cs" />
     <Compile Include="Converters\DateFilterInputVisibilityConverter.cs" />
     <Compile Include="Converters\TextFilterInputVisibilityConverter.cs" />
     <Compile Include="Events\FilterFieldChangedArgs.cs" />

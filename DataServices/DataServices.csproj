@@ -58,7 +58,6 @@
     <Compile Include="Enums\ArtistConvertOptions.cs" />
     <Compile Include="Enums\MoodConvertOptions.cs" />
     <Compile Include="Enums\PlaceConvertOptions.cs" />
-    <Compile Include="Extensions\NHibernateExtensions.cs" />
     <Compile Include="PagedList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

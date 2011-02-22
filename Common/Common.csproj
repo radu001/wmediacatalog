@@ -125,7 +125,9 @@
     <Compile Include="ViewModels\FilterViewModelBase.cs" />
     <Compile Include="ViewModels\IDialogViewModel.cs" />
     <Compile Include="ViewModels\IFilterViewModel.cs" />
+    <Compile Include="ViewModels\IWasteableViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="ViewModels\WasteableViewModelBase.cs" />
     <Compile Include="ViewNames.cs" />
   </ItemGroup>
   <ItemGroup>
