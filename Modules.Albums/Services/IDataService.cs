@@ -9,6 +9,7 @@ namespace Modules.Albums.Services
         IPagedList<Artist> GetArtists(ILoadOptions options);
         IPagedList<Album> GetAlbums(ILoadOptions options);
         Album GetAlbum(int albumID);
+        bool SaveAlbumWasted(Album album);
         IList<Tag> GetTags();
         IPagedList<Genre> GetGenres(ILoadOptions loadOptions);
         bool SaveAlbum(Album album);

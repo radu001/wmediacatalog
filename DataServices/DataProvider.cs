@@ -764,7 +764,8 @@ namespace DataServices
 
             DetachedCriteria criteria = DetachedCriteria.For<AlbumEntity>();
 
-            criteria.Add(Restrictions.Eq("IsWaste", options.IncludeWaste));
+            if ( !options.IncludeWaste )
+                criteria.Add(Restrictions.Eq("IsWaste", false));
 
             switch (fieldName)
             {
@@ -829,6 +830,39 @@ namespace DataServices
                 tx.Commit();
 
                 album.ID = dataEntity.ID;
+
+                result = true;
+            }
+            catch (Exception ex)
+            {
+                Logger.Write(ex);
+                tx.Rollback();
+            }
+            finally
+            {
+                session.Close();
+                tx.Dispose();
+            }
+
+            return result;
+        }
+
+        public bool SaveAlbumWasted(Album album)
+        {
+            bool result = false;
+
+            ISession session = SessionFactory.GetSession();
+
+            ITransaction tx = session.BeginTransaction();
+
+            try
+            {
+                var dataEntity = session.Load<AlbumEntity>(album.ID);
+                dataEntity.IsWaste = album.IsWaste;
+
+                session.Update(dataEntity);
+
+                tx.Commit();
 
                 result = true;
             }

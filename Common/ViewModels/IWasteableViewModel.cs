@@ -9,5 +9,6 @@ namespace Common.ViewModels
         DelegateCommand<object> ShowWasteCommand { get; }
         DelegateCommand<object> HideWasteCommand { get; }
         DelegateCommand<object> MarkAsWasteCommand { get; }
+        DelegateCommand<object> UnMarkAsWasteCommand { get; }
     }
 }

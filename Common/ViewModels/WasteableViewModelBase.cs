@@ -12,6 +12,7 @@ namespace Common.ViewModels
             ShowWasteCommand = new DelegateCommand<object>(OnShowWasteCommand);
             HideWasteCommand = new DelegateCommand<object>(OnHideWasteCommand);
             MarkAsWasteCommand = new DelegateCommand<object>(OnMarkAsWasteCommand);
+            UnMarkAsWasteCommand = new DelegateCommand<object>(OnUnMarkAsWasteCommand);
         }
 
         #region IWasteableViewModel Members
@@ -35,6 +36,8 @@ namespace Common.ViewModels
 
         public DelegateCommand<object> MarkAsWasteCommand { get; private set; }
 
+        public DelegateCommand<object> UnMarkAsWasteCommand { get; private set; }
+
         #endregion
 
         #region Abstract methods
@@ -44,6 +47,8 @@ namespace Common.ViewModels
         public abstract void OnHideWasteCommand(object parameter);
 
         public abstract void OnMarkAsWasteCommand(object parameter);
+
+        public abstract void OnUnMarkAsWasteCommand(object parameter);
 
         #endregion
 
