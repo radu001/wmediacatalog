@@ -7,5 +7,6 @@ namespace Common.Entities.Pagination
         int MaxResults { get; set; }
         IField FilterField { get; set; }
         string FilterValue { get; set; }
+        bool IncludeWaste { get; set; }
     }
 }

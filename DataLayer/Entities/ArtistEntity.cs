@@ -7,6 +7,7 @@ namespace DataLayer.Entities
         public virtual string Name { get; set; }
         public virtual string PrivateMarks { get; set; }
         public virtual string Biography { get; set; }
+        public virtual bool IsWaste { get; set; }
         public virtual IList<AlbumEntity> Albums
         {
             get

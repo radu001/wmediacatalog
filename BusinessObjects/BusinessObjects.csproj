@@ -52,6 +52,7 @@
     <Compile Include="Artist.cs" />
     <Compile Include="Base\BusinessObject.cs" />
     <Compile Include="Base\NameableObject.cs" />
+    <Compile Include="Base\WasteableObject.cs" />
     <Compile Include="Interfaces\IValidatingObject.cs" />
     <Compile Include="Listening.cs" />
     <Compile Include="Mood.cs" />

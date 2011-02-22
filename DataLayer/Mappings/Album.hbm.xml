@@ -13,6 +13,7 @@
     <property name="Year" column="year"/>
     <property name="DiscsCount" column="discs_count"/>
     <property name="Rating" column="rating" not-null="true"/>
+    <property name="IsWaste" column="is_waste" not-null="true"/>
 
     <!--Owns relation and persistes bindings into albums_genres table-->
     <bag name="Genres" table="albums_genres" lazy="true">

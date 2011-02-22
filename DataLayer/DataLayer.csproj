@@ -64,7 +64,6 @@
     <Compile Include="Caching\IConfigurationCache.cs" />
     <Compile Include="Entities\PlaceEntity.cs" />
     <Compile Include="SessionFactory.cs" />
-    <Compile Include="DataProvider.cs" />
     <Compile Include="Entities\AlbumEntity.cs" />
     <Compile Include="Entities\ArtistEntity.cs" />
     <Compile Include="Entities\ListeningEntity.cs" />
@@ -76,7 +75,6 @@
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="Entities\UserLoginEntity.cs" />
     <Compile Include="Entities\UserSettingsEntity.cs" />
-    <Compile Include="IDataProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

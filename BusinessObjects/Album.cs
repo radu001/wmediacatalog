@@ -1,9 +1,10 @@
 ﻿
 using System;
 using System.Collections.ObjectModel;
+using BusinessObjects.Base;
 namespace BusinessObjects
 {
-    public class Album : BusinessObject
+    public class Album : WasteableObject
     {
         public string Name
         {
