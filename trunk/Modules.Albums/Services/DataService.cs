@@ -27,6 +27,13 @@ namespace Modules.Albums.Services
             return provider.GetAlbum(albumID);
         }
 
+        public bool SaveAlbumWasted(Album album)
+        {
+            DataProvider provider = new DataProvider();
+            return provider.SaveAlbumWasted(album);
+        }
+
+
         public IList<Tag> GetTags()
         {
             DataProvider provider = new DataProvider();

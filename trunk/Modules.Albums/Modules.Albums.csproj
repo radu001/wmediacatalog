@@ -79,6 +79,8 @@
   <ItemGroup>
     <Compile Include="AlbumsModule.cs" />
     <Compile Include="Controllers\AlbumsController.cs" />
+    <Compile Include="Converters\AlbumWastedToForegroundConverter.cs" />
+    <Compile Include="Converters\AlbumWastedToVisibilityConverter.cs" />
     <Compile Include="Converters\TagsBoxVisibilityConverter.cs" />
     <Compile Include="Converters\VerticalAlignmentConverter.cs" />
     <Compile Include="Enums\AlbumTabsEnum.cs" />

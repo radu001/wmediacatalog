@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using BusinessObjects;
 using Common.Controls.Controls;
+using Common.Dialogs;
 using Common.Entities.Pagination;
 using Common.Enums;
 using Common.Events;
@@ -121,15 +122,58 @@ namespace Modules.Albums.ViewModels
 
         public override void OnShowWasteCommand(object parameter)
         {
-            IsWasteVisible = true;
+            FilterByWaste(true);
         }
 
         public override void OnHideWasteCommand(object parameter)
         {
-            IsWasteVisible = false;
+            FilterByWaste(false);
         }
 
         public override void OnMarkAsWasteCommand(object parameter)
+        {
+            if (CurrentAlbum == null)
+            {
+                Notify("Please select album first", NotificationType.Info);
+                return;
+            }
+
+            if (!CurrentAlbum.IsWaste)
+            {
+                ConfirmDialog confirm = new ConfirmDialog()
+                {
+                    HeaderText = "Confirm waste mark",
+                    MessageText = String.Format("Do you really want to mark album {0} as wasted?", CurrentAlbum.Name)
+                };
+
+                if (confirm.ShowDialog() == true)
+                {
+                    CurrentAlbum.IsWaste = true;
+                    IsBusy = true;
+
+                    Task<bool> saveAlbumTask = Task.Factory.StartNew<bool>(() =>
+                    {
+                        return dataService.SaveAlbumWasted(CurrentAlbum);
+                    }, TaskScheduler.Default);
+
+                    Task finishedTask = saveAlbumTask.ContinueWith((t) =>
+                    {
+                        IsBusy = false;
+
+                        if (t.Result)
+                        {
+                            LoadAlbums();
+                        }
+                        else
+                        {
+                            Notify("Can't update album. See log for details", NotificationType.Error);
+                        }
+                    }, TaskScheduler.FromCurrentSynchronizationContext());
+                }
+            }
+        }
+
+        public override void OnUnMarkAsWasteCommand(object parameter)
         {
             //TODO
         }
@@ -257,6 +301,14 @@ namespace Modules.Albums.ViewModels
         private void RemoveAlbumImpl(int albumID)
         {
             Notify("Not yet implemented", NotificationType.Info);
+        }
+
+        private void FilterByWaste(bool showWaste)
+        {
+            IsWasteVisible = showWaste;
+            LoadOptions.IncludeWaste = showWaste;
+
+            LoadAlbums();
         }
 
         #endregion

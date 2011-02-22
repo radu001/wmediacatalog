@@ -9,10 +9,6 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Common.Dialogs;component/Styles/CommonStyles.xaml"/>
     </ResourceDictionary.MergedDictionaries>
-    
-    <DataTemplate x:Key="AlbumTemplate">
-        <TextBlock Text="{Binding Name}"/>
-    </DataTemplate>
 
     <DataTemplate x:Key="GenreDataTemplate">
         <Border BorderBrush="LightSteelBlue" Background="LightSteelBlue" BorderThickness="1" CornerRadius="8" Margin="2,1,2,1">
