@@ -19,6 +19,12 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="LocalResources.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate x:Key="AlbumSimpleTemplate">
+                <StackPanel>
+                    <TextBlock Text="{Binding Name}"/>
+                </StackPanel>
+            </DataTemplate>
         </ResourceDictionary>
     </Window.Resources>
     <Grid x:Name="LayoutRoot" 
@@ -69,7 +75,7 @@
                                           ItemContainerStyle="{StaticResource GeneralComboBoxItemStyle}"/>
                     <ListView x:Name="AlbumsListView" Grid.Row="1"
                       commands:MouseDoubleClick.Command="{Binding SelectAlbumCommand}"
-                      ItemsSource="{Binding AlbumsCollection}" ItemTemplate="{StaticResource AlbumTemplate}"
+                      ItemsSource="{Binding AlbumsCollection}" ItemTemplate="{StaticResource AlbumSimpleTemplate}"
                       ItemContainerStyle="{StaticResource GeneralListViewItemStyle}"
                       SelectedItem="{Binding CurrentAlbum}"/>
                     <Grid Grid.Row="2">

@@ -111,59 +111,53 @@
         <ToolBarTray Grid.Row="0" Grid.ColumnSpan="2">
             <ToolBar HorizontalAlignment="Left">
                 <Button Margin="2"
-                                Style="{StaticResource ToolbarImageButtonStyle}"
-                                ToolTip="Create new artist"
-                                prismCommands:Click.Command="{Binding CreateArtistCommand}"
-                                      >
+                        Style="{StaticResource ToolbarImageButtonStyle}"
+                        ToolTip="Create new artist"
+                        prismCommands:Click.Command="{Binding CreateArtistCommand}">
                     <Button.Content>
-                        <Image Source="/Common.Dialogs;component/Images/Conductor_add_48x48.png" Width="48" Height="48" Stretch="Fill"/>
+                        <Image Source="/Common.Dialogs;component/Images/Conductor_add_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
                     </Button.Content>
                 </Button>
                 <Button Margin="2"
-                                Style="{StaticResource ToolbarImageButtonStyle}"
-                                ToolTip="Edit selected artist"
-                                prismCommands:Click.Command="{Binding EditArtistCommand}"
-                                      >
+                        Style="{StaticResource ToolbarImageButtonStyle}"
+                        ToolTip="Edit selected artist"
+                        prismCommands:Click.Command="{Binding EditArtistCommand}">
                     <Button.Content>
-                        <Image Source="/Common.Dialogs;component/Images/Conductor_edit_48x48.png" Stretch="Fill"/>
+                        <Image Source="/Common.Dialogs;component/Images/Conductor_edit_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
                     </Button.Content>
                 </Button>
                 <Button Margin="2"
-                                Style="{StaticResource ToolbarImageButtonStyle}"
-                                ToolTip="Remove selected artist"
-                                prismCommands:Click.Command="{Binding RemoveArtistCommand}"
-                                      >
+                        Style="{StaticResource ToolbarImageButtonStyle}"
+                        ToolTip="Remove selected artist"
+                        prismCommands:Click.Command="{Binding RemoveArtistCommand}">
                     <Button.Content>
-                        <Image Source="/Common.Dialogs;component/Images/Conductor_remove_48x48.png" Stretch="Fill"/>
+                        <Image Source="/Common.Dialogs;component/Images/Conductor_remove_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
                     </Button.Content>
                 </Button>
             </ToolBar>
             <ToolBar HorizontalAlignment="Left">
                 <Button Margin="2"
-                                    Style="{StaticResource ToolbarImageButtonStyle}"
-                                    ToolTip="Create new album for selected artist"
-                                    prismCommands:Click.Command="{Binding CreateAlbumCommand}"
-                                          >
+                        Style="{StaticResource ToolbarImageButtonStyle}"
+                        ToolTip="Create new album for selected artist"
+                        prismCommands:Click.Command="{Binding CreateAlbumCommand}">
                     <Button.Content>
-                        <Image Source="/Common.Dialogs;component/Images/CD_add_48x48.png" Width="48" Height="48" Stretch="Fill"/>
+                        <Image Source="/Common.Dialogs;component/Images/CD_add_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
                     </Button.Content>
                 </Button>
                 <Button Margin="2"
-                                    Style="{StaticResource ToolbarImageButtonStyle}"
-                                    ToolTip="Edit selected album"
-                                    prismCommands:Click.Command="{Binding EditAlbumCommand}"
-                                          >
+                        Style="{StaticResource ToolbarImageButtonStyle}"
+                        ToolTip="Edit selected album"
+                        prismCommands:Click.Command="{Binding EditAlbumCommand}">
                     <Button.Content>
-                        <Image Source="/Common.Dialogs;component/Images/CD_edit_48x48.png" Stretch="Fill"/>
+                        <Image Source="/Common.Dialogs;component/Images/CD_edit_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
                     </Button.Content>
                 </Button>
                 <Button Margin="2"
-                                    Style="{StaticResource ToolbarImageButtonStyle}"
-                                    ToolTip="Remove selected album"
-                                    prismCommands:Click.Command="{Binding RemoveAlbumCommand}"
-                                          >
+                        Style="{StaticResource ToolbarImageButtonStyle}"
+                        ToolTip="Remove selected album"
+                        prismCommands:Click.Command="{Binding RemoveAlbumCommand}">
                     <Button.Content>
-                        <Image Source="/Common.Dialogs;component/Images/CD_remove_48x48.png" Stretch="Fill"/>
+                        <Image Source="/Common.Dialogs;component/Images/CD_remove_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
                     </Button.Content>
                 </Button>
             </ToolBar>
