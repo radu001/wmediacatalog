@@ -26,6 +26,7 @@ namespace Modules.Artists.ViewModels
 
             eventAggregator.GetEvent<ReloadArtistsEvent>().Subscribe(OnReloadArtistsEvent, true);
             eventAggregator.GetEvent<AlbumLoadedEvent>().Subscribe(OnAlbumLoadedEvent, true);
+            eventAggregator.GetEvent<CreateArtistEvent>().Subscribe(OnCreateArtistCommand, true);
 
             ViewLoadedCommand = new DelegateCommand<object>(OnViewLoadedCommand);
             EditArtistCommand = new DelegateCommand<object>(OnEditArtistCommand);

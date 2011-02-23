@@ -18,5 +18,7 @@ namespace Modules.Listenings.ViewModels
         DelegateCommand<object> RemoveListeningCommand { get; }
         DelegateCommand<PageChangedArgs> PageChangedCommand { get; }
         DelegateCommand<object> DisplayListeningCommand { get; }
+        DelegateCommand<object> CreateArtistCommand { get; }
+        DelegateCommand<object> CreateAlbumCommand { get; }
     }
 }
