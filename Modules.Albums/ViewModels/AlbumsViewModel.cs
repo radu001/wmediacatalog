@@ -132,50 +132,12 @@ namespace Modules.Albums.ViewModels
 
         public override void OnMarkAsWasteCommand(object parameter)
         {
-            if (CurrentAlbum == null)
-            {
-                Notify("Please select album first", NotificationType.Info);
-                return;
-            }
-
-            if (!CurrentAlbum.IsWaste)
-            {
-                ConfirmDialog confirm = new ConfirmDialog()
-                {
-                    HeaderText = "Confirm waste mark",
-                    MessageText = String.Format("Do you really want to mark album {0} as wasted?", CurrentAlbum.Name)
-                };
-
-                if (confirm.ShowDialog() == true)
-                {
-                    CurrentAlbum.IsWaste = true;
-                    IsBusy = true;
-
-                    Task<bool> saveAlbumTask = Task.Factory.StartNew<bool>(() =>
-                    {
-                        return dataService.SaveAlbumWasted(CurrentAlbum);
-                    }, TaskScheduler.Default);
-
-                    Task finishedTask = saveAlbumTask.ContinueWith((t) =>
-                    {
-                        IsBusy = false;
-
-                        if (t.Result)
-                        {
-                            LoadAlbums();
-                        }
-                        else
-                        {
-                            Notify("Can't update album. See log for details", NotificationType.Error);
-                        }
-                    }, TaskScheduler.FromCurrentSynchronizationContext());
-                }
-            }
+            UpdateWasteMark(true);
         }
 
         public override void OnUnMarkAsWasteCommand(object parameter)
         {
-            //TODO
+            UpdateWasteMark(false);
         }
 
         #region Private methods
@@ -309,6 +271,52 @@ namespace Modules.Albums.ViewModels
             LoadOptions.IncludeWaste = showWaste;
 
             LoadAlbums();
+        }
+
+        private void UpdateWasteMark(bool isWaste)
+        {
+            if (CurrentAlbum == null)
+            {
+                Notify("Please select album first", NotificationType.Info);
+                return;
+            }
+
+            if (CurrentAlbum.IsWaste != isWaste) // we're actually changing waste status
+            {
+                ConfirmDialog confirm = new ConfirmDialog()
+                {
+                    HeaderText =
+                        isWaste == true ? "Confirm waste mark" : "Confirm waste mark removal",
+                    MessageText =
+                        isWaste == true ? String.Format("Do you really want to mark album {0} as wasted?", CurrentAlbum.Name) :
+                                          String.Format("Do you really want to unmark album {0} as wasted?", CurrentAlbum.Name)
+                };
+
+                if (confirm.ShowDialog() == true)
+                {
+                    CurrentAlbum.IsWaste = isWaste;
+                    IsBusy = true;
+
+                    Task<bool> saveAlbumTask = Task.Factory.StartNew<bool>(() =>
+                    {
+                        return dataService.SaveAlbumWasted(CurrentAlbum);
+                    }, TaskScheduler.Default);
+
+                    Task finishedTask = saveAlbumTask.ContinueWith((t) =>
+                    {
+                        IsBusy = false;
+
+                        if (t.Result)
+                        {
+                            LoadAlbums();
+                        }
+                        else
+                        {
+                            Notify("Can't update album. See log for details", NotificationType.Error);
+                        }
+                    }, TaskScheduler.FromCurrentSynchronizationContext());
+                }
+            }
         }
 
         #endregion
