@@ -81,7 +81,7 @@
                             <TextBox Text="{Binding Listening.Date}" Grid.Row="0" Grid.Column="1" IsReadOnly="True" 
                                      Margin="{StaticResource DialogMargin}"
                                      Visibility="{Binding IsEditMode,Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
-                            <DatePicker Grid.Row="0" Grid.Column="1" Margin="{StaticResource DialogMargin}"
+                            <DatePicker Grid.Row="0" Grid.Column="1" Margin="{StaticResource DialogMargin}" Focusable="False"
                                         SelectedDate="{Binding Listening.Date,Mode=TwoWay}"
                                         Visibility="{Binding IsEditMode,Converter={StaticResource BoolToVisibilityConverter}}"/>
                             

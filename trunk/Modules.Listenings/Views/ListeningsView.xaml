@@ -27,8 +27,20 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <ToolBar Grid.Row="0">
-            <Button Content="+" prismCommands:Click.Command="{Binding AddListeningCommand}"/>
-            <Button Content="-" prismCommands:Click.Command="{Binding RemoveListeningCommand}"/>
+            <Button Margin="2" Style="{StaticResource ToolbarImageButtonStyle}"
+                    ToolTip="Add new listening"
+                    prismCommands:Click.Command="{Binding AddListeningCommand}">
+                <Button.Content>
+                    <Image Source="/Common.Dialogs;component/Images/Music-icon_plus_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
+                </Button.Content>
+            </Button>
+            <Button Margin="2" Style="{StaticResource ToolbarImageButtonStyle}"
+                    ToolTip="Remove listening"
+                    prismCommands:Click.Command="{Binding RemoveListeningCommand}">
+                <Button.Content>
+                    <Image Source="/Common.Dialogs;component/Images/Music-icon_remove_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
+                </Button.Content>
+            </Button>
         </ToolBar>
         <commonControls:FilterControl Grid.Row="1" Margin="4"
                                           FilterFields="{Binding Fields}"
