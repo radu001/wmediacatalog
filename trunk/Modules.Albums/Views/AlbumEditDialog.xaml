@@ -51,8 +51,7 @@
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Right" Grid.Column="1">
                     <Button VerticalAlignment="Center" Margin="8" Style="{StaticResource CloseButtonStyle}"
-                            prismCommands:Click.Command="{Binding CancelCommand}"
-                            >
+                            prismCommands:Click.Command="{Binding CancelCommand}">
                         <Button.Content>
                             <Image Source="/Common.Dialogs;component/Images/305_Close_16x16_72.png" Width="12" Height="12"/>
                         </Button.Content>
@@ -259,16 +258,14 @@
                                     <DockPanel Grid.Row="0" LastChildFill="True">
                                         <Button x:Name="CreateGenreButton"
                                             Style="{StaticResource ToolbarImageButtonStyle}"  Margin="0"
-                                            ToolTip="Create new genre" DockPanel.Dock="Right" Width="24" Height="24"
-                                            prismCommands:Click.Command="{Binding CreateGenreCommand}"
-                                            >
+                                            ToolTip="Create new genre" DockPanel.Dock="Right" Width="16" Height="16"
+                                            prismCommands:Click.Command="{Binding CreateGenreCommand}">
                                             <Button.Content>
-                                                <Image Source="/Common.Dialogs;component/Images/NotePlus_24x24.png" Width="24" Height="24"/>
+                                                <Image Source="/Common.Dialogs;component/Images/add_15x15.png" Width="16" Height="16"/>
                                             </Button.Content>
                                         </Button>
-                                        <controls:SearchControl  Margin="4"
-                                                                 SelectedFilterValue="{Binding GenresFilterValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                                                 />
+                                        <controls:SearchControl Margin="4"
+                                                                SelectedFilterValue="{Binding GenresFilterValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                                     </DockPanel>
                                     <ListView Grid.Row="1" ItemsSource="{Binding Genres}" 
                                               SelectionMode="Extended"

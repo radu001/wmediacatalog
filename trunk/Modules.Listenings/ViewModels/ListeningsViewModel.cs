@@ -30,6 +30,8 @@ namespace Modules.Listenings.ViewModels
             RemoveListeningCommand = new DelegateCommand<object>(OnRemoveListeningCommand);
             PageChangedCommand = new DelegateCommand<PageChangedArgs>(OnPageChangedCommand);
             DisplayListeningCommand = new DelegateCommand<object>(OnDisplayListeningCommand);
+            CreateArtistCommand = new DelegateCommand<object>(OnCreateArtistCommand);
+            CreateAlbumCommand = new DelegateCommand<object>(OnCreateAlbumCommand);
         }
 
         public override IEnumerable<IField> InitializeFields()
@@ -105,6 +107,10 @@ namespace Modules.Listenings.ViewModels
         public DelegateCommand<PageChangedArgs> PageChangedCommand { get; private set; }
 
         public DelegateCommand<object> DisplayListeningCommand { get; private set; }
+
+        public DelegateCommand<object> CreateArtistCommand { get; private set; }
+
+        public DelegateCommand<object> CreateAlbumCommand { get; private set; }
 
         #endregion
 
@@ -198,6 +204,16 @@ namespace Modules.Listenings.ViewModels
 
             ListeningDialog dialog = new ListeningDialog(viewModel);
             dialog.ShowDialog();
+        }
+
+        private void OnCreateArtistCommand(object parameter)
+        {
+            eventAggregator.GetEvent<CreateArtistEvent>().Publish(String.Empty);
+        }
+
+        private void OnCreateAlbumCommand(object parameter)
+        {
+            eventAggregator.GetEvent<CreateAlbumEvent>().Publish(String.Empty);
         }
 
         private void OnReloadListeningsEvent(object payload)
