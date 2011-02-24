@@ -81,6 +81,9 @@
     <Compile Include="Controllers\ListeningsController.cs" />
     <Compile Include="Converters\AlbumConverter.cs" />
     <Compile Include="Converters\HeaderTextConverter.cs" />
+    <Compile Include="Converters\IntervalFilterToDescriptionConverter.cs" />
+    <Compile Include="Converters\IntervalFilterToImageConverter.cs" />
+    <Compile Include="Data\IntervalFilterEnum.cs" />
     <Compile Include="ListeningsModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DataService.cs" />
