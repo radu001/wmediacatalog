@@ -154,7 +154,10 @@ namespace Modules.Listenings.ViewModels
             //TODO
             switch (selectedIntervalFilter)
             {
-                //TODO changed background of selected item and selection in comboBox to transparent
+                case IntervalFilterEnum.No:
+                    {
+                    }
+                    break;
             }
         }
 
