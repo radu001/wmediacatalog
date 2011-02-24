@@ -721,6 +721,7 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+
     <!--============================-->
     
 
@@ -742,7 +743,6 @@
         </Setter>
     </Style>
     <!--============================-->
-    
     
     <!--=======Common dataGrid =====-->
     <Style x:Key="TracksDataGridCellStyle" TargetType="{x:Type DataGridCell}">

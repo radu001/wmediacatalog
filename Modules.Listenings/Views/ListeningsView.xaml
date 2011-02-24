@@ -63,7 +63,9 @@
                 </Button>                
             </ToolBar>
             <ToolBar>
-                <ComboBox x:Name="intervalFilters" SelectedIndex="0" ItemsSource="{Binding IntervalFilters}" SelectedItem="{Binding IntervalFilter}"
+                <ComboBox x:Name="intervalFilters" SelectedIndex="0"
+                          ItemsSource="{Binding IntervalFilters}" SelectedItem="{Binding IntervalFilter}" 
+                          ItemContainerStyle="{StaticResource GeneralComboBoxItemStyle}" 
                           commands:SelectionChanged.Command="{Binding IntervalFilterChangedCommand}"
                           commands:SelectionChanged.CommandParameter="{Binding ElementName=intervalFilters,Path=SelectedItem}">
                     <ComboBox.ItemTemplate>
