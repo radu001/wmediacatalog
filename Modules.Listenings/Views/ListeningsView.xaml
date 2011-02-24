@@ -59,6 +59,15 @@
                     </Button.Content>
                 </Button>                
             </ToolBar>
+            <ToolBar>
+                <Button Margin="2" Style="{StaticResource ToolbarImageButtonStyle}"
+                    ToolTip="Add new album"
+                    prismCommands:Click.Command="{Binding CreateAlbumCommand}">
+                    <Button.Content>
+                        <Image Source="/Common.Dialogs;component/Images/calendar-icon-1.png" Style="{StaticResource ToolBarImageStyle}"/>
+                    </Button.Content>
+                </Button>
+            </ToolBar>
         </ToolBarTray>
         <commonControls:FilterControl Grid.Row="1" Margin="4"
                                           FilterFields="{Binding Fields}"
