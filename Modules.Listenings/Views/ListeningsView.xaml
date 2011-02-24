@@ -6,7 +6,9 @@
              xmlns:commands="clr-namespace:Common.Commands;assembly=Common.Commands"
              xmlns:commonControls="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
              xmlns:pagerCommands="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
+             xmlns:localConverters="clr-namespace:Modules.Listenings.Converters"
              xmlns:prismCommands="clr-namespace:Microsoft.Practices.Composite.Presentation.Commands;assembly=Microsoft.Practices.Composite.Presentation"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" commands:Loaded.Command="{Binding ViewLoadedCommand}"
              x:Name="listeningsView"
              d:DesignHeight="178" d:DesignWidth="283">
@@ -15,8 +17,9 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Common.Dialogs;component/Styles/CommonStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            
-            
+
+            <localConverters:IntervalFilterToImageConverter x:Key="IntervalFilterToImageConverter"/>
+            <localConverters:IntervalFilterToDescriptionConverter x:Key="IntervalFilterToDescriptionConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid x:Name="LayoutRoot">
@@ -60,13 +63,16 @@
                 </Button>                
             </ToolBar>
             <ToolBar>
-                <Button Margin="2" Style="{StaticResource ToolbarImageButtonStyle}"
-                    ToolTip="Add new album"
-                    prismCommands:Click.Command="{Binding CreateAlbumCommand}">
-                    <Button.Content>
-                        <Image Source="/Common.Dialogs;component/Images/calendar-icon-1.png" Style="{StaticResource ToolBarImageStyle}"/>
-                    </Button.Content>
-                </Button>
+                <ComboBox x:Name="intervalFilters" SelectedIndex="0" ItemsSource="{Binding IntervalFilters}" SelectedItem="{Binding IntervalFilter}"
+                          commands:SelectionChanged.Command="{Binding IntervalFilterChangedCommand}"
+                          commands:SelectionChanged.CommandParameter="{Binding ElementName=intervalFilters,Path=SelectedItem}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding Converter={StaticResource IntervalFilterToImageConverter}}" Width="48" Height="48" Stretch="Fill"
+                                   ToolTip="{Binding Converter={StaticResource IntervalFilterToDescriptionConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
             </ToolBar>
         </ToolBarTray>
         <commonControls:FilterControl Grid.Row="1" Margin="4"
