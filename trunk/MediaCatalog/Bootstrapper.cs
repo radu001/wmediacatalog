@@ -30,8 +30,8 @@ namespace MediaCatalog
             ModuleCatalog moduleCatalog = new ModuleCatalog();
             moduleCatalog.AddModule(typeof(NotificationsModule));
             moduleCatalog.AddModule(typeof(LoginModule));
-            moduleCatalog.AddModule(typeof(DatabaseSettingsModule));
             moduleCatalog.AddModule(typeof(MainModule));
+            moduleCatalog.AddModule(typeof(DatabaseSettingsModule));
             moduleCatalog.AddModule(typeof(TagsModule));
             moduleCatalog.AddModule(typeof(ArtistsModule));
             moduleCatalog.AddModule(typeof(AlbumsModule));

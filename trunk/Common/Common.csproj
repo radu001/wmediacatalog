@@ -111,7 +111,6 @@
     <Compile Include="Events\RemoveAlbumEvent.cs" />
     <Compile Include="Events\SearchAlbumEvent.cs" />
     <Compile Include="Events\SetupDatabaseEvent.cs" />
-    <Compile Include="Events\SwitchDbSettingsViewEvent.cs" />
     <Compile Include="Events\TagsChangedEvent.cs" />
     <Compile Include="Events\WorkspaceActivatedEvent.cs" />
     <Compile Include="Logger.cs" />
