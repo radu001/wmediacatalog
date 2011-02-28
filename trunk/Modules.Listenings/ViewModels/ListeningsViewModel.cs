@@ -2,9 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using BusinessObjects;
-using Common.Commands;
 using Common.Controls.Controls;
 using Common.Dialogs;
 using Common.Entities.Pagination;
@@ -14,7 +12,6 @@ using Common.ViewModels;
 using Microsoft.Practices.Composite.Events;
 using Microsoft.Practices.Composite.Presentation.Commands;
 using Microsoft.Practices.Unity;
-using Modules.Listenings.Data;
 using Modules.Listenings.Services;
 using Modules.Listenings.Views;
 namespace Modules.Listenings.ViewModels
@@ -35,7 +32,6 @@ namespace Modules.Listenings.ViewModels
             DisplayListeningCommand = new DelegateCommand<object>(OnDisplayListeningCommand);
             CreateArtistCommand = new DelegateCommand<object>(OnCreateArtistCommand);
             CreateAlbumCommand = new DelegateCommand<object>(OnCreateAlbumCommand);
-            IntervalFilterChangedCommand = new DelegateCommand<object>(OnIntervalFilterChangedCommand);
         }
 
         public override IEnumerable<IField> InitializeFields()
@@ -62,19 +58,6 @@ namespace Modules.Listenings.ViewModels
         #region IListeningsViewModel Members
 
         public ILoadOptions LoadOptions { get; private set; }
-
-        public IEnumerable<IntervalFilterEnum> IntervalFilters
-        {
-            get
-            {
-                return intervalFilters;
-            }
-            private set
-            {
-                intervalFilters = value.ToList();
-                NotifyPropertyChanged(() => IntervalFilters);
-            }
-        }
 
         public ObservableCollection<Listening> ListeningsCollection
         {
@@ -129,37 +112,10 @@ namespace Modules.Listenings.ViewModels
 
         public DelegateCommand<object> CreateAlbumCommand { get; private set; }
 
-        public DelegateCommand<object> IntervalFilterChangedCommand { get; private set; }
-
         #endregion
 
         #region Private methods
 
-        private void InitIntervalFilters()
-        {
-            List<IntervalFilterEnum> filters = new List<IntervalFilterEnum>();
-            filters.AddRange(Enum.GetValues(typeof(IntervalFilterEnum)).Cast<IntervalFilterEnum>());
-
-            IntervalFilters = filters;
-        }
-
-        private void OnIntervalFilterChangedCommand(object parameter)
-        {
-            SelectionChangedArgs args = parameter as SelectionChangedArgs;
-            if (args == null)
-                return;
-
-            var selectedIntervalFilter = (IntervalFilterEnum)args.SelectedValue;
-
-            //TODO
-            switch (selectedIntervalFilter)
-            {
-                case IntervalFilterEnum.No:
-                    {
-                    }
-                    break;
-            }
-        }
 
         private void OnViewLoadedCommand(object parameter)
         {
@@ -180,8 +136,6 @@ namespace Modules.Listenings.ViewModels
                 LoadOptions.MaxResults = 10;
 
                 NotifyPropertyChanged(() => LoadOptions);
-
-                InitIntervalFilters();
 
                 LoadListenings();
             }
@@ -283,8 +237,6 @@ namespace Modules.Listenings.ViewModels
         private ObservableCollection<Listening> listeningsCollection;
         private int listeningsCount;
         private Listening selectedListening;
-
-        private List<IntervalFilterEnum> intervalFilters;
 
         #endregion
     }
