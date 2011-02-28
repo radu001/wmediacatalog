@@ -17,9 +17,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Common.Dialogs;component/Styles/CommonStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-
-            <localConverters:IntervalFilterToImageConverter x:Key="IntervalFilterToImageConverter"/>
-            <localConverters:IntervalFilterToDescriptionConverter x:Key="IntervalFilterToDescriptionConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid x:Name="LayoutRoot">
@@ -61,20 +58,6 @@
                         <Image Source="/Common.Dialogs;component/Images/CD_add_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
                     </Button.Content>
                 </Button>                
-            </ToolBar>
-            <ToolBar>
-                <ComboBox x:Name="intervalFilters" SelectedIndex="0"
-                          ItemsSource="{Binding IntervalFilters}" SelectedItem="{Binding IntervalFilter}" 
-                          ItemContainerStyle="{StaticResource GeneralComboBoxItemStyle}" 
-                          commands:SelectionChanged.Command="{Binding IntervalFilterChangedCommand}"
-                          commands:SelectionChanged.CommandParameter="{Binding ElementName=intervalFilters,Path=SelectedItem}">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <Image Source="{Binding Converter={StaticResource IntervalFilterToImageConverter}}" Width="48" Height="48" Stretch="Fill"
-                                   ToolTip="{Binding Converter={StaticResource IntervalFilterToDescriptionConverter}}"/>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
             </ToolBar>
         </ToolBarTray>
         <commonControls:FilterControl Grid.Row="1" Margin="4"
