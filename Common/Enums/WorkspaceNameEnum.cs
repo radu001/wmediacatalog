@@ -7,6 +7,6 @@ namespace Common.Enums
         Albums = 2,
         Tags = 3,
         Listenings = 4,
-        DatabaseManagement = 5
+        DatabaseTools = 5
     }
 }

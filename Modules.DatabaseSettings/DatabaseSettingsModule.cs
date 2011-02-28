@@ -22,7 +22,7 @@ namespace Modules.DatabaseSettings
             container.RegisterType<IDataService, DataService>();
 
             container.RegisterType<IConnectionSettingsViewModel, ConnectionSettingsViewModel>();
-            container.RegisterType<IAdvancedSettingsViewModel, AdvancedSettingsViewModel>();
+            container.RegisterType<IDatabaseToolsViewModel, DatabaseToolsViewModel>();
 
             controller = container.Resolve<DbSettingsController>();
         }

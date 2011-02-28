@@ -5,8 +5,6 @@ namespace Common
     {
         public static string MainView = "MainView";
         public static string LoginView = "LoginView";
-
-        public static string DbConnectionSettingsView = "ConnectionSettingsView";
-        public static string DbAdvancedSettingsView = "AdvancedSettingsView";
+        public static string DbSettingsView = "DbSettingsView";
     }
 }

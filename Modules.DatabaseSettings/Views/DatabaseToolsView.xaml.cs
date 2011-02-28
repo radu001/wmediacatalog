@@ -4,11 +4,11 @@ using Modules.DatabaseSettings.ViewModels;
 namespace Modules.DatabaseSettings.Views
 {
     /// <summary>
-    /// Interaction logic for AdvancedSettingsView.xaml
+    /// Interaction logic for DatabaseToolsView.xaml
     /// </summary>
-    public partial class AdvancedSettingsView : UserControl
+    public partial class DatabaseToolsView : UserControl
     {
-        public AdvancedSettingsView(IAdvancedSettingsViewModel viewModel)
+        public DatabaseToolsView(IDatabaseToolsViewModel viewModel)
         {
             InitializeComponent();
 

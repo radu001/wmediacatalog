@@ -80,20 +80,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DataService.cs" />
     <Compile Include="Services\IDataService.cs" />
-    <Compile Include="Utils\IPsqlShell.cs" />
-    <Compile Include="Utils\PsqlShell.cs" />
-    <Compile Include="Utils\Psql\IPsqlLocator.cs" />
-    <Compile Include="Utils\Psql\PsqlLocator.cs" />
-    <Compile Include="Utils\Psql\PsqlSearchStatusEnum.cs" />
-    <Compile Include="ViewModels\AdvancedSettingsViewModel.cs" />
     <Compile Include="ViewModels\ConnectionSettingsViewModel.cs" />
-    <Compile Include="ViewModels\IAdvancedSettingsViewModel.cs" />
+    <Compile Include="ViewModels\DatabaseToolsViewModel.cs" />
     <Compile Include="ViewModels\IConnectionSettingsViewModel.cs" />
-    <Compile Include="Views\AdvancedSettingsView.xaml.cs">
-      <DependentUpon>AdvancedSettingsView.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="ViewModels\IDatabaseToolsViewModel.cs" />
     <Compile Include="Views\ConnectionSettingsView.xaml.cs">
       <DependentUpon>ConnectionSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DatabaseToolsView.xaml.cs">
+      <DependentUpon>DatabaseToolsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DbSettingsView.xaml.cs">
       <DependentUpon>DbSettingsView.xaml</DependentUpon>
@@ -122,11 +117,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\AdvancedSettingsView.xaml">
+    <Page Include="Views\ConnectionSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ConnectionSettingsView.xaml">
+    <Page Include="Views\DatabaseToolsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -137,6 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Converters\" />
+    <Folder Include="Utils\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

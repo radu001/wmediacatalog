@@ -40,7 +40,7 @@
             </TabItem>
             <TabItem Header="Database management">
                 <TabItem.Tag>
-                    <common:WorkspaceNameEnum>DatabaseManagement</common:WorkspaceNameEnum>
+                    <common:WorkspaceNameEnum>DatabaseTools</common:WorkspaceNameEnum>
                 </TabItem.Tag>
             </TabItem>
         </TabControl>

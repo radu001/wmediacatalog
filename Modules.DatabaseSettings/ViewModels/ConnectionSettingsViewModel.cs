@@ -4,7 +4,6 @@ using System.IO;
 using System.Threading.Tasks;
 using Common.Dialogs;
 using Common.Enums;
-using Common.Events;
 using Common.ViewModels;
 using Microsoft.Practices.Composite.Events;
 using Microsoft.Practices.Composite.Presentation.Commands;
@@ -23,7 +22,6 @@ namespace Modules.DatabaseSettings.ViewModels
             ViewLoadedCommand = new DelegateCommand<object>(OnViewLoadedCommand);
             TestConfigurationCommand = new DelegateCommand<object>(OnTestConfigurationCommand);
             SaveConfigurationCommand = new DelegateCommand<object>(OnSaveConfigurationCommand);
-            AdvancedSettingsCommand = new DelegateCommand<object>(OnAdvancedSettingsCommand);
         }
 
         #region IConnectionSettingsViewModel Members
@@ -47,8 +45,6 @@ namespace Modules.DatabaseSettings.ViewModels
         public DelegateCommand<object> TestConfigurationCommand { get; private set; }
 
         public DelegateCommand<object> SaveConfigurationCommand { get; private set; }
-
-        public DelegateCommand<object> AdvancedSettingsCommand { get; private set; }
 
         #endregion
 
@@ -133,11 +129,6 @@ namespace Modules.DatabaseSettings.ViewModels
                 else
                     Notify("Can't save configuration. Unexpected error", NotificationType.Error);
             }
-        }
-
-        private void OnAdvancedSettingsCommand(object parameter)
-        {
-            eventAggregator.GetEvent<SwitchDbSettingsViewEvent>().Publish(DbSettingsMode.AdvancedSettings);
         }
 
         #endregion
