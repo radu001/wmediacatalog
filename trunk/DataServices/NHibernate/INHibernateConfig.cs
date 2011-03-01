@@ -1,12 +1,13 @@
 ﻿
 using System.Collections.ObjectModel;
-namespace Modules.DatabaseSettings.Data
+namespace DataServices.NHibernate
 {
     public interface INHibernateConfig
     {
         ObservableCollection<ConfigurationProperty> Properties { get; }
+        string FileName { get; }
 
-        bool Load(string fileName);
+        bool Load();
         bool Save(string fileName);
     }
 }

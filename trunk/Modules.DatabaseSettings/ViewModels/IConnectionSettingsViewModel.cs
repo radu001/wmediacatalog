@@ -1,6 +1,6 @@
 ﻿
+using DataServices.NHibernate;
 using Microsoft.Practices.Composite.Presentation.Commands;
-using Modules.DatabaseSettings.Data;
 namespace Modules.DatabaseSettings.ViewModels
 {
     public interface IConnectionSettingsViewModel

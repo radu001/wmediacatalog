@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
+using Common;
 using Common.Entities;
+using DataServices.NHibernate;
 
 namespace DataServices.Additional
 {
@@ -107,7 +109,38 @@ namespace DataServices.Additional
 
         public void BeginExport(Action<TextResult> finishAction)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string dbName = GetDatabaseName();
+
+                throw new NotImplementedException();
+            }
+            catch (Exception ex)
+            {
+                Logger.Write(ex);
+
+                finishAction(new TextResult()
+                {
+                    Success = false,
+                    Message = "Error while exporting database occured. Please see log for details"
+                });
+            }
+        }
+
+        #endregion
+
+        #region Private methods
+
+        private string GetDatabaseName()
+        {
+            //TODO locate nhibernate config and grab database name from it
+            INHibernateConfig config = new NHibernateConfigModel();
+            if (!config.Load())
+                throw new Exception("Can't load NHibernate configuration file");
+
+            //TODO
+
+            return null;
         }
 
         #endregion

@@ -61,6 +61,10 @@
     <Compile Include="Enums\ArtistConvertOptions.cs" />
     <Compile Include="Enums\MoodConvertOptions.cs" />
     <Compile Include="Enums\PlaceConvertOptions.cs" />
+    <Compile Include="NHibernate\ConfigurationProperty.cs" />
+    <Compile Include="NHibernate\ConfigurationValue.cs" />
+    <Compile Include="NHibernate\INHibernateConfig.cs" />
+    <Compile Include="NHibernate\NHibernateConfigModel.cs" />
     <Compile Include="PagedList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
