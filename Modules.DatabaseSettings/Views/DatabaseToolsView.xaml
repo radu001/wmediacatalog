@@ -5,8 +5,53 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:prismCommands="clr-namespace:Microsoft.Practices.Composite.Presentation.Commands;assembly=Microsoft.Practices.Composite.Presentation"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="243" d:DesignWidth="386">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Common.Dialogs;component/Styles/CommonStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid x:Name="LayoutRoot">
-        <Button Content="Add" Width="75" Height="24" prismCommands:Click.Command="{Binding ExportDatabaseCommand}"/>
+        <TabControl TabStripPlacement="Right" ItemContainerStyle="{StaticResource VerticalTabItemHeaderStyle}">
+            <TabItem Header="Export">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Username:" Grid.Row="0" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
+                    <TextBox Text="{Binding UserName}" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="8"/>
+                    
+                    <TextBlock Text="Password:" Grid.Row="1" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
+                    <TextBox Text="{Binding Password}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"  Margin="8" />
+                    
+                    <TextBlock Text="Provider path:" Grid.Row="2" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
+                    <TextBox Text="{Binding ProviderPath}" Grid.Row="2" Grid.Column="1" Margin="8" />
+                    <Button Content="..." Grid.Row="2" Grid.Column="2" Margin="8"/>
+                    
+                    <TextBlock Text="Export file path:" Grid.Row="3" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
+                    <TextBox Text="{Binding ExportPath}" Grid.Row="3" Grid.Column="1" Margin="8" />
+                    <Button Content="..." Grid.Row="3" Grid.Column="2" Margin="8"/>
+                    
+                    <TextBlock Text="Export file name:" Grid.Row="4" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
+                    <TextBox Text="{Binding ExportFileName}" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="8" />
+                    
+                    <Button Content="Export database" prismCommands:Click.Command="{Binding ExportDatabaseCommand}" 
+                            Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="8" VerticalAlignment="Bottom"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Import"/>
+        </TabControl>
     </Grid>
 </UserControl>
