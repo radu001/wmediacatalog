@@ -8,6 +8,6 @@ namespace DataServices.Additional
         ExportProviderSettings Settings { get; set; }
 
         TextResult ValidateSettings();
-        void BeginExport(Action<bool> finishAction);
+        void BeginExport(Action<TextResult> finishAction);
     }
 }

@@ -24,7 +24,7 @@ namespace Modules.DatabaseSettings.Services
             return exportProvider.ValidateSettings();
         }
 
-        public void BeginExport(ExportProviderSettings settings, Action<bool> completeAction)
+        public void BeginExport(ExportProviderSettings settings, Action<TextResult> completeAction)
         {
             exportProvider.Settings = settings;
             exportProvider.BeginExport(completeAction);
