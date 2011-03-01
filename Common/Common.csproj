@@ -91,6 +91,7 @@
     <Compile Include="Entities\Pagination\ILoadOptions.cs" />
     <Compile Include="Entities\Pagination\IPagedList.cs" />
     <Compile Include="Entities\Pagination\LoadOptions.cs" />
+    <Compile Include="Entities\TextResult.cs" />
     <Compile Include="Enums\NotificationType.cs" />
     <Compile Include="Enums\WorkspaceNameEnum.cs" />
     <Compile Include="Events\AlbumLoadedEvent.cs" />

@@ -52,6 +52,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Additional\ExportProviderSettings.cs" />
+    <Compile Include="Additional\IExportProvider.cs" />
+    <Compile Include="Additional\PostgreExportProvider.cs" />
     <Compile Include="DataProvider.cs" />
     <Compile Include="EntityConverter.cs" />
     <Compile Include="Enums\AlbumConvertOptions.cs" />

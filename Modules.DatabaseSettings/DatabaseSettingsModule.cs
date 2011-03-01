@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.Composite.Modularity;
+﻿using DataServices.Additional;
+using Microsoft.Practices.Composite.Modularity;
 using Microsoft.Practices.Composite.Regions;
 using Microsoft.Practices.Unity;
 using Modules.DatabaseSettings.Controllers;
@@ -19,6 +20,7 @@ namespace Modules.DatabaseSettings
 
         public void Initialize()
         {
+            container.RegisterType<IExportProvider, PostgreExportProvider>();
             container.RegisterType<IDataService, DataService>();
 
             container.RegisterType<IConnectionSettingsViewModel, ConnectionSettingsViewModel>();
