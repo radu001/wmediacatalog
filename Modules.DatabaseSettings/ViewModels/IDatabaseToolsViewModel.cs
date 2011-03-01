@@ -11,5 +11,7 @@ namespace Modules.DatabaseSettings.ViewModels
         string ExportFileName { get; set; }
 
         DelegateCommand<object> ExportDatabaseCommand { get; }
+        DelegateCommand<object> SelectProviderPathCommand { get; }
+        DelegateCommand<object> SelectExportPathCommand { get; }
     }
 }
