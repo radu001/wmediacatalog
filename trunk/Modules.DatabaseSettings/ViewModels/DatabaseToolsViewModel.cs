@@ -18,6 +18,13 @@ namespace Modules.DatabaseSettings.ViewModels
             this.dataService = dataService;
 
             ExportDatabaseCommand = new DelegateCommand<object>(OnExportDatabaseCommand);
+
+            UserName = "user";
+            Password = "password";
+            ProviderPath = @"C:\Program Files\PostgreSQL\8.4\bin";
+            ExportPath = @"D:\";
+            ExportFileName = "backup.db";
+
         }
 
         #region IDatabaseToolsViewModel Members

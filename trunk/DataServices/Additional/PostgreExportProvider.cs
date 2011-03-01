@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using Common;
 using Common.Entities;
 using DataServices.NHibernate;
@@ -34,7 +35,7 @@ namespace DataServices.Additional
             FileInfo dumpExecutable = null;
             try
             {
-                dumpExecutable = new FileInfo(Path.Combine(Settings.ExportPath, Settings.ExportFileName));
+                dumpExecutable = new FileInfo(Path.Combine(Settings.ProviderPath, PgDumpFileName));
 
                 if (!dumpExecutable.Exists)
                 {
@@ -113,6 +114,8 @@ namespace DataServices.Additional
             {
                 string dbName = GetDatabaseName();
 
+                //TODO: setup PGPASSWORD variable and run pg_dump
+
                 throw new NotImplementedException();
             }
             catch (Exception ex)
@@ -138,9 +141,10 @@ namespace DataServices.Additional
             if (!config.Load())
                 throw new Exception("Can't load NHibernate configuration file");
 
-            //TODO
+            var connectionString = config.Properties.Where(p => p.Name == "connection.connection_string").FirstOrDefault();
+            var dbName = connectionString.Values.Where(cp => cp.Name == "Database").FirstOrDefault();
 
-            return null;
+            return dbName.Value;
         }
 
         #endregion

@@ -815,4 +815,21 @@
         </Style.Triggers>
     </Style>
     <!--============================-->
+
+    <Style x:Key="VerticalTabItemHeaderStyle" TargetType="{x:Type TabItem}">
+        <Setter Property="HeaderTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Grid>
+                        <TextBlock Text="{Binding}" Margin="24,-2,24,-2"/>
+                        <Grid.LayoutTransform>
+                            <TransformGroup>
+                                <RotateTransform Angle="90"/>
+                            </TransformGroup>
+                        </Grid.LayoutTransform>
+                    </Grid>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
