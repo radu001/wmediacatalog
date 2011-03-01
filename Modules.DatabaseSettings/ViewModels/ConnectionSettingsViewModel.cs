@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Common.Dialogs;
 using Common.Enums;
 using Common.ViewModels;
+using DataServices.NHibernate;
 using Microsoft.Practices.Composite.Events;
 using Microsoft.Practices.Composite.Presentation.Commands;
 using Microsoft.Practices.Unity;
-using Modules.DatabaseSettings.Data;
 using Modules.DatabaseSettings.Services;
 namespace Modules.DatabaseSettings.ViewModels
 {
@@ -53,13 +53,13 @@ namespace Modules.DatabaseSettings.ViewModels
         private void OnViewLoadedCommand(object parameter)
         {
             INHibernateConfig config = new NHibernateConfigModel();
-            if (config.Load(ConfigFileName))
+            if (config.Load())
             {
                 NHibernateConfig = config;
             }
             else
             {
-                Notify(String.Format("Can't load NHibernate configuration from {0}", ConfigFileName), NotificationType.Error);
+                Notify(String.Format("Can't load NHibernate configuration from {0}", NHibernateConfig.FileName), NotificationType.Error);
             }
         }
 
@@ -118,11 +118,11 @@ namespace Modules.DatabaseSettings.ViewModels
                 if (!dir.Exists)
                     dir.Create();
 
-                string newName = "backup" + DateTime.Now.ToBinary().ToString() + '-' + ConfigFileName;
+                string newName = "backup" + DateTime.Now.ToBinary().ToString() + '-' + NHibernateConfig.FileName;
                 string fullPath = BackupDir + "\\" + newName;
-                File.Copy(ConfigFileName, fullPath, true);
+                File.Copy(NHibernateConfig.FileName, fullPath, true);
 
-                if (NHibernateConfig.Save(ConfigFileName))
+                if (NHibernateConfig.Save(NHibernateConfig.FileName))
                     Notify(
                         String.Format("Configuration has been successfully saved. Created backup {0}", newName),
                         NotificationType.Success);
@@ -138,7 +138,7 @@ namespace Modules.DatabaseSettings.ViewModels
         private IDataService dataService;
         private INHibernateConfig config;
 
-        private static readonly string ConfigFileName = "hibernate.cfg.xml";
+        
         private static readonly string BackupDir = "backup";
 
         #endregion

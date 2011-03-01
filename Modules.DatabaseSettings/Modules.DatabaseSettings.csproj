@@ -72,11 +72,6 @@
   <ItemGroup>
     <Compile Include="Controllers\DbSettingsController.cs" />
     <Compile Include="DatabaseSettingsModule.cs" />
-    <Compile Include="Data\ConfigurationProperty.cs" />
-    <Compile Include="Data\ConfigurationValue.cs" />
-    <Compile Include="Data\DatabaseDeployInfo.cs" />
-    <Compile Include="Data\INHibernateConfig.cs" />
-    <Compile Include="Data\NHibernateConfigModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DataService.cs" />
     <Compile Include="Services\IDataService.cs" />

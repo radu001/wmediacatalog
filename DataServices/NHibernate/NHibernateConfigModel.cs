@@ -5,7 +5,7 @@ using System.Text;
 using System.Xml.Linq;
 using Common;
 
-namespace Modules.DatabaseSettings.Data
+namespace DataServices.NHibernate
 {
     public class NHibernateConfigModel : INHibernateConfig
     {
@@ -18,16 +18,24 @@ namespace Modules.DatabaseSettings.Data
 
         public ObservableCollection<ConfigurationProperty> Properties { get; private set; }
 
-        public bool Load(string fileName)
+        public string FileName
+        {
+            get
+            {
+                return "hibernate.cfg.xml";
+            }
+        }
+
+        public bool Load()
         {
             bool result = false;
 
-            if (!File.Exists(fileName))
+            if (!File.Exists(FileName))
                 return false;
 
             try
             {
-                XDocument doc = XDocument.Load(fileName);
+                XDocument doc = XDocument.Load(FileName);
 
                 XNamespace ns = "urn:nhibernate-configuration-2.2";
 
