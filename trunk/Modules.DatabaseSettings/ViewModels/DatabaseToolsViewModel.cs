@@ -18,13 +18,10 @@ namespace Modules.DatabaseSettings.ViewModels
             this.dataService = dataService;
 
             ExportDatabaseCommand = new DelegateCommand<object>(OnExportDatabaseCommand);
+            SelectExportPathCommand = new DelegateCommand<object>(OnSelectExportPathCommand);
+            SelectProviderPathCommand = new DelegateCommand<object>(OnSelectProviderPathCommand);
 
-            UserName = "user";
-            Password = "password";
-            ProviderPath = @"C:\Program Files\PostgreSQL\8.4\bin";
-            ExportPath = @"D:\";
-            ExportFileName = "backup.db";
-
+            InitDefaultSettings();
         }
 
         #region IDatabaseToolsViewModel Members
@@ -96,6 +93,10 @@ namespace Modules.DatabaseSettings.ViewModels
 
         public DelegateCommand<object> ExportDatabaseCommand { get; private set; }
 
+        public DelegateCommand<object> SelectProviderPathCommand { get; private set; }
+
+        public DelegateCommand<object> SelectExportPathCommand { get; private set; }
+
         #endregion
 
         #region Private methods
@@ -112,6 +113,23 @@ namespace Modules.DatabaseSettings.ViewModels
             {
                 dataService.BeginExport(settings, OnExportCompleted);
             }
+        }
+
+        private void OnSelectProviderPathCommand(object parameter)
+        {
+        }
+
+        private void OnSelectExportPathCommand(object parameter)
+        {
+        }
+
+        private void InitDefaultSettings()
+        {
+            UserName = "user";
+            Password = "password";
+            ProviderPath = @"C:\Program Files\PostgreSQL\8.4\bin";
+            ExportPath = @"D:\";
+            ExportFileName = "backup.db";
         }
 
         private ExportProviderSettings CreateExportSettings()
