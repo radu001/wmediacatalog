@@ -99,7 +99,7 @@ namespace Modules.DatabaseSettings.ViewModels
             TextResult validationResult = dataService.ValidateProviderSettings(settings);
             if (!validationResult.Success)
             {
-                Notify(String.Format("Illegal export settings: {0}", validationResult.Message), NotificationType.Error);
+                Notify(String.Format("Illegal export settings. {0}", validationResult.Message), NotificationType.Error);
             }
             else
             {
@@ -119,7 +119,7 @@ namespace Modules.DatabaseSettings.ViewModels
             };
         }
 
-        private void OnExportCompleted(bool success)
+        private void OnExportCompleted(TextResult exportResult)
         {
         }
 

@@ -8,6 +8,6 @@ namespace Modules.DatabaseSettings.Services
     {
         Exception ValidateConnection();
         TextResult ValidateProviderSettings(ExportProviderSettings settings);
-        void BeginExport(ExportProviderSettings settings, Action<bool> completeAction);
+        void BeginExport(ExportProviderSettings settings, Action<TextResult> completeAction);
     }
 }
