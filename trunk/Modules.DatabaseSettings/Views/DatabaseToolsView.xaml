@@ -38,13 +38,21 @@
                     
                     <TextBlock Text="Provider path:" Grid.Row="2" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
                     <TextBox Text="{Binding ProviderPath}" Grid.Row="2" Grid.Column="1" Margin="8" />
-                    <Button Content="..." Grid.Row="2" Grid.Column="2" Margin="8"
-                            prismCommands:Click.Command="{Binding SelectProviderPathCommand}"/>
+                    <Button Grid.Row="2" Grid.Column="2" Margin="8"
+                            prismCommands:Click.Command="{Binding SelectProviderPathCommand}">
+                        <Button.Content>
+                                <Image Source="/Common.Dialogs;component/Images/ZoomHS.png" Width="16" Height="16" Stretch="Fill"/>
+                        </Button.Content>
+                    </Button>
                     
                     <TextBlock Text="Export file path:" Grid.Row="3" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
                     <TextBox Text="{Binding ExportPath}" Grid.Row="3" Grid.Column="1" Margin="8" />
-                    <Button Content="..." Grid.Row="3" Grid.Column="2" Margin="8"
-                            prismCommands:Click.Command="{Binding SelectExportPathCommand}"/>
+                    <Button Grid.Row="3" Grid.Column="2" Margin="8"
+                            prismCommands:Click.Command="{Binding SelectExportPathCommand}">
+                        <Button.Content>
+                            <Image Source="/Common.Dialogs;component/Images/ZoomHS.png" Width="16" Height="16" Stretch="Fill"/>
+                        </Button.Content>
+                    </Button>
                     
                     <TextBlock Text="Export file name:" Grid.Row="4" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
                     <TextBox Text="{Binding ExportFileName}" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="8" />
