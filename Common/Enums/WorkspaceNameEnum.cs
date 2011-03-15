@@ -7,6 +7,7 @@ namespace Common.Enums
         Albums = 2,
         Tags = 3,
         Listenings = 4,
-        DatabaseTools = 5
+        DatabaseTools = 5,
+        Import = 6
     }
 }
