@@ -64,6 +64,9 @@
   <ItemGroup>
     <Compile Include="Controllers\ImportController.cs" />
     <Compile Include="ImportModule.cs" />
+    <Compile Include="Models\AlbumInfo.cs" />
+    <Compile Include="Models\ArtistInfo.cs" />
+    <Compile Include="Models\ScanResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DataService.cs" />
     <Compile Include="Services\IDataService.cs" />
