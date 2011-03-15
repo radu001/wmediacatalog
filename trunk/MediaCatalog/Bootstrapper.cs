@@ -10,6 +10,7 @@ using Modules.Main;
 using Modules.Notifications;
 using Modules.Tags;
 using Modules.WorkspaceSelector;
+using Modules.Import;
 
 namespace MediaCatalog
 {
@@ -36,6 +37,7 @@ namespace MediaCatalog
             moduleCatalog.AddModule(typeof(ArtistsModule));
             moduleCatalog.AddModule(typeof(AlbumsModule));
             moduleCatalog.AddModule(typeof(ListeningsModule));
+            moduleCatalog.AddModule(typeof(ImportModule));
             moduleCatalog.AddModule(typeof(WorkspaceSelectorModule));
             return moduleCatalog;
         }

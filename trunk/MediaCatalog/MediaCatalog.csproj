@@ -164,6 +164,10 @@
       <Project>{F20BE165-AEA7-444F-B1F2-773A33D04EBD}</Project>
       <Name>Modules.DatabaseSettings</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Modules.Import\Modules.Import.csproj">
+      <Project>{A226F52F-EE4A-4AF8-AC8A-95350E893E2C}</Project>
+      <Name>Modules.Import</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Modules.Listenings\Modules.Listenings.csproj">
       <Project>{35061300-651E-4734-BFA6-A8C69C83ED05}</Project>
       <Name>Modules.Listenings</Name>

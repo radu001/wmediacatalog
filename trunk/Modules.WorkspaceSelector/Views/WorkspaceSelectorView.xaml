@@ -43,6 +43,11 @@
                     <common:WorkspaceNameEnum>DatabaseTools</common:WorkspaceNameEnum>
                 </TabItem.Tag>
             </TabItem>
+            <TabItem Header="Import">
+                <TabItem.Tag>
+                    <common:WorkspaceNameEnum>Import</common:WorkspaceNameEnum>
+                </TabItem.Tag>
+            </TabItem>
         </TabControl>
     </Grid>
 </UserControl>
