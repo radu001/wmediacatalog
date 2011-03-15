@@ -1,7 +1,7 @@
 ﻿using BusinessObjects;
 using NUnit.Framework;
 
-namespace Tests.DataLayer.BusinessObjects
+namespace MediaCatalog.Tests
 {
     [TestFixture]
     public class MoodTest
