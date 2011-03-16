@@ -4,6 +4,7 @@ using Microsoft.Practices.Composite.Regions;
 using Microsoft.Practices.Unity;
 using Modules.Import.Controllers;
 using Modules.Import.Services;
+using Modules.Import.Services.Utils;
 using Modules.Import.ViewModels;
 using Modules.Import.Views;
 
@@ -23,6 +24,10 @@ namespace Modules.Import
         {
             container.RegisterType<IDataService, DataService>();
             container.RegisterType<IImportViewModel, ImportViewModel>();
+            container.RegisterType<ITagsAccumulator, TagsAccumulator>();
+            container.RegisterType<IScanner, VorbisCommentsScanner>();
+            container.RegisterType<IFileSystem, FileSystem>();
+            
             //container.RegisterType<IArtistEditViewModel, ArtistEditViewModel>();
 
             importController = container.Resolve<ImportController>();

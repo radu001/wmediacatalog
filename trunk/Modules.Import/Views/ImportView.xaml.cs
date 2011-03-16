@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows.Controls;
+using Modules.Import.ViewModels;
 
 namespace Modules.Import.Views
 {
@@ -19,9 +8,11 @@ namespace Modules.Import.Views
     /// </summary>
     public partial class ImportView : UserControl
     {
-        public ImportView()
+        public ImportView(IImportViewModel viewModel)
         {
             InitializeComponent();
+
+            DataContext = viewModel;
         }
     }
 }
