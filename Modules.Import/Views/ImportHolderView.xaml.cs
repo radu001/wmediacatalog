@@ -1,5 +1,4 @@
 ﻿using System.Windows.Controls;
-using Modules.Import.ViewModels;
 
 namespace Modules.Import.Views
 {
@@ -8,11 +7,9 @@ namespace Modules.Import.Views
     /// </summary>
     public partial class ImportHolderView : UserControl
     {
-        public ImportHolderView(IImportViewModel viewModel)
+        public ImportHolderView()
         {
             InitializeComponent();
-
-            DataContext = viewModel;
         }
     }
 }
