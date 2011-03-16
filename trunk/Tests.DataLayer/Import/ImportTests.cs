@@ -1,4 +1,7 @@
-﻿using Microsoft.Practices.Unity;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using Microsoft.Practices.Unity;
 using Modules.Import.Model;
 using Modules.Import.Services;
 using Modules.Import.Services.Utils;
@@ -27,7 +30,7 @@ namespace MediaCatalog.Tests.Import
             var scanner = container.Resolve<IScanner>();
             var accumulator = container.Resolve<ITagsAccumulator>();
 
-            string path = @"D:\Audio\Blues\!Listening";
+            string path = @"D:\Audio\";
             var service = new DataService(container);
             service.BeginScan(new ScanSettings()
             {
@@ -38,4 +41,60 @@ namespace MediaCatalog.Tests.Import
 
         private Mockery mockery;
     }
+
+    public class StubFileSystem : IFileSystem
+    {
+        public StubFileSystem(string rootPath)
+        {
+            root = new DirectoryItem(new DirectoryInfo(rootPath));
+        }
+
+        public DirectoryItem GetRoot()
+        {
+            return root;
+        }
+
+        #region IFileSystem Members
+
+        public IEnumerable<FileInfo> GetFiles(DirectoryInfo dir, string searchPattern)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<DirectoryInfo> GetSubDirectories(DirectoryInfo dir)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region Private methods
+
+
+
+        #endregion
+
+        #region Private fields
+
+        private DirectoryItem root;
+
+        #endregion
+    }
+
+    public class DirectoryItem
+    {
+        public DirectoryInfo Dir { get; set; }
+
+        public List<DirectoryInfo> Childs { get; set; }
+
+        public List<FileInfo> Files { get; set; }
+
+        public DirectoryItem(DirectoryInfo dir)
+        {
+            Dir = dir;
+            Childs = new List<DirectoryInfo>();
+            Files = new List<FileInfo>();
+        }
+    }
+
 }
