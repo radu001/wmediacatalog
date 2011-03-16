@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Common.Controllers;
-using Microsoft.Practices.Unity;
-using Microsoft.Practices.Composite.Regions;
-using Microsoft.Practices.Composite.Events;
+﻿using Common.Controllers;
 using Common.Enums;
+using Microsoft.Practices.Composite.Events;
+using Microsoft.Practices.Composite.Regions;
+using Microsoft.Practices.Unity;
 using Modules.Import.Views;
 
 namespace Modules.Import.Controllers
@@ -19,7 +15,7 @@ namespace Modules.Import.Controllers
         protected override void InitViews()
         {
             IRegion workspaceRegion = GetWorkspaceRegion();
-            workspaceRegion.Add(container.Resolve<ImportView>(), WorkspaceNameEnum.Import.ToString());
+            workspaceRegion.Add(container.Resolve<ImportHolderView>(), WorkspaceNameEnum.Import.ToString());
         }
     }
 }

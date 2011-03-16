@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Common;
 using Microsoft.Practices.Composite.Modularity;
 using Microsoft.Practices.Composite.Regions;
 using Microsoft.Practices.Unity;
+using Modules.Import.Controllers;
 using Modules.Import.Services;
 using Modules.Import.ViewModels;
-using Modules.Import.Controllers;
+using Modules.Import.Views;
 
 namespace Modules.Import
 {
@@ -28,6 +26,9 @@ namespace Modules.Import
             //container.RegisterType<IArtistEditViewModel, ArtistEditViewModel>();
 
             importController = container.Resolve<ImportController>();
+
+            regionManager.RegisterViewWithRegion(RegionNames.ImportRegion, typeof(ImportView));
+            regionManager.RegisterViewWithRegion(RegionNames.ExportRegion, typeof(ExportView));
         }
 
         #endregion

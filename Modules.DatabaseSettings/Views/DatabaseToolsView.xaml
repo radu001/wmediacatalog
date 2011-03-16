@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:commonControls="clr-namespace:Common.Controls.Controls.FolderPicker;assembly=Common.Controls"
              xmlns:prismCommands="clr-namespace:Microsoft.Practices.Composite.Presentation.Commands;assembly=Microsoft.Practices.Composite.Presentation"
              mc:Ignorable="d" 
              d:DesignHeight="243" d:DesignWidth="386">
@@ -15,7 +16,7 @@
     </UserControl.Resources>
     <Grid x:Name="LayoutRoot">
         <TabControl TabStripPlacement="Right" ItemContainerStyle="{StaticResource VerticalTabItemHeaderStyle}">
-            <TabItem Header="Export">
+            <TabItem Header="Database export">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
@@ -61,7 +62,9 @@
                             Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="8" VerticalAlignment="Bottom"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Import"/>
+            <TabItem Header="Database import">
+                <commonControls:FolderPicker/>
+            </TabItem>
         </TabControl>
     </Grid>
 </UserControl>
