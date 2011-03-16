@@ -74,8 +74,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Npgsql", "Npgsql", "{E3E86D
 	ProjectSection(SolutionItems) = preProject
 		Lib\Npgsql\Mono.Security.dll = Lib\Npgsql\Mono.Security.dll
 		Lib\Npgsql\Npgsql.dll = Lib\Npgsql\Npgsql.dll
-		Lib\Npgsql\Npgsql.pdb = Lib\Npgsql\Npgsql.pdb
-		Lib\Npgsql\Npgsql.XML = Lib\Npgsql\Npgsql.XML
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Prism", "Prism", "{2A4139D5-B4D1-4494-AFDD-4CBEA3A40EA1}"
