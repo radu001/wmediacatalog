@@ -11,20 +11,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Modules.Import.ViewModels;
 
 namespace Modules.Import.Views
 {
     /// <summary>
-    /// Interaction logic for ImportView.xaml
+    /// Interaction logic for ExportView.xaml
     /// </summary>
-    public partial class ImportView : UserControl
+    public partial class ExportView : UserControl
     {
-        public ImportView(IImportViewModel viewModel)
+        public ExportView()
         {
             InitializeComponent();
-
-            DataContext = viewModel;
         }
     }
 }
