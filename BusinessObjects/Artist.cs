@@ -70,6 +70,19 @@ namespace BusinessObjects
             }
         }
 
+        public ObservableCollection<Album> Albums
+        {
+            get
+            {
+                return albums;
+            }
+            set
+            {
+                albums = value;
+                NotifyPropertyChanged(() => Albums);
+            }
+        }
+
         public Artist()
         {
             Name = String.Empty;
@@ -77,6 +90,7 @@ namespace BusinessObjects
             Biography = String.Empty;
 
             Tags = new ObservableCollection<Tag>();
+            Albums = new ObservableCollection<Album>();
         }
 
         #region Private fields
@@ -85,6 +99,7 @@ namespace BusinessObjects
         private string privateMarks;
         private string biography;
         private ObservableCollection<Tag> tags;
+        private ObservableCollection<Album> albums;
 
         #endregion
     }

@@ -128,6 +128,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WPFToolkit", "WPFToolkit", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modules.Import", "Modules.Import\Modules.Import.csproj", "{A226F52F-EE4A-4AF8-AC8A-95350E893E2C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NMock", "NMock", "{3EBD4435-2853-4D56-BDFD-4DE1B13DB312}"
+	ProjectSection(SolutionItems) = preProject
+		Lib\NMock\NMock2.dll = Lib\NMock\NMock2.dll
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharpFlac", "SharpFlac", "{0DF7A59C-C2CC-4FCA-9C90-4F07558B4C94}"
+	ProjectSection(SolutionItems) = preProject
+		Lib\SharpFlac\SharpFlacLib.dll = Lib\SharpFlac\SharpFlacLib.dll
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -349,5 +359,7 @@ Global
 		{2A4139D5-B4D1-4494-AFDD-4CBEA3A40EA1} = {EED3D0DF-F921-4817-B284-0AE429FEA339}
 		{553095A0-9B0D-4C29-8028-295E4D99C096} = {EED3D0DF-F921-4817-B284-0AE429FEA339}
 		{7A498CC9-88E1-4723-8872-041E050AF0A0} = {EED3D0DF-F921-4817-B284-0AE429FEA339}
+		{3EBD4435-2853-4D56-BDFD-4DE1B13DB312} = {EED3D0DF-F921-4817-B284-0AE429FEA339}
+		{0DF7A59C-C2CC-4FCA-9C90-4F07558B4C94} = {EED3D0DF-F921-4817-B284-0AE429FEA339}
 	EndGlobalSection
 EndGlobal
