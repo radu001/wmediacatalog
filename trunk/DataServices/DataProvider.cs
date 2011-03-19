@@ -47,12 +47,11 @@ namespace DataServices
 
             try
             {
-                ICriteria criteria =
-                    session.CreateCriteria<UserEntity>().
-                    Add(Restrictions.Eq("UserName", userName)).
-                    Add(Restrictions.Eq("Password", password));
+                var query =
+                    session.QueryOver<UserEntity>().
+                    Where(u => u.UserName == userName).And(u => u.Password == password);
 
-                IList<UserEntity> users = criteria.List<UserEntity>();
+                IList<UserEntity> users = query.List<UserEntity>();
 
                 if (users.Count > 0)
                 {
@@ -84,12 +83,11 @@ namespace DataServices
 
             try
             {
-                ICriteria criteria =
-                    session.CreateCriteria<UserEntity>().
-                    Add(Restrictions.Eq("UserName", user.UserName)).
-                    Add(Restrictions.Eq("Password", user.Password));
+                var query =
+                    session.QueryOver<UserEntity>().
+                    Where(u => u.UserName == user.UserName).And(u => u.Password == user.Password);
 
-                IList<UserEntity> users = criteria.List<UserEntity>();
+                IList<UserEntity> users = query.List<UserEntity>();
 
                 if (users.Count > 0)
                 {
@@ -125,10 +123,10 @@ namespace DataServices
 
             try
             {
-                ICriteria criteria = session.CreateCriteria<UserSettingsEntity>().
-                    Add(Restrictions.Eq("User.ID", user.ID));
+                var query = session.QueryOver<UserSettingsEntity>().
+                    Where(u => u.ID == user.ID);
 
-                IList<UserSettingsEntity> dataEntities = criteria.List<UserSettingsEntity>();
+                IList<UserSettingsEntity> dataEntities = query.List<UserSettingsEntity>();
 
                 foreach (UserSettingsEntity de in dataEntities)
                 {
@@ -158,14 +156,11 @@ namespace DataServices
 
             try
             {
-                ICriteria criteria = session.CreateCriteria<UserEntity>().
-                    Add(Restrictions.Eq("UserName", userName)).
-                    SetProjection(Projections.Count("ID"));
-
-                int usersCount = criteria.UniqueResult<int>();
+                var usersCount = session.QueryOver<UserEntity>().
+                    Where(u => u.UserName == userName).
+                    RowCount();
 
                 result = usersCount > 0;
-                    
             }
             catch (Exception ex)
             {
@@ -240,7 +235,7 @@ namespace DataServices
 
         public Artist GetArtist(int artistID)
         {
-            Artist result = null; 
+            Artist result = null;
 
             ISession session = SessionFactory.GetSession();
 
@@ -437,7 +432,7 @@ namespace DataServices
 
                 foreach (MoodEntity dataEntity in moods)
                 {
-                    Mood businessEntity = entityConverter.FromDataEntity(dataEntity, MoodConvertOptions.Short );
+                    Mood businessEntity = entityConverter.FromDataEntity(dataEntity, MoodConvertOptions.Short);
                     result.Add(businessEntity);
                 }
             }
@@ -665,7 +660,7 @@ namespace DataServices
 
             try
             {
-                
+
                 DetachedCriteria artistsCriteria = DetachedCriteria.For<AlbumEntity>().CreateCriteria("Artists").
                     Add(Restrictions.Eq("ID", artistID)).
                     SetProjection(Property.ForName("ID"));
@@ -764,7 +759,7 @@ namespace DataServices
 
             DetachedCriteria criteria = DetachedCriteria.For<AlbumEntity>();
 
-            if ( !options.IncludeWaste )
+            if (!options.IncludeWaste)
                 criteria.Add(Restrictions.Eq("IsWaste", false));
 
             switch (fieldName)
@@ -1063,9 +1058,9 @@ namespace DataServices
 
             switch (fieldName)
             {
-                    /*
-                     *             fields.Add(new Field("Album", "Album"));
-            fields.Add(new Field("Date", "Date", FieldTypeEnum.DateInterval));*/
+                /*
+                 *             fields.Add(new Field("Album", "Album"));
+        fields.Add(new Field("Date", "Date", FieldTypeEnum.DateInterval));*/
                 case "ListenRating":
                     {
                         int intFilterValue = -1;
