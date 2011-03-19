@@ -57,11 +57,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NHibernate", "NHibernate", 
 		Lib\NHibernate\Antlr3.Runtime.dll = Lib\NHibernate\Antlr3.Runtime.dll
 		Lib\NHibernate\Iesi.Collections.dll = Lib\NHibernate\Iesi.Collections.dll
 		Lib\NHibernate\Iesi.Collections.xml = Lib\NHibernate\Iesi.Collections.xml
+		Lib\NHibernate\LinFu.DynamicProxy.dll = Lib\NHibernate\LinFu.DynamicProxy.dll
 		Lib\NHibernate\log4net.dll = Lib\NHibernate\log4net.dll
 		Lib\NHibernate\log4net.license.txt = Lib\NHibernate\log4net.license.txt
 		Lib\NHibernate\log4net.xml = Lib\NHibernate\log4net.xml
 		Lib\NHibernate\nhibernate-configuration.xsd = Lib\NHibernate\nhibernate-configuration.xsd
 		Lib\NHibernate\nhibernate-mapping.xsd = Lib\NHibernate\nhibernate-mapping.xsd
+		Lib\NHibernate\NHibernate.ByteCode.LinFu.dll = Lib\NHibernate\NHibernate.ByteCode.LinFu.dll
+		Lib\NHibernate\NHibernate.ByteCode.LinFu.xml = Lib\NHibernate\NHibernate.ByteCode.LinFu.xml
 		Lib\NHibernate\NHibernate.dll = Lib\NHibernate\NHibernate.dll
 		Lib\NHibernate\NHibernate.xml = Lib\NHibernate\NHibernate.xml
 	EndProjectSection
