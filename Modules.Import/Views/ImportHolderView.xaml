@@ -14,17 +14,6 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <TabControl TabStripPlacement="Right" ItemContainerStyle="{StaticResource VerticalTabItemHeaderStyle}">
-            <TabItem Header="Import">
-                <Grid>
-                    <ContentControl regions:RegionManager.RegionName="ImportRegion"/>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Export">
-                <Grid>
-                    <ContentControl regions:RegionManager.RegionName="ExportRegion"/>
-                </Grid>
-            </TabItem>
-        </TabControl>
+        <ContentControl regions:RegionManager.RegionName="ImportRegion"/>
     </Grid>
 </UserControl>
