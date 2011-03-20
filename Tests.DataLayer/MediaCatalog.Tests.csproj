@@ -94,6 +94,8 @@
     <Compile Include="BusinessObjects\GenreTest.cs" />
     <Compile Include="BusinessObjects\MoodTest.cs" />
     <Compile Include="BusinessObjects\TagTest.cs" />
+    <Compile Include="Helpers\DirectoryItem.cs" />
+    <Compile Include="Helpers\StubFileSystem.cs" />
     <Compile Include="Import\ImportTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
