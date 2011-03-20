@@ -1,5 +1,5 @@
 ﻿
-using Microsoft.Practices.Composite.Presentation.Commands;
+using Microsoft.Practices.Prism.Commands;
 namespace Common.ViewModels
 {
     public interface IDialogViewModel

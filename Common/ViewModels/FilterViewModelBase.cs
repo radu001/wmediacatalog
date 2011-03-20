@@ -2,11 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Common.Entities;
 using Common.Entities.Pagination;
-using Common.Enums;
-using Common.Events;
-using Microsoft.Practices.Composite.Events;
+using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 namespace Common.ViewModels
 {

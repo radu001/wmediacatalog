@@ -5,11 +5,11 @@ using System.Linq.Expressions;
 using Common.Entities;
 using Common.Enums;
 using Common.Events;
-using Microsoft.Practices.Composite.Events;
+using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 namespace Common.ViewModels
 {
-    public class ViewModelBase: INotifyPropertyChanged
+    public class ViewModelBase : INotifyPropertyChanged
     {
         public ViewModelBase(IUnityContainer container, IEventAggregator eventAggregator)
         {
