@@ -26,7 +26,7 @@ namespace MediaCatalog.Tests.Import
             container.RegisterType<IFileSystem, StubFileSystem>(new ContainerControlledLifetimeManager());
             container.RegisterType<ITagsAccumulator, TagsAccumulator>(new ContainerControlledLifetimeManager());
 
-            var fs = container.Resolve<IFileSystem>();
+            var fs = container.Resolve<IFileSystem>(new ParameterOverride("rootPath", @"D:\"));
             var scanner = container.Resolve<IScanner>();
             var accumulator = container.Resolve<ITagsAccumulator>();
 
