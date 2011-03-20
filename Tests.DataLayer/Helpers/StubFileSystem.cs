@@ -7,9 +7,9 @@ namespace MediaCatalog.Tests.Helpers
 {
     public class StubFileSystem : IFileSystem
     {
-        public StubFileSystem()
+        public StubFileSystem(string rootPath)
         {
-            root = new DirectoryItem(new DirectoryInfo((@"D:\")));
+            root = new DirectoryItem(new DirectoryInfo((rootPath)));
         }
 
         public DirectoryItem GetRoot()
