@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
-using Microsoft.Practices.Composite.Presentation.Commands;
+using Microsoft.Practices.Prism.Commands;
 
 namespace Common.Commands
 {

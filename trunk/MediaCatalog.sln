@@ -76,6 +76,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Npgsql", "Npgsql", "{E3E86D
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Prism", "Prism", "{2A4139D5-B4D1-4494-AFDD-4CBEA3A40EA1}"
+	ProjectSection(SolutionItems) = preProject
+		Lib\Prism\Microsoft.Practices.Prism.dll = Lib\Prism\Microsoft.Practices.Prism.dll
+		Lib\Prism\Microsoft.Practices.Prism.Interactivity.dll = Lib\Prism\Microsoft.Practices.Prism.Interactivity.dll
+		Lib\Prism\Microsoft.Practices.Prism.MefExtensions.dll = Lib\Prism\Microsoft.Practices.Prism.MefExtensions.dll
+		Lib\Prism\Microsoft.Practices.Prism.UnityExtensions.dll = Lib\Prism\Microsoft.Practices.Prism.UnityExtensions.dll
+		Lib\Prism\Microsoft.Practices.ServiceLocation.dll = Lib\Prism\Microsoft.Practices.ServiceLocation.dll
+		Lib\Prism\Microsoft.Practices.Unity.dll = Lib\Prism\Microsoft.Practices.Unity.dll
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NUnit", "NUnit", "{553095A0-9B0D-4C29-8028-295E4D99C096}"
 	ProjectSection(SolutionItems) = preProject
