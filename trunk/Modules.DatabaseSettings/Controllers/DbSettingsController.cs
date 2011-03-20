@@ -4,9 +4,8 @@ using Common;
 using Common.Controllers;
 using Common.Enums;
 using Common.Events;
-using Microsoft.Practices.Composite.Events;
-using Microsoft.Practices.Composite.Presentation.Regions;
-using Microsoft.Practices.Composite.Regions;
+using Microsoft.Practices.Prism.Events;
+using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
 using Modules.DatabaseSettings.Views;
 namespace Modules.DatabaseSettings.Controllers
@@ -14,7 +13,7 @@ namespace Modules.DatabaseSettings.Controllers
     public class DbSettingsController : WorkspaceControllerBase
     {
         public DbSettingsController(IUnityContainer container, IRegionManager regionManager, IEventAggregator eventAggregator)
-            :base(container,regionManager,eventAggregator)
+            : base(container, regionManager, eventAggregator)
         {
             eventAggregator.GetEvent<SetupDatabaseEvent>().Subscribe(OnSetupDatabaseEvent, true);
         }

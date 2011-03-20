@@ -7,7 +7,7 @@
              xmlns:commonControls="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
              xmlns:converters="clr-namespace:Common.Controls.Converters;assembly=Common.Controls"
              xmlns:localConverters="clr-namespace:Modules.Albums.Converters"
-             xmlns:prismCommands="clr-namespace:Microsoft.Practices.Composite.Presentation.Commands;assembly=Microsoft.Practices.Composite.Presentation"
+             xmlns:prismCommands="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"
              xmlns:pagerCommands="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
              mc:Ignorable="d" commands:Loaded.Command="{Binding ViewLoadedCommand}"
              d:DesignHeight="300" d:DesignWidth="300">

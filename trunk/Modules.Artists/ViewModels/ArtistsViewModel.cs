@@ -5,13 +5,12 @@ using System.Threading.Tasks;
 using BusinessObjects;
 using Common.Controls.Controls;
 using Common.Dialogs;
-using Common.Entities;
 using Common.Entities.Pagination;
 using Common.Enums;
 using Common.Events;
 using Common.ViewModels;
-using Microsoft.Practices.Composite.Events;
-using Microsoft.Practices.Composite.Presentation.Commands;
+using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 using Modules.Artists.Services;
 using Modules.Artists.Views;
@@ -20,7 +19,7 @@ namespace Modules.Artists.ViewModels
     public class ArtistsViewModel : FilterViewModelBase, IArtistsViewModel
     {
         public ArtistsViewModel(IUnityContainer container, IEventAggregator eventAggregator, IDataService dataService)
-            :base(container,eventAggregator)
+            : base(container, eventAggregator)
         {
             this.dataService = dataService;
 
@@ -102,7 +101,7 @@ namespace Modules.Artists.ViewModels
                 }
             }
         }
-                
+
         public Artist CurrentArtist
         {
             get
@@ -296,7 +295,7 @@ namespace Modules.Artists.ViewModels
         {
             if (CurrentArtist == null)
                 return;
-            
+
             IsBusy = true;
 
             Task<Artist> loadArtistTask = Task.Factory.StartNew<Artist>(() =>

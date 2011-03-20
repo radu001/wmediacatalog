@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:commands="clr-namespace:Microsoft.Practices.Composite.Presentation.Commands;assembly=Microsoft.Practices.Composite.Presentation"
+             xmlns:commands="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"
              xmlns:controls="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
              xmlns:extCommands="clr-namespace:Common.Commands;assembly=Common.Commands"
              mc:Ignorable="d">
@@ -52,8 +52,7 @@
                        />
                 <Button x:Name="LoginButton" Content="Ok" Height="24" Width="75" Margin="12,0"
                         Style="{StaticResource DialogButtonStyle}"
-                        commands:Click.Command="{Binding LoginCommand}"
-                        />
+                        commands:Click.Command="{Binding LoginCommand}"/>
             </StackPanel>
         </Grid>
     </Border>

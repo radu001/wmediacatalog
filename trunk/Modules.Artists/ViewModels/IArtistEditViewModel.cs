@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Windows.Controls;
 using BusinessObjects;
 using Common.Commands;
-using Microsoft.Practices.Composite.Presentation.Commands;
 using Common.ViewModels;
+using Microsoft.Practices.Prism.Commands;
 namespace Modules.Artists.ViewModels
 {
     public interface IArtistEditViewModel : IDialogViewModel

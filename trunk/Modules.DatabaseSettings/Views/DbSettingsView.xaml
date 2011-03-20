@@ -8,7 +8,7 @@
              xmlns:controls="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
              xmlns:dialogs="clr-namespace:Common.Dialogs;assembly=Common.Dialogs"
              xmlns:commonConverters="clr-namespace:Common.Dialogs.Converters;assembly=Common.Dialogs"
-             xmlns:regions="clr-namespace:Microsoft.Practices.Composite.Presentation.Regions;assembly=Microsoft.Practices.Composite.Presentation" 
+             xmlns:regions="clr-namespace:Microsoft.Practices.Prism.Regions;assembly=Microsoft.Practices.Prism" 
              mc:Ignorable="d" 
              WindowStyle="None" AllowsTransparency="True" ResizeMode="NoResize"
              Background="Transparent" WindowStartupLocation="CenterScreen"

@@ -7,7 +7,7 @@
              xmlns:commonControls="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
              xmlns:pagerCommands="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
              xmlns:localConverters="clr-namespace:Modules.Listenings.Converters"
-             xmlns:prismCommands="clr-namespace:Microsoft.Practices.Composite.Presentation.Commands;assembly=Microsoft.Practices.Composite.Presentation"
+             xmlns:prismCommands="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" commands:Loaded.Command="{Binding ViewLoadedCommand}"
              x:Name="listeningsView"

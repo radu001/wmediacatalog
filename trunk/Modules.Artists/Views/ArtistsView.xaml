@@ -7,8 +7,8 @@
              xmlns:commonControls="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
              xmlns:pagerCommands="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
              xmlns:commands="clr-namespace:Common.Commands;assembly=Common.Commands"
-             xmlns:prismCommands="clr-namespace:Microsoft.Practices.Composite.Presentation.Commands;assembly=Microsoft.Practices.Composite.Presentation"
-             xmlns:prismRegions="clr-namespace:Microsoft.Practices.Composite.Presentation.Regions;assembly=Microsoft.Practices.Composite.Presentation"
+             xmlns:prismCommands="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"
+             xmlns:prismRegions="clr-namespace:Microsoft.Practices.Prism.Regions;assembly=Microsoft.Practices.Prism"
              mc:Ignorable="d" commands:Loaded.Command="{Binding ViewLoadedCommand}"
              x:Name="artistsView"
              d:DesignHeight="300" d:DesignWidth="300">

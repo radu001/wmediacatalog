@@ -2,8 +2,8 @@
 using Common;
 using Common.Entities;
 using Common.Events;
-using Microsoft.Practices.Composite.Events;
-using Microsoft.Practices.Composite.Regions;
+using Microsoft.Practices.Prism.Events;
+using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
 using Modules.Main.Views;
 namespace Modules.Main.Controllers
@@ -43,7 +43,7 @@ namespace Modules.Main.Controllers
 
         private IRegion GetMainRegion()
         {
-            return regionManager.Regions[RegionNames.MainRegion]; 
+            return regionManager.Regions[RegionNames.MainRegion];
         }
 
         private IUnityContainer container;

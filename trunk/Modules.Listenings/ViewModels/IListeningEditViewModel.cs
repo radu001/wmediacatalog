@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using BusinessObjects;
 using Common.ViewModels;
-using Microsoft.Practices.Composite.Presentation.Commands;
+using Microsoft.Practices.Prism.Commands;
 
 namespace Modules.Listenings.ViewModels
 {

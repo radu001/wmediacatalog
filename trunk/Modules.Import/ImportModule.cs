@@ -1,6 +1,6 @@
 ﻿using Common;
-using Microsoft.Practices.Composite.Modularity;
-using Microsoft.Practices.Composite.Regions;
+using Microsoft.Practices.Prism.Modularity;
+using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
 using Modules.Import.Controllers;
 using Modules.Import.Services;
@@ -27,7 +27,7 @@ namespace Modules.Import
             container.RegisterType<ITagsAccumulator, TagsAccumulator>();
             container.RegisterType<IScanner, VorbisCommentsScanner>();
             container.RegisterType<IFileSystem, FileSystem>();
-            
+
             importController = container.Resolve<ImportController>();
 
             regionManager.RegisterViewWithRegion(RegionNames.ImportRegion, typeof(ImportView));

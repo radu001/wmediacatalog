@@ -4,7 +4,7 @@ using BusinessObjects;
 using Common.Controls.Controls;
 using Common.Entities.Pagination;
 using Common.ViewModels;
-using Microsoft.Practices.Composite.Presentation.Commands;
+using Microsoft.Practices.Prism.Commands;
 namespace Modules.Albums.ViewModels
 {
     public interface IAlbumsViewModel : IFilterViewModel

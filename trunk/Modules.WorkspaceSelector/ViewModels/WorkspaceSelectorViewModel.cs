@@ -3,8 +3,8 @@ using System.Windows.Controls;
 using Common.Commands;
 using Common.Enums;
 using Common.Events;
-using Microsoft.Practices.Composite.Events;
-using Microsoft.Practices.Composite.Presentation.Commands;
+using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Events;
 using Modules.WorkspaceSelector.Services;
 
 namespace Modules.WorkspaceSelector.ViewModels

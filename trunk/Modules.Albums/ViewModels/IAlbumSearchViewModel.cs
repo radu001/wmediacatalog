@@ -1,9 +1,9 @@
-﻿using Common.ViewModels;
-using Microsoft.Practices.Composite.Presentation.Commands;
-using Common.Controls.Controls;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using BusinessObjects;
+using Common.Controls.Controls;
 using Common.Entities.Pagination;
+using Common.ViewModels;
+using Microsoft.Practices.Prism.Commands;
 
 namespace Modules.Albums.ViewModels
 {

@@ -2,8 +2,8 @@
 using Common.Dialogs;
 using Common.Entities;
 using Common.Events;
-using Microsoft.Practices.Composite.Events;
-using Microsoft.Practices.Composite.Regions;
+using Microsoft.Practices.Prism.Events;
+using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
 using Modules.Notifications.ViewModels;
 namespace Modules.Notifications.Controllers

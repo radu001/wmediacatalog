@@ -1,5 +1,5 @@
-﻿using Microsoft.Practices.Composite.Modularity;
-using Microsoft.Practices.Composite.Regions;
+﻿using Microsoft.Practices.Prism.Modularity;
+using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
 using Modules.Notifications.Controllers;
 using Modules.Notifications.ViewModels;
