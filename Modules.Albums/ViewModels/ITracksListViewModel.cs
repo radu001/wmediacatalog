@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using BusinessObjects;
 using Common.Commands;
-using Microsoft.Practices.Composite.Presentation.Commands;
+using Microsoft.Practices.Prism.Commands;
 namespace Modules.Albums.ViewModels
 {
     public interface ITracksListViewModel

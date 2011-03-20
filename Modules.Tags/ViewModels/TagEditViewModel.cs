@@ -4,8 +4,7 @@ using Common.Enums;
 using Common.Events;
 using Common.Utilities;
 using Common.ViewModels;
-using Microsoft.Practices.Composite.Events;
-using Microsoft.Practices.Composite.Presentation.Commands;
+using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 using Modules.Tags.Services;
 

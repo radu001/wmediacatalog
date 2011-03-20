@@ -8,7 +8,7 @@
              xmlns:commands="clr-namespace:Common.Commands;assembly=Common.Commands"
              xmlns:dialogs="clr-namespace:Common.Dialogs;assembly=Common.Dialogs"
              xmlns:pagerCommands="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
-             xmlns:prismCommands="clr-namespace:Microsoft.Practices.Composite.Presentation.Commands;assembly=Microsoft.Practices.Composite.Presentation"
+             xmlns:prismCommands="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"
              mc:Ignorable="d" 
              WindowStyle="None" AllowsTransparency="True" ResizeMode="NoResize"
              Background="Transparent" WindowStartupLocation="CenterScreen"

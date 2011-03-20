@@ -6,7 +6,7 @@
              xmlns:dialogs="clr-namespace:Common.Dialogs;assembly=Common.Dialogs"
              xmlns:controls="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
              xmlns:converters="clr-namespace:Common.Dialogs.Converters;assembly=Common.Dialogs"
-             xmlns:prismCommands="clr-namespace:Microsoft.Practices.Composite.Presentation.Commands;assembly=Microsoft.Practices.Composite.Presentation"
+             xmlns:prismCommands="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"
              mc:Ignorable="d" 
              x:Name="dialogWindow"
              WindowStyle="None" AllowsTransparency="True" ResizeMode="NoResize"
@@ -42,8 +42,7 @@
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Right" Grid.Column="1">
                     <Button VerticalAlignment="Center" Margin="8" Style="{StaticResource CloseButtonStyle}" IsCancel="True"
-                            prismCommands:Click.Command="{Binding CancelCommand}"
-                            >
+                            prismCommands:Click.Command="{Binding CancelCommand}">
                         <Button.Content>
                             <Image Source="/Common.Dialogs;component/Images/305_Close_16x16_72.png" Width="12" Height="12"/>
                         </Button.Content>

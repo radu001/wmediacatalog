@@ -6,7 +6,7 @@
              xmlns:controls="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
              xmlns:dialogs="clr-namespace:Common.Dialogs;assembly=Common.Dialogs"
              xmlns:converters="clr-namespace:Common.Dialogs.Converters;assembly=Common.Dialogs"
-             xmlns:prismCommands="clr-namespace:Microsoft.Practices.Composite.Presentation.Commands;assembly=Microsoft.Practices.Composite.Presentation"                      
+             xmlns:prismCommands="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"                      
              mc:Ignorable="d" 
              x:Name="dialogWindow"
              WindowStyle="None" AllowsTransparency="True" ResizeMode="NoResize"

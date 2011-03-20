@@ -1,7 +1,6 @@
 ﻿using Common.Controllers;
-using Common.ViewModels;
-using Microsoft.Practices.Composite.Modularity;
-using Microsoft.Practices.Composite.Regions;
+using Microsoft.Practices.Prism.Modularity;
+using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
 using Modules.Artists.Controllers;
 using Modules.Artists.Services;

@@ -6,8 +6,8 @@ using Common.Dialogs;
 using Common.Enums;
 using Common.ViewModels;
 using DataServices.NHibernate;
-using Microsoft.Practices.Composite.Events;
-using Microsoft.Practices.Composite.Presentation.Commands;
+using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 using Modules.DatabaseSettings.Services;
 namespace Modules.DatabaseSettings.ViewModels
@@ -138,7 +138,7 @@ namespace Modules.DatabaseSettings.ViewModels
         private IDataService dataService;
         private INHibernateConfig config;
 
-        
+
         private static readonly string BackupDir = "backup";
 
         #endregion

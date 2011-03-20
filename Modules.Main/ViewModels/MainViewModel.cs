@@ -1,5 +1,5 @@
 ﻿
-using Microsoft.Practices.Composite.Events;
+using Microsoft.Practices.Prism.Events;
 using Modules.Main.Services;
 namespace Modules.Main.ViewModels
 {

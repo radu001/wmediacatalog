@@ -8,8 +8,8 @@ using Common.Commands;
 using Common.Controls.Controls;
 using Common.Entities.Pagination;
 using Common.ViewModels;
-using Microsoft.Practices.Composite.Events;
-using Microsoft.Practices.Composite.Presentation.Commands;
+using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 using Modules.Albums.Events;
 using Modules.Albums.Services;
@@ -172,7 +172,7 @@ namespace Modules.Albums.ViewModels
         {
             if (LoadOptions == null)
                 LoadOptions = new LoadOptions();
-        
+
             LoadOptions.FilterField = this.FilterField;
             LoadOptions.FilterValue = ArtistsFilterValue;
             LoadOptions.FirstResult = 0;
@@ -238,7 +238,7 @@ namespace Modules.Albums.ViewModels
 
                 // allow scroll inside listView
                 dragSource.SelectedItems.Clear();
-                SelectedArtists = null; 
+                SelectedArtists = null;
             }
         }
 

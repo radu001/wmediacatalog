@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using BusinessObjects;
 using Common.Controls.Controls;
 using Common.Entities.Pagination;
-using Microsoft.Practices.Composite.Presentation.Commands;
+using Microsoft.Practices.Prism.Commands;
 namespace Modules.Listenings.ViewModels
 {
     public interface IListeningsViewModel

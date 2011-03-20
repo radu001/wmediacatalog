@@ -4,7 +4,7 @@ using Common.Enums;
 using Common.Events;
 using Common.Utilities;
 using Common.ViewModels;
-using Microsoft.Practices.Composite.Events;
+using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 using Modules.Listenings.Services;
 

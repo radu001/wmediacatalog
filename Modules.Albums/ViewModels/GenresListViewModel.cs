@@ -10,8 +10,8 @@ using Common.Controls.Controls;
 using Common.Entities.Pagination;
 using Common.Events;
 using Common.ViewModels;
-using Microsoft.Practices.Composite.Events;
-using Microsoft.Practices.Composite.Presentation.Commands;
+using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 using Modules.Albums.Events;
 using Modules.Albums.Services;
@@ -284,7 +284,7 @@ namespace Modules.Albums.ViewModels
 
                 // allow scroll inside listView
                 dragSource.SelectedItems.Clear();
-                SelectedGenres = null; 
+                SelectedGenres = null;
             }
         }
 
@@ -298,7 +298,7 @@ namespace Modules.Albums.ViewModels
         #region Private fields
 
         IDataService dataService;
-        
+
         IList<Genre> genres;
         IList<Genre> selectedGenres;
         ILoadOptions loadOptions;

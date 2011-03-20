@@ -1,18 +1,18 @@
 ﻿
-using Common.ViewModels;
-using Microsoft.Practices.Composite.Events;
-using Microsoft.Practices.Unity;
+using System;
 using System.Collections.Generic;
-using Common.Entities.Pagination;
-using Modules.Albums.ViewModels.Common;
 using System.Collections.ObjectModel;
 using BusinessObjects;
-using Microsoft.Practices.Composite.Presentation.Commands;
 using Common.Controls.Controls;
-using Modules.Albums.Services;
-using System;
+using Common.Entities.Pagination;
 using Common.Enums;
 using Common.Events;
+using Common.ViewModels;
+using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Events;
+using Microsoft.Practices.Unity;
+using Modules.Albums.Services;
+using Modules.Albums.ViewModels.Common;
 namespace Modules.Albums.ViewModels
 {
     public class AlbumSearchViewModel : FilterableDialogViewModelBase, IAlbumSearchViewModel

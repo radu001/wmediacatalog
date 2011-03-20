@@ -1,6 +1,6 @@
 ﻿
-using Microsoft.Practices.Composite.Presentation.Commands;
 using Common.ViewModels;
+using Microsoft.Practices.Prism.Commands;
 namespace Modules.Login.ViewModels
 {
     public interface IUserRegistrationViewModel : IDialogViewModel

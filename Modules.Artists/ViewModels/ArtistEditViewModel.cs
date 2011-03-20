@@ -10,8 +10,8 @@ using Common.Enums;
 using Common.Events;
 using Common.Utilities;
 using Common.ViewModels;
-using Microsoft.Practices.Composite.Events;
-using Microsoft.Practices.Composite.Presentation.Commands;
+using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 using Modules.Artists.Services;
 using Modules.Tags.ViewModels;
@@ -26,7 +26,7 @@ namespace Modules.Artists.ViewModels
             this.dataService = dataService;
 
             eventAggregator.GetEvent<TagsChangedEvent>().Subscribe(OnTagsChangedEvent, true);
-            
+
             FilterTagCommand = new AutoCompleteFilterPredicate<object>(FilterTag);
             AttachTagCommand = new DelegateCommand<object>(OnAttachTagCommand);
             AttachTagKeyboardCommand = new DelegateCommand<KeyDownArgs>(OnAttachTagKeyboardCommand);
@@ -296,7 +296,7 @@ namespace Modules.Artists.ViewModels
                     return dataService.GetTags();
                 }, TaskScheduler.Default);
 
-            Task displayTask = loadTagsTask.ContinueWith( (t) =>
+            Task displayTask = loadTagsTask.ContinueWith((t) =>
                 {
                     Tags = t.Result;
                 }, TaskScheduler.FromCurrentSynchronizationContext());

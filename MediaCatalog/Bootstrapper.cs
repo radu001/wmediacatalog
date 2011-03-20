@@ -1,16 +1,16 @@
 ﻿using System.Windows;
-using Microsoft.Practices.Composite.Modularity;
-using Microsoft.Practices.Composite.UnityExtensions;
+using Microsoft.Practices.Prism.Modularity;
+using Microsoft.Practices.Prism.UnityExtensions;
 using Modules.Albums;
 using Modules.Artists;
 using Modules.DatabaseSettings;
+using Modules.Import;
 using Modules.Listenings;
 using Modules.Login;
 using Modules.Main;
 using Modules.Notifications;
 using Modules.Tags;
 using Modules.WorkspaceSelector;
-using Modules.Import;
 
 namespace MediaCatalog
 {
@@ -18,16 +18,13 @@ namespace MediaCatalog
     {
         protected override DependencyObject CreateShell()
         {
-            Shell shell = Container.Resolve<Shell>();
+            Shell shell = Container.TryResolve<Shell>();
             shell.Show();
             return shell;
         }
 
-        protected override Microsoft.Practices.Composite.Modularity.IModuleCatalog GetModuleCatalog()
+        protected override IModuleCatalog CreateModuleCatalog()
         {
-            //PsqlHelper helper = new PsqlHelper();
-            //helper.LocatePsql();
-
             ModuleCatalog moduleCatalog = new ModuleCatalog();
             moduleCatalog.AddModule(typeof(NotificationsModule));
             moduleCatalog.AddModule(typeof(LoginModule));

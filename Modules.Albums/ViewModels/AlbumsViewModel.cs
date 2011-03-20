@@ -10,8 +10,8 @@ using Common.Entities.Pagination;
 using Common.Enums;
 using Common.Events;
 using Common.ViewModels;
-using Microsoft.Practices.Composite.Events;
-using Microsoft.Practices.Composite.Presentation.Commands;
+using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 using Modules.Albums.Services;
 using Modules.Albums.ViewModels.Common;
@@ -21,7 +21,7 @@ namespace Modules.Albums.ViewModels
     public class AlbumsViewModel : WasteableViewModelBase, IAlbumsViewModel
     {
         public AlbumsViewModel(IUnityContainer container, IEventAggregator eventAggregator, IDataService dataService)
-            :base(container, eventAggregator)
+            : base(container, eventAggregator)
         {
             this.dataService = dataService;
 
@@ -249,7 +249,7 @@ namespace Modules.Albums.ViewModels
 
         private void OnRemoveAlbumCommand(object parameter)
         {
-            if ( CurrentAlbum == null)
+            if (CurrentAlbum == null)
                 Notify("You must select artist to be removed", NotificationType.Info);
 
             RemoveAlbumImpl(CurrentAlbum.ID);

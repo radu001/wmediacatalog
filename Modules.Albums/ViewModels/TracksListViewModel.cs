@@ -5,8 +5,8 @@ using System.Windows.Controls;
 using BusinessObjects;
 using Common.Commands;
 using Common.ViewModels;
-using Microsoft.Practices.Composite.Events;
-using Microsoft.Practices.Composite.Presentation.Commands;
+using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 using Modules.Albums.Utils;
 
@@ -89,7 +89,7 @@ namespace Modules.Albums.ViewModels
 
             int maxIndex = 0;
 
-            if ( Album.Tracks.Count > 0 )
+            if (Album.Tracks.Count > 0)
                 maxIndex = Album.Tracks.Max(t => t.Index);
 
             Track track = new Track()
@@ -98,7 +98,7 @@ namespace Modules.Albums.ViewModels
             };
             Album.Tracks.Add(track);
             CurrentTrack = track;
-            
+
         }
 
         private void OnRemoveTracksCommand(object parameter)
@@ -130,7 +130,7 @@ namespace Modules.Albums.ViewModels
             TracksHelper helper = new TracksHelper(Album.Tracks, SelectedTracks);
             helper.MoveDown();
             helper.SelectTracks(GetDataGrid(parameter));
-            
+
             FixIndices();
         }
 

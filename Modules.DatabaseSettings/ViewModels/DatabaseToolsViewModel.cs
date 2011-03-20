@@ -4,8 +4,8 @@ using Common.Enums;
 using Common.ViewModels;
 using DataServices.Additional;
 using FolderPickerLib;
-using Microsoft.Practices.Composite.Events;
-using Microsoft.Practices.Composite.Presentation.Commands;
+using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 using Modules.DatabaseSettings.Services;
 

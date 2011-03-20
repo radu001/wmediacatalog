@@ -1,19 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using BusinessObjects;
 using Common.Enums;
 using Common.Events;
 using Common.Utilities;
 using Common.ViewModels;
-using Microsoft.Practices.Composite.Events;
-using Microsoft.Practices.Composite.Presentation.Commands;
+using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 using Modules.Listenings.Services;
 using Modules.Listenings.Views;
-using System.Linq;
-using System.Linq.Expressions;
-using System;
 
 namespace Modules.Listenings.ViewModels
 {
@@ -256,7 +255,7 @@ namespace Modules.Listenings.ViewModels
 
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
-        
+
         #endregion
 
         #region Private fields

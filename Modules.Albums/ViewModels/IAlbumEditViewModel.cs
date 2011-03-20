@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using BusinessObjects;
 using Common.Commands;
 using Common.ViewModels;
-using Microsoft.Practices.Composite.Presentation.Commands;
+using Microsoft.Practices.Prism.Commands;
 namespace Modules.Albums.ViewModels
 {
     public interface IAlbumEditViewModel : IDialogViewModel

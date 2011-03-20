@@ -1,8 +1,8 @@
 ﻿
 using Common.Controllers;
 using Common.Enums;
-using Microsoft.Practices.Composite.Events;
-using Microsoft.Practices.Composite.Regions;
+using Microsoft.Practices.Prism.Events;
+using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
 using Modules.Artists.Views;
 namespace Modules.Artists.Controllers

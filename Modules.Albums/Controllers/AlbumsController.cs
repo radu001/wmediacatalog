@@ -1,11 +1,11 @@
 ﻿using Common.Controllers;
 using Common.Enums;
 using Common.Events;
-using Microsoft.Practices.Composite.Events;
-using Microsoft.Practices.Composite.Regions;
+using Microsoft.Practices.Prism.Events;
+using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
-using Modules.Albums.Views;
 using Modules.Albums.ViewModels;
+using Modules.Albums.Views;
 
 namespace Modules.Albums.Controllers
 {
