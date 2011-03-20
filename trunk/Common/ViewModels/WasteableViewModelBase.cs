@@ -1,6 +1,6 @@
-﻿using Microsoft.Practices.Composite.Events;
-using Microsoft.Practices.Composite.Presentation.Commands;
-using Microsoft.Practices.Unity;
+﻿using Microsoft.Practices.Unity;
+using Microsoft.Practices.Prism.Events;
+using Microsoft.Practices.Prism.Commands;
 
 namespace Common.ViewModels
 {

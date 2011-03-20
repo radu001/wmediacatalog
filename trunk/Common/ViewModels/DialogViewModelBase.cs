@@ -1,5 +1,5 @@
-﻿using Microsoft.Practices.Composite.Events;
-using Microsoft.Practices.Composite.Presentation.Commands;
+﻿using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 
 namespace Common.ViewModels
@@ -34,7 +34,7 @@ namespace Common.ViewModels
             }
         }
 
-        public DelegateCommand<object> CancelCommand { get; private set;}
+        public DelegateCommand<object> CancelCommand { get; private set; }
 
         public DelegateCommand<object> SuccessCommand { get; private set; }
 
