@@ -76,20 +76,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Npgsql", "Npgsql", "{E3E86D
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Prism", "Prism", "{2A4139D5-B4D1-4494-AFDD-4CBEA3A40EA1}"
-	ProjectSection(SolutionItems) = preProject
-		Lib\Prism\Microsoft.Practices.Composite.dll = Lib\Prism\Microsoft.Practices.Composite.dll
-		Lib\Prism\Microsoft.Practices.Composite.Presentation.dll = Lib\Prism\Microsoft.Practices.Composite.Presentation.dll
-		Lib\Prism\Microsoft.Practices.Composite.Presentation.xml = Lib\Prism\Microsoft.Practices.Composite.Presentation.xml
-		Lib\Prism\Microsoft.Practices.Composite.UnityExtensions.dll = Lib\Prism\Microsoft.Practices.Composite.UnityExtensions.dll
-		Lib\Prism\Microsoft.Practices.Composite.UnityExtensions.xml = Lib\Prism\Microsoft.Practices.Composite.UnityExtensions.xml
-		Lib\Prism\Microsoft.Practices.Composite.xml = Lib\Prism\Microsoft.Practices.Composite.xml
-		Lib\Prism\Microsoft.Practices.ObjectBuilder2.dll = Lib\Prism\Microsoft.Practices.ObjectBuilder2.dll
-		Lib\Prism\Microsoft.Practices.ObjectBuilder2.xml = Lib\Prism\Microsoft.Practices.ObjectBuilder2.xml
-		Lib\Prism\Microsoft.Practices.ServiceLocation.dll = Lib\Prism\Microsoft.Practices.ServiceLocation.dll
-		Lib\Prism\Microsoft.Practices.ServiceLocation.xml = Lib\Prism\Microsoft.Practices.ServiceLocation.xml
-		Lib\Prism\Microsoft.Practices.Unity.dll = Lib\Prism\Microsoft.Practices.Unity.dll
-		Lib\Prism\Microsoft.Practices.Unity.xml = Lib\Prism\Microsoft.Practices.Unity.xml
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NUnit", "NUnit", "{553095A0-9B0D-4C29-8028-295E4D99C096}"
 	ProjectSection(SolutionItems) = preProject

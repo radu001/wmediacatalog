@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
+using MediaCatalog.Tests.Helpers;
 using Microsoft.Practices.Unity;
 using Modules.Import.Model;
 using Modules.Import.Services;
@@ -24,13 +23,22 @@ namespace MediaCatalog.Tests.Import
         {
             var container = new UnityContainer();
             container.RegisterType<IScanner, VorbisCommentsScanner>(new ContainerControlledLifetimeManager());
-            container.RegisterType<IFileSystem, FileSystem>();
+            container.RegisterType<IFileSystem, StubFileSystem>(new ContainerControlledLifetimeManager());
             container.RegisterType<ITagsAccumulator, TagsAccumulator>(new ContainerControlledLifetimeManager());
 
+            var fs = container.Resolve<IFileSystem>();
             var scanner = container.Resolve<IScanner>();
             var accumulator = container.Resolve<ITagsAccumulator>();
 
-            string path = @"D:\Audio\";
+            //debug populate stub filesystem
+            var root = ((StubFileSystem)fs).GetRoot();
+            var childs = root.AddChilds("dir1", "dir2", "dir3");
+            var childsDir3 = childs[2].AddChilds("dir31", "dir32");
+            childsDir3[1].Files.Add(new FileInfo("test.flac"));
+
+
+
+            string path = @"D:\";
             var service = new DataService(container);
             service.BeginScan(new ScanSettings()
             {
@@ -42,59 +50,8 @@ namespace MediaCatalog.Tests.Import
         private Mockery mockery;
     }
 
-    public class StubFileSystem : IFileSystem
-    {
-        public StubFileSystem(string rootPath)
-        {
-            root = new DirectoryItem(new DirectoryInfo(rootPath));
-        }
-
-        public DirectoryItem GetRoot()
-        {
-            return root;
-        }
-
-        #region IFileSystem Members
-
-        public IEnumerable<FileInfo> GetFiles(DirectoryInfo dir, string searchPattern)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<DirectoryInfo> GetSubDirectories(DirectoryInfo dir)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
-        #region Private methods
 
 
 
-        #endregion
-
-        #region Private fields
-
-        private DirectoryItem root;
-
-        #endregion
-    }
-
-    public class DirectoryItem
-    {
-        public DirectoryInfo Dir { get; set; }
-
-        public List<DirectoryInfo> Childs { get; set; }
-
-        public List<FileInfo> Files { get; set; }
-
-        public DirectoryItem(DirectoryInfo dir)
-        {
-            Dir = dir;
-            Childs = new List<DirectoryInfo>();
-            Files = new List<FileInfo>();
-        }
-    }
 
 }
