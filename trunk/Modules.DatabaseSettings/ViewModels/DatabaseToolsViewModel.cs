@@ -3,6 +3,7 @@ using Common.Entities;
 using Common.Enums;
 using Common.ViewModels;
 using DataServices.Additional;
+using FolderPickerLib;
 using Microsoft.Practices.Composite.Events;
 using Microsoft.Practices.Composite.Presentation.Commands;
 using Microsoft.Practices.Unity;
@@ -117,10 +118,20 @@ namespace Modules.DatabaseSettings.ViewModels
 
         private void OnSelectProviderPathCommand(object parameter)
         {
+            var dialog = new FolderPickerDialog();
+            if (dialog.ShowDialog() == true)
+            {
+                ProviderPath = dialog.SelectedPath;
+            }
         }
 
         private void OnSelectExportPathCommand(object parameter)
         {
+            var dialog = new FolderPickerDialog();
+            if (dialog.ShowDialog() == true)
+            {
+                ExportPath = dialog.SelectedPath;
+            }
         }
 
         private void InitDefaultSettings()

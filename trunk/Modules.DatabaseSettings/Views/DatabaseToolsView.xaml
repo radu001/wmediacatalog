@@ -63,7 +63,6 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Database import">
-                <commonControls:FolderPicker/>
             </TabItem>
         </TabControl>
     </Grid>

@@ -110,6 +110,10 @@
       <Project>{EF68B28D-CEE3-4398-BA62-7C79F5926866}</Project>
       <Name>DataServices</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FolderPickerLib\FolderPickerLib.csproj">
+      <Project>{F53582DB-02B7-4864-B7AA-AAD055A591E4}</Project>
+      <Name>FolderPickerLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\ConnectionSettingsView.xaml">

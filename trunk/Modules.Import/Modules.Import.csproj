@@ -80,9 +80,6 @@
     <Compile Include="Services\Utils\VorbisCommentsScanner.cs" />
     <Compile Include="ViewModels\IImportViewModel.cs" />
     <Compile Include="ViewModels\ImportViewModel.cs" />
-    <Compile Include="Views\ExportView.xaml.cs">
-      <DependentUpon>ExportView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\ImportHolderView.xaml.cs">
       <DependentUpon>ImportHolderView.xaml</DependentUpon>
     </Compile>
@@ -114,10 +111,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\ExportView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\ImportHolderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

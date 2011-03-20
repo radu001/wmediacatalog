@@ -28,12 +28,9 @@ namespace Modules.Import
             container.RegisterType<IScanner, VorbisCommentsScanner>();
             container.RegisterType<IFileSystem, FileSystem>();
             
-            //container.RegisterType<IArtistEditViewModel, ArtistEditViewModel>();
-
             importController = container.Resolve<ImportController>();
 
             regionManager.RegisterViewWithRegion(RegionNames.ImportRegion, typeof(ImportView));
-            regionManager.RegisterViewWithRegion(RegionNames.ExportRegion, typeof(ExportView));
         }
 
         #endregion
