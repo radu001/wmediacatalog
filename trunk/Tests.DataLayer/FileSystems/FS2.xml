@@ -1,0 +1,11 @@
+﻿<fs root="d:\">
+  <dir name="dir1">
+    <dir name="dir2"/>
+    <dir name="dir3"/>
+    <dir name="dir4">
+      <file name="file.png" size="1024"/>
+      <file name="file1.png" size="1024"/>
+      <file name="file2.png" size="1024"/>
+    </dir>
+  </dir>
+</fs>

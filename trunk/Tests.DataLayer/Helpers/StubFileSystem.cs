@@ -1,83 +1,75 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using Modules.Import.Services.Utils;
+using System.Xml.Linq;
 
 namespace MediaCatalog.Tests.Helpers
 {
-    public class StubFileSystem : IFileSystem
+    public class StubFileSystem //: IFileSystem
     {
-        public StubFileSystem(string rootPath)
+        public DirectoryItem Root { get; private set; }
+
+        public StubFileSystem(string xml)
         {
-            root = new DirectoryItem(new DirectoryInfo((rootPath)));
+            InitFileSystem(xml);
         }
 
-        public DirectoryItem GetRoot()
+        private void InitFileSystem(string xml)
         {
-            return root;
-        }
+            XElement rootElement = XElement.Parse(xml);
+            XAttribute rootAttribute = rootElement.Attribute("root");
 
-        #region IFileSystem Members
-
-        public IEnumerable<FileInfo> GetFiles(DirectoryInfo dir, string searchPattern)
-        {
-            var parent = FindDicrectory(dir);
-            if (parent != null)
+            Root = new DirectoryItem(null)
             {
-                return parent.Files.Where(f => f.Name.Contains(searchPattern));
-            }
+                Dir = new DirectoryInfo(rootAttribute.Value)
+            };
 
-            return new FileInfo[] { };
+            foreach (var child in rootElement.Elements("dir"))
+                ProcessChild(child, Root);
+
+            foreach (var childFile in rootElement.Elements("file"))
+                Root.Files.Add(new FileInfo(childFile.Attribute("name").Value));
         }
 
-        public IEnumerable<DirectoryInfo> GetSubDirectories(DirectoryInfo dir)
+        private void ProcessChild(XElement child, DirectoryItem parent)
         {
-            var parent = FindDicrectory(dir);
-            if (parent != null)
-                return parent.Childs.Select(ch => ch.Dir);
-
-            return new DirectoryInfo[] { };
-        }
-
-        #endregion
-
-        #region Private methods
-
-        private DirectoryItem FindDicrectory(DirectoryInfo dir)
-        {
-            if (dir == null)
-                return null;
-
-            DirectoryItem result = null;
-
-            Stack<DirectoryItem> stack = new Stack<DirectoryItem>();
-            stack.Push(root);
-
-            while (stack.Count > 0)
+            var directory = new DirectoryItem(parent)
             {
-                var current = stack.Pop();
+                Dir = new DirectoryInfo(child.Attribute("name").Value)
+            };
+            parent.Childs.Add(directory);
 
-                if (current.Dir.FullName == dir.FullName)
-                {
-                    result = current;
-                    break;
-                }
-                else
-                {
-                    foreach (var child in current.Childs)
-                        stack.Push(child);
-                }
+            var files = child.Elements("file");
+            foreach (var f in files)
+                directory.Files.Add(new FileInfo(f.Attribute("name").Value));
+
+            foreach (var d in child.Elements("dir"))
+                ProcessChild(d, directory);
+        }
+    }
+
+    public class DirectoryItem
+    {
+        public DirectoryInfo Dir { get; set; }
+
+        public DirectoryItem Parent { get; set; }
+
+        public List<DirectoryItem> Childs { get; set; }
+
+        public List<FileInfo> Files { get; set; }
+
+        public bool IsRoot
+        {
+            get
+            {
+                return Parent == null;
             }
-
-            return result;
         }
 
-        #endregion
-
-        #region Private fields
-
-        private DirectoryItem root;
-
-        #endregion
+        public DirectoryItem(DirectoryItem parent)
+        {
+            Files = new List<FileInfo>();
+            Childs = new List<DirectoryItem>();
+            Parent = parent;
+        }
     }
 }
