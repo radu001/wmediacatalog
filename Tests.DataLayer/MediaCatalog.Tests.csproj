@@ -94,9 +94,9 @@
     <Compile Include="BusinessObjects\GenreTest.cs" />
     <Compile Include="BusinessObjects\MoodTest.cs" />
     <Compile Include="BusinessObjects\TagTest.cs" />
-    <Compile Include="Helpers\DirectoryItem.cs" />
     <Compile Include="Helpers\StubFileSystem.cs" />
     <Compile Include="Import\ImportTests.cs" />
+    <Compile Include="Import\StubFileSystemTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -112,6 +112,14 @@
       <Project>{A226F52F-EE4A-4AF8-AC8A-95350E893E2C}</Project>
       <Name>Modules.Import</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FileSystems\FS2.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FileSystems\FS1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -21,9 +21,12 @@ namespace MediaCatalog.Tests.Import
         [Test]
         public void TestScan()
         {
+            string xml = File.ReadAllText("FS.xml");
+            var fs2 = new StubFileSystem(xml);
+
             var container = new UnityContainer();
             container.RegisterType<IScanner, VorbisCommentsScanner>(new ContainerControlledLifetimeManager());
-            container.RegisterType<IFileSystem, StubFileSystem>(new ContainerControlledLifetimeManager());
+            //container.RegisterType<IFileSystem, StubFileSystem>(new ContainerControlledLifetimeManager());
             container.RegisterType<ITagsAccumulator, TagsAccumulator>(new ContainerControlledLifetimeManager());
 
             var fs = container.Resolve<IFileSystem>(new ParameterOverride("rootPath", @"D:\"));
@@ -31,10 +34,12 @@ namespace MediaCatalog.Tests.Import
             var accumulator = container.Resolve<ITagsAccumulator>();
 
             //debug populate stub filesystem
-            var root = ((StubFileSystem)fs).GetRoot();
-            var childs = root.AddChilds("dir1", "dir2", "dir3");
-            var childsDir3 = childs[2].AddChilds("dir31", "dir32");
-            childsDir3[1].Files.Add(new FileInfo("test.flac"));
+            //var root = ((StubFileSystem)fs).GetRoot();
+            //var childs = root.AddChilds("dir1", "dir2", "dir3");
+            //var childsDir3 = childs[2].AddChilds("dir31", "dir32");
+            //childsDir3[1].Files.Add(new FileInfo("test.flac"));
+
+
 
 
 
