@@ -182,13 +182,12 @@ namespace DataServices
 
             try
             {
-                ICriteria criteria = session.CreateCriteria<ArtistEntity>().
-                    Add(Restrictions.InsensitiveLike("Name", artistName, MatchMode.Exact)).
-                    SetProjection(Projections.Count("ID"));
+                var query = session.QueryOver<ArtistEntity>().
+                    WhereRestrictionOn(a => a.Name).IsInsensitiveLike(artistName, MatchMode.Exact);
 
-                int usersCount = criteria.UniqueResult<int>();
+                int artistsCount = query.RowCount();
 
-                result = usersCount > 0;
+                result = artistsCount > 0;
 
             }
             catch (Exception ex)
@@ -241,8 +240,8 @@ namespace DataServices
 
             try
             {
-                ArtistEntity dataEntity = session.CreateCriteria<ArtistEntity>().
-                    Add(Restrictions.Eq("ID", artistID)).UniqueResult<ArtistEntity>();
+                ArtistEntity dataEntity = session.QueryOver<ArtistEntity>().
+                    Where(a => a.ID == artistID).SingleOrDefault();
 
                 EntityConverter entityConverter = new EntityConverter();
 
