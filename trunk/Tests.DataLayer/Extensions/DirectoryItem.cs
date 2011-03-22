@@ -1,7 +1,7 @@
 ﻿
 using System.Collections.Generic;
 using System.IO;
-namespace MediaCatalog.Tests.Helpers
+namespace MediaCatalog.Tests.Extensions
 {
     public class DirectoryItem<T>
     {

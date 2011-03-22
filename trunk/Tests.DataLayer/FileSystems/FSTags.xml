@@ -1,0 +1,16 @@
+﻿<!--normal filesystem-->
+<fs root="d:\">
+  <dir name="Artist1">
+    <dir name="cd1">
+      <file name="track1.png">
+        <tag key="ARTIST" value="Artist1"/>
+        <tag key="ALBUM" value="Album1"/>
+        <tag key="GENRE" value="Jazz"/>
+      </file>
+      <file name="file4.png"/>
+      <file name="file5.png"/>
+    </dir>
+    <dir name="cd2">
+    </dir>
+  </dir>
+</fs>

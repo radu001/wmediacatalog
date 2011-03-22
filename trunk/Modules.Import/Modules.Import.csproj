@@ -56,6 +56,7 @@
     <Compile Include="Controllers\ImportController.cs" />
     <Compile Include="ImportModule.cs" />
     <Compile Include="Model\FileTag.cs" />
+    <Compile Include="Model\FileTagCollection.cs" />
     <Compile Include="Services\Utils\FileSystem.cs" />
     <Compile Include="Services\Utils\IFileSystem.cs" />
     <Compile Include="Services\Utils\IScanner.cs" />

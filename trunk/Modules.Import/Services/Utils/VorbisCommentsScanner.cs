@@ -1,6 +1,5 @@
 ﻿
 using System;
-using System.Collections.Generic;
 using Modules.Import.Model;
 using SharpFlac;
 namespace Modules.Import.Services.Utils
@@ -18,9 +17,9 @@ namespace Modules.Import.Services.Utils
 
         #region IScanner Members
 
-        public IEnumerable<FileTag> GetTags(string filePath)
+        public FileTagCollection GetTags(string filePath)
         {
-            List<FileTag> result = new List<FileTag>();
+            FileTagCollection result = new FileTagCollection();
 
             FlacParser parser = new FlacParser();
             var vorbisComments = parser.ReadVorbisComments(filePath);

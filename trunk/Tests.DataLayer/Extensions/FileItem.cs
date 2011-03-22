@@ -1,6 +1,6 @@
 ﻿
 using System.IO;
-namespace MediaCatalog.Tests.Helpers
+namespace MediaCatalog.Tests.Extensions
 {
     public class FileItem<T>
     {

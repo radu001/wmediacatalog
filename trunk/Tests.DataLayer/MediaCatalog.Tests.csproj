@@ -94,12 +94,13 @@
     <Compile Include="BusinessObjects\GenreTest.cs" />
     <Compile Include="BusinessObjects\MoodTest.cs" />
     <Compile Include="BusinessObjects\TagTest.cs" />
-    <Compile Include="Helpers\DefaultFileDataResolver.cs" />
-    <Compile Include="Helpers\DirectoryItem.cs" />
-    <Compile Include="Helpers\FileItem.cs" />
-    <Compile Include="Helpers\IFileDataResolver.cs" />
-    <Compile Include="Helpers\StubFileSystem.cs" />
-    <Compile Include="Helpers\StubTagsScanner.cs" />
+    <Compile Include="Extensions\DefaultFileDataResolver.cs" />
+    <Compile Include="Extensions\DirectoryItem.cs" />
+    <Compile Include="Extensions\FileItem.cs" />
+    <Compile Include="Extensions\IFileDataResolver.cs" />
+    <Compile Include="Extensions\StubFileSystem.cs" />
+    <Compile Include="Mocks\StubTagsScanner.cs" />
+    <Compile Include="Mocks\TagDataResolver.cs" />
     <Compile Include="TestSuites\Import\ImportTests.cs" />
     <Compile Include="TestSuites\Import\StubFileSystemTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -119,6 +120,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="FileSystems\FSTags.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="FileSystems\FS3.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

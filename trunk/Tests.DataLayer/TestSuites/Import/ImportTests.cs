@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using MediaCatalog.Tests.Helpers;
+using MediaCatalog.Tests.Mocks;
 using Microsoft.Practices.Unity;
 using Modules.Import.Model;
 using Modules.Import.Services;
@@ -21,13 +21,16 @@ namespace MediaCatalog.Tests.TestSuites.Import
         [Test]
         public void TestScan()
         {
-            string xml = File.ReadAllText(@"FileSystems\FS1.xml");
+            string xml = File.ReadAllText(@"FileSystems\FSTags.xml");
 
             var container = new UnityContainer();
+            var resolver = new TagDataResolver();
+
+            var scanner = new StubTagsScanner(xml);
 
             string path = @"d:\";
-            var service = new DataService(container, new StubTagsScanner(), new StubFileSystem<object>(xml), new TagsAccumulator());
-            var artists = 
+            var service = new DataService(container, scanner, scanner, new TagsAccumulator());
+            var artists =
                 service.BeginScan(new ScanSettings()
                 {
                     ScanPath = path,
