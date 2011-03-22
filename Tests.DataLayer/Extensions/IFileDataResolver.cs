@@ -1,6 +1,6 @@
 ﻿
 using System.Xml.Linq;
-namespace MediaCatalog.Tests.Helpers
+namespace MediaCatalog.Tests.Extensions
 {
     public interface IFileDataResolver<T>
     {

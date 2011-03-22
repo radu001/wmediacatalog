@@ -5,7 +5,7 @@ using System.Linq;
 using System.Xml.Linq;
 using Modules.Import.Services.Utils;
 
-namespace MediaCatalog.Tests.Helpers
+namespace MediaCatalog.Tests.Extensions
 {
     public class StubFileSystem<T> : IFileSystem
     {
@@ -75,7 +75,7 @@ namespace MediaCatalog.Tests.Helpers
             if (directory == null)
                 return new FileInfo[] { };
 
-            return directory.Files.Select( f => f.File).Where(f => f.Name.Contains(searchPattern));
+            return directory.Files.Select(f => f.File).Where(f => f.Name.Contains(searchPattern));
         }
 
         public IEnumerable<DirectoryInfo> GetSubDirectories(DirectoryInfo dir)
@@ -163,7 +163,7 @@ namespace MediaCatalog.Tests.Helpers
 
         private void AddFileToDirectory(DirectoryItem<T> dir, string fullFileName, T fileData)
         {
-            int sameFilesCount = dir.Files.Select( f => f.File).Where(f => f.FullName == fullFileName).Count();
+            int sameFilesCount = dir.Files.Select(f => f.File).Where(f => f.FullName == fullFileName).Count();
             if (sameFilesCount == 0)
             {
                 dir.Files.Add(new FileItem<T>()
@@ -175,7 +175,7 @@ namespace MediaCatalog.Tests.Helpers
             else
             {
                 throw new Exception(
-                    String.Format("Attempted to add duplicate file={0} in the same directory={1}.", 
+                    String.Format("Attempted to add duplicate file={0} in the same directory={1}.",
                     dir.Dir.FullName, fullFileName));
             }
         }

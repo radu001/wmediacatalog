@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using MediaCatalog.Tests.Helpers;
+using MediaCatalog.Tests.Extensions;
 using Modules.Import.Services.Utils;
 using NUnit.Framework;
 
@@ -79,7 +79,7 @@ namespace MediaCatalog.Tests.TestSuites.Import
         private void AssertHasFiles(DirectoryItem<object> item, params string[] fileNames)
         {
             Assert.AreEqual(item.Files.Count, fileNames.Length, "Directory has different files count");
-            
+
             var itemFileNames = item.Files.Select(f => f.File.Name).ToArray();
 
             Assert.True(itemFileNames.SequenceEqual(fileNames));
