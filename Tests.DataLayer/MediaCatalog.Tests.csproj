@@ -94,8 +94,10 @@
     <Compile Include="BusinessObjects\GenreTest.cs" />
     <Compile Include="BusinessObjects\MoodTest.cs" />
     <Compile Include="BusinessObjects\TagTest.cs" />
+    <Compile Include="Helpers\DefaultFileDataResolver.cs" />
     <Compile Include="Helpers\DirectoryItem.cs" />
     <Compile Include="Helpers\FileItem.cs" />
+    <Compile Include="Helpers\IFileDataResolver.cs" />
     <Compile Include="Helpers\StubFileSystem.cs" />
     <Compile Include="Helpers\StubTagsScanner.cs" />
     <Compile Include="TestSuites\Import\ImportTests.cs" />

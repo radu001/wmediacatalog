@@ -11,8 +11,20 @@ namespace MediaCatalog.Tests.Helpers
     {
         public DirectoryItem<T> Root { get; private set; }
 
+        public IFileDataResolver<T> FileDataResolver { get; private set; }
+
         public StubFileSystem(string xml)
+            : this(xml, new DefaultFileDataResolver<T>())
         {
+        }
+
+        public StubFileSystem(string xml, IFileDataResolver<T> fileDataResolver)
+        {
+            if (fileDataResolver == null)
+                throw new NullReferenceException("Illegal null-reference file data resolver");
+
+            FileDataResolver = fileDataResolver;
+
             InitFileSystem(xml);
         }
 
@@ -37,6 +49,22 @@ namespace MediaCatalog.Tests.Helpers
             }
 
             return null;
+        }
+
+        public T GetFileData(string fullFileName)
+        {
+            string path = Path.GetDirectoryName(fullFileName);
+            string fileName = Path.GetFileName(fullFileName);
+
+            var dir = FindDirectory(path);
+            if (dir != null)
+            {
+                var file = dir.Files.Where(f => f.File.FullName == fullFileName).FirstOrDefault();
+                if (file != null)
+                    return file.Data;
+            }
+
+            return default(T);
         }
 
         #region IFileSystem Members
@@ -65,7 +93,7 @@ namespace MediaCatalog.Tests.Helpers
 
         protected T GetFileData(XElement fileElement)
         {
-            return default(T);
+            return FileDataResolver.GetFileData(fileElement);
         }
 
         #endregion

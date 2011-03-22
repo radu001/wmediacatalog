@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using MediaCatalog.Tests.Helpers;
+using Modules.Import.Services.Utils;
 using NUnit.Framework;
 
 namespace MediaCatalog.Tests.TestSuites.Import
@@ -13,7 +14,7 @@ namespace MediaCatalog.Tests.TestSuites.Import
         public void CreateFs_ValidXml_Success()
         {
             var xml = File.ReadAllText(@"FileSystems\FS1.xml");
-            StubFileSystem<object> fs = new StubFileSystem<object>(xml);
+            var fs = CreateFileSystem(xml) as StubFileSystem<object>;
 
             Assert.True(fs.Root.IsRoot);
             Assert.AreEqual(@"d:\", fs.Root.Dir.Name);
@@ -64,7 +65,7 @@ namespace MediaCatalog.Tests.TestSuites.Import
         public void CreateFs_DuplicateFilesInFolder_ThrowsException()
         {
             var xml = File.ReadAllText(@"FileSystems\FS2.xml");
-            StubFileSystem<object> fs = new StubFileSystem<object>(xml);
+            var fs = CreateFileSystem(xml);
         }
 
         [Test]
@@ -72,7 +73,7 @@ namespace MediaCatalog.Tests.TestSuites.Import
         public void CreateFs_DuplicateFolders_ThrowsException()
         {
             var xml = File.ReadAllText(@"FileSystems\FS3.xml");
-            StubFileSystem<object> fs = new StubFileSystem<object>(xml);
+            var fs = CreateFileSystem(xml);
         }
 
         private void AssertHasFiles(DirectoryItem<object> item, params string[] fileNames)
@@ -103,6 +104,11 @@ namespace MediaCatalog.Tests.TestSuites.Import
             var subDirNames = parent.Childs.Select(sd => sd.Dir.FullName);
 
             Assert.True(subDirNames.SequenceEqual(dirNames));
+        }
+
+        private IFileSystem CreateFileSystem(string xml)
+        {
+            return new StubFileSystem<object>(xml);
         }
     }
 }
