@@ -11,18 +11,17 @@ namespace Modules.Import.Services
 {
     public class DataService : IDataService
     {
-        public DataService(IUnityContainer container)
+        public DataService(IUnityContainer container, IScanner scanner, IFileSystem fileSystem, ITagsAccumulator tagsAccumulator)
         {
             this.container = container;
+            this.scanner = scanner;
+            this.fileSystem = fileSystem;
+            this.tagsAccumulator = tagsAccumulator;
         }
 
         public IEnumerable<Artist> BeginScan(ScanSettings settings)
         {
             List<Artist> result = new List<Artist>();
-
-            IScanner scanner = container.Resolve<IScanner>();
-            IFileSystem fileSystem = container.Resolve<IFileSystem>();
-            ITagsAccumulator tagsAccumulator = container.Resolve<ITagsAccumulator>();
 
             DirectoryInfo dir = new DirectoryInfo(settings.ScanPath);
             Stack<DirectoryInfo> stack = new Stack<DirectoryInfo>();
@@ -68,7 +67,10 @@ namespace Modules.Import.Services
 
         #region Private fields
 
-        private IUnityContainer container;
+        private readonly IUnityContainer container;
+        private readonly IScanner scanner;
+        private readonly IFileSystem fileSystem;
+        private readonly ITagsAccumulator tagsAccumulator;
 
         #endregion
     }

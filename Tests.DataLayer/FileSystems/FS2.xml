@@ -1,11 +1,6 @@
-﻿<fs root="d:\">
-  <dir name="dir1">
-    <dir name="dir2"/>
-    <dir name="dir3"/>
-    <dir name="dir4">
-      <file name="file.png" size="1024"/>
-      <file name="file1.png" size="1024"/>
-      <file name="file2.png" size="1024"/>
-    </dir>
-  </dir>
+﻿<!--filesystem with duplicated file names in the same dir-->
+<fs root="d:\">
+  <file name="file3.png"/>
+  <file name="file3.png"/>
+  <file name="file3.png"/>
 </fs>

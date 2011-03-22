@@ -1,0 +1,9 @@
+﻿<!--filesystem with duplicated dir names-->
+<fs root="d:\">
+  <dir name="dir2"/>
+  <dir name="dir3"/>
+  <dir name="dir4"/>
+  <dir name="dir2"/>
+  <dir name="dir3"/>
+  <dir name="dir4"/>
+</fs>

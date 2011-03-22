@@ -1,4 +1,5 @@
-﻿<fs root="d:\">
+﻿<!--normal filesystem-->
+<fs root="d:\">
   <dir name="dir1">
     <dir name="dir2"/>
     <dir name="dir3"/>
