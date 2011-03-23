@@ -25,6 +25,12 @@ namespace Modules.Import.Services
             Stack<DirectoryInfo> stack = new Stack<DirectoryInfo>();
             stack.Push(dir);
 
+            if (settings.BeforeScan != null)
+            {
+                int totalFiles = fileSystem.CountFilesRecursively(dir, settings.FileMask);
+                settings.BeforeScan(totalFiles);
+            }
+
             while (stack.Count > 0 && !settings.Stop)
             {
                 if (settings.Pause)

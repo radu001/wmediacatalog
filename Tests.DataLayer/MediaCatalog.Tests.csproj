@@ -121,6 +121,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="FileSystems\FSEmpty.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="FileSystems\FSTags.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.ObjectModel;
+using BusinessObjects;
+using Microsoft.Practices.Prism.Commands;
 
 namespace Modules.Import.ViewModels
 {
     public interface IImportViewModel
     {
+        DelegateCommand<object> ScanFilesCommand { get; }
+
+        ObservableCollection<Artist> ImportedArtists { get; }
     }
 }

@@ -76,6 +76,24 @@ namespace MediaCatalog.Tests.TestSuites.Import
             var fs = CreateFileSystem(xml);
         }
 
+        [Test]
+        public void CountFilesEmptyFs_ReturnsZero()
+        {
+            var xml = File.ReadAllText(@"FileSystems\FSEmpty.xml");
+            var filesystem = CreateFileSystem(xml) as StubFileSystem<object>;
+
+            Assert.AreEqual(0, filesystem.CountFilesRecursively(filesystem.Root.Dir, ""));
+        }
+
+        [Test]
+        public void CountFilesNormalFs_ReturnsActualCount()
+        {
+            var xml = File.ReadAllText(@"FileSystems\FS1.xml");
+            var filesystem = CreateFileSystem(xml) as StubFileSystem<object>;
+
+            Assert.AreEqual(6, filesystem.CountFilesRecursively(filesystem.Root.Dir, ""));
+        }
+
         private void AssertHasFiles(DirectoryItem<object> item, params string[] fileNames)
         {
             Assert.AreEqual(item.Files.Count, fileNames.Length, "Directory has different files count");

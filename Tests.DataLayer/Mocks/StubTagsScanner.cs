@@ -25,6 +25,11 @@ namespace MediaCatalog.Tests.Mocks
 
         #region IFileSystem Members
 
+        public int CountFilesRecursively(DirectoryInfo dir, string searchPattern)
+        {
+            return fs.CountFilesRecursively(dir, searchPattern);
+        }
+
         public IEnumerable<FileInfo> GetFiles(DirectoryInfo dir, string searchPattern)
         {
             return fs.GetFiles(dir, searchPattern);
