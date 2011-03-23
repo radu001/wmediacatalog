@@ -87,6 +87,11 @@ namespace Modules.Import.Services.Utils
                             artist.Albums.Add(album);
                         }
 
+                        if (album.Artists.Where(a => a.Name == artist.Name).Count() == 0)
+                        {
+                            album.Artists.Add(artist);
+                        }
+
                         ProcessGenre(tags, album);
                     }
                 }
