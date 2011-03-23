@@ -112,26 +112,14 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\ZoomHS.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Common.Dialogs\Common.Dialogs.csproj">
-      <Project>{CAE942B3-324B-4B06-BCB3-AADFAC80A69C}</Project>
-      <Name>Common.Dialogs</Name>
+    <ProjectReference Include="..\Common.Content\Common.Content.csproj">
+      <Project>{43AB1E81-C1D5-477C-9C71-DC60CF72D0BB}</Project>
+      <Name>Common.Content</Name>
     </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{E66025A2-8077-40D1-B627-4D4945CEB365}</Project>
       <Name>Common</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\calendar-icon-1.png" />
-    <Resource Include="Images\calendar-icon-14.png" />
-    <Resource Include="Images\calendar-icon-2.png" />
-    <Resource Include="Images\calendar-icon-3.png" />
-    <Resource Include="Images\calendar-icon-5.png" />
-    <Resource Include="Images\calendar-icon-7.png" />
-    <Resource Include="Images\calendar-icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

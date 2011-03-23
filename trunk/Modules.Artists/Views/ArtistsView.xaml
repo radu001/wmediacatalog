@@ -15,29 +15,29 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Common.Dialogs;component/Styles/CommonStyles.xaml"/>
+                <ResourceDictionary Source="/Common.Content;component/Styles/CommonStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <ContextMenu x:Key="ArtistContextMenu">
                 <MenuItem Header="Create new artist" commands:MenuItemClick.Command="{Binding CreateArtistCommand}">
                     <MenuItem.Icon>
-                        <Image Source="/Common.Dialogs;component/Images/Conductor_add_48x48.png" Style="{StaticResource MenuIconStyle}"/>
+                        <Image Source="/Common.Content;component/Images/Conductor_add_48x48.png" Style="{StaticResource MenuIconStyle}"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="Edit artist" commands:MenuItemClick.Command="{Binding EditArtistCommand}">
                     <MenuItem.Icon>
-                        <Image Source="/Common.Dialogs;component/Images/Conductor_edit_48x48.png" Style="{StaticResource MenuIconStyle}"/>
+                        <Image Source="/Common.Content;component/Images/Conductor_edit_48x48.png" Style="{StaticResource MenuIconStyle}"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="Remove artist" commands:MenuItemClick.Command="{Binding RemoveArtistCommand}">
                     <MenuItem.Icon>
-                        <Image Source="/Common.Dialogs;component/Images/Conductor_remove_48x48.png" Style="{StaticResource MenuIconStyle}"/>
+                        <Image Source="/Common.Content;component/Images/Conductor_remove_48x48.png" Style="{StaticResource MenuIconStyle}"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator/>
                 <MenuItem Header="Create album for artist" commands:MenuItemClick.Command="{Binding CreateAlbumCommand}">
                     <MenuItem.Icon>
-                        <Image Source="/Common.Dialogs;component/Images/Conductor_album_48x48.png" Style="{StaticResource MenuIconStyle}"/>
+                        <Image Source="/Common.Content;component/Images/Conductor_album_48x48.png" Style="{StaticResource MenuIconStyle}"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </ContextMenu>
@@ -115,7 +115,7 @@
                         ToolTip="Create new artist"
                         prismCommands:Click.Command="{Binding CreateArtistCommand}">
                     <Button.Content>
-                        <Image Source="/Common.Dialogs;component/Images/Conductor_add_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
+                        <Image Source="/Common.Content;component/Images/Conductor_add_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
                     </Button.Content>
                 </Button>
                 <Button Margin="2"
@@ -123,7 +123,7 @@
                         ToolTip="Edit selected artist"
                         prismCommands:Click.Command="{Binding EditArtistCommand}">
                     <Button.Content>
-                        <Image Source="/Common.Dialogs;component/Images/Conductor_edit_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
+                        <Image Source="/Common.Content;component/Images/Conductor_edit_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
                     </Button.Content>
                 </Button>
                 <Button Margin="2"
@@ -131,7 +131,7 @@
                         ToolTip="Remove selected artist"
                         prismCommands:Click.Command="{Binding RemoveArtistCommand}">
                     <Button.Content>
-                        <Image Source="/Common.Dialogs;component/Images/Conductor_remove_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
+                        <Image Source="/Common.Content;component/Images/Conductor_remove_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
                     </Button.Content>
                 </Button>
             </ToolBar>
@@ -141,7 +141,7 @@
                         ToolTip="Create new album for selected artist"
                         prismCommands:Click.Command="{Binding CreateAlbumCommand}">
                     <Button.Content>
-                        <Image Source="/Common.Dialogs;component/Images/CD_add_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
+                        <Image Source="/Common.Content;component/Images/CD_add_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
                     </Button.Content>
                 </Button>
                 <Button Margin="2"
@@ -149,7 +149,7 @@
                         ToolTip="Edit selected album"
                         prismCommands:Click.Command="{Binding EditAlbumCommand}">
                     <Button.Content>
-                        <Image Source="/Common.Dialogs;component/Images/CD_edit_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
+                        <Image Source="/Common.Content;component/Images/CD_edit_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
                     </Button.Content>
                 </Button>
                 <Button Margin="2"
@@ -157,7 +157,7 @@
                         ToolTip="Remove selected album"
                         prismCommands:Click.Command="{Binding RemoveAlbumCommand}">
                     <Button.Content>
-                        <Image Source="/Common.Dialogs;component/Images/CD_remove_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
+                        <Image Source="/Common.Content;component/Images/CD_remove_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
                     </Button.Content>
                 </Button>
             </ToolBar>

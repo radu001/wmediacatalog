@@ -3,27 +3,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:controls="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
              xmlns:local="clr-namespace:Common.Dialogs"
              mc:Ignorable="d"
              WindowStyle="None" AllowsTransparency="True" ResizeMode="NoResize"
              Background="Transparent" WindowStartupLocation="CenterScreen"
-             x:Name="dialog"
-             d:DesignHeight="248" d:DesignWidth="337">
+             x:Name="dialog">
     <local:DialogWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles/CommonStyles.xaml"/>
+                <ResourceDictionary Source="/Common.Content;component/Styles/CommonStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </local:DialogWindow.Resources>
-    <Grid x:Name="LayoutRoot" >
+    <Grid x:Name="DialogLayoutRoot" 
+          controls:BusyIndicatorBehavior.AddMargins="True" 
+          controls:BusyIndicatorBehavior.BusyState="{Binding ElementName=dialog,Path=IsBusy}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Border x:Name="HeaderBorder" Grid.Row="0" BorderThickness="2,2,2,0" CornerRadius="10,10,0,0" BorderBrush="Black" Background="SteelBlue"
-                MouseDown="HeaderBorder_MouseDown"
-                >
+                MouseDown="HeaderBorder_MouseDown">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -33,9 +34,9 @@
                     <TextBlock Text="{Binding ElementName=dialog, Path=HeaderText}" Style="{StaticResource DialogHeaderTextStyle}" FontSize="14" FontWeight="Bold" Margin="8"/>
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Right" Grid.Column="1">
-                    <Button VerticalAlignment="Center" Margin="8" Style="{StaticResource CloseButtonStyle}" IsCancel="True">
+                    <Button x:Name="CancelHeaderButton" VerticalAlignment="Center" Margin="8" Style="{StaticResource CloseButtonStyle}">
                         <Button.Content>
-                            <Image Source="Images/305_Close_16x16_72.png" Width="12" Height="12"/>
+                            <Image Source="/Common.Content;component/Images/305_Close_16x16_72.png" Width="12" Height="12"/>
                         </Button.Content>
                     </Button>
                 </StackPanel>
@@ -52,10 +53,10 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <ContentControl Content="{Binding ElementName=dialog,Path=DialogContent}" Grid.Row="0" Grid.ColumnSpan="2"/>
-                <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Margin="8,8,0,8" HorizontalAlignment="Right" Orientation="Horizontal">
-                    <Button x:Name="YesButton" Content="Yes" Width="75" IsDefault="True" Margin="6"
+                <StackPanel x:Name="ButtonsLayout" Grid.Row="1" Grid.ColumnSpan="2" Margin="8,8,0,8" HorizontalAlignment="Right" Orientation="Horizontal">
+                    <Button x:Name="OkButton" Content="Ok" Width="75" Margin="6"
                             Style="{StaticResource DialogButtonStyle}"/>
-                    <Button x:Name="NoButton" Content="No" Width="75" IsCancel="True" Margin="6"
+                    <Button x:Name="CancelButton" Content="Cancel" Width="75" Margin="6"
                             Style="{StaticResource DialogButtonStyle}"/>
                 </StackPanel>
             </Grid>

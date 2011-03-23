@@ -7,7 +7,7 @@
     xmlns:prismCommands="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/Common.Dialogs;component/Styles/CommonStyles.xaml"/>
+        <ResourceDictionary Source="/Common.Content;component/Styles/CommonStyles.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <DataTemplate x:Key="GenreDataTemplate">
@@ -48,7 +48,7 @@
                                                         prismCommands:Click.CommandParameter="{Binding}"
                                                         >
                     <Button.Content>
-                        <Image Source="/Common.Dialogs;component/Images/Remove_16x16.png" Height="16" Width="16"/>
+                        <Image Source="/Common.Content;component/Images/Remove_16x16.png" Height="16" Width="16"/>
                     </Button.Content>
                 </Button>
             </Grid>
@@ -69,7 +69,7 @@
                                                         prismCommands:Click.CommandParameter="{Binding}"
                                                         >
                     <Button.Content>
-                        <Image Source="/Common.Dialogs;component/Images/Remove_16x16.png" Height="16" Width="16"/>
+                        <Image Source="/Common.Content;component/Images/Remove_16x16.png" Height="16" Width="16"/>
                     </Button.Content>
                 </Button>
             </Grid>

@@ -10,7 +10,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Common.Dialogs;component/Styles/CommonStyles.xaml"/>
+                <ResourceDictionary Source="/Common.Content;component/Styles/CommonStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate x:Key="PageTemplate">
@@ -32,13 +32,13 @@
                 <Button x:Name="PrevTenPagesButton" Click="PrevTenPagesButton_Click" Cursor="Hand"
                     Style="{StaticResource ToolbarImageButtonStyle}" ToolTip="Move ten pages backward">
                     <Button.Content>
-                        <Image Source="/Common.Dialogs;component/Images/DoubleLeftArrowHS.png" Width="16" Height="16"/>
+                        <Image Source="/Common.Content;component/Images/DoubleLeftArrowHS.png" Width="16" Height="16"/>
                     </Button.Content>
                 </Button>
                 <Button x:Name="PrevPageButton" Click="MovePreviousPage_Click" Cursor="Hand"
                     Style="{StaticResource ToolbarImageButtonStyle}" ToolTip="Move page backward">
                     <Button.Content>
-                        <Image Source="/Common.Dialogs;component/Images/LeftArrowHS.png" Width="16" Height="16"/>
+                        <Image Source="/Common.Content;component/Images/LeftArrowHS.png" Width="16" Height="16"/>
                     </Button.Content>
                 </Button>
                 <ListView x:Name="PageSelectorListView" 
@@ -61,13 +61,13 @@
                 <Button x:Name="NextPageButton" Click="MoveNextPage_Click" Cursor="Hand"
                     Style="{StaticResource ToolbarImageButtonStyle}" ToolTip="Move page forward">
                     <Button.Content>
-                        <Image Source="/Common.Dialogs;component/Images/RightArrowHS.png" Width="16" Height="16"/>
+                        <Image Source="/Common.Content;component/Images/RightArrowHS.png" Width="16" Height="16"/>
                     </Button.Content>
                 </Button>
                 <Button x:Name="NextTenPagesButton" Click="NextTenPagesButton_Click" Cursor="Hand"
                     Style="{StaticResource ToolbarImageButtonStyle}" ToolTip="Move ten pages forward">
                     <Button.Content>
-                        <Image Source="/Common.Dialogs;component/Images/DoubleRightArrowHS.png" Width="16" Height="16"/>
+                        <Image Source="/Common.Content;component/Images/DoubleRightArrowHS.png" Width="16" Height="16"/>
                     </Button.Content>
                 </Button>
             </StackPanel>

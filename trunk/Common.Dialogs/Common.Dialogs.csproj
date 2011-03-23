@@ -39,6 +39,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Practices.Prism, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Prism\Microsoft.Practices.Prism.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="PresentationFramework.Aero" />
@@ -71,6 +75,7 @@
       <DependentUpon>NotificationDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\CommandAdapter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="CommonDialog.xaml">
@@ -85,118 +90,25 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Resource Include="Styles\CommonStyles.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\305_Close_16x16_72.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\109_AllAnnotations_Error_48x48_72.png" />
-    <Resource Include="Images\109_AllAnnotations_Help_48x48_72.png" />
-    <Resource Include="Images\109_AllAnnotations_Info_48x48_72.png" />
-    <Resource Include="Images\109_AllAnnotations_Warning_48x48_72.png" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\Common.Content\Common.Content.csproj">
+      <Project>{43AB1E81-C1D5-477C-9C71-DC60CF72D0BB}</Project>
+      <Name>Common.Content</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common.Controls\Common.Controls.csproj">
+      <Project>{65BBD200-9201-46BF-877F-3AF4D68039B2}</Project>
+      <Name>Common.Controls</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{E66025A2-8077-40D1-B627-4D4945CEB365}</Project>
       <Name>Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\109_AllAnnotations_Default_48x48_72.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\command_link_16x16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Remove_16x16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\077_AddFile_32x32_72.png" />
-    <Resource Include="Images\126_Edit_32x32_72.png" />
-    <Resource Include="Images\Remove_32x32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\CD_add_48x48.png" />
-    <Resource Include="Images\CD_edit_48x48.png" />
-    <Resource Include="Images\CD_normal_48x48.png" />
-    <Resource Include="Images\CD_remove_48x48.png" />
-    <Resource Include="Images\Conductor_add_48x48.png" />
-    <Resource Include="Images\Conductor_edit_48x48.png" />
-    <Resource Include="Images\Conductor_normal_48x48.png" />
-    <Resource Include="Images\Conductor_remove_48x48.png" />
-    <Resource Include="Images\Saxophone_add_48x48.png" />
-    <Resource Include="Images\Saxophone_edit_48x48.png" />
-    <Resource Include="Images\Saxophone_normal_48x48.png" />
-    <Resource Include="Images\Saxophone_remove_48x48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\add_15x15.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\GoToNextHS.png" />
-    <Resource Include="Images\GoToPrevious.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\DoubleLeftArrowHS.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\RightArrowHS.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\DoubleRightArrowHS.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\LeftArrowHS.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Page.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\PageBlue.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\NotePlus_24x24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Conductor_album_48x48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\ZoomHS.png" />
-  </ItemGroup>
-  <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\waste_48x48.png" />
-    <Resource Include="Images\waste_minus_48x48.png" />
-    <Resource Include="Images\waste_plus_48x48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\waste_arrow_48x48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\waste_arrow_red_48x48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Trash_48x48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Music-icon_48x48.png" />
-    <Resource Include="Images\Music-icon_plus_48x48.png" />
-    <Resource Include="Images\Music-icon_remove_48x48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\calendar-icon-1.png" />
-    <Resource Include="Images\calendar-icon-14.png" />
-    <Resource Include="Images\calendar-icon-2.png" />
-    <Resource Include="Images\calendar-icon-3.png" />
-    <Resource Include="Images\calendar-icon-5.png" />
-    <Resource Include="Images\calendar-icon-7.png" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

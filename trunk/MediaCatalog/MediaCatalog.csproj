@@ -122,6 +122,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common.Content\Common.Content.csproj">
+      <Project>{43AB1E81-C1D5-477C-9C71-DC60CF72D0BB}</Project>
+      <Name>Common.Content</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{E66025A2-8077-40D1-B627-4D4945CEB365}</Project>
       <Name>Common</Name>

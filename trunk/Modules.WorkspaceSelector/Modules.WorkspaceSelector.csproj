@@ -69,6 +69,10 @@
     <Compile Include="WorkspaceSelectorModule.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common.Content\Common.Content.csproj">
+      <Project>{43AB1E81-C1D5-477C-9C71-DC60CF72D0BB}</Project>
+      <Name>Common.Content</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common.Dialogs\Common.Dialogs.csproj">
       <Project>{CAE942B3-324B-4B06-BCB3-AADFAC80A69C}</Project>
       <Name>Common.Dialogs</Name>

@@ -18,7 +18,7 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Common.Dialogs;component/Styles/CommonStyles.xaml"/>
+                <ResourceDictionary Source="/Common.Content;component/Styles/CommonStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <localConverters:HeaderTextConverter x:Key="HeaderTextConverter" EntityName="listening"/>
@@ -49,7 +49,7 @@
                     <Button VerticalAlignment="Center" Margin="8" Style="{StaticResource CloseButtonStyle}"
                             prismCommand:Click.Command="{Binding CancelCommand}">
                         <Button.Content>
-                            <Image Source="/Common.Dialogs;component/Images/305_Close_16x16_72.png" Width="12" Height="12"/>
+                            <Image Source="/Common.Content;component/Images/305_Close_16x16_72.png" Width="12" Height="12"/>
                         </Button.Content>
                     </Button>
                 </StackPanel>
@@ -98,7 +98,7 @@
                                         Visibility="{Binding IsEditMode,Converter={StaticResource BoolToVisibilityConverter}}"
                                         prismCommand:Click.Command="{Binding SearchAlbumCommand}">
                                     <Button.Content>
-                                        <Image Source="/Common.Dialogs;component/Images/ZoomHS.png" Width="16" Height="16"/>
+                                        <Image Source="/Common.Content;component/Images/ZoomHS.png" Width="16" Height="16"/>
                                     </Button.Content>
                                 </Button>
                                 <TextBox x:Name="AlbumTextBox" Grid.Row="2" Grid.Column="1" Margin="{StaticResource DialogMargin}" IsReadOnly="True"/>
@@ -113,7 +113,7 @@
                                 <Button DockPanel.Dock="Right" Margin="{StaticResource DialogMargin}" Style="{StaticResource ImageButtonStyle}"
                                         prismCommand:Click.Command="{Binding CreatePlaceCommand}">
                                     <Button.Content>
-                                        <Image Source="/Common.Dialogs;component/Images/add_15x15.png" Width="15" Height="15"/>
+                                        <Image Source="/Common.Content;component/Images/add_15x15.png" Width="15" Height="15"/>
                                     </Button.Content>
                                 </Button>
                                 <ComboBox Margin="{StaticResource DialogMargin}"
@@ -129,7 +129,7 @@
                                 <Button DockPanel.Dock="Right" Margin="{StaticResource DialogMargin}" Style="{StaticResource ImageButtonStyle}"
                                         prismCommand:Click.Command="{Binding CreateMoodCommand}">
                                     <Button.Content>
-                                        <Image Source="/Common.Dialogs;component/Images/add_15x15.png" Width="15" Height="15"/>
+                                        <Image Source="/Common.Content;component/Images/add_15x15.png" Width="15" Height="15"/>
                                     </Button.Content>
                                 </Button>
                                 <ComboBox Grid.Row="4" Grid.Column="1" Margin="{StaticResource DialogMargin}"

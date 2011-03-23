@@ -113,12 +113,12 @@ namespace Common.Controls.Controls
                 if (DateInterval.Validate())
                 {
                     IsValid = true;
-                    if ( OnDateIntervalChanged != null )
+                    if (OnDateIntervalChanged != null)
                         OnDateIntervalChanged(this, e);
                 }
                 else
                 {
-                    ValidationMessage = 
+                    ValidationMessage =
                         String.Format("Illegal inteval {0} - {1}. Start date is greater then end one", DateInterval.StartDate.ToShortDateString(), DateInterval.EndDate.ToShortDateString());
                     IsValid = false;
                 }
@@ -131,50 +131,50 @@ namespace Common.Controls.Controls
             presets.Add(new DateIntervalPreset()
             {
                 Name = "No",
-                IntervalType = IntervalFilterEnum.No,
-                IconPath = @"..\..\Images\calendar-icon.png",
+                IntervalType = IntervalFilterEnum.No, //
+                IconPath = "pack://application:,,,/Common.Content;component/Images/calendar-icon.png",
                 Description = String.Empty
             });
             presets.Add(new DateIntervalPreset()
             {
                 Name = "Today",
                 IntervalType = IntervalFilterEnum.OneDay,
-                IconPath = @"..\..\Images\calendar-icon-1.png",
+                IconPath = "pack://application:,,,/Common.Content;component/Images/calendar-icon-1.png",
                 Description = String.Empty
             });
             presets.Add(new DateIntervalPreset()
             {
                 Name = "Last two days",
                 IntervalType = IntervalFilterEnum.TwoDays,
-                IconPath = @"..\..\Images\calendar-icon-2.png",
+                IconPath = "pack://application:,,,/Common.Content;component/Images/calendar-icon-2.png",
                 Description = String.Empty
             });
             presets.Add(new DateIntervalPreset()
             {
                 Name = "Last three days",
                 IntervalType = IntervalFilterEnum.ThreeDays,
-                IconPath = @"..\..\Images\calendar-icon-3.png",
+                IconPath = "pack://application:,,,/Common.Content;component/Images/calendar-icon-3.png",
                 Description = String.Empty
             });
             presets.Add(new DateIntervalPreset()
             {
                 Name = "Last five days",
                 IntervalType = IntervalFilterEnum.FiveDays,
-                IconPath = @"..\..\Images\calendar-icon-5.png",
+                IconPath = "pack://application:,,,/Common.Content;component/Images/calendar-icon-5.png",
                 Description = String.Empty
             });
             presets.Add(new DateIntervalPreset()
             {
                 Name = "Last week",
                 IntervalType = IntervalFilterEnum.Week,
-                IconPath = @"..\..\Images\calendar-icon-7.png",
+                IconPath = "pack://application:,,,/Common.Content;component/Images/calendar-icon-7.png",
                 Description = String.Empty
             });
             presets.Add(new DateIntervalPreset()
             {
                 Name = "Last two weeks",
                 IntervalType = IntervalFilterEnum.TwoWeeks,
-                IconPath = @"..\..\Images\calendar-icon-14.png",
+                IconPath = "pack://application:,,,/Common.Content;component/Images/calendar-icon-14.png",
                 Description = String.Empty
             });
 

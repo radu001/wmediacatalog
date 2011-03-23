@@ -17,7 +17,7 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Common.Dialogs;component/Styles/CommonStyles.xaml"/>
+                <ResourceDictionary Source="/Common.Content;component/Styles/CommonStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <localConverters:HeaderTextConverter x:Key="HeaderTextConverter" EntityName="mood"/>
@@ -46,7 +46,7 @@
                     <Button VerticalAlignment="Center" Margin="8" Style="{StaticResource CloseButtonStyle}"
                             prismCommand:Click.Command="{Binding CancelCommand}">
                         <Button.Content>
-                            <Image Source="/Common.Dialogs;component/Images/305_Close_16x16_72.png" Width="12" Height="12"/>
+                            <Image Source="/Common.Content;component/Images/305_Close_16x16_72.png" Width="12" Height="12"/>
                         </Button.Content>
                     </Button>
                 </StackPanel>

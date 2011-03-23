@@ -16,6 +16,7 @@ using Microsoft.Practices.Unity;
 using Modules.Artists.Services;
 using Modules.Tags.ViewModels;
 using Modules.Tags.Views;
+using System.Threading;
 namespace Modules.Artists.ViewModels
 {
     public class ArtistEditViewModel : DialogViewModelBase, IArtistEditViewModel
@@ -135,6 +136,7 @@ namespace Modules.Artists.ViewModels
 
             Task<bool> saveArtistTask = Task.Factory.StartNew<bool>(() =>
             {
+                Thread.Sleep(10000);
                 return dataService.SaveArtist(Artist);
             }, TaskScheduler.Default);
 

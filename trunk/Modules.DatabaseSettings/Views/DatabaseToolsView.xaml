@@ -9,7 +9,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Common.Dialogs;component/Styles/CommonStyles.xaml"/>
+                <ResourceDictionary Source="/Common.Content;component/Styles/CommonStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -41,7 +41,7 @@
                     <Button Grid.Row="2" Grid.Column="2" Margin="8"
                             prismCommands:Click.Command="{Binding SelectProviderPathCommand}">
                         <Button.Content>
-                                <Image Source="/Common.Dialogs;component/Images/ZoomHS.png" Width="16" Height="16" Stretch="Fill"/>
+                                <Image Source="/Common.Content;component/Images/ZoomHS.png" Width="16" Height="16" Stretch="Fill"/>
                         </Button.Content>
                     </Button>
                     
@@ -50,7 +50,7 @@
                     <Button Grid.Row="3" Grid.Column="2" Margin="8"
                             prismCommands:Click.Command="{Binding SelectExportPathCommand}">
                         <Button.Content>
-                            <Image Source="/Common.Dialogs;component/Images/ZoomHS.png" Width="16" Height="16" Stretch="Fill"/>
+                            <Image Source="/Common.Content;component/Images/ZoomHS.png" Width="16" Height="16" Stretch="Fill"/>
                         </Button.Content>
                     </Button>
                     
