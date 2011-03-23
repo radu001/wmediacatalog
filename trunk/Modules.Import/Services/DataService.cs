@@ -21,8 +21,6 @@ namespace Modules.Import.Services
 
         public IEnumerable<Artist> BeginScan(ScanSettings settings)
         {
-            List<Artist> result = new List<Artist>();
-
             DirectoryInfo dir = new DirectoryInfo(settings.ScanPath);
             Stack<DirectoryInfo> stack = new Stack<DirectoryInfo>();
             stack.Push(dir);
@@ -62,7 +60,7 @@ namespace Modules.Import.Services
                 }
             }
 
-            return result;
+            return tagsAccumulator.GetAccumulatedResult();
         }
 
         #region Private fields

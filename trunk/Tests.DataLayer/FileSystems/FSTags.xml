@@ -7,10 +7,33 @@
         <tag key="ALBUM" value="Album1"/>
         <tag key="GENRE" value="Jazz"/>
       </file>
-      <file name="file4.png"/>
-      <file name="file5.png"/>
+      <file name="file2.flac">
+        <tag key="ARTIST" value="Artist1"/>
+        <tag key="ALBUM" value="Album1"/>
+        <tag key="GENRE" value="Jazz"/>
+      </file>
+      <file name="file3.flac">
+        <tag key="ARTIST" value="Artist1"/>
+        <tag key="ALBUM" value="Album1"/>
+        <tag key="GENRE" value="Jazz"/>
+      </file>
     </dir>
     <dir name="cd2">
+      <file name="track1.flac">
+        <tag key="ARTIST" value="Artist1"/>
+        <tag key="ALBUM" value="Album2"/>
+        <tag key="GENRE" value="Jazz"/>
+      </file>
+      <file name="file2.flac">
+        <tag key="ARTIST" value="Artist1"/>
+        <tag key="ALBUM" value="Album2"/>
+        <tag key="GENRE" value="Jazz"/>
+      </file>
+      <file name="file3.flac">
+        <tag key="ARTIST" value="Artist1"/>
+        <tag key="ALBUM" value="Album2"/>
+        <tag key="GENRE" value="Jazz"/>
+      </file>
     </dir>
   </dir>
 </fs>

@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Linq;
 using Modules.Import.Model;
 using Modules.Import.Services.Utils;
@@ -324,6 +325,24 @@ namespace MediaCatalog.Tests.TestSuites.Import
 
             Assert.NotNull(result);
             Assert.AreEqual(0, result.Count());
+        }
+
+        [Test]
+        public void MultiArtistAlbum_ArtistsAreAttachedToAlbum()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Test]
+        public void SingleArtistAlbum_ArtistsAreAttachedToAlbum()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Test]
+        public void TwoAlbumsTwoArtists_ArtistsAreAttachedToAlbum()
+        {
+            throw new NotImplementedException();
         }
 
         private ITagsAccumulator CreateAccumulator()
