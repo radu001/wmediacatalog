@@ -2,7 +2,7 @@
 <fs root="d:\">
   <dir name="Artist1">
     <dir name="cd1">
-      <file name="track1.png">
+      <file name="track1.flac">
         <tag key="ARTIST" value="Artist1"/>
         <tag key="ALBUM" value="Album1"/>
         <tag key="GENRE" value="Jazz"/>

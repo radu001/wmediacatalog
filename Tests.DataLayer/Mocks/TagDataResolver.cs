@@ -10,7 +10,20 @@ namespace MediaCatalog.Tests.Mocks
 
         public FileTagCollection GetFileData(XElement fileElement)
         {
-            return null;
+            FileTagCollection result = new FileTagCollection();
+
+            var tagElements = fileElement.Descendants("tag");
+            foreach (var te in tagElements)
+            {
+                FileTag tag = new FileTag()
+                {
+                    Key = te.Attribute("key").Value,
+                    Value = te.Attribute("value").Value
+                };
+                result.Add(tag);
+            }
+
+            return result;
         }
 
         #endregion

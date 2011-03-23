@@ -80,9 +80,10 @@ namespace MediaCatalog.Tests.TestSuites.Import
         {
             Assert.AreEqual(item.Files.Count, fileNames.Length, "Directory has different files count");
 
-            var itemFileNames = item.Files.Select(f => f.File.Name).ToArray();
+            var itemFileNames = item.Files.Select(f => f.File.FullName).ToArray();
+            var fullNames = fileNames.Select(f => Path.Combine(item.Dir.FullName, f));
 
-            Assert.True(itemFileNames.SequenceEqual(fileNames));
+            Assert.True(itemFileNames.SequenceEqual(fullNames));
         }
 
         private void AssertHasNoFiles(DirectoryItem<object> item)

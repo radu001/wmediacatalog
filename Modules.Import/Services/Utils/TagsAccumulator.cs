@@ -23,59 +23,79 @@ namespace Modules.Import.Services.Utils
 
         public void AccumulateTags(IEnumerable<FileTag> tags)
         {
+            if (tags == null)
+                return;
+
             Artist artist = null;
             Album album = null;
 
-            var artistTag = tags.Where(t => t.Key == ArtistTagKey).FirstOrDefault();
+            var artistTag = tags.Where(t => t.Key.ToUpper() == ArtistTagKey).FirstOrDefault();
             if ( artistTag == null )
                 return;
 
-            string artistName = artistTag.Value;
-            if (!String.IsNullOrEmpty(artistName))
+            string artistNames = artistTag.Value;
+            if (!String.IsNullOrEmpty(artistNames))
             {
-                if (!artists.TryGetValue(artistName, out artist))
-                {
-                    artist = new Artist()
-                    {
-                        Name = artistName
-                    };
-                    artists[artistName] = artist;
-                }
+                var separatedArtists = artistNames.Split(new char[] { ',' }).Select(an => an.Trim());
 
-                ProcessAlbum(tags, artist, album);
+                foreach (var artistName in separatedArtists)
+                {
+                    if (!artists.TryGetValue(artistName, out artist))
+                    {
+                        artist = new Artist()
+                        {
+                            Name = artistName
+                        };
+                        artists[artistName] = artist;
+                    }
+
+                    ProcessAlbum(tags, artist, album);
+                }
             }
         }
 
+        public IEnumerable<Artist> GetAccumulatedResult()
+        {
+            return artists.Select(dv => dv.Value);
+        }
+
+        #endregion
+
+        #region Private methods
+
         private void ProcessAlbum(IEnumerable<FileTag> tags, Artist artist, Album album)
         {
-            var albumTag = tags.Where(t => t.Key == AlbumTagKey).FirstOrDefault();
-            if (albumTag != null)
+            var albumTags = tags.Where(t => t.Key.ToUpper() == AlbumTagKey);
+            if (albumTags != null)
             {
-                string albumName = albumTag.Value;
-                if (!String.IsNullOrEmpty(albumName))
+                foreach (var albumTag in albumTags)
                 {
-                    if (!albums.TryGetValue(albumName, out album))
+                    string albumName = albumTag.Value;
+                    if (!String.IsNullOrEmpty(albumName))
                     {
-                        album = new Album()
+                        if (!albums.TryGetValue(albumName, out album))
                         {
-                            Name = albumName
-                        };
-                        albums[albumName] = album;
-                    }
+                            album = new Album()
+                            {
+                                Name = albumName
+                            };
+                            albums[albumName] = album;
+                        }
 
-                    if (artist.Albums.Where(a => a.Name == albumName).Count() == 0)
-                    {
-                        artist.Albums.Add(album);
-                    }
+                        if (artist.Albums.Where(a => a.Name == albumName).Count() == 0)
+                        {
+                            artist.Albums.Add(album);
+                        }
 
-                    ProcessGenre(tags, album);
+                        ProcessGenre(tags, album);
+                    }
                 }
             }
         }
 
         private void ProcessGenre(IEnumerable<FileTag> tags, Album album)
         {
-            var genreTags = tags.Where(t => t.Key == GenreTagKey);
+            var genreTags = tags.Where(t => t.Key.ToUpper() == GenreTagKey);
             foreach (var genreTag in genreTags)
             {
                 if (genreTag != null)
