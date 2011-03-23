@@ -18,7 +18,7 @@ namespace MediaCatalog.Tests.Mocks
         public FileTagCollection GetTags(string filePath)
         {
             var fileData = fs.GetFileData(filePath);
-            return null;
+            return fileData;
         }
 
         #endregion

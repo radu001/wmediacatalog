@@ -114,7 +114,7 @@ namespace MediaCatalog.Tests.Extensions
                 ProcessChild(child, Root);
 
             foreach (var childFile in rootElement.Elements("file"))
-                ProcessChildFile(Root, Root, childFile);
+                ProcessChildFile(Root, childFile);
         }
 
         private void ProcessChild(XElement child, DirectoryItem<T> parent)
@@ -125,16 +125,16 @@ namespace MediaCatalog.Tests.Extensions
             var files = child.Elements("file");
             foreach (var f in files)
             {
-                ProcessChildFile(parent, directory, f);
+                ProcessChildFile(directory, f);
             }
 
             foreach (var d in child.Elements("dir"))
                 ProcessChild(d, directory);
         }
 
-        private void ProcessChildFile(DirectoryItem<T> parent, DirectoryItem<T> directory, XElement f)
+        private void ProcessChildFile(DirectoryItem<T> directory, XElement f)
         {
-            var fileName = CreateFileName(parent, f);
+            var fileName = CreateFileName(directory, f);
             var fileData = GetFileData(f);
             AddFileToDirectory(directory, fileName, fileData);
         }

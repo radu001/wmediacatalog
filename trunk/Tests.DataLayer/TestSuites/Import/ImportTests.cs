@@ -34,7 +34,7 @@ namespace MediaCatalog.Tests.TestSuites.Import
                 service.BeginScan(new ScanSettings()
                 {
                     ScanPath = path,
-                    FileMask = ".png"
+                    FileMask = ".flac"
                 });
         }
 
