@@ -1,10 +1,10 @@
 ﻿using System.IO;
+using System.Linq;
 using MediaCatalog.Tests.Mocks;
 using Microsoft.Practices.Unity;
 using Modules.Import.Model;
 using Modules.Import.Services;
 using Modules.Import.Services.Utils;
-using NMock2;
 using NUnit.Framework;
 
 namespace MediaCatalog.Tests.TestSuites.Import
@@ -12,12 +12,6 @@ namespace MediaCatalog.Tests.TestSuites.Import
     [TestFixture]
     public class ImportTests
     {
-        [TestFixtureSetUp]
-        public void Setup()
-        {
-            mockery = new Mockery();
-        }
-
         [Test]
         public void TestScan()
         {
@@ -36,9 +30,23 @@ namespace MediaCatalog.Tests.TestSuites.Import
                     ScanPath = path,
                     FileMask = ".flac"
                 });
-        }
 
-        private Mockery mockery;
+            Assert.NotNull(artists);
+            Assert.AreEqual(1, artists.Count());
+            Assert.AreEqual("Artist1", artists.SingleOrDefault().Name);
+
+            var albums = artists.SingleOrDefault().Albums;
+            Assert.NotNull(albums);
+            Assert.AreEqual(2, albums.Count());
+
+            var firstAlbum = albums.Where(a => a.Name == "Album1").FirstOrDefault();
+            var secondAlbum = albums.Where(a => a.Name == "Album2").FirstOrDefault();
+
+            Assert.NotNull(firstAlbum);
+            Assert.NotNull(secondAlbum);
+            Assert.AreSame(artists.SingleOrDefault(), firstAlbum.Artists[0]);
+            Assert.AreSame(artists.SingleOrDefault(), secondAlbum.Artists[0]);
+        }
     }
 
 
