@@ -29,27 +29,30 @@ namespace Modules.Import.Services.Utils
             Artist artist = null;
             Album album = null;
 
-            var artistTag = tags.Where(t => t.Key.ToUpper() == ArtistTagKey).FirstOrDefault();
-            if ( artistTag == null )
+            var artistTags = tags.Where(t => t.Key.ToUpper() == ArtistTagKey);
+            if ( artistTags == null )
                 return;
 
-            string artistNames = artistTag.Value;
-            if (!String.IsNullOrEmpty(artistNames))
+            foreach (var artistTag in artistTags)
             {
-                var separatedArtists = artistNames.Split(new char[] { ',' }).Select(an => an.Trim());
-
-                foreach (var artistName in separatedArtists)
+                string artistNames = artistTag.Value;
+                if (!String.IsNullOrEmpty(artistNames))
                 {
-                    if (!artists.TryGetValue(artistName, out artist))
-                    {
-                        artist = new Artist()
-                        {
-                            Name = artistName
-                        };
-                        artists[artistName] = artist;
-                    }
+                    var separatedArtists = artistNames.Split(new char[] { ',' }).Select(an => an.Trim());
 
-                    ProcessAlbum(tags, artist, album);
+                    foreach (var artistName in separatedArtists)
+                    {
+                        if (!artists.TryGetValue(artistName, out artist))
+                        {
+                            artist = new Artist()
+                            {
+                                Name = artistName
+                            };
+                            artists[artistName] = artist;
+                        }
+
+                        ProcessAlbum(tags, artist, album);
+                    }
                 }
             }
         }
@@ -105,23 +108,29 @@ namespace Modules.Import.Services.Utils
             {
                 if (genreTag != null)
                 {
-                    string genreName = genreTag.Value;
-                    if (!String.IsNullOrEmpty(genreName))
+                    string genreNames = genreTag.Value;
+
+                    var strippedGenreNames = genreNames.Split(new char[] { ',' }).Select(gn => gn.Trim());
+
+                    foreach (var genreName in strippedGenreNames)
                     {
-                        Genre genre = null;
-                        if (!genres.TryGetValue(genreName, out genre))
+                        if (!String.IsNullOrEmpty(genreName))
                         {
-                            genre = new Genre()
+                            Genre genre = null;
+                            if (!genres.TryGetValue(genreName, out genre))
                             {
-                                Name = genreName
-                            };
+                                genre = new Genre()
+                                {
+                                    Name = genreName
+                                };
 
-                            genres[genreName] = genre;
-                        }
+                                genres[genreName] = genre;
+                            }
 
-                        if (album.Genres.Where(g => g.Name == genreName).Count() == 0)
-                        {
-                            album.Genres.Add(genre);
+                            if (album.Genres.Where(g => g.Name == genreName).Count() == 0)
+                            {
+                                album.Genres.Add(genre);
+                            }
                         }
                     }
                 }
