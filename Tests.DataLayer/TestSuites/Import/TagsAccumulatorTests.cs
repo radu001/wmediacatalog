@@ -328,14 +328,51 @@ namespace MediaCatalog.Tests.TestSuites.Import
         }
 
         [Test]
-        public void MultiArtistAlbum_ArtistsAreAttachedToAlbum()
+        public void SingleArtistAlbum_ArtistsAreAttachedToAlbum()
         {
-            throw new NotImplementedException();
+            var accumulator = CreateAccumulator();
+
+            var tags = new FileTagCollection();
+            tags.Add(new FileTag()
+            {
+                Key = "Artist",
+                Value = "Artist1"
+            });
+            tags.Add(new FileTag()
+            {
+                Key = "Album",
+                Value = "Album1"
+            });
+            tags.Add(new FileTag()
+            {
+                Key = "Album",
+                Value = "Album2"
+            });
+
+            accumulator.AccumulateTags(tags);
+
+            var result = accumulator.GetAccumulatedResult();
+
+            Assert.NotNull(result);
+            Assert.AreEqual(1, result.Count());
+
+            var artist = result.SingleOrDefault();
+            var firstAlbum = artist.Albums.Where(a => a.Name == "Album1").FirstOrDefault();
+            var secondAlbum = artist.Albums.Where(a => a.Name == "Album2").FirstOrDefault();
+
+            Assert.NotNull(firstAlbum);
+            Assert.NotNull(secondAlbum);
+            Assert.AreEqual(1, firstAlbum.Artists.Count);
+            Assert.AreEqual(1, secondAlbum.Artists.Count);
+            Assert.AreSame(artist, firstAlbum.Artists[0]);
+            Assert.AreSame(artist, secondAlbum.Artists[0]);
         }
 
         [Test]
-        public void SingleArtistAlbum_ArtistsAreAttachedToAlbum()
+        public void MultiArtistAlbum_ArtistsAreAttachedToAlbum()
         {
+
+
             throw new NotImplementedException();
         }
 
