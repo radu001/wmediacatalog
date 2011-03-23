@@ -10,14 +10,16 @@ namespace Common.Dialogs
             DependencyProperty.RegisterAttached("WindowResult", typeof(bool?), typeof(DialogWindow),
             new PropertyMetadata(WindowResultProperty_Changed));
 
-        public static bool? GetWindowResult(DependencyObject obj)
+        public bool? WindowResult
         {
-            return (bool?)obj.GetValue(WindowResultProperty);
-        }
-
-        public static void SetWindowResult(DependencyObject obj, bool? value)
-        {
-            obj.SetValue(WindowResultProperty, value);
+            get
+            {
+                return (bool?)GetValue(WindowResultProperty);
+            }
+            set
+            {
+                SetValue(WindowResultProperty, value);
+            }
         }
 
         private static void WindowResultProperty_Changed(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)

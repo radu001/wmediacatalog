@@ -342,8 +342,12 @@ namespace Modules.Artists.ViewModels
 
             artist.NeedValidate = true;
 
-            ArtistEditDialog view = new ArtistEditDialog(viewModel);
-            view.ShowDialog();
+
+            CommonDialog dialog = new CommonDialog()
+            {
+                DialogContent = new ArtistEditView(viewModel)
+            };
+            dialog.ShowDialog();
         }
 
         private void LoadArtistAlbums()

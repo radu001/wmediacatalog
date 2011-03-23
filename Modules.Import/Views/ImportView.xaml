@@ -10,7 +10,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Common.Dialogs;component/Styles/CommonStyles.xaml"/>
+                <ResourceDictionary Source="/Common.Content;component/Styles/CommonStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -26,7 +26,7 @@
                         ToolTip="Scan files"
                         prismCommands:Click.Command="{Binding ScanFilesCommand}">
                     <Button.Content>
-                        <Image Source="/Common.Dialogs;component/Images/Conductor_add_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
+                        <Image Source="/Common.Content;component/Images/Conductor_add_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
                     </Button.Content>
                 </Button>
             </ToolBar>

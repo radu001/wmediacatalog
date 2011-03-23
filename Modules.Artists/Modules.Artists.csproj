@@ -75,8 +75,8 @@
     <Compile Include="ViewModels\ArtistsViewModel.cs" />
     <Compile Include="ViewModels\IArtistEditViewModel.cs" />
     <Compile Include="ViewModels\IArtistsViewModel.cs" />
-    <Compile Include="Views\ArtistEditDialog.xaml.cs">
-      <DependentUpon>ArtistEditDialog.xaml</DependentUpon>
+    <Compile Include="Views\ArtistEditView.xaml.cs">
+      <DependentUpon>ArtistEditView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ArtistsView.xaml.cs">
       <DependentUpon>ArtistsView.xaml</DependentUpon>
@@ -86,6 +86,10 @@
     <ProjectReference Include="..\BusinessObjects\BusinessObjects.csproj">
       <Project>{82C52DA4-8017-469C-8665-BE404E072A4B}</Project>
       <Name>BusinessObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common.Content\Common.Content.csproj">
+      <Project>{43AB1E81-C1D5-477C-9C71-DC60CF72D0BB}</Project>
+      <Name>Common.Content</Name>
     </ProjectReference>
     <ProjectReference Include="..\Common.Controls\Common.Controls.csproj">
       <Project>{65BBD200-9201-46BF-877F-3AF4D68039B2}</Project>
@@ -113,7 +117,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\ArtistEditDialog.xaml">
+    <Page Include="Views\ArtistEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

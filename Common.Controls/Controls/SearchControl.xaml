@@ -9,7 +9,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Common.Dialogs;component/Styles/CommonStyles.xaml"/>
+                <ResourceDictionary Source="/Common.Content;component/Styles/CommonStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -19,7 +19,7 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Image Source="../Images/ZoomHS.png" Grid.Column="0" Width="16" Height="16"/>
+            <Image Source="/Common.Dialogs;component/Images/ZoomHS.png" Grid.Column="0" Width="16" Height="16"/>
             <TextBox x:Name="FilterValueTextBox" Grid.Column="1" 
                      Text="{Binding ElementName=searchControl,Path=SelectedFilterValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                      Style="{StaticResource BorderlessTextBox}"

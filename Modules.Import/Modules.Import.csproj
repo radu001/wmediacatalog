@@ -87,6 +87,10 @@
       <Project>{82C52DA4-8017-469C-8665-BE404E072A4B}</Project>
       <Name>BusinessObjects</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Common.Content\Common.Content.csproj">
+      <Project>{43AB1E81-C1D5-477C-9C71-DC60CF72D0BB}</Project>
+      <Name>Common.Content</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common.Controls\Common.Controls.csproj">
       <Project>{65BBD200-9201-46BF-877F-3AF4D68039B2}</Project>
       <Name>Common.Controls</Name>

@@ -15,7 +15,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Common.Dialogs;component/Styles/CommonStyles.xaml"/>
+                <ResourceDictionary Source="/Common.Content;component/Styles/CommonStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -32,14 +32,14 @@
                     ToolTip="Add new listening"
                     prismCommands:Click.Command="{Binding AddListeningCommand}">
                     <Button.Content>
-                        <Image Source="/Common.Dialogs;component/Images/Music-icon_plus_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
+                        <Image Source="/Common.Content;component/Images/Music-icon_plus_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
                     </Button.Content>
                 </Button>
                 <Button Margin="2" Style="{StaticResource ToolbarImageButtonStyle}"
                     ToolTip="Remove listening"
                     prismCommands:Click.Command="{Binding RemoveListeningCommand}">
                     <Button.Content>
-                        <Image Source="/Common.Dialogs;component/Images/Music-icon_remove_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
+                        <Image Source="/Common.Content;component/Images/Music-icon_remove_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
                     </Button.Content>
                 </Button>
             </ToolBar>
@@ -48,14 +48,14 @@
                     ToolTip="Add new artist"
                     prismCommands:Click.Command="{Binding CreateArtistCommand}">
                     <Button.Content>
-                        <Image Source="/Common.Dialogs;component/Images/Conductor_add_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
+                        <Image Source="/Common.Content;component/Images/Conductor_add_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
                     </Button.Content>
                 </Button>
                 <Button Margin="2" Style="{StaticResource ToolbarImageButtonStyle}"
                     ToolTip="Add new album"
                     prismCommands:Click.Command="{Binding CreateAlbumCommand}">
                     <Button.Content>
-                        <Image Source="/Common.Dialogs;component/Images/CD_add_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
+                        <Image Source="/Common.Content;component/Images/CD_add_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
                     </Button.Content>
                 </Button>                
             </ToolBar>

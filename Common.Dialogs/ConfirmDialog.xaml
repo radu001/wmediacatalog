@@ -12,7 +12,7 @@
     <local:DialogWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles/CommonStyles.xaml"/>
+                <ResourceDictionary Source="/Common.Content;component/Styles/CommonStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </local:DialogWindow.Resources>
@@ -35,7 +35,7 @@
                 <StackPanel HorizontalAlignment="Right" Grid.Column="1">
                     <Button VerticalAlignment="Center" Margin="8" Style="{StaticResource CloseButtonStyle}" IsCancel="True">
                         <Button.Content>
-                            <Image Source="Images/305_Close_16x16_72.png" Width="12" Height="12"/>
+                            <Image Source="/Common.Content;component/Images/305_Close_16x16_72.png" Width="12" Height="12"/>
                         </Button.Content>
                     </Button>
                 </StackPanel>
@@ -52,7 +52,7 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <Image Source="Images/109_AllAnnotations_Help_48x48_72.png" Width="48" Height="48" Grid.Row="0" Grid.Column="0" Margin="8"/>
+                <Image Source="/Common.Content;component/Images/109_AllAnnotations_Help_48x48_72.png" Width="48" Height="48" Grid.Row="0" Grid.Column="0" Margin="8"/>
                 <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource NotificationTextBoxStyle}" Margin="8" IsReadOnly="True"
                     VerticalContentAlignment="Center"
                     Text="{Binding ElementName=confirmDialog, Path=MessageText}" AcceptsReturn="True" TextWrapping="Wrap" />
