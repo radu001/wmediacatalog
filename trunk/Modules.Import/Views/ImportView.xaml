@@ -3,9 +3,40 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:commands="clr-namespace:Common.Commands;assembly=Common.Commands"
+             xmlns:prismCommands="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-            
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Common.Dialogs;component/Styles/CommonStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ToolBarTray Grid.Row="0" Grid.ColumnSpan="2">
+            <ToolBar HorizontalAlignment="Left">
+                <Button Margin="2"
+                        Style="{StaticResource ToolbarImageButtonStyle}"
+                        ToolTip="Scan files"
+                        prismCommands:Click.Command="{Binding ScanFilesCommand}">
+                    <Button.Content>
+                        <Image Source="/Common.Dialogs;component/Images/Conductor_add_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
+                    </Button.Content>
+                </Button>
+            </ToolBar>
+            <ToolBar HorizontalAlignment="Left">
+            </ToolBar>
+        </ToolBarTray>
+        <GroupBox Header="Import results" Grid.Row="1" Margin="2">
+            <TreeView x:Name="ImportTreeView"  ItemsSource="{Binding ImportedArtists}" >
+
+            </TreeView>
+        </GroupBox>
     </Grid>
 </UserControl>

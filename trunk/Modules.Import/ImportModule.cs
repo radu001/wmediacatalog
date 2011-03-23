@@ -24,6 +24,7 @@ namespace Modules.Import
         {
             container.RegisterType<IDataService, DataService>();
             container.RegisterType<IImportViewModel, ImportViewModel>();
+            container.RegisterType<IImportProgressViewModel, ImportProgressViewModel>();
             container.RegisterType<ITagsAccumulator, TagsAccumulator>();
             container.RegisterType<IScanner, VorbisCommentsScanner>();
             container.RegisterType<IFileSystem, FileSystem>();

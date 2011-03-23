@@ -67,10 +67,15 @@
     <Compile Include="Services\Utils\ITagsAccumulator.cs" />
     <Compile Include="Services\Utils\TagsAccumulator.cs" />
     <Compile Include="Services\Utils\VorbisCommentsScanner.cs" />
+    <Compile Include="ViewModels\IImportProgressViewModel.cs" />
     <Compile Include="ViewModels\IImportViewModel.cs" />
+    <Compile Include="ViewModels\ImportProgressViewModel.cs" />
     <Compile Include="ViewModels\ImportViewModel.cs" />
     <Compile Include="Views\ImportHolderView.xaml.cs">
       <DependentUpon>ImportHolderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ImportProgressView.xaml.cs">
+      <DependentUpon>ImportProgressView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ImportView.xaml.cs">
       <DependentUpon>ImportView.xaml</DependentUpon>
@@ -98,9 +103,17 @@
       <Project>{E66025A2-8077-40D1-B627-4D4945CEB365}</Project>
       <Name>Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FolderPickerLib\FolderPickerLib.csproj">
+      <Project>{F53582DB-02B7-4864-B7AA-AAD055A591E4}</Project>
+      <Name>FolderPickerLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\ImportHolderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ImportProgressView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

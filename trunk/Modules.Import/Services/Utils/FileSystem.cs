@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Modules.Import.Services.Utils
 {
@@ -15,6 +16,11 @@ namespace Modules.Import.Services.Utils
         public IEnumerable<DirectoryInfo> GetSubDirectories(DirectoryInfo dir)
         {
             return dir.GetDirectories();
+        }
+
+        public int CountFilesRecursively(DirectoryInfo dir, string searchPattern)
+        {
+            return dir.EnumerateFiles(searchPattern, SearchOption.AllDirectories).Count();
         }
 
         #endregion

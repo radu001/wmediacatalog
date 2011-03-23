@@ -69,6 +69,12 @@ namespace MediaCatalog.Tests.Extensions
 
         #region IFileSystem Members
 
+        public int CountFilesRecursively(DirectoryInfo dir, string searchPattern)
+        {
+            var allFiles = EnumerateFiles();
+            return allFiles.Count();
+        }
+
         public IEnumerable<FileInfo> GetFiles(DirectoryInfo dir, string searchPattern)
         {
             var directory = FindDirectory(dir.FullName);
@@ -196,6 +202,34 @@ namespace MediaCatalog.Tests.Extensions
             {
                 stack.Push(i);
             }
+        }
+
+        private IEnumerable<DirectoryItem<T>> EnumerateDirectories()
+        {
+            List<DirectoryItem<T>> allDirs = new List<DirectoryItem<T>>();
+
+            Stack<DirectoryItem<T>> stack = new Stack<DirectoryItem<T>>();
+            stack.Push(Root);
+
+            while (stack.Count > 0)
+            {
+                var current = stack.Pop();
+                allDirs.Add(current);
+
+                AppendToStack(stack, current.Childs);
+            }
+
+            return allDirs;
+        }
+
+        private IEnumerable<FileItem<T>> EnumerateFiles()
+        {
+            List<FileItem<T>> result = new List<FileItem<T>>();
+
+            var allDirs = EnumerateDirectories();
+            result.AddRange(allDirs.SelectMany(d => d.Files));
+
+            return result;
         }
 
         #endregion
