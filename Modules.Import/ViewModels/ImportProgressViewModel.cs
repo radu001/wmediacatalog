@@ -4,11 +4,21 @@ using Microsoft.Practices.Unity;
 
 namespace Modules.Import.ViewModels
 {
-    public class ImportProgressViewModel : ViewModelBase, IImportProgressViewModel
+    public class ImportProgressViewModel : DialogViewModelBase, IImportProgressViewModel
     {
         public ImportProgressViewModel(IUnityContainer unityContainer, IEventAggregator eventAggregator)
             : base(unityContainer, eventAggregator)
         {
+        }
+
+        public override void OnSuccessCommand(object parameter)
+        {
+            DialogResult = true;
+        }
+
+        public override void OnCancelCommand(object parameter)
+        {
+            DialogResult = false;
         }
 
         #region IImportProgressViewModel Members

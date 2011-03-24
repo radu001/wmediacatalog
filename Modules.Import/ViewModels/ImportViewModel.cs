@@ -53,16 +53,24 @@ namespace Modules.Import.ViewModels
 
         private void OnScanFilesCommand(object parameter)
         {
+            var viewModel = container.Resolve<IImportProgressViewModel>();
+            CommonDialog dialog2 = new CommonDialog()
+            {
+                DialogContent = new ImportProgressView(viewModel)
+            };
+            if (dialog2.ShowDialog() == true)
+            {
+            }
+
+            return; //debug
+
+
             FolderPickerDialog dialog = new FolderPickerDialog();
             if (dialog.ShowDialog() == true)
             {
-                var viewModel = container.Resolve<IImportProgressViewModel>();
-                CommonDialog dialog2 = new CommonDialog()
-                {
-                    DialogContent = new ImportProgressView(viewModel)
-                };
 
-                if (dialog2.ShowDialog() == true)
+
+
                 {
 
                     string path = dialog.SelectedPath;

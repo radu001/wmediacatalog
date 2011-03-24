@@ -1,4 +1,4 @@
-﻿<dialogs:DialogWindow x:Class="Modules.Tags.Views.TagEditView"
+﻿<UserControl x:Class="Modules.Tags.Views.TagEditView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -9,11 +9,8 @@
              xmlns:prismCommands="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"
              mc:Ignorable="d" 
              x:Name="dialogWindow"
-             WindowStyle="None" AllowsTransparency="True" ResizeMode="NoResize"
-             Background="Transparent" WindowStartupLocation="CenterScreen"
-             WindowResult="{Binding DialogResult}"
              Height="520" Width="500">
-    <Window.Resources>
+    <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Common.Content;component/Styles/CommonStyles.xaml"/>
@@ -21,42 +18,8 @@
 
             <converters:HeaderTextConverter x:Key="HeaderTextConverter" EntityName="tag"/>
         </ResourceDictionary>
-    </Window.Resources>
-    <Grid x:Name="LayoutRoot"
-          controls:BusyIndicatorBehavior.AddMargins="True" 
-          controls:BusyIndicatorBehavior.BusyState="{Binding IsBusy}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Border x:Name="HeaderBorder" Grid.Row="0" BorderThickness="2,2,2,0" CornerRadius="10,10,0,0" BorderBrush="Black" Background="SteelBlue"
-                MouseDown="HeaderBorder_MouseDown"
-                >
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <StackPanel HorizontalAlignment="Left" Grid.Column="0">
-                    <TextBlock Text="{Binding IsEditMode,Converter={StaticResource HeaderTextConverter}}" Style="{StaticResource DialogHeaderTextStyle}"/>
-                </StackPanel>
-                <StackPanel HorizontalAlignment="Right" Grid.Column="1">
-                    <Button VerticalAlignment="Center" Margin="8" Style="{StaticResource CloseButtonStyle}" IsCancel="True"
-                            prismCommands:Click.Command="{Binding CancelCommand}">
-                        <Button.Content>
-                            <Image Source="/Common.Content;component/Images/305_Close_16x16_72.png" Width="12" Height="12"/>
-                        </Button.Content>
-                    </Button>
-                </StackPanel>
-            </Grid>
-        </Border>
-        <Border Grid.Row="1" BorderThickness="2,0,2,2" CornerRadius="0,0,4,4" BorderBrush="Black" Background="LightGray">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid x:Name="ContentLayout" DataContext="{Binding Tag}">
+    </UserControl.Resources>
+        <Grid x:Name="LayoutRoot" DataContext="{Binding Tag}">
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition/>
@@ -91,18 +54,4 @@
                     <TextBox Text="{Binding CreateDate}" Grid.Row="9" Grid.Column="1" Margin="8" VerticalAlignment="Center" IsReadOnly="True"/>
 
                 </Grid>
-                <StackPanel Grid.Row="1" HorizontalAlignment="Right" Orientation="Horizontal" Margin="12,0,4,12">
-                    <Button x:Name="OkButton" Content="Ok" Width="75" IsDefault="True" Margin="6"
-                            Style="{StaticResource DialogButtonStyle}"
-                            prismCommands:Click.Command="{Binding SuccessCommand}"
-                            prismCommands:Click.CommandParameter="{Binding ElementName=dialogWindow}"
-                            />
-                    <Button x:Name="CancelButton" Content="Cancel" Width="75" IsCancel="True" Margin="6"
-                            Style="{StaticResource DialogButtonStyle}"
-                            prismCommands:Click.Command="{Binding CancelCommand}"
-                            />
-                </StackPanel>
-            </Grid>
-        </Border>
-    </Grid>
-</dialogs:DialogWindow>
+</UserControl>

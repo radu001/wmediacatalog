@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using BusinessObjects;
 using Common.Commands;
+using Common.Dialogs;
 using Common.Enums;
 using Common.Events;
 using Common.ViewModels;
@@ -300,8 +301,11 @@ namespace Modules.Albums.ViewModels
             viewModel.IsEditMode = isEditMode;
             viewModel.Tag.NeedValidate = true;
 
-            TagEditView view = new TagEditView(viewModel);
-            view.ShowDialog();
+            CommonDialog dialog = new CommonDialog()
+            {
+                DialogContent = new TagEditView(viewModel)
+            };
+            dialog.ShowDialog();
 
             return viewModel;
         }
