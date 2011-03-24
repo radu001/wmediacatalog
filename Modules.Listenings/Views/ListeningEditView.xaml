@@ -22,7 +22,7 @@
             <converters:InverseBoolConverter x:Key="InverseBoolConverter"/>
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
             <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter"/>
-            <converters:RatingConverter x:Key="RatingConverter"/>
+            <converters:RatingConverter x:Key="RatingConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid x:Name="LayoutRoot">
