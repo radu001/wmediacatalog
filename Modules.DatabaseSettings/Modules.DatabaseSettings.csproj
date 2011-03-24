@@ -73,9 +73,6 @@
     <Compile Include="Views\DatabaseToolsView.xaml.cs">
       <DependentUpon>DatabaseToolsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DbSettingsView.xaml.cs">
-      <DependentUpon>DbSettingsView.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common.Content\Common.Content.csproj">
@@ -115,10 +112,6 @@
     <Page Include="Views\DatabaseToolsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\DbSettingsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

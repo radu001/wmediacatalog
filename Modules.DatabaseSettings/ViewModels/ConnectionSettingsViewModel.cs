@@ -4,6 +4,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Common.Dialogs;
 using Common.Enums;
+using Common.Events;
 using Common.ViewModels;
 using DataServices.NHibernate;
 using Microsoft.Practices.Prism.Commands;
@@ -22,6 +23,7 @@ namespace Modules.DatabaseSettings.ViewModels
             ViewLoadedCommand = new DelegateCommand<object>(OnViewLoadedCommand);
             TestConfigurationCommand = new DelegateCommand<object>(OnTestConfigurationCommand);
             SaveConfigurationCommand = new DelegateCommand<object>(OnSaveConfigurationCommand);
+            CloseSettingsCommand = new DelegateCommand<object>(OnCloseSettingsCommand);
         }
 
         #region IConnectionSettingsViewModel Members
@@ -45,6 +47,8 @@ namespace Modules.DatabaseSettings.ViewModels
         public DelegateCommand<object> TestConfigurationCommand { get; private set; }
 
         public DelegateCommand<object> SaveConfigurationCommand { get; private set; }
+
+        public DelegateCommand<object> CloseSettingsCommand { get; private set; }
 
         #endregion
 
@@ -129,6 +133,11 @@ namespace Modules.DatabaseSettings.ViewModels
                 else
                     Notify("Can't save configuration. Unexpected error", NotificationType.Error);
             }
+        }
+
+        private void OnCloseSettingsCommand(object parameter)
+        {
+            eventAggregator.GetEvent<EndSetupDatabaseEvent>().Publish(String.Empty);
         }
 
         #endregion
