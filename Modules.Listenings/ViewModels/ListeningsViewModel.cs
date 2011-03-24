@@ -143,15 +143,12 @@ namespace Modules.Listenings.ViewModels
 
         private void OnAddListeningCommand(object parameter)
         {
-            IListeningEditViewModel viewModel = container.Resolve<IListeningEditViewModel>();
-            viewModel.IsEditMode = true;
-            viewModel.Listening = new Listening()
+            var newListening = new Listening()
             {
                 NeedValidate = true
             };
 
-            ListeningDialog dialog = new ListeningDialog(viewModel);
-            dialog.ShowDialog();
+            CreateOrViewListening(true, newListening);
         }
 
         private void OnRemoveListeningCommand(object parameter)
@@ -199,11 +196,19 @@ namespace Modules.Listenings.ViewModels
             if (SelectedListening == null)
                 return;
 
-            IListeningEditViewModel viewModel = container.Resolve<IListeningEditViewModel>();
-            viewModel.IsEditMode = false;
-            viewModel.Listening = SelectedListening;
+            CreateOrViewListening(false, SelectedListening);
+        }
 
-            ListeningDialog dialog = new ListeningDialog(viewModel);
+        private void CreateOrViewListening(bool isEditMode, Listening listening)
+        {
+            IListeningEditViewModel viewModel = container.Resolve<IListeningEditViewModel>();
+            viewModel.IsEditMode = isEditMode;
+            viewModel.Listening = listening;
+
+            var dialog = new CommonDialog()
+            {
+                DialogContent = new ListeningEditView(viewModel)
+            };
             dialog.ShowDialog();
         }
 

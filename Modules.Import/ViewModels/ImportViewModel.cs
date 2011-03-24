@@ -54,7 +54,7 @@ namespace Modules.Import.ViewModels
         private void OnScanFilesCommand(object parameter)
         {
             var viewModel = container.Resolve<IImportProgressViewModel>();
-            CommonDialog dialog2 = new CommonDialog()
+            var dialog2 = new CommonDialog()
             {
                 DialogContent = new ImportProgressView(viewModel)
             };

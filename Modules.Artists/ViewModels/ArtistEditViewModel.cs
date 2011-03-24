@@ -258,7 +258,7 @@ namespace Modules.Artists.ViewModels
             viewModel.Tag.NeedValidate = true;
 
 
-            CommonDialog dialog = new CommonDialog()
+            var dialog = new CommonDialog()
             {
                 DialogContent = new TagEditView(viewModel)
             };

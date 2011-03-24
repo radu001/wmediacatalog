@@ -301,7 +301,7 @@ namespace Modules.Albums.ViewModels
             viewModel.IsEditMode = isEditMode;
             viewModel.Tag.NeedValidate = true;
 
-            CommonDialog dialog = new CommonDialog()
+            var dialog = new CommonDialog()
             {
                 DialogContent = new TagEditView(viewModel)
             };

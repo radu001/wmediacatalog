@@ -343,7 +343,7 @@ namespace Modules.Artists.ViewModels
             artist.NeedValidate = true;
 
 
-            CommonDialog dialog = new CommonDialog()
+            var dialog = new CommonDialog()
             {
                 DialogContent = new ArtistEditView(viewModel)
             };
