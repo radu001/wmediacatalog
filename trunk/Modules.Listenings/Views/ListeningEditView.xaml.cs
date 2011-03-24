@@ -1,18 +1,17 @@
-﻿using Common.Dialogs;
-using Modules.Listenings.ViewModels;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using Modules.Listenings.Converters;
-using System.Windows;
+using Modules.Listenings.ViewModels;
 
 namespace Modules.Listenings.Views
 {
     /// <summary>
     /// Interaction logic for ListeningDialog.xaml
     /// </summary>
-    public partial class ListeningDialog : DialogWindow
+    public partial class ListeningEditView : UserControl
     {
-        public ListeningDialog(IListeningEditViewModel viewModel)
+        public ListeningEditView(IListeningEditViewModel viewModel)
         {
             InitializeComponent();
 
@@ -29,11 +28,6 @@ namespace Modules.Listenings.Views
                     Listening = viewModel.Listening
                 }
             });
-        }
-
-        private void HeaderBorder_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            this.DragMove();
         }
     }
 }

@@ -81,17 +81,17 @@
     <Compile Include="ViewModels\ListeningsViewModel.cs" />
     <Compile Include="ViewModels\MoodViewModel.cs" />
     <Compile Include="ViewModels\PlaceViewModel.cs" />
-    <Compile Include="Views\PlaceDialog.xaml.cs">
-      <DependentUpon>PlaceDialog.xaml</DependentUpon>
+    <Compile Include="Views\PlaceView.xaml.cs">
+      <DependentUpon>PlaceView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ListeningDialog.xaml.cs">
-      <DependentUpon>ListeningDialog.xaml</DependentUpon>
+    <Compile Include="Views\ListeningEditView.xaml.cs">
+      <DependentUpon>ListeningEditView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ListeningsView.xaml.cs">
       <DependentUpon>ListeningsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MoodDialog.xaml.cs">
-      <DependentUpon>MoodDialog.xaml</DependentUpon>
+    <Compile Include="Views\MoodView.xaml.cs">
+      <DependentUpon>MoodView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup />
@@ -126,11 +126,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\PlaceDialog.xaml">
+    <Page Include="Views\PlaceView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ListeningDialog.xaml">
+    <Page Include="Views\ListeningEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -138,7 +138,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MoodDialog.xaml">
+    <Page Include="Views\MoodView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

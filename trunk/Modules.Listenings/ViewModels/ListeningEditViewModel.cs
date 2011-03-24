@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using BusinessObjects;
+using Common.Dialogs;
 using Common.Enums;
 using Common.Events;
 using Common.Utilities;
@@ -35,8 +36,14 @@ namespace Modules.Listenings.ViewModels
             {
                 if (Listening.IsNew)
                 {
+                    bool originalValue = Listening.NeedValidate;
+
+                    Listening.NeedValidate = false; // force reset to avoid initial validation errors
+
                     Listening.Mood = Moods.FirstOrDefault();
-                    Listening.Place = Places.FirstOrDefault();
+                    Listening.Place = Places.FirstOrDefault(); // restore to original value
+
+                    Listening.NeedValidate = originalValue;
                 }
             });
         }
@@ -143,7 +150,10 @@ namespace Modules.Listenings.ViewModels
             };
             viewModel.IsEditMode = true;
 
-            PlaceDialog dialog = new PlaceDialog(viewModel);
+            var dialog = new CommonDialog()
+            {
+                DialogContent = new PlaceView(viewModel)
+            };
             dialog.ShowDialog();
         }
 
@@ -156,7 +166,10 @@ namespace Modules.Listenings.ViewModels
             };
             viewModel.IsEditMode = true;
 
-            MoodDialog dialog = new MoodDialog(viewModel);
+            var dialog = new CommonDialog()
+            {
+                DialogContent = new MoodView(viewModel)
+            };
             dialog.ShowDialog();
         }
 
