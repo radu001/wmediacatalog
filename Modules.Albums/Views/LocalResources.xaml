@@ -33,47 +33,4 @@
             </Grid>
         </Border>
     </DataTemplate>
-
-    <DataTemplate x:Key="GenreDetachableDataTemplate">
-        <Border BorderBrush="LightSteelBlue" Background="LightSteelBlue" BorderThickness="1" CornerRadius="8" Margin="2,1,2,1">
-            <Grid Margin="4,2,4,2" Height="24">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Text="{Binding Name}" FontWeight="Bold" Grid.Column="0" VerticalAlignment="Center"/>
-                <Button Style="{StaticResource TransparentImageButtonStyle}" Grid.Column="1" Margin="6,0,0,0" VerticalAlignment="Center"
-                                                        ToolTip="Detach this tag from artist" Cursor="Hand"
-                                                        prismCommands:Click.Command="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.DetachGenreCommand}"
-                                                        prismCommands:Click.CommandParameter="{Binding}"
-                                                        >
-                    <Button.Content>
-                        <Image Source="/Common.Content;component/Images/Remove_16x16.png" Height="16" Width="16"/>
-                    </Button.Content>
-                </Button>
-            </Grid>
-        </Border>
-    </DataTemplate>
-
-    <DataTemplate x:Key="ArtistDetachableDataTemplate">
-        <Border BorderBrush="LightSteelBlue" Background="LightSteelBlue" BorderThickness="1" CornerRadius="8" Margin="2,1,2,1">
-            <Grid Margin="4,2,4,2" Height="24">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Text="{Binding Name}" FontWeight="Bold" Grid.Column="0" VerticalAlignment="Center"/>
-                <Button Style="{StaticResource TransparentImageButtonStyle}" Grid.Column="1" Margin="6,0,0,0" VerticalAlignment="Center"
-                                                        ToolTip="Detach this tag from artist" Cursor="Hand"
-                                                        prismCommands:Click.Command="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.DetachArtistCommand}"
-                                                        prismCommands:Click.CommandParameter="{Binding}"
-                                                        >
-                    <Button.Content>
-                        <Image Source="/Common.Content;component/Images/Remove_16x16.png" Height="16" Width="16"/>
-                    </Button.Content>
-                </Button>
-            </Grid>
-        </Border>
-    </DataTemplate>
-
 </ResourceDictionary>

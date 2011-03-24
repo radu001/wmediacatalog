@@ -98,8 +98,8 @@
     <Compile Include="ViewModels\IGenresListViewModel.cs" />
     <Compile Include="ViewModels\ITracksListViewModel.cs" />
     <Compile Include="ViewModels\TracksListViewModel.cs" />
-    <Compile Include="Views\AlbumEditDialog.xaml.cs">
-      <DependentUpon>AlbumEditDialog.xaml</DependentUpon>
+    <Compile Include="Views\AlbumEditView.xaml.cs">
+      <DependentUpon>AlbumEditView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AlbumSearchView.xaml.cs">
       <DependentUpon>AlbumSearchView.xaml</DependentUpon>
@@ -112,7 +112,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\AlbumEditDialog.xaml">
+    <Page Include="Views\AlbumEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -124,13 +124,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Resource Include="Views\LocalResources.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Resource>
     <Page Include="Views\GenreEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LocalResources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
