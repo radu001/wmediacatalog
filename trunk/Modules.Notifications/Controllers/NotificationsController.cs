@@ -6,6 +6,7 @@ using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
 using Modules.Notifications.ViewModels;
+using Modules.Notifications.Views;
 namespace Modules.Notifications.Controllers
 {
     public class NotificationsController
@@ -25,11 +26,16 @@ namespace Modules.Notifications.Controllers
                 return;
 
             INotificationsViewModel viewModel = container.Resolve<INotificationsViewModel>();
-            viewModel.HeaderText = info.NotificationType.ToString();
             viewModel.MessageText = info.Text;
             viewModel.NotificationType = info.NotificationType;
 
-            NotificationDialog dialog = new NotificationDialog(viewModel);
+            CommonDialog dialog = new CommonDialog()
+            {
+                HeaderText = info.NotificationType.ToString(),
+                DialogButtons = DialogButtons.Ok,
+                DialogContent = new NotificationControl(viewModel)
+            };
+
             dialog.ShowDialog();
         }
 

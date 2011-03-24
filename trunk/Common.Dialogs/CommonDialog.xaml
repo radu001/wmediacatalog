@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:controls="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
              xmlns:local="clr-namespace:Common.Dialogs"
+             xmlns:converters="clr-namespace:Common.Dialogs.Converters"
              mc:Ignorable="d"
              WindowStyle="None" AllowsTransparency="True" ResizeMode="NoResize"
              Background="Transparent" WindowStartupLocation="CenterScreen"
@@ -14,6 +15,9 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Common.Content;component/Styles/CommonStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
+            <converters:DialogButtonsConverter x:Key="OkDialogButtonsConverter" ButtonType="Ok"/>
+            <converters:DialogButtonsConverter x:Key="CancelDialogButtonsConverter" ButtonType="Cancel"/>
         </ResourceDictionary>
     </local:DialogWindow.Resources>
     <Grid x:Name="DialogLayoutRoot" 
@@ -55,9 +59,11 @@
                 <ContentControl Content="{Binding ElementName=dialog,Path=DialogContent}" Grid.Row="0" Grid.ColumnSpan="2"/>
                 <StackPanel x:Name="ButtonsLayout" Grid.Row="1" Grid.ColumnSpan="2" Margin="8,8,0,8" HorizontalAlignment="Right" Orientation="Horizontal">
                     <Button x:Name="OkButton" Content="Ok" Width="75" Margin="6"
-                            Style="{StaticResource DialogButtonStyle}"/>
+                            Style="{StaticResource DialogButtonStyle}"
+                            Visibility="{Binding ElementName=dialog,Path=DialogButtons,Converter={StaticResource OkDialogButtonsConverter}}"/>
                     <Button x:Name="CancelButton" Content="Cancel" Width="75" Margin="6"
-                            Style="{StaticResource DialogButtonStyle}"/>
+                            Style="{StaticResource DialogButtonStyle}"
+                            Visibility="{Binding ElementName=dialog,Path=DialogButtons,Converter={StaticResource CancelDialogButtonsConverter}}"/>
                 </StackPanel>
             </Grid>
         </Border>

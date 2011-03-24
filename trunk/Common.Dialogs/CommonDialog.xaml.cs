@@ -123,6 +123,26 @@ namespace Common.Dialogs
 
         #endregion
 
+        #region ButtonsSettings
+
+        public static readonly DependencyProperty DialogButtonsProperty =
+            DependencyProperty.Register("DialogButtons", typeof(DialogButtons), typeof(CommonDialog),
+            new PropertyMetadata(DialogButtons.Ok | DialogButtons.Cancel));
+
+        public DialogButtons DialogButtons
+        {
+            get
+            {
+                return (DialogButtons)GetValue(DialogButtonsProperty);
+            }
+            set
+            {
+                SetValue(DialogButtonsProperty, value);
+            }
+        }
+
+        #endregion
+
         #endregion
 
         public CommonDialog()

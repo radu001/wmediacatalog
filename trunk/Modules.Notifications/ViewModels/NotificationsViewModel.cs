@@ -1,9 +1,17 @@
 ﻿
 using Common.Enums;
+using Common.ViewModels;
+using Microsoft.Practices.Prism.Events;
+using Microsoft.Practices.Unity;
 namespace Modules.Notifications.ViewModels
 {
-    public class NotificationsViewModel : INotificationsViewModel
+    public class NotificationsViewModel : DialogViewModelBase, INotificationsViewModel
     {
+        public NotificationsViewModel(IUnityContainer container, IEventAggregator eventAggregator)
+            : base(container, eventAggregator)
+        {
+        }
+
         #region INotificationsViewModel Members
 
         public NotificationType NotificationType
@@ -15,18 +23,6 @@ namespace Modules.Notifications.ViewModels
             set
             {
                 notificationType = value;
-            }
-        }
-
-        public string HeaderText
-        {
-            get
-            {
-                return headerText;
-            }
-            set
-            {
-                headerText = value;
             }
         }
 
@@ -44,10 +40,19 @@ namespace Modules.Notifications.ViewModels
 
         #endregion
 
+        public override void OnSuccessCommand(object parameter)
+        {
+            DialogResult = true;
+        }
+
+        public override void OnCancelCommand(object parameter)
+        {
+            DialogResult = false;
+        }
+
         #region Private fields
 
         private NotificationType notificationType;
-        private string headerText;
         private string messageText;
 
         #endregion
