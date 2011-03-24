@@ -21,6 +21,70 @@
                 <ResourceDictionary Source="LocalResources.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
+            <DataTemplate x:Key="GenreDataTemplate">
+                <Border BorderBrush="LightSteelBlue" Background="LightSteelBlue" BorderThickness="1" CornerRadius="8" Margin="2,1,2,1">
+                    <Grid Margin="4,2,4,2" Height="24">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding Name}" FontWeight="Bold" Grid.Column="0" VerticalAlignment="Center"/>
+                    </Grid>
+                </Border>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ArtistDataTemplate">
+                <Border BorderBrush="LightSteelBlue" Background="LightSteelBlue" BorderThickness="1" CornerRadius="8" Margin="2,1,2,1">
+                    <Grid Margin="4,2,4,2" Height="24">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding Name}" FontWeight="Bold" Grid.Column="0" VerticalAlignment="Center"/>
+                    </Grid>
+                </Border>
+            </DataTemplate>
+
+            <DataTemplate x:Key="GenreDetachableDataTemplate">
+                <Border BorderBrush="LightSteelBlue" Background="LightSteelBlue" BorderThickness="1" CornerRadius="8" Margin="2,1,2,1">
+                    <Grid Margin="4,2,4,2" Height="24">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding Name}" FontWeight="Bold" Grid.Column="0" VerticalAlignment="Center"/>
+                        <Button Style="{StaticResource TransparentImageButtonStyle}" Grid.Column="1" Margin="6,0,0,0" VerticalAlignment="Center"
+                                                        ToolTip="Detach this tag from artist" Cursor="Hand"
+                                                        prismCommands:Click.Command="{Binding ElementName=dialogWindow, Path=DetachGenreCommand}"
+                                                        prismCommands:Click.CommandParameter="{Binding}">
+                            <Button.Content>
+                                <Image Source="/Common.Content;component/Images/Remove_16x16.png" Height="16" Width="16"/>
+                            </Button.Content>
+                        </Button>
+                    </Grid>
+                </Border>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ArtistDetachableDataTemplate">
+                <Border BorderBrush="LightSteelBlue" Background="LightSteelBlue" BorderThickness="1" CornerRadius="8" Margin="2,1,2,1">
+                    <Grid Margin="4,2,4,2" Height="24">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding Name}" FontWeight="Bold" Grid.Column="0" VerticalAlignment="Center"/>
+                        <Button Style="{StaticResource TransparentImageButtonStyle}" Grid.Column="1" Margin="6,0,0,0" VerticalAlignment="Center"
+                                                        ToolTip="Detach this tag from artist" Cursor="Hand"
+                                                        prismCommands:Click.Command="{Binding ElementName=dialogWindow, Path=DataContext.DetachArtistCommand}"
+                                                        prismCommands:Click.CommandParameter="{Binding}">
+                            <Button.Content>
+                                <Image Source="/Common.Content;component/Images/Remove_16x16.png" Height="16" Width="16"/>
+                            </Button.Content>
+                        </Button>
+                    </Grid>
+                </Border>
+            </DataTemplate>
+
             <converters:HeaderTextConverter x:Key="HeaderTextConverter" EntityName="album"/>
             <converters:RatingConverter x:Key="RatingConverter"/>
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
@@ -81,13 +145,11 @@
                         <TextBlock Text="Rating" Grid.Row="6" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
                         <toolkit:Rating Value="{Binding Rating,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource RatingConverter}}" 
                                                 Grid.Row="6" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Cursor="Hand"
-                                                ItemCount="7"
-                                                />
+                                                ItemCount="7"/>
 
                         <TextBlock Text="Private marks" Grid.Row="7" Grid.RowSpan="2"  Grid.Column="0" VerticalAlignment="Top" Style="{StaticResource DialogLabelStyle}"/>
                         <TextBox Text="{Binding PrivateMarks}" Grid.Row="7" Grid.RowSpan="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="8" 
-                                    AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap"
-                                />
+                                    AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Tracks" DataContext="{Binding TracksListViewModel}" Tag="{x:Static enums:AlbumTabsEnum.Tracks}">
@@ -103,8 +165,7 @@
                                                    CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" AlternatingRowBackground="#E1E5E8" 
                                                    HorizontalGridLinesBrush="Transparent" VerticalGridLinesBrush="Transparent"
                                                    CellStyle="{StaticResource TracksDataGridCellStyle}"
-                                                   commands:MultiSelectionChanged.Command="{Binding SelectedTracksChangedCommand}"
-                                                   >
+                                                   commands:MultiSelectionChanged.Command="{Binding SelectedTracksChangedCommand}">
                             <DataGrid.InputBindings>
                                 <KeyBinding Key="Down" Modifiers="Alt" Command="{Binding MoveTracksDownCommand}" CommandParameter="{Binding ElementName=TrackListDataGrid}"/>
                                 <KeyBinding Key="Up" Modifiers="Alt" Command="{Binding MoveTracksUpCommand}" CommandParameter="{Binding ElementName=TrackListDataGrid}"/>
