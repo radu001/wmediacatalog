@@ -45,16 +45,16 @@
                     <TextBlock Text="Date" Grid.Row="0" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
                     <TextBox Text="{Binding Listening.Date}" Grid.Row="0" Grid.Column="1" IsReadOnly="True" 
                                      Margin="{StaticResource DialogMargin}"
-                                     Visibility="{Binding IsEditMode,Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
+                                     Visibility="{Binding IsViewMode,Converter={StaticResource BoolToVisibilityConverter}}"/>
                     <DatePicker Grid.Row="0" Grid.Column="1" Margin="{StaticResource DialogMargin}" Focusable="False"
                                         SelectedDate="{Binding Listening.Date,Mode=TwoWay}"
-                                        Visibility="{Binding IsEditMode,Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                        Visibility="{Binding IsViewMode,Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
 
                     <TextBlock Text="Rating" Grid.Row="1" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
                     <toolkit:Rating Value="{Binding Listening.ListenRating,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource RatingConverter}}" 
                                                 Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"
                                                 Margin="{StaticResource DialogMargin}" Cursor="Hand"
-                                                IsReadOnly="{Binding IsEditMode,Converter={StaticResource InverseBoolConverter}}"
+                                                IsReadOnly="{Binding IsViewMode}"
                                                 ItemCount="7"/>
 
                     <TextBlock Text="Album" Grid.Row="2" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
@@ -74,7 +74,7 @@
                                      Margin="{StaticResource DialogMargin}"
                                      Visibility="{Binding IsEditMode,Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
                     <DockPanel Grid.Row="3" Grid.Column="1" LastChildFill="True" 
-                                       Visibility="{Binding IsEditMode,Converter={StaticResource BoolToVisibilityConverter}}">
+                                       Visibility="{Binding IsEditMode,Converter={StaticResource InverseBoolToVisibilityConverter}}">
                         <Button DockPanel.Dock="Right" Margin="{StaticResource DialogMargin}" Style="{StaticResource ImageButtonStyle}"
                                         prismCommand:Click.Command="{Binding CreatePlaceCommand}">
                             <Button.Content>
@@ -90,7 +90,7 @@
                                      Margin="{StaticResource DialogMargin}"
                                      Visibility="{Binding IsEditMode,Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
                     <DockPanel Grid.Row="4" Grid.Column="1" LastChildFill="True"
-                                       Visibility="{Binding IsEditMode,Converter={StaticResource BoolToVisibilityConverter}}">
+                                       Visibility="{Binding IsEditMode,Converter={StaticResource InverseBoolToVisibilityConverter}}">
                         <Button DockPanel.Dock="Right" Margin="{StaticResource DialogMargin}" Style="{StaticResource ImageButtonStyle}"
                                         prismCommand:Click.Command="{Binding CreateMoodCommand}">
                             <Button.Content>

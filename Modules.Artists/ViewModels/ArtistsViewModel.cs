@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BusinessObjects;
 using Common.Controls.Controls;
 using Common.Dialogs;
+using Common.Dialogs.Helpers;
 using Common.Entities.Pagination;
 using Common.Enums;
 using Common.Events;
@@ -345,7 +346,8 @@ namespace Modules.Artists.ViewModels
 
             var dialog = new CommonDialog()
             {
-                DialogContent = new ArtistEditView(viewModel)
+                DialogContent = new ArtistEditView(viewModel),
+                HeaderText = HeaderTextHelper.CreateHeaderText(typeof(Artist), isEditMode)
             };
             dialog.ShowDialog();
         }

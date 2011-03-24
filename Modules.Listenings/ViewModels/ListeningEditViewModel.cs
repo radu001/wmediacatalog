@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BusinessObjects;
 using Common.Dialogs;
+using Common.Dialogs.Helpers;
 using Common.Enums;
 using Common.Events;
 using Common.Utilities;
@@ -89,6 +90,19 @@ namespace Modules.Listenings.ViewModels
             }
         }
 
+        public bool IsViewMode
+        {
+            get
+            {
+                return isViewMode;
+            }
+            set
+            {
+                isViewMode = value;
+                NotifyPropertyChanged(() => IsViewMode);
+            }
+        }
+
         public DelegateCommand<object> SearchAlbumCommand { get; private set; }
 
         public DelegateCommand<object> CreatePlaceCommand { get; private set; }
@@ -152,7 +166,8 @@ namespace Modules.Listenings.ViewModels
 
             var dialog = new CommonDialog()
             {
-                DialogContent = new PlaceView(viewModel)
+                DialogContent = new PlaceView(viewModel),
+                HeaderText = HeaderTextHelper.CreateHeaderText(typeof(Place), false)
             };
             dialog.ShowDialog();
         }
@@ -168,7 +183,8 @@ namespace Modules.Listenings.ViewModels
 
             var dialog = new CommonDialog()
             {
-                DialogContent = new MoodView(viewModel)
+                DialogContent = new MoodView(viewModel),
+                HeaderText = HeaderTextHelper.CreateHeaderText(typeof(Mood), false)
             };
             dialog.ShowDialog();
         }
@@ -278,6 +294,7 @@ namespace Modules.Listenings.ViewModels
         private Listening listening;
         private ObservableCollection<Mood> moods;
         private ObservableCollection<Place> places;
+        private bool isViewMode;
 
         #endregion
     }

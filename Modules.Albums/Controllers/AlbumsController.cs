@@ -28,7 +28,7 @@ namespace Modules.Albums.Controllers
         {
             IAlbumSearchViewModel viewModel = container.Resolve<IAlbumSearchViewModel>();
 
-            CommonDialog dialog = new CommonDialog()
+            var dialog = new CommonDialog()
             {
                 DialogContent = new AlbumSearchView(viewModel)
             };

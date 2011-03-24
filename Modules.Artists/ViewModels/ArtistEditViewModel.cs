@@ -7,6 +7,7 @@ using System.Windows.Input;
 using BusinessObjects;
 using Common.Commands;
 using Common.Dialogs;
+using Common.Dialogs.Helpers;
 using Common.Enums;
 using Common.Events;
 using Common.Utilities;
@@ -260,7 +261,8 @@ namespace Modules.Artists.ViewModels
 
             var dialog = new CommonDialog()
             {
-                DialogContent = new TagEditView(viewModel)
+                DialogContent = new TagEditView(viewModel),
+                HeaderText = HeaderTextHelper.CreateHeaderText(typeof(Tag), isEditMode)
             };
             dialog.ShowDialog();
 

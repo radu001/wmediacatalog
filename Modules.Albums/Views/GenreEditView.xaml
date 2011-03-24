@@ -15,8 +15,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Common.Content;component/Styles/CommonStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-
-            <converters:HeaderTextConverter x:Key="HeaderTextConverter" EntityName="genre"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid x:Name="LayoutRoot" DataContext="{Binding Genre}">
