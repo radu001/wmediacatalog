@@ -45,20 +45,20 @@ namespace Common.Dialogs.Converters
             switch (imageType)
             {
                 case NotificationType.Error:
-                        image.UriSource = new Uri("Images/109_AllAnnotations_Error_48x48_72.png", UriKind.Relative);
-                        break;
+                    image.UriSource = new Uri("pack://application:,,,/Common.Content;component/Images/109_AllAnnotations_Error_48x48_72.png");
+                    break;
                 case NotificationType.Help:
-                        image.UriSource = new Uri("Images/109_AllAnnotations_Help_48x48_72.png", UriKind.Relative);
-                        break;
+                    image.UriSource = new Uri("pack://application:,,,/Common.Content;component/Images/109_AllAnnotations_Help_48x48_72.png");
+                    break;
                 case NotificationType.Info:
-                        image.UriSource = new Uri("Images/109_AllAnnotations_Info_48x48_72.png", UriKind.Relative);
-                        break;
+                    image.UriSource = new Uri("pack://application:,,,/Common.Content;component/Images/109_AllAnnotations_Info_48x48_72.png");
+                    break;
                 case NotificationType.Warning:
-                        image.UriSource = new Uri("Images/109_AllAnnotations_Warning_48x48_72.png", UriKind.Relative);
-                        break;
+                    image.UriSource = new Uri("pack://application:,,,/Common.Content;component/Images/109_AllAnnotations_Warning_48x48_72.png");
+                    break;
                 case NotificationType.Success:
-                        image.UriSource = new Uri("Images/109_AllAnnotations_Default_48x48_72.png", UriKind.Relative);
-                        break;
+                    image.UriSource = new Uri("pack://application:,,,/Common.Content;component/Images/109_AllAnnotations_Default_48x48_72.png");
+                    break;
             }
             image.EndInit();
 

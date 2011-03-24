@@ -1,5 +1,4 @@
 ﻿
-using System.Windows;
 using Common;
 using Common.Controllers;
 using Common.Enums;
@@ -16,18 +15,26 @@ namespace Modules.DatabaseSettings.Controllers
             : base(container, regionManager, eventAggregator)
         {
             eventAggregator.GetEvent<SetupDatabaseEvent>().Subscribe(OnSetupDatabaseEvent, true);
+            eventAggregator.GetEvent<EndSetupDatabaseEvent>().Subscribe(OnEndSetupDatabaseEvent, true);
         }
 
         private void OnSetupDatabaseEvent(object parameter)
         {
-            IRegion dbSettingsRegion = GetDbSettingsRegion();
-            object view = dbSettingsRegion.GetView(ViewNames.DbSettingsView);
-
+            IRegion mainRegion = GetMainRegion();
+            var view = mainRegion.GetView(ViewNames.ConnectionSettingsView);
             if (view != null)
             {
-                if (dbSettingsView.Visibility == Visibility.Collapsed || dbSettingsView.Visibility == Visibility.Hidden)
-                    dbSettingsView.ShowDialog();
-                dbSettingsRegion.Activate(view);
+                mainRegion.Activate(view);
+            }
+        }
+
+        private void OnEndSetupDatabaseEvent(object parameter)
+        {
+            IRegion mainRegion = GetMainRegion();
+            var view = mainRegion.GetView(ViewNames.LoginView);
+            if (view != null)
+            {
+                mainRegion.Activate(view);
             }
         }
 
@@ -36,17 +43,13 @@ namespace Modules.DatabaseSettings.Controllers
             IRegion workspaceRegion = GetWorkspaceRegion();
             workspaceRegion.Add(container.Resolve<DatabaseToolsView>(), WorkspaceNameEnum.DatabaseTools.ToString());
 
-            dbSettingsView = new DbSettingsView();
-            RegionManager.SetRegionManager(dbSettingsView, regionManager);
-            IRegion dbSettingsRegion = GetDbSettingsRegion();
-            dbSettingsRegion.Add(container.Resolve<ConnectionSettingsView>(), ViewNames.DbSettingsView);
+            IRegion mainRegion = GetMainRegion();
+            mainRegion.Add(container.Resolve<ConnectionSettingsView>(), ViewNames.ConnectionSettingsView);
         }
 
-        private IRegion GetDbSettingsRegion()
+        private IRegion GetMainRegion()
         {
-            return regionManager.Regions[RegionNames.DbSettingsRegion];
+            return regionManager.Regions[RegionNames.MainRegion];
         }
-
-        private DbSettingsView dbSettingsView;
     }
 }

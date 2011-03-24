@@ -87,6 +87,7 @@
     <Compile Include="Events\CreateAlbumEvent.cs" />
     <Compile Include="Events\CreateArtistEvent.cs" />
     <Compile Include="Events\EditAlbumEvent.cs" />
+    <Compile Include="Events\EndSetupDatabaseEvent.cs" />
     <Compile Include="Events\GenresChangedEvent.cs" />
     <Compile Include="Events\ReloadAlbumsEvent.cs" />
     <Compile Include="Events\LoginFailedEvent.cs" />

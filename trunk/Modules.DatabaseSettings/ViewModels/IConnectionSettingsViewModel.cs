@@ -10,5 +10,6 @@ namespace Modules.DatabaseSettings.ViewModels
         DelegateCommand<object> ViewLoadedCommand { get; }
         DelegateCommand<object> TestConfigurationCommand { get; }
         DelegateCommand<object> SaveConfigurationCommand { get; }
+        DelegateCommand<object> CloseSettingsCommand { get; }
     }
 }
