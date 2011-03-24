@@ -60,7 +60,7 @@
                     <TextBlock Text="Album" Grid.Row="2" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
                     <DockPanel Grid.Row="2" Grid.Column="1" LastChildFill="True">
                         <Button DockPanel.Dock="Right" Margin="{StaticResource DialogMargin}" Style="{StaticResource ImageButtonStyle}"
-                                        Visibility="{Binding IsEditMode,Converter={StaticResource BoolToVisibilityConverter}}"
+                                        Visibility="{Binding IsViewMode,Converter={StaticResource InverseBoolToVisibilityConverter}}"
                                         prismCommand:Click.Command="{Binding SearchAlbumCommand}">
                             <Button.Content>
                                 <Image Source="/Common.Content;component/Images/ZoomHS.png" Width="16" Height="16"/>
@@ -72,9 +72,9 @@
                     <TextBlock Text="Place" Grid.Row="3" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
                     <TextBox Text="{Binding Listening.Place.Name}" Grid.Row="3" Grid.Column="1" IsReadOnly="True"
                                      Margin="{StaticResource DialogMargin}"
-                                     Visibility="{Binding IsEditMode,Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
+                                     Visibility="{Binding IsViewMode,Converter={StaticResource BoolToVisibilityConverter}}"/>
                     <DockPanel Grid.Row="3" Grid.Column="1" LastChildFill="True" 
-                                       Visibility="{Binding IsEditMode,Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                                       Visibility="{Binding IsViewMode,Converter={StaticResource InverseBoolToVisibilityConverter}}">
                         <Button DockPanel.Dock="Right" Margin="{StaticResource DialogMargin}" Style="{StaticResource ImageButtonStyle}"
                                         prismCommand:Click.Command="{Binding CreatePlaceCommand}">
                             <Button.Content>
@@ -88,9 +88,9 @@
                     <TextBlock Text="Mood" Grid.Row="4" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
                     <TextBox Text="{Binding Listening.Mood.Name}" Grid.Row="4" Grid.Column="1" IsReadOnly="True"
                                      Margin="{StaticResource DialogMargin}"
-                                     Visibility="{Binding IsEditMode,Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
+                                     Visibility="{Binding IsViewMode,Converter={StaticResource BoolToVisibilityConverter}}"/>
                     <DockPanel Grid.Row="4" Grid.Column="1" LastChildFill="True"
-                                       Visibility="{Binding IsEditMode,Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                                       Visibility="{Binding IsViewMode,Converter={StaticResource InverseBoolToVisibilityConverter}}">
                         <Button DockPanel.Dock="Right" Margin="{StaticResource DialogMargin}" Style="{StaticResource ImageButtonStyle}"
                                         prismCommand:Click.Command="{Binding CreateMoodCommand}">
                             <Button.Content>
@@ -104,7 +104,7 @@
                     <TextBlock Text="Private marks" Grid.Row="5" Grid.Column="0" VerticalAlignment="Top" Style="{StaticResource DialogLabelStyle}"/>
                     <TextBox Grid.Row="5" Grid.Column="1" Margin="{StaticResource DialogMargin}" AcceptsReturn="True"
                                      Text="{Binding Listening.PrivateMarks,Mode=TwoWay}"
-                                     IsReadOnly="{Binding IsEditMode,Converter={StaticResource InverseBoolConverter}}"/>
+                                     IsReadOnly="{Binding IsViewMode}"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Review" Style="{StaticResource VeticalTabItemHeader}">
@@ -116,7 +116,7 @@
                     <TextBlock Text="Review" Grid.Column="0" VerticalAlignment="Top" Style="{StaticResource DialogLabelStyle}"/>
                     <TextBox Grid.Column="1" Margin="{StaticResource DialogMargin}" AcceptsReturn="True"
                                      Text="{Binding Listening.Review,Mode=TwoWay}"
-                                     IsReadOnly="{Binding IsEditMode,Converter={StaticResource InverseBoolConverter}}"/>
+                                     IsReadOnly="{Binding IsViewMode}"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Comments" Style="{StaticResource VeticalTabItemHeader}">
@@ -128,7 +128,7 @@
                     <TextBlock Text="Comments" Grid.Column="0" VerticalAlignment="Top" Style="{StaticResource DialogLabelStyle}"/>
                     <TextBox Grid.Column="1" Margin="{StaticResource DialogMargin}" AcceptsReturn="True"
                                      Text="{Binding Listening.Comments,Mode=TwoWay}"
-                                     IsReadOnly="{Binding IsEditMode,Converter={StaticResource InverseBoolConverter}}"/>
+                                     IsReadOnly="{Binding IsViewMode}"/>
                 </Grid>
             </TabItem>
         </TabControl>

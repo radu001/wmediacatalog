@@ -117,7 +117,6 @@ namespace Modules.Listenings.ViewModels
 
         #region Private methods
 
-
         private void OnViewLoadedCommand(object parameter)
         {
             //User control is loaded multiple times when we switch between regions
