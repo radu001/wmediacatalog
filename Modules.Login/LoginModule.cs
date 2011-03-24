@@ -4,7 +4,6 @@ using Microsoft.Practices.Unity;
 using Modules.Login.Controllers;
 using Modules.Login.Services;
 using Modules.Login.ViewModels;
-using Modules.Login.Views;
 
 namespace Modules.Login
 {
@@ -23,8 +22,6 @@ namespace Modules.Login
             container.RegisterType<IDataService, DataService>();
             container.RegisterType<ILoginViewModel, LoginViewModel>();
             container.RegisterType<IUserRegistrationViewModel, UserRegistrationViewModel>();
-
-            container.RegisterType<IUserRegistrationView, UserRegistrationView>();
 
             loginController = container.Resolve<LoginController>();
         }

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using BusinessObjects;
 using Common.Commands;
+using Common.Dialogs;
 using Common.Entities;
 using Common.Enums;
 using Common.Events;
@@ -125,7 +126,12 @@ namespace Modules.Login.ViewModels
 
         private void OnRegisterNewUserCommand(MouseDownArgs parameter)
         {
-            IUserRegistrationView dialog = container.Resolve<IUserRegistrationView>();
+            var viewModel = container.Resolve<IUserRegistrationViewModel>();
+
+            var dialog = new CommonDialog()
+            {
+                DialogContent = new UserRegistrationView(viewModel)
+            };
             dialog.ShowDialog();
         }
 

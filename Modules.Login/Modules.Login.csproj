@@ -67,7 +67,6 @@
     <Compile Include="ViewModels\IUserRegistrationViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\UserRegistrationViewModel.cs" />
-    <Compile Include="Views\IUserRegistrationView.cs" />
     <Compile Include="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>

@@ -1,7 +1,6 @@
 ﻿
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -137,7 +136,6 @@ namespace Modules.Artists.ViewModels
 
             Task<bool> saveArtistTask = Task.Factory.StartNew<bool>(() =>
             {
-                Thread.Sleep(10000);
                 return dataService.SaveArtist(Artist);
             }, TaskScheduler.Default);
 
