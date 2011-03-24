@@ -115,33 +115,40 @@ namespace Modules.Listenings.ViewModels
 
         public override void OnSuccessCommand(object parameter)
         {
-            ValidationHelper validator = new ValidationHelper();
-            if (validator.Validate(parameter))
+            if (IsViewMode) // avoid updating listening when pressing ok in viewMode
             {
-                IsBusy = true;
+                DialogResult = false;
+            }
+            else
+            {
+                ValidationHelper validator = new ValidationHelper();
+                if (validator.Validate(parameter))
+                {
+                    IsBusy = true;
 
-                Task<bool> saveTask = Task.Factory.StartNew<bool>(() =>
-                    {
-                        return dataService.SaveListening(Listening);
-                    }, TaskScheduler.Default);
-
-                Task finishTask = saveTask.ContinueWith((t) =>
-                    {
-                        IsBusy = false;
-
-                        if (t.Result)
+                    Task<bool> saveTask = Task.Factory.StartNew<bool>(() =>
                         {
-                            Notify("Listening has been successfully saved", NotificationType.Success);
+                            return dataService.SaveListening(Listening);
+                        }, TaskScheduler.Default);
 
-                            eventAggregator.GetEvent<ReloadListeningsEvent>().Publish(null);
-                        }
-                        else
+                    Task finishTask = saveTask.ContinueWith((t) =>
                         {
-                            Notify("Can't save listening. Watch log for details", NotificationType.Error);
-                        }
+                            IsBusy = false;
 
-                        DialogResult = true;
-                    }, TaskScheduler.FromCurrentSynchronizationContext());
+                            if (t.Result)
+                            {
+                                Notify("Listening has been successfully saved", NotificationType.Success);
+
+                                eventAggregator.GetEvent<ReloadListeningsEvent>().Publish(null);
+                            }
+                            else
+                            {
+                                Notify("Can't save listening. Watch log for details", NotificationType.Error);
+                            }
+
+                            DialogResult = true;
+                        }, TaskScheduler.FromCurrentSynchronizationContext());
+                }
             }
         }
 
