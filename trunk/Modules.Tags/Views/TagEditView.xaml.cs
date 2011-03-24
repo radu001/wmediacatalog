@@ -1,5 +1,4 @@
-﻿using System.Windows.Input;
-using Common.Dialogs;
+﻿using System.Windows.Controls;
 using Modules.Tags.ViewModels;
 
 namespace Modules.Tags.Views
@@ -7,18 +6,13 @@ namespace Modules.Tags.Views
     /// <summary>
     /// Interaction logic for TagEditView.xaml
     /// </summary>
-    public partial class TagEditView : DialogWindow
+    public partial class TagEditView : UserControl
     {
         public TagEditView(ITagEditViewModel viewModel)
         {
             InitializeComponent();
 
             DataContext = viewModel;
-        }
-
-        private void HeaderBorder_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            this.DragMove();
         }
     }
 }

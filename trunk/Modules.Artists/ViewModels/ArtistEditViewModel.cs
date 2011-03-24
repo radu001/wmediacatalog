@@ -1,11 +1,13 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using BusinessObjects;
 using Common.Commands;
+using Common.Dialogs;
 using Common.Enums;
 using Common.Events;
 using Common.Utilities;
@@ -16,7 +18,6 @@ using Microsoft.Practices.Unity;
 using Modules.Artists.Services;
 using Modules.Tags.ViewModels;
 using Modules.Tags.Views;
-using System.Threading;
 namespace Modules.Artists.ViewModels
 {
     public class ArtistEditViewModel : DialogViewModelBase, IArtistEditViewModel
@@ -258,8 +259,12 @@ namespace Modules.Artists.ViewModels
             viewModel.IsEditMode = isEditMode;
             viewModel.Tag.NeedValidate = true;
 
-            TagEditView view = new TagEditView(viewModel);
-            view.ShowDialog();
+
+            CommonDialog dialog = new CommonDialog()
+            {
+                DialogContent = new TagEditView(viewModel)
+            };
+            dialog.ShowDialog();
 
             return viewModel;
         }
