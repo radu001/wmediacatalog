@@ -101,14 +101,14 @@
     <Compile Include="Views\AlbumEditDialog.xaml.cs">
       <DependentUpon>AlbumEditDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\AlbumSearchDialog.xaml.cs">
-      <DependentUpon>AlbumSearchDialog.xaml</DependentUpon>
+    <Compile Include="Views\AlbumSearchView.xaml.cs">
+      <DependentUpon>AlbumSearchView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AlbumsView.xaml.cs">
       <DependentUpon>AlbumsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\GenreEditDialog.xaml.cs">
-      <DependentUpon>GenreEditDialog.xaml</DependentUpon>
+    <Compile Include="Views\GenreEditView.xaml.cs">
+      <DependentUpon>GenreEditView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -116,7 +116,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\AlbumSearchDialog.xaml">
+    <Page Include="Views\AlbumSearchView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -128,7 +128,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Resource>
-    <Page Include="Views\GenreEditDialog.xaml">
+    <Page Include="Views\GenreEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

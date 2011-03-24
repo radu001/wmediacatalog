@@ -4,11 +4,11 @@ using Modules.Albums.ViewModels;
 namespace Modules.Albums.Views
 {
     /// <summary>
-    /// Interaction logic for AlbumEditDialog.xaml
+    /// Interaction logic for AlbumSearchDialog.xaml
     /// </summary>
-    public partial class AlbumEditView : UserControl
+    public partial class AlbumSearchView : UserControl
     {
-        public AlbumEditView(IAlbumEditViewModel viewModel)
+        public AlbumSearchView(IAlbumSearchViewModel viewModel)
         {
             InitializeComponent();
 

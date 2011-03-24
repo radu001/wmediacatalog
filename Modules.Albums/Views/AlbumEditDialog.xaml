@@ -1,4 +1,4 @@
-﻿<dialogs:DialogWindow x:Class="Modules.Albums.Views.AlbumEditDialog"
+﻿<UserControl x:Class="Modules.Albums.Views.AlbumEditView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -14,11 +14,8 @@
              xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
              xmlns:toolkit2="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit"
              mc:Ignorable="d" x:Name="dialogWindow"
-             WindowStyle="None" AllowsTransparency="True" ResizeMode="NoResize"
-             Background="Transparent" WindowStartupLocation="CenterScreen"
-             WindowResult="{Binding DialogResult}"
              Height="559" Width="734">
-    <Window.Resources>
+    <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="LocalResources.xaml"/>
@@ -30,110 +27,76 @@
             <localConverters:TagsBoxVisibilityConverter x:Key="TagsBoxVisibilityConverter"/>
             <localConverters:VerticalAlignmentConverter x:Key="VerticalAlignmentConverter"/>
         </ResourceDictionary>
-    </Window.Resources>
-    <Grid x:Name="LayoutRoot" 
-          controls:BusyIndicatorBehavior.AddMargins="True" 
-          controls:BusyIndicatorBehavior.BusyState="{Binding IsBusy}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Border x:Name="HeaderBorder" Grid.Row="0" BorderThickness="2,2,2,0" CornerRadius="10,10,0,0" BorderBrush="Black" Background="SteelBlue"
-                MouseDown="HeaderBorder_MouseDown"
-                >
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <StackPanel HorizontalAlignment="Left" Grid.Column="0">
-                    <TextBlock Text="{Binding IsEditMode,Converter={StaticResource HeaderTextConverter}}" Style="{StaticResource DialogHeaderTextStyle}"/>
-                </StackPanel>
-                <StackPanel HorizontalAlignment="Right" Grid.Column="1">
-                    <Button VerticalAlignment="Center" Margin="8" Style="{StaticResource CloseButtonStyle}"
-                            prismCommands:Click.Command="{Binding CancelCommand}">
-                        <Button.Content>
-                            <Image Source="/Common.Content;component/Images/305_Close_16x16_72.png" Width="12" Height="12"/>
-                        </Button.Content>
-                    </Button>
-                </StackPanel>
-            </Grid>
-        </Border>
-        <Border Grid.Row="1" BorderThickness="2,0,2,2" CornerRadius="0,0,4,4" BorderBrush="Black" Background="LightGray">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0" Grid.Column="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    
-                    <TabControl x:Name="AlbumTabControl" Grid.Column="0" Margin="8,8,8,0">
-                        <TabItem Header="General" DataContext="{Binding Album}" Tag="{x:Static enums:AlbumTabsEnum.General}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
+    </UserControl.Resources>
+    <Grid x:Name="LayoutRoot" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TabControl x:Name="AlbumTabControl" Grid.Column="0" Margin="8,8,8,0">
+                <TabItem Header="General" DataContext="{Binding Album}" Tag="{x:Static enums:AlbumTabsEnum.General}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
 
-                                <TextBlock Text="Album name" Grid.Row="0" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
-                                <TextBox Text="{Binding Name}" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="8" VerticalAlignment="Center"/>
+                        <TextBlock Text="Album name" Grid.Row="0" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
+                        <TextBox Text="{Binding Name}" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="8" VerticalAlignment="Center"/>
 
-                                <TextBlock Text="Year" Grid.Row="1" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
+                        <TextBlock Text="Year" Grid.Row="1" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
 
-                                <toolkit2:DatePicker Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" SelectedDate="{Binding Year}" Margin="{StaticResource DialogMargin}"/>
+                        <toolkit2:DatePicker Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" SelectedDate="{Binding Year}" Margin="{StaticResource DialogMargin}"/>
 
-                                <TextBlock Text="Discs count" Grid.Row="2" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
-                                <TextBox Text="{Binding DiscsCount}" Grid.Row="2" Grid.Column="1" Margin="8" VerticalAlignment="Center"/>
+                        <TextBlock Text="Discs count" Grid.Row="2" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
+                        <TextBox Text="{Binding DiscsCount}" Grid.Row="2" Grid.Column="1" Margin="8" VerticalAlignment="Center"/>
 
-                                <TextBlock Text="Label" Grid.Row="3" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
-                                <TextBox Text="{Binding Label}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="8" VerticalAlignment="Center"/>
+                        <TextBlock Text="Label" Grid.Row="3" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
+                        <TextBox Text="{Binding Label}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="8" VerticalAlignment="Center"/>
 
-                                <TextBlock Text="ASIN" Grid.Row="4" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
-                                <TextBox Text="{Binding ASIN}" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="8" VerticalAlignment="Center"/>
+                        <TextBlock Text="ASIN" Grid.Row="4" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
+                        <TextBox Text="{Binding ASIN}" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="8" VerticalAlignment="Center"/>
 
-                                <TextBlock Text="FreeDB ID" Grid.Row="5" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
-                                <TextBox Text="{Binding FreedbID}" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Margin="8" VerticalAlignment="Center"/>
+                        <TextBlock Text="FreeDB ID" Grid.Row="5" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
+                        <TextBox Text="{Binding FreedbID}" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Margin="8" VerticalAlignment="Center"/>
 
-                                <TextBlock Text="Rating" Grid.Row="6" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
-                                <toolkit:Rating Value="{Binding Rating,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource RatingConverter}}" 
+                        <TextBlock Text="Rating" Grid.Row="6" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
+                        <toolkit:Rating Value="{Binding Rating,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource RatingConverter}}" 
                                                 Grid.Row="6" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Cursor="Hand"
                                                 ItemCount="7"
                                                 />
 
-                                <TextBlock Text="Private marks" Grid.Row="7" Grid.RowSpan="2"  Grid.Column="0" VerticalAlignment="Top" Style="{StaticResource DialogLabelStyle}"/>
-                                <TextBox Text="{Binding PrivateMarks}" Grid.Row="7" Grid.RowSpan="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="8" 
+                        <TextBlock Text="Private marks" Grid.Row="7" Grid.RowSpan="2"  Grid.Column="0" VerticalAlignment="Top" Style="{StaticResource DialogLabelStyle}"/>
+                        <TextBox Text="{Binding PrivateMarks}" Grid.Row="7" Grid.RowSpan="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="8" 
                                     AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap"
                                 />
-                            </Grid>
-                        </TabItem>
-                        <TabItem Header="Tracks" DataContext="{Binding TracksListViewModel}" Tag="{x:Static enums:AlbumTabsEnum.Tracks}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <DataGrid x:Name="TrackListDataGrid" Grid.Column="0" Margin="8"
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Tracks" DataContext="{Binding TracksListViewModel}" Tag="{x:Static enums:AlbumTabsEnum.Tracks}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <DataGrid x:Name="TrackListDataGrid" Grid.Column="0" Margin="8"
                                                    ItemsSource="{Binding Album.Tracks}" 
                                                    SelectedItem="{Binding Mode=TwoWay, Path=CurrentTrack}" SelectionUnit="FullRow" SelectionMode="Extended"
                                                    AutoGenerateColumns="False"
@@ -142,73 +105,73 @@
                                                    CellStyle="{StaticResource TracksDataGridCellStyle}"
                                                    commands:MultiSelectionChanged.Command="{Binding SelectedTracksChangedCommand}"
                                                    >
-                                    <DataGrid.InputBindings>
-                                        <KeyBinding Key="Down" Modifiers="Alt" Command="{Binding MoveTracksDownCommand}" CommandParameter="{Binding ElementName=TrackListDataGrid}"/>
-                                        <KeyBinding Key="Up" Modifiers="Alt" Command="{Binding MoveTracksUpCommand}" CommandParameter="{Binding ElementName=TrackListDataGrid}"/>
-                                        <KeyBinding Key="Delete" Modifiers="Alt" Command="{Binding RemoveTracksCommand}" />
-                                    </DataGrid.InputBindings>
-                                    <DataGrid.ContextMenu>
-                                        <ContextMenu>
-                                            <MenuItem Header="Move down" InputGestureText="Alt+Down"
+                            <DataGrid.InputBindings>
+                                <KeyBinding Key="Down" Modifiers="Alt" Command="{Binding MoveTracksDownCommand}" CommandParameter="{Binding ElementName=TrackListDataGrid}"/>
+                                <KeyBinding Key="Up" Modifiers="Alt" Command="{Binding MoveTracksUpCommand}" CommandParameter="{Binding ElementName=TrackListDataGrid}"/>
+                                <KeyBinding Key="Delete" Modifiers="Alt" Command="{Binding RemoveTracksCommand}" />
+                            </DataGrid.InputBindings>
+                            <DataGrid.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Move down" InputGestureText="Alt+Down"
                                                 commands:MenuItemClick.Command="{Binding MoveTracksDownCommand}"/>
-                                            <MenuItem Header="Move up" InputGestureText="Alt+Up"
+                                    <MenuItem Header="Move up" InputGestureText="Alt+Up"
                                                 commands:MenuItemClick.Command="{Binding MoveTracksUpCommand}"/>
-                                            <Separator/>
-                                            <MenuItem Header="Remove track(s)" InputGestureText="Alt+Delete"
+                                    <Separator/>
+                                    <MenuItem Header="Remove track(s)" InputGestureText="Alt+Delete"
                                                 commands:MenuItemClick.Command="{Binding RemoveTracksCommand}"/>
-                                        </ContextMenu>
-                                    </DataGrid.ContextMenu>
-                                    <DataGrid.Columns>
-                                        <DataGridTextColumn Width="15*" IsReadOnly="True"
+                                </ContextMenu>
+                            </DataGrid.ContextMenu>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Width="15*" IsReadOnly="True"
                                             Binding="{Binding Path=Index}" Header="Index" />
-                                        <DataGridTextColumn Width="65*"
+                                <DataGridTextColumn Width="65*"
                                             Binding="{Binding Path=Name}" Header="Name" />
-                                        <DataGridTextColumn Width="20*"
+                                <DataGridTextColumn Width="20*"
                                             Binding="{Binding Path=Length}" Header="Length" />
-                                    </DataGrid.Columns>
-                                </DataGrid>
-                                <GroupBox Header="Commands" Grid.Column="1" Width="180" Margin="4">
-                                    <StackPanel>
-                                        <Button Content="Add track" Margin="4"
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <GroupBox Header="Commands" Grid.Column="1" Width="180" Margin="4">
+                            <StackPanel>
+                                <Button Content="Add track" Margin="4"
                                                 prismCommands:Click.Command="{Binding AddTrackCommand}"/>
-                                        <Button Content="Remove track(s)" Margin="4"
+                                <Button Content="Remove track(s)" Margin="4"
                                                 prismCommands:Click.Command="{Binding RemoveTracksCommand}"/>
-                                        <Button Content="Move up" Margin="4" 
+                                <Button Content="Move up" Margin="4" 
                                                 prismCommands:Click.Command="{Binding MoveTracksUpCommand}"
                                                 prismCommands:Click.CommandParameter="{Binding ElementName=TrackListDataGrid}"/>
-                                        <Button Content="Move down" Margin="4"
+                                <Button Content="Move down" Margin="4"
                                                 prismCommands:Click.Command="{Binding MoveTracksDownCommand}"
                                                 prismCommands:Click.CommandParameter="{Binding ElementName=TrackListDataGrid}"/>
-                                        <Separator Margin="4"/>
-                                        <Button Content="Import FreeDB" Margin="4"/>
-                                        <Button Content="Import TrackType.org" Margin="4"/>
-                                        <Button Content="Import VorbisComments" Margin="4"/>
-                                        <Button Content="Import filesystem" Margin="4"/>
-                                    </StackPanel>
-                                </GroupBox>
-                            </Grid>
-                        </TabItem>
-                        <TabItem Header="Description" Tag="{x:Static enums:AlbumTabsEnum.Description}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="Description" Grid.Column="0" VerticalAlignment="Top" Style="{StaticResource DialogLabelStyle}"/>
-                                <TextBox Text="{Binding Album.Description}" Grid.Row="4" Grid.RowSpan="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="8" 
+                                <Separator Margin="4"/>
+                                <Button Content="Import FreeDB" Margin="4"/>
+                                <Button Content="Import TrackType.org" Margin="4"/>
+                                <Button Content="Import VorbisComments" Margin="4"/>
+                                <Button Content="Import filesystem" Margin="4"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Description" Tag="{x:Static enums:AlbumTabsEnum.Description}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Description" Grid.Column="0" VerticalAlignment="Top" Style="{StaticResource DialogLabelStyle}"/>
+                        <TextBox Text="{Binding Album.Description}" Grid.Row="4" Grid.RowSpan="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="8" 
                                     AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap"
                                 />
-                            </Grid>
-                        </TabItem>
-                        <TabItem Header="Genres" Tag="{x:Static enums:AlbumTabsEnum.Genres}">
-                            <Grid x:Name="GenresLayout">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Genres" Tag="{x:Static enums:AlbumTabsEnum.Genres}">
+                    <Grid x:Name="GenresLayout">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-                                <ListView ItemsSource="{Binding Album.Genres}" Grid.Column="0" Margin="8" 
+                        <ListView ItemsSource="{Binding Album.Genres}" Grid.Column="0" Margin="8" 
                                           AllowDrop="True" SelectionMode="Extended"
                                           ItemTemplate="{StaticResource GenreDetachableDataTemplate}"
                                           ItemContainerStyle="{StaticResource ListViewItemCommonStyle}"
@@ -216,58 +179,58 @@
                                           commands:Drop.Command="{Binding DropGenreCommand}"
                                           />
 
-                                <StackPanel Orientation="Vertical" Grid.Column="1" Margin="0,8,0,0" DataContext="{Binding GenresListViewModel}"
+                        <StackPanel Orientation="Vertical" Grid.Column="1" Margin="0,8,0,0" DataContext="{Binding GenresListViewModel}"
                                             VerticalAlignment="{Binding IsGenresListVisible,Converter={StaticResource VerticalAlignmentConverter}}">
-                                    <Button x:Name="AddGenresButton"
+                            <Button x:Name="AddGenresButton"
                                         Style="{StaticResource ToolbarImageButtonStyle}"  Margin="4"
                                         ToolTip="Attach genre(s) to this album"
                                         prismCommands:Click.Command="{Binding HideShowGenresListCommand}"
                                         >
-                                        <Button.Content>
-                                            <Image Source="/Common.Content;component/Images/add_15x15.png" Width="16" Height="16"/>
-                                        </Button.Content>
-                                    </Button>
-                                    <Button x:Name="AttachGenresButton"
+                                <Button.Content>
+                                    <Image Source="/Common.Content;component/Images/add_15x15.png" Width="16" Height="16"/>
+                                </Button.Content>
+                            </Button>
+                            <Button x:Name="AttachGenresButton"
                                             Visibility="{Binding IsGenresListVisible,Converter={StaticResource BoolToVisibilityConverter}}"
                                             Style="{StaticResource ToolbarImageButtonStyle}" Margin="4"
                                             prismCommands:Click.Command="{Binding AttachGenresCommand}"
                                             >
-                                        <Button.Content>
-                                            <Image Source="/Common.Content;component/Images/GoToPrevious.png" Width="16" Height="16"/>
-                                        </Button.Content>
-                                    </Button>
-                                    <Button x:Name="DetachGenresButton"
+                                <Button.Content>
+                                    <Image Source="/Common.Content;component/Images/GoToPrevious.png" Width="16" Height="16"/>
+                                </Button.Content>
+                            </Button>
+                            <Button x:Name="DetachGenresButton"
                                             Visibility="{Binding IsGenresListVisible,Converter={StaticResource BoolToVisibilityConverter}}"
                                             Style="{StaticResource ToolbarImageButtonStyle}"  Margin="4"
                                             prismCommands:Click.Command="{Binding DetachGenresCommand}"
                                             >
-                                        <Button.Content>
-                                            <Image Source="/Common.Content;component/Images/GoToNextHS.png" Width="16" Height="16"/>
-                                        </Button.Content>
-                                    </Button>
-                                </StackPanel>
+                                <Button.Content>
+                                    <Image Source="/Common.Content;component/Images/GoToNextHS.png" Width="16" Height="16"/>
+                                </Button.Content>
+                            </Button>
+                        </StackPanel>
 
-                                <Grid x:Name="GenresListLayout" DataContext="{Binding GenresListViewModel}" Grid.Column="2" Margin="8"
+                        <Grid x:Name="GenresListLayout" DataContext="{Binding GenresListViewModel}" Grid.Column="2" Margin="8"
                                       Visibility="{Binding IsGenresListVisible,Converter={StaticResource BoolToVisibilityConverter}}"
                                       >
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
-                                    <DockPanel Grid.Row="0" LastChildFill="True">
-                                        <Button x:Name="CreateGenreButton"
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <DockPanel Grid.Row="0" LastChildFill="True">
+                                <Button x:Name="CreateGenreButton"
                                             Style="{StaticResource ToolbarImageButtonStyle}"  Margin="0"
                                             ToolTip="Create new genre" DockPanel.Dock="Right" Width="16" Height="16"
                                             prismCommands:Click.Command="{Binding CreateGenreCommand}">
-                                            <Button.Content>
-                                                <Image Source="/Common.Content;component/Images/add_15x15.png" Width="16" Height="16"/>
-                                            </Button.Content>
-                                        </Button>
-                                        <controls:SearchControl Margin="4"
+                                    <Button.Content>
+                                        <Image Source="/Common.Content;component/Images/add_15x15.png" Width="16" Height="16"/>
+                                    </Button.Content>
+                                </Button>
+                                <controls:SearchControl Margin="4"
                                                                 SelectedFilterValue="{Binding GenresFilterValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                                    </DockPanel>
-                                    <ListView Grid.Row="1" ItemsSource="{Binding Genres}" 
+                            </DockPanel>
+                            <ListView Grid.Row="1" ItemsSource="{Binding Genres}" 
                                               SelectionMode="Extended"
                                               ItemTemplate="{StaticResource GenreDataTemplate}"
                                               ItemContainerStyle="{StaticResource ListViewItemCommonStyle}"
@@ -275,129 +238,128 @@
                                               commands:MouseDoubleClick.Command="{Binding EditGenreCommand}"
                                               commands:MouseMove.Command="{Binding DragGenresCommand}"
                                               />
-                                    <controls:DataPager Grid.Row="2" Margin="4"
+                            <controls:DataPager Grid.Row="2" Margin="4"
                                       HorizontalAlignment="Left"
                                       ItemsPerPage="{Binding LoadOptions.MaxResults}" VisiblePagesCount="3" TotalItems="{Binding TotalGenresCount}"
                                       pagerCommands:PageChanged.Command="{Binding PageChangedCommand}"
                                     />
-                                </Grid>
-                            </Grid>
-                        </TabItem>
-                        <TabItem Header="Artists" Tag="{x:Static enums:AlbumTabsEnum.Artists}">
-                            <Grid x:Name="ArtistsLayout">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <ListView ItemsSource="{Binding Album.Artists}" Grid.Column="0" Margin="8" 
+                        </Grid>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Artists" Tag="{x:Static enums:AlbumTabsEnum.Artists}">
+                    <Grid x:Name="ArtistsLayout">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <ListView ItemsSource="{Binding Album.Artists}" Grid.Column="0" Margin="8" 
                                           AllowDrop="True" SelectionMode="Extended"
                                           ItemTemplate="{StaticResource ArtistDetachableDataTemplate}"
                                           ItemContainerStyle="{StaticResource ListViewItemCommonStyle}"
                                           commands:MultiSelectionChanged.Command="{Binding SelectedArtistsChangedCommand}"
                                           commands:Drop.Command="{Binding DropArtistCommand}"
                                           />
-                                <StackPanel Orientation="Vertical" Grid.Column="1" Margin="0,8,0,0" DataContext="{Binding ArtistsListViewModel}"
+                        <StackPanel Orientation="Vertical" Grid.Column="1" Margin="0,8,0,0" DataContext="{Binding ArtistsListViewModel}"
                                             VerticalAlignment="{Binding IsArtistsListVisible,Converter={StaticResource VerticalAlignmentConverter}}">
-                                    <Button x:Name="AddArtistsButton"
+                            <Button x:Name="AddArtistsButton"
                                         Style="{StaticResource ToolbarImageButtonStyle}"  Margin="4"
                                         ToolTip="Attach genre(s) to this album"
                                         prismCommands:Click.Command="{Binding HideShowArtistsListCommand}"
                                         >
-                                        <Button.Content>
-                                            <Image Source="/Common.Content;component/Images/add_15x15.png" Width="16" Height="16"/>
-                                        </Button.Content>
-                                    </Button>
-                                    <Button x:Name="AttachArtistsButton"
+                                <Button.Content>
+                                    <Image Source="/Common.Content;component/Images/add_15x15.png" Width="16" Height="16"/>
+                                </Button.Content>
+                            </Button>
+                            <Button x:Name="AttachArtistsButton"
                                             Visibility="{Binding IsArtistsListVisible,Converter={StaticResource BoolToVisibilityConverter}}"
                                             Style="{StaticResource ToolbarImageButtonStyle}" Margin="4"
                                             prismCommands:Click.Command="{Binding AttachArtistsCommand}"
                                             >
-                                        <Button.Content>
-                                            <Image Source="/Common.Content;component/Images/GoToPrevious.png" Width="16" Height="16"/>
-                                        </Button.Content>
-                                    </Button>
-                                    <Button x:Name="DetachArtistsButton"
+                                <Button.Content>
+                                    <Image Source="/Common.Content;component/Images/GoToPrevious.png" Width="16" Height="16"/>
+                                </Button.Content>
+                            </Button>
+                            <Button x:Name="DetachArtistsButton"
                                             Visibility="{Binding IsArtistsListVisible,Converter={StaticResource BoolToVisibilityConverter}}"
                                             Style="{StaticResource ToolbarImageButtonStyle}"  Margin="4"
                                             prismCommands:Click.Command="{Binding DetachArtistsCommand}"
                                             >
-                                        <Button.Content>
-                                            <Image Source="/Common.Content;component/Images/GoToNextHS.png" Width="16" Height="16"/>
-                                        </Button.Content>
-                                    </Button>
-                                </StackPanel>
+                                <Button.Content>
+                                    <Image Source="/Common.Content;component/Images/GoToNextHS.png" Width="16" Height="16"/>
+                                </Button.Content>
+                            </Button>
+                        </StackPanel>
 
-                                <Grid x:Name="ArtistsListLayout" DataContext="{Binding ArtistsListViewModel}" Grid.Column="2" Margin="8"
+                        <Grid x:Name="ArtistsListLayout" DataContext="{Binding ArtistsListViewModel}" Grid.Column="2" Margin="8"
                                       Visibility="{Binding IsArtistsListVisible,Converter={StaticResource BoolToVisibilityConverter}}"
                                       >
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
-                                    <controls:SearchControl Grid.Row="0" Margin="4"
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <controls:SearchControl Grid.Row="0" Margin="4"
                                                             SelectedFilterValue="{Binding ArtistsFilterValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                                    <ListView Grid.Row="1" ItemsSource="{Binding Artists}" 
+                            <ListView Grid.Row="1" ItemsSource="{Binding Artists}" 
                                               SelectionMode="Extended"
                                               ItemTemplate="{StaticResource ArtistDataTemplate}"
                                               ItemContainerStyle="{StaticResource ListViewItemCommonStyle}"
                                               commands:MultiSelectionChanged.Command="{Binding SelectedArtistsChangedCommand}"
                                               commands:MouseMove.Command="{Binding DragArtistCommand}"
                                               />
-                                    <controls:DataPager Grid.Row="2" Margin="4"
+                            <controls:DataPager Grid.Row="2" Margin="4"
                                       HorizontalAlignment="Left"
                                       ItemsPerPage="{Binding LoadOptions.MaxResults}" VisiblePagesCount="3" TotalItems="{Binding TotalArtistsCount}"
                                       pagerCommands:PageChanged.Command="{Binding PageChangedCommand}"
                                   />
-                                </Grid>
-                            </Grid>
-                        </TabItem>
-                    </TabControl>
-                </Grid>
-                <GroupBox Header="Tags" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Margin="4" Width="200"
-                          Visibility="{Binding ElementName=AlbumTabControl, Path=SelectedItem.Tag, Converter={StaticResource TagsBoxVisibilityConverter}}"
-                          >
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <ListView x:Name="TagsListView" Margin="8"
+                        </Grid>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </Grid>
+        <GroupBox Header="Tags" Grid.Column="1" Margin="4" Width="200"
+                          Visibility="{Binding ElementName=AlbumTabControl, Path=SelectedItem.Tag, Converter={StaticResource TagsBoxVisibilityConverter}}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <ListView x:Name="TagsListView" Margin="8"
                                       ItemsSource="{Binding Album.Tags}"
                                       IsSynchronizedWithCurrentItem="True"
                                       commands:MouseDoubleClick.Command="{Binding EditTagCommand}"
                                       ItemContainerStyle="{StaticResource ListViewItemCommonStyle}"
                                       >
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <Border BorderBrush="LightSteelBlue" Background="LightSteelBlue" BorderThickness="1" CornerRadius="8" Margin="2,1,2,1">
-                                        <Grid Margin="4,2,4,2" Height="24">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="Auto"/>
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Text="{Binding Name}" FontWeight="Bold" Grid.Column="0" VerticalAlignment="Center"/>
-                                            <Button Style="{StaticResource TransparentImageButtonStyle}" Grid.Column="1" Margin="6,0,0,0" VerticalAlignment="Center"
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="LightSteelBlue" Background="LightSteelBlue" BorderThickness="1" CornerRadius="8" Margin="2,1,2,1">
+                                <Grid Margin="4,2,4,2" Height="24">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding Name}" FontWeight="Bold" Grid.Column="0" VerticalAlignment="Center"/>
+                                    <Button Style="{StaticResource TransparentImageButtonStyle}" Grid.Column="1" Margin="6,0,0,0" VerticalAlignment="Center"
                                                         ToolTip="Detach this tag from artist" Cursor="Hand"
                                                         prismCommands:Click.Command="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.DetachTagCommand}"
                                                         prismCommands:Click.CommandParameter="{Binding}"
                                                         >
-                                                <Button.Content>
-                                                    <Image Source="/Common.Content;component/Images/Remove_16x16.png" Height="16" Width="16"/>
-                                                </Button.Content>
-                                            </Button>
-                                        </Grid>
-                                    </Border>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                        <Grid Grid.Row="1" Margin="8,0,8,8">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <toolkit:AutoCompleteBox x:Name="TagAutocompleteBox" Grid.Column="0"
+                                        <Button.Content>
+                                            <Image Source="/Common.Content;component/Images/Remove_16x16.png" Height="16" Width="16"/>
+                                        </Button.Content>
+                                    </Button>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Grid Grid.Row="1" Margin="8,0,8,8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <toolkit:AutoCompleteBox x:Name="TagAutocompleteBox" Grid.Column="0"
                                                      ItemsSource="{Binding Tags}"
                                                      ItemFilter="{Binding FilterTagCommand}"
                                                      SelectedItem="{Binding SelectedTag,Mode=TwoWay}"
@@ -406,35 +368,23 @@
                                                      commands:PreviewKeyDown.Command="{Binding AttachTagKeyboardCommand}"
                                                      ValueMemberPath="Name"
                                                      >
-                                <toolkit:AutoCompleteBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding Name}"/>
-                                    </DataTemplate>
-                                </toolkit:AutoCompleteBox.ItemTemplate>
-                            </toolkit:AutoCompleteBox>
-                            <Button x:Name="AttachTagButton" Grid.Column="1"
+                        <toolkit:AutoCompleteBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </toolkit:AutoCompleteBox.ItemTemplate>
+                    </toolkit:AutoCompleteBox>
+                    <Button x:Name="AttachTagButton" Grid.Column="1"
                                         Style="{StaticResource ImageButtonStyle}"
                                         ToolTip="Assign tag to this artist"
                                         prismCommands:Click.Command="{Binding AttachTagCommand}"
                                         >
-                                <Button.Content>
-                                    <Image Source="/Common.Content;component/Images/command_link_16x16.png" Width="16" Height="16"/>
-                                </Button.Content>
-                            </Button>
-                        </Grid>
-                    </Grid>
-                </GroupBox>
-                <StackPanel Grid.Row="1" HorizontalAlignment="Right" Orientation="Horizontal" Margin="12,0,4,12">
-                    <Button x:Name="OkButton" Content="Ok" Width="75" IsDefault="True" Margin="6"
-                            Style="{StaticResource DialogButtonStyle}"
-                            prismCommands:Click.Command="{Binding SuccessCommand}"
-                            />
-                    <Button x:Name="CancelButton" Content="Cancel" Width="75" IsDefault="True" Margin="6"
-                            Style="{StaticResource DialogButtonStyle}"
-                            prismCommands:Click.Command="{Binding CancelCommand}"
-                            />
-                </StackPanel>
+                        <Button.Content>
+                            <Image Source="/Common.Content;component/Images/command_link_16x16.png" Width="16" Height="16"/>
+                        </Button.Content>
+                    </Button>
+                </Grid>
             </Grid>
-        </Border>
+        </GroupBox>
     </Grid>
-</dialogs:DialogWindow>
+</UserControl>

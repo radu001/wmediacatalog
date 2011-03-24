@@ -1,23 +1,19 @@
 ﻿using Common.Dialogs;
 using Modules.Albums.ViewModels;
+using System.Windows.Controls;
 
 namespace Modules.Albums.Views
 {
     /// <summary>
     /// Interaction logic for GenreEditView.xaml
     /// </summary>
-    public partial class GenreEditDialog : DialogWindow
+    public partial class GenreEditView : UserControl
     {
-        public GenreEditDialog(IGenreEditViewModel viewModel)
+        public GenreEditView(IGenreEditViewModel viewModel)
         {
             InitializeComponent();
 
             DataContext = viewModel;
-        }
-
-        private void HeaderBorder_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            this.DragMove();
         }
     }
 }
