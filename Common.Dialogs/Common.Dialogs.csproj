@@ -64,7 +64,10 @@
       <DependentUpon>ConfirmDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\DialogButtonsConverter.cs" />
     <Compile Include="Converters\EmptyStringToVisibilityConverter.cs" />
+    <Compile Include="DialogButton.cs" />
+    <Compile Include="DialogButtons.cs" />
     <Compile Include="Helpers\DialogModeEnum.cs" />
     <Compile Include="Helpers\HeaderTextHelper.cs" />
     <Compile Include="Converters\InverseBoolConverter.cs" />
@@ -72,9 +75,6 @@
     <Compile Include="Converters\NotificationImageConverter.cs" />
     <Compile Include="Converters\RatingConverter.cs" />
     <Compile Include="DialogWindow.cs" />
-    <Compile Include="NotificationDialog.xaml.cs">
-      <DependentUpon>NotificationDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\CommandAdapter.cs" />
   </ItemGroup>
@@ -84,10 +84,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ConfirmDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="NotificationDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
