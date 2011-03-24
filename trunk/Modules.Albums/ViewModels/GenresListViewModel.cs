@@ -8,6 +8,7 @@ using BusinessObjects;
 using Common.Commands;
 using Common.Controls.Controls;
 using Common.Dialogs;
+using Common.Dialogs.Helpers;
 using Common.Entities.Pagination;
 using Common.Events;
 using Common.ViewModels;
@@ -216,7 +217,7 @@ namespace Modules.Albums.ViewModels
 
             selectedGenre.NeedValidate = true;
 
-            CreateOrEditGenre(true, selectedGenre);
+            CreateOrEditGenre(selectedGenre, true);
         }
 
         private void OnHideShowGenresListCommand(object parameter)
@@ -231,10 +232,10 @@ namespace Modules.Albums.ViewModels
                 NeedValidate = true
             };
 
-            CreateOrEditGenre(false, genre);
+            CreateOrEditGenre(genre, false);
         }
 
-        private void CreateOrEditGenre(bool isEditMode, Genre genre)
+        private void CreateOrEditGenre(Genre genre, bool isEditMode)
         {
             IGenreEditViewModel viewModel = container.Resolve<IGenreEditViewModel>();
             viewModel.IsEditMode = isEditMode;
@@ -242,7 +243,8 @@ namespace Modules.Albums.ViewModels
 
             var dialog = new CommonDialog()
             {
-                DialogContent = new GenreEditView(viewModel)
+                DialogContent = new GenreEditView(viewModel),
+                HeaderText = HeaderTextHelper.CreateHeaderText(typeof(Genre), isEditMode)
             };
 
             dialog.ShowDialog();

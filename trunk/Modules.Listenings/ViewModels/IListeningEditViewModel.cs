@@ -10,6 +10,7 @@ namespace Modules.Listenings.ViewModels
         ObservableCollection<Mood> Moods { get; }
         ObservableCollection<Place> Places { get; }
         Listening Listening { get; set; }
+        bool IsViewMode { get; set; }
 
         DelegateCommand<object> SearchAlbumCommand { get; }
         DelegateCommand<object> CreatePlaceCommand { get; }

@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using BusinessObjects;
 using Common.Commands;
 using Common.Dialogs;
+using Common.Dialogs.Helpers;
 using Common.Entities;
 using Common.Enums;
 using Common.Events;
@@ -130,7 +131,8 @@ namespace Modules.Login.ViewModels
 
             var dialog = new CommonDialog()
             {
-                DialogContent = new UserRegistrationView(viewModel)
+                DialogContent = new UserRegistrationView(viewModel),
+                HeaderText = HeaderTextHelper.CreateHeaderText(typeof(User), false)
             };
             dialog.ShowDialog();
         }

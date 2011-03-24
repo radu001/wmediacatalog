@@ -84,8 +84,6 @@
                     </Grid>
                 </Border>
             </DataTemplate>
-
-            <converters:HeaderTextConverter x:Key="HeaderTextConverter" EntityName="album"/>
             <converters:RatingConverter x:Key="RatingConverter"/>
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
             <localConverters:TagsBoxVisibilityConverter x:Key="TagsBoxVisibilityConverter"/>

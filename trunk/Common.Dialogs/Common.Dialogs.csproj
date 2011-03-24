@@ -65,7 +65,8 @@
     </Compile>
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\EmptyStringToVisibilityConverter.cs" />
-    <Compile Include="Converters\HeaderTextConverter.cs" />
+    <Compile Include="Helpers\DialogModeEnum.cs" />
+    <Compile Include="Helpers\HeaderTextHelper.cs" />
     <Compile Include="Converters\InverseBoolConverter.cs" />
     <Compile Include="Converters\InverseBoolToVisibilityConverter.cs" />
     <Compile Include="Converters\NotificationImageConverter.cs" />

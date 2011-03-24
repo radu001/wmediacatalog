@@ -17,8 +17,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Common.Content;component/Styles/CommonStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-
-            <converters:HeaderTextConverter x:Key="HeaderTextConverter" EntityName="artist"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid x:Name="LayoutRoot" Background="Transparent">

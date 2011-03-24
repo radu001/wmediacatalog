@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BusinessObjects;
 using Common.Controls.Controls;
 using Common.Dialogs;
+using Common.Dialogs.Helpers;
 using Common.Entities.Pagination;
 using Common.Enums;
 using Common.Events;
@@ -233,7 +234,8 @@ namespace Modules.Albums.ViewModels
 
             var dialog = new CommonDialog()
             {
-                DialogContent = new AlbumEditView(viewModel)
+                DialogContent = new AlbumEditView(viewModel),
+                HeaderText = HeaderTextHelper.CreateHeaderText(typeof(Album), isEditMode)
             };
             dialog.ShowDialog();
         }

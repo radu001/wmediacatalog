@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using BusinessObjects;
 using Common.Controls.Controls;
 using Common.Dialogs;
+using Common.Dialogs.Helpers;
 using Common.Entities.Pagination;
 using Common.Enums;
 using Common.Events;
@@ -148,7 +149,7 @@ namespace Modules.Listenings.ViewModels
                 NeedValidate = true
             };
 
-            CreateOrViewListening(true, newListening);
+            CreateOrViewListening(newListening, false);
         }
 
         private void OnRemoveListeningCommand(object parameter)
@@ -196,18 +197,21 @@ namespace Modules.Listenings.ViewModels
             if (SelectedListening == null)
                 return;
 
-            CreateOrViewListening(false, SelectedListening);
+            CreateOrViewListening(SelectedListening, true);
         }
 
-        private void CreateOrViewListening(bool isEditMode, Listening listening)
+        private void CreateOrViewListening(Listening listening, bool isViewMode)
         {
-            IListeningEditViewModel viewModel = container.Resolve<IListeningEditViewModel>();
-            viewModel.IsEditMode = isEditMode;
+            var viewModel = container.Resolve<IListeningEditViewModel>();
+            viewModel.IsViewMode = isViewMode;
             viewModel.Listening = listening;
+
+            DialogModeEnum mode = isViewMode ? DialogModeEnum.View : DialogModeEnum.Create;
 
             var dialog = new CommonDialog()
             {
-                DialogContent = new ListeningEditView(viewModel)
+                DialogContent = new ListeningEditView(viewModel),
+                HeaderText = HeaderTextHelper.CreateHeaderText(typeof(Listening), mode)
             };
             dialog.ShowDialog();
         }

@@ -11,6 +11,10 @@ namespace Common.Dialogs
     /// </summary>
     public partial class CommonDialog : DialogWindow
     {
+        #region Dependency properties
+
+        #region IsBusy
+
         public static readonly DependencyProperty IsBusyProperty =
             DependencyProperty.Register("IsBusy", typeof(bool), typeof(CommonDialog));
 
@@ -26,6 +30,9 @@ namespace Common.Dialogs
             }
         }
 
+        #endregion
+
+        #region DialogContent
 
         public static readonly DependencyProperty DialogContentProperty =
             DependencyProperty.Register("DialogContent", typeof(FrameworkElement), typeof(CommonDialog),
@@ -59,25 +66,7 @@ namespace Common.Dialogs
                     newContent.DataContextChanged += (sender, ec) =>
                     {
                         IDialogViewModel contentViewModel = ec.NewValue as IDialogViewModel;
-                        if (contentViewModel != null)
-                        {
-                            SetupContent(contentViewModel, dialog, newContent);
-                        }
-                        else
-                        {
-                            dialog.CancelButton.Command = new DelegateCommand<object>(a =>
-                            {
-                                dialog.DialogResult = false;
-                            });
-                            dialog.CancelHeaderButton.Command = new DelegateCommand<object>(a =>
-                            {
-                                dialog.DialogResult = false;
-                            });
-                            dialog.OkButton.Command = new DelegateCommand<object>(a =>
-                            {
-                                dialog.DialogResult = true;
-                            });
-                        }
+                        SetupContent(contentViewModel, dialog, newContent);
                     };
                 }
             }
@@ -85,33 +74,82 @@ namespace Common.Dialogs
 
         private static void SetupContent(IDialogViewModel viewModel, CommonDialog dialog, FrameworkElement content)
         {
-            dialog.SetBinding(IsBusyProperty, new Binding()
+            if (viewModel != null)
             {
-                Source = viewModel,
-                Path = new PropertyPath("IsBusy")
-            });
-            dialog.CancelButton.Command = viewModel.CancelCommand;
-            dialog.CancelHeaderButton.Command = viewModel.CancelCommand;
-            dialog.OkButton.Command = viewModel.SuccessCommand;
-            dialog.OkButton.CommandParameter = dialog;
-            dialog.SetBinding(WindowResultProperty, new Binding()
+                dialog.SetBinding(IsBusyProperty, new Binding()
+                {
+                    Source = viewModel,
+                    Path = new PropertyPath("IsBusy")
+                });
+                dialog.CancelButton.Command = viewModel.CancelCommand;
+                dialog.CancelHeaderButton.Command = viewModel.CancelCommand;
+                dialog.OkButton.Command = viewModel.SuccessCommand;
+                dialog.OkButton.CommandParameter = dialog;
+                dialog.SetBinding(WindowResultProperty, new Binding()
+                {
+                    Source = viewModel,
+                    Path = new PropertyPath("DialogResult"),
+                    Mode = BindingMode.TwoWay
+                });
+            }
+            else
             {
-                Source = viewModel,
-                Path = new PropertyPath("DialogResult"),
-                Mode = BindingMode.TwoWay
-            });
+                dialog.CancelButton.Command = dialog.DefaultCancelCommand;
+                dialog.CancelHeaderButton.Command = dialog.DefaultCancelCommand;
+                dialog.OkButton.Command = dialog.DefaultOkCommand;
+            }
             dialog.Width = content.Width;
             dialog.Height = content.Height + 100;
         }
 
+        #endregion
+
+        #region HeaderText
+
+        public static readonly DependencyProperty HeaderTextProperty =
+            DependencyProperty.Register("HeaderText", typeof(string), typeof(CommonDialog));
+
+        public string HeaderText
+        {
+            get
+            {
+                return (string)GetValue(HeaderTextProperty);
+            }
+            set
+            {
+                SetValue(HeaderTextProperty, value);
+            }
+        }
+
+        #endregion
+
+        #endregion
+
         public CommonDialog()
         {
             InitializeComponent();
+
+            DefaultOkCommand = new DelegateCommand<object>(OnDefaultOkCommand);
+            DefaultCancelCommand = new DelegateCommand<object>(OnDefaultCancelCommand);
         }
+
+        public DelegateCommand<object> DefaultOkCommand { get; private set; }
+
+        public DelegateCommand<object> DefaultCancelCommand { get; private set; }
 
         private void HeaderBorder_MouseDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
+        }
+
+        private void OnDefaultOkCommand(object parameter)
+        {
+            WindowResult = true;
+        }
+
+        private void OnDefaultCancelCommand(object parameter)
+        {
+            WindowResult = false;
         }
     }
 }
