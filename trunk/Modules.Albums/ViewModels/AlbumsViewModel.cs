@@ -231,8 +231,11 @@ namespace Modules.Albums.ViewModels
             viewModel.IsEditMode = isEditMode;
             viewModel.Album = album;
 
-            AlbumEditDialog view = new AlbumEditDialog(viewModel);
-            view.ShowDialog();
+            var dialog = new CommonDialog()
+            {
+                DialogContent = new AlbumEditView(viewModel)
+            };
+            dialog.ShowDialog();
         }
 
         private void LoadAlbums()

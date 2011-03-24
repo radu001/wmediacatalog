@@ -7,6 +7,7 @@ using System.Windows.Input;
 using BusinessObjects;
 using Common.Commands;
 using Common.Controls.Controls;
+using Common.Dialogs;
 using Common.Entities.Pagination;
 using Common.Events;
 using Common.ViewModels;
@@ -213,13 +214,9 @@ namespace Modules.Albums.ViewModels
             if (selectedGenre == null)
                 return;
 
-            IGenreEditViewModel viewModel = container.Resolve<IGenreEditViewModel>();
-            viewModel.IsEditMode = true;
-            viewModel.Genre = selectedGenre;
-            viewModel.Genre.NeedValidate = true;
+            selectedGenre.NeedValidate = true;
 
-            GenreEditDialog view = new GenreEditDialog(viewModel);
-            view.ShowDialog();
+            CreateOrEditGenre(true, selectedGenre);
         }
 
         private void OnHideShowGenresListCommand(object parameter)
@@ -229,16 +226,26 @@ namespace Modules.Albums.ViewModels
 
         private void OnCreateGenreCommand(object parameter)
         {
-            IGenreEditViewModel viewModel = container.Resolve<IGenreEditViewModel>();
-            viewModel.IsEditMode = false;
-            viewModel.Genre = new Genre()
+            var genre = new Genre()
             {
                 NeedValidate = true
             };
 
-            GenreEditDialog view = new GenreEditDialog(viewModel);
+            CreateOrEditGenre(false, genre);
+        }
 
-            view.ShowDialog();
+        private void CreateOrEditGenre(bool isEditMode, Genre genre)
+        {
+            IGenreEditViewModel viewModel = container.Resolve<IGenreEditViewModel>();
+            viewModel.IsEditMode = isEditMode;
+            viewModel.Genre = genre;
+
+            var dialog = new CommonDialog()
+            {
+                DialogContent = new GenreEditView(viewModel)
+            };
+
+            dialog.ShowDialog();
         }
 
         private void OnAttachGenresCommand(object parameter)

@@ -1,4 +1,5 @@
 ﻿using Common.Controllers;
+using Common.Dialogs;
 using Common.Enums;
 using Common.Events;
 using Microsoft.Practices.Prism.Events;
@@ -26,8 +27,12 @@ namespace Modules.Albums.Controllers
         private void OnSearchAlbumEvent(object parameter)
         {
             IAlbumSearchViewModel viewModel = container.Resolve<IAlbumSearchViewModel>();
-            AlbumSearchDialog popup = new AlbumSearchDialog(viewModel);
-            popup.ShowDialog();
+
+            CommonDialog dialog = new CommonDialog()
+            {
+                DialogContent = new AlbumSearchView(viewModel)
+            };
+            dialog.ShowDialog();
         }
     }
 }

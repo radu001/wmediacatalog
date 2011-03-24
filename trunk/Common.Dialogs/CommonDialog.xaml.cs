@@ -49,7 +49,7 @@ namespace Common.Dialogs
             FrameworkElement newContent = e.NewValue as FrameworkElement;
             if (newContent != null)
             {
-                DialogViewModelBase viewModel = newContent.DataContext as DialogViewModelBase;
+                IDialogViewModel viewModel = newContent.DataContext as IDialogViewModel;
                 if (viewModel != null)
                 {
                     SetupContent(viewModel, dialog, newContent);
@@ -58,7 +58,7 @@ namespace Common.Dialogs
                 {
                     newContent.DataContextChanged += (sender, ec) =>
                     {
-                        DialogViewModelBase contentViewModel = ec.NewValue as DialogViewModelBase;
+                        IDialogViewModel contentViewModel = ec.NewValue as IDialogViewModel;
                         if (contentViewModel != null)
                         {
                             SetupContent(contentViewModel, dialog, newContent);
@@ -83,7 +83,7 @@ namespace Common.Dialogs
             }
         }
 
-        private static void SetupContent(DialogViewModelBase viewModel, CommonDialog dialog, FrameworkElement content)
+        private static void SetupContent(IDialogViewModel viewModel, CommonDialog dialog, FrameworkElement content)
         {
             dialog.SetBinding(IsBusyProperty, new Binding()
             {
