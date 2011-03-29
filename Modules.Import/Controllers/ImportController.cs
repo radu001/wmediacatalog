@@ -15,7 +15,7 @@ namespace Modules.Import.Controllers
         protected override void InitViews()
         {
             IRegion workspaceRegion = GetWorkspaceRegion();
-            workspaceRegion.Add(container.Resolve<ImportHolderView>(), WorkspaceNameEnum.Import.ToString());
+            workspaceRegion.Add(container.Resolve<ImportView>(), WorkspaceNameEnum.Import.ToString());
         }
     }
 }

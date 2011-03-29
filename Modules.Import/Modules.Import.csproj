@@ -71,9 +71,6 @@
     <Compile Include="ViewModels\IImportViewModel.cs" />
     <Compile Include="ViewModels\ImportProgressViewModel.cs" />
     <Compile Include="ViewModels\ImportViewModel.cs" />
-    <Compile Include="Views\ImportHolderView.xaml.cs">
-      <DependentUpon>ImportHolderView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\ImportProgressView.xaml.cs">
       <DependentUpon>ImportProgressView.xaml</DependentUpon>
     </Compile>
@@ -113,10 +110,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\ImportHolderView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\ImportProgressView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
