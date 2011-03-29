@@ -60,9 +60,7 @@
     <Compile Include="CommonDialog.xaml.cs">
       <DependentUpon>CommonDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ConfirmDialog.xaml.cs">
-      <DependentUpon>ConfirmDialog.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="ConfirmDialog.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\DialogButtonsConverter.cs" />
     <Compile Include="Converters\EmptyStringToVisibilityConverter.cs" />
@@ -77,13 +75,16 @@
     <Compile Include="DialogWindow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\CommandAdapter.cs" />
+    <Compile Include="Views\ConfirmDialogView.xaml.cs">
+      <DependentUpon>ConfirmDialogView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Include="CommonDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ConfirmDialog.xaml">
+    <Page Include="Views\ConfirmDialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

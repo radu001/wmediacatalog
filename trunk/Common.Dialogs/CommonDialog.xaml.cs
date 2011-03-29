@@ -63,6 +63,8 @@ namespace Common.Dialogs
                 }
                 else
                 {
+                    SetupContent(null, dialog, newContent);
+
                     newContent.DataContextChanged += (sender, ec) =>
                     {
                         IDialogViewModel contentViewModel = ec.NewValue as IDialogViewModel;
