@@ -28,7 +28,6 @@ namespace Modules.Import.ViewModels
         public override void OnSuccessCommand(object parameter)
         {
             BeginScanCommand.Execute(null);
-            //DialogResult = true;
         }
 
         public override void OnCancelCommand(object parameter)
