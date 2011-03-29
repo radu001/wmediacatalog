@@ -1,12 +1,10 @@
-﻿using Common;
-using Microsoft.Practices.Prism.Modularity;
+﻿using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
 using Modules.Import.Controllers;
 using Modules.Import.Services;
 using Modules.Import.Services.Utils;
 using Modules.Import.ViewModels;
-using Modules.Import.Views;
 
 namespace Modules.Import
 {
@@ -30,8 +28,6 @@ namespace Modules.Import
             container.RegisterType<IFileSystem, FileSystem>();
 
             importController = container.Resolve<ImportController>();
-
-            regionManager.RegisterViewWithRegion(RegionNames.ImportRegion, typeof(ImportView));
         }
 
         #endregion

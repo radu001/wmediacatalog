@@ -3,9 +3,43 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
+             xmlns:prismCommands="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"
+             mc:Ignorable="d" Width="400" Height="350"
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid Background="PaleGoldenrod">
-            
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Common.Content;component/Styles/CommonStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid x:Name="LayoutRooe">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="Scan path:" Grid.Row="0" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
+        <TextBox Text="{Binding ScanPath,Mode=OneWay}" IsReadOnly="True" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center"/>
+        <Button Grid.Row="0" Grid.Column="2" Margin="8" prismCommands:Click.Command="{Binding SelectScanPathCommand}">
+            <Button.Content>
+                <Image Source="/Common.Content;component/Images/ZoomHS.png" Width="16" Height="16" Stretch="Fill"/>
+            </Button.Content>
+        </Button>
+        
+        <TextBox Grid.Row="1" Grid.ColumnSpan="3"/>
+
+        <StatusBar Grid.Row="2" Grid.ColumnSpan="3">
+            <StackPanel Orientation="Horizontal">
+                <ProgressBar Value="{Binding CurrentProgress,Mode=OneWay}" 
+                             Minimum="0" Maximum="100"  Height="24" Width="186"/>
+            </StackPanel>
+        </StatusBar>
     </Grid>
 </UserControl>

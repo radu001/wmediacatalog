@@ -45,7 +45,7 @@
                         </Grid.RowDefinitions>
 
                         <TextBlock Text="Artist name:" FontWeight="Bold" Grid.Row="0" Grid.Column="0" Margin="16,8,8,8"
-                                VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                Style="{StaticResource DialogLabelStyle}"/>
                         <TextBox Text="{Binding Name,ValidatesOnExceptions=True}" Grid.Row="0" Grid.Column="1" Margin="8" Height="24"/>
 
                         <TextBlock Text="Private marks:" FontWeight="Bold" Grid.Row="1" Grid.Column="0" Margin="16,8,8,8"
