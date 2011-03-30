@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ImportController.cs" />
+    <Compile Include="Events\DisplayImportProgressViewEvent.cs" />
     <Compile Include="ImportModule.cs" />
     <Compile Include="Model\FileTag.cs" />
     <Compile Include="Model\FileTagCollection.cs" />
@@ -73,6 +74,9 @@
     <Compile Include="ViewModels\ImportViewModel.cs" />
     <Compile Include="Views\ImportProgressView.xaml.cs">
       <DependentUpon>ImportProgressView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ImportRegionView.xaml.cs">
+      <DependentUpon>ImportRegionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ImportView.xaml.cs">
       <DependentUpon>ImportView.xaml</DependentUpon>
@@ -111,6 +115,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\ImportProgressView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ImportRegionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

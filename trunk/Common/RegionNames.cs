@@ -6,5 +6,7 @@ namespace Common
         public static string MainRegion = "MainRegion";
         public static string WorkspaceSelectorRegion = "WorkspaceSelectorRegion";
         public static string WorkspaceRegion = "WorkspaceRegion";
+
+        public static string ImportRegion = "ImportRegion";
     }
 }
