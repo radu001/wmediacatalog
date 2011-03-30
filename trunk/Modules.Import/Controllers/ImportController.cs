@@ -19,7 +19,8 @@ namespace Modules.Import.Controllers
             DisplayImportView(ViewNames.ImportView);
 
             eventAggregator.GetEvent<BeginScanProgressEvent>().Subscribe(OnDisplayImportProgressViewEvent, true);
-            eventAggregator.GetEvent<CompleteScanProgressEvent>().Subscribe(OnCompleteScanProgressEvent, true);
+            eventAggregator.GetEvent<CompleteScanProgressEvent>().Subscribe(OnCompleteOrCancelScanProgressEvent, true);
+            eventAggregator.GetEvent<CancelScanProgressEvent>().Subscribe(OnCompleteOrCancelScanProgressEvent, true);
         }
 
         protected override void InitViews()
@@ -40,7 +41,7 @@ namespace Modules.Import.Controllers
             DisplayImportView(ViewNames.ImportProgressView);
         }
 
-        private void OnCompleteScanProgressEvent(object parameter)
+        private void OnCompleteOrCancelScanProgressEvent(object parameter)
         {
             DisplayImportView(ViewNames.ImportView);
         }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BusinessObjects;
+using Common.Dialogs;
 using Common.Enums;
 using Common.ViewModels;
 using FolderPickerLib;
@@ -205,11 +206,23 @@ namespace Modules.Import.ViewModels
         {
             if (!IsScanning)
             {
-                //todo return to import region using event and controller
+                CompleteScan();
             }
             else
             {
-                //show confirmation
+                ConfirmDialog confirm = new ConfirmDialog()
+                {
+                    MessageText = "Do you really want to cancel scanning progress?",
+                    HeaderText = "Confirm"
+                };
+
+                if (confirm.ShowDialog() == true)
+                {
+                    /* this will cause data service to finish scan task and control flow
+                     * will return to first condition in this method*/
+                    isCanceled = true;
+                    scanSettings.Stop = true;
+                }
             }
         }
 
@@ -223,13 +236,20 @@ namespace Modules.Import.ViewModels
 
         private void CompleteScan()
         {
-            int artistCount = Artists.Count();
-            int albumsCount = Artists.SelectMany(a => a.Albums).Count();
+            if (!isCanceled)
+            {
+                int artistCount = Artists.Count();
+                int albumsCount = Artists.SelectMany(a => a.Albums).Count();
 
-            Notify(String.Format("Scanning has been completed. Found {0} artists, {1} albums", artistCount, albumsCount),
-                   NotificationType.Success);
+                Notify(String.Format("Scanning has been completed. Found {0} artists, {1} albums", artistCount, albumsCount),
+                       NotificationType.Success);
 
-            eventAggregator.GetEvent<CompleteScanProgressEvent>().Publish(Artists);
+                eventAggregator.GetEvent<CompleteScanProgressEvent>().Publish(Artists);
+            }
+            else
+            {
+                eventAggregator.GetEvent<CancelScanProgressEvent>().Publish(null);
+            }
         }
 
         private ScanSettings CreateScanSettings()
@@ -279,7 +299,10 @@ namespace Modules.Import.ViewModels
         private StringBuilder logText;
 
         private double step;
+        private bool isCanceled;
+
         private ScanSettings scanSettings;
+
 
         #endregion
     }
