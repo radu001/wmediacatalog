@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Controllers\ImportController.cs" />
     <Compile Include="Converters\BoolToPauseResumeConverter.cs" />
+    <Compile Include="Converters\ProgressPercentageConverter.cs" />
     <Compile Include="Events\CompleteScanProgressEvent.cs" />
     <Compile Include="Events\BeginScanProgressEvent.cs" />
     <Compile Include="ImportModule.cs" />

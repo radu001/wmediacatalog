@@ -17,6 +17,7 @@
             <converters:InverseBoolConverter x:Key="InverseBoolConverter"/>
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
             <localConverters:BoolToPauseResumeConverter x:Key="PauseButtonNameConverter"/>
+            <localConverters:ProgressPercentageConverter x:Key="PercentageConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid x:Name="LayoutRooe">
@@ -41,7 +42,8 @@
         </Button>
 
         <GroupBox Header="Scan log:" Grid.Row="1" Grid.ColumnSpan="3">
-            <TextBox Grid.Row="1" Grid.ColumnSpan="3"/>
+            <TextBox Grid.Row="1" Grid.ColumnSpan="3" Text="{Binding LogText,Mode=OneWay}" 
+                     IsReadOnly="True" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
         </GroupBox>
 
         <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="3" Margin="8" HorizontalAlignment="Right">
@@ -65,7 +67,8 @@
             </Grid.ColumnDefinitions>
             <ProgressBar Value="{Binding CurrentProgress,Mode=OneWay}" 
                              Minimum="0" Maximum="100"  Height="24"/>
-            <TextBlock Text="{Binding CurrentProgress}" Grid.Column="1"/>
+            <TextBlock Text="{Binding CurrentProgress,Converter={StaticResource PercentageConverter}}" 
+                       Grid.Column="1" Margin="4,0,4,0"/>
         </Grid>
     </Grid>
 </UserControl>

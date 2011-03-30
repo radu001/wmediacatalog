@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using BusinessObjects;
 using Common.Enums;
@@ -16,10 +18,15 @@ namespace Modules.Import.ViewModels
 {
     public class ImportProgressViewModel : ViewModelBase, IImportProgressViewModel
     {
+        public const double MinProgress = 0;
+        public const double MaxProgress = 100;
+
         public ImportProgressViewModel(IUnityContainer unityContainer, IEventAggregator eventAggregator, IDataService dataService)
             : base(unityContainer, eventAggregator)
         {
             this.dataService = dataService;
+
+            Artists = new Artist[] { };
 
             SelectScanPathCommand = new DelegateCommand<object>(OnSelectScanPathCommand);
             BeginScanCommand = new DelegateCommand<object>(OnBeginScanCommand);
@@ -109,6 +116,19 @@ namespace Modules.Import.ViewModels
             }
         }
 
+        public StringBuilder LogText
+        {
+            get
+            {
+                return logText;
+            }
+            private set
+            {
+                logText = value;
+                NotifyPropertyChanged(() => LogText);
+            }
+        }
+
         public DelegateCommand<object> SelectScanPathCommand { get; private set; }
 
         public DelegateCommand<object> BeginScanCommand { get; private set; }
@@ -153,6 +173,7 @@ namespace Modules.Import.ViewModels
                 {
                     IsScanning = false;
                     IsPaused = false;
+                    CurrentProgress = MaxProgress;
 
                     Artists = l.Result;
 
@@ -196,12 +217,17 @@ namespace Modules.Import.ViewModels
         {
             ScanFilesCount = 0;
             ScannedFilesCount = 0;
-            CurrentProgress = 0;
+            CurrentProgress = MinProgress;
+            LogText = new StringBuilder();
         }
 
         private void CompleteScan()
         {
-            Notify("Scanning has been completed", NotificationType.Success);
+            int artistCount = Artists.Count();
+            int albumsCount = Artists.SelectMany(a => a.Albums).Count();
+
+            Notify(String.Format("Scanning has been completed. Found {0} artists, {1} albums", artistCount, albumsCount),
+                   NotificationType.Success);
 
             eventAggregator.GetEvent<CompleteScanProgressEvent>().Publish(Artists);
         }
@@ -223,7 +249,7 @@ namespace Modules.Import.ViewModels
         private void OnBeforeScan(int filesCount)
         {
             ScanFilesCount = filesCount;
-            step = 100d / ScanFilesCount;
+            step = MaxProgress / ScanFilesCount;
         }
 
         private void OnBeginFileScan(string fileName)
@@ -233,7 +259,8 @@ namespace Modules.Import.ViewModels
 
         private void OnBeginDirectoryScan(string pathName)
         {
-
+            LogText.AppendLine(pathName);
+            NotifyPropertyChanged(() => LogText);
         }
 
         #endregion
@@ -249,6 +276,7 @@ namespace Modules.Import.ViewModels
         private double currentProgress;
         private bool isScanning;
         private bool isPaused;
+        private StringBuilder logText;
 
         private double step;
         private ScanSettings scanSettings;
