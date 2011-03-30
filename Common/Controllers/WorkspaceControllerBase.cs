@@ -26,6 +26,8 @@ namespace Common.Controllers
             return regionManager.Regions[RegionNames.WorkspaceRegion];
         }
 
+
+
         private void OnChangeWorkspaceViewEventHandler(WorkspaceNameEnum workspace)
         {
             DisplayWorkspace(workspace);
@@ -42,7 +44,6 @@ namespace Common.Controllers
 
                 eventAggregator.GetEvent<WorkspaceActivatedEvent>().Publish(workspace);
             }
-
         }
 
         private bool IsActiveView(IRegion region, object view)

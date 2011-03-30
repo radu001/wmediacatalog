@@ -1,12 +1,11 @@
 ﻿using System.Collections.ObjectModel;
 using BusinessObjects;
-using Common.Dialogs;
 using Common.ViewModels;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
+using Modules.Import.Events;
 using Modules.Import.Services;
-using Modules.Import.Views;
 
 namespace Modules.Import.ViewModels
 {
@@ -51,16 +50,18 @@ namespace Modules.Import.ViewModels
 
         private void OnScanFilesCommand(object parameter)
         {
-            var viewModel = container.Resolve<IImportProgressViewModel>();
-            var scanProgressDialog = new CommonDialog()
-            {
-                DialogContent = new ImportProgressView(viewModel)
-            };
+            eventAggregator.GetEvent<DisplayImportProgressViewEvent>().Publish(null);
 
-            if (scanProgressDialog.ShowDialog() == true)
-            {
-                //TODO
-            }
+            //var viewModel = container.Resolve<IImportProgressViewModel>();
+            //var scanProgressDialog = new CommonDialog()
+            //{
+            //    DialogContent = new ImportProgressView(viewModel)
+            //};
+
+            //if (scanProgressDialog.ShowDialog() == true)
+            //{
+            //    //TODO
+            //}
         }
 
         #endregion
