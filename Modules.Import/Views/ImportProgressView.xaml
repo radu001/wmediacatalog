@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:prismCommands="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"
-             mc:Ignorable="d" Width="400" Height="350"
-             d:DesignHeight="300" d:DesignWidth="300">
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="450">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -17,6 +17,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -32,10 +33,21 @@
                 <Image Source="/Common.Content;component/Images/ZoomHS.png" Width="16" Height="16" Stretch="Fill"/>
             </Button.Content>
         </Button>
-        
-        <TextBox Grid.Row="1" Grid.ColumnSpan="3"/>
 
-        <StatusBar Grid.Row="2" Grid.ColumnSpan="3">
+        <GroupBox Header="Scan log:" Grid.Row="1" Grid.ColumnSpan="3">
+            <TextBox Grid.Row="1" Grid.ColumnSpan="3"/>
+        </GroupBox>
+        
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="3" HorizontalAlignment="Right">
+            <Button Content="Begin scan" 
+                    prismCommands:Click.Command="{Binding BeginScanCommand}"/>
+            <Button Content="Pause scan"
+                    prismCommands:Click.Command="{Binding PauseScanCommand}"/>
+            <Button Content="Cancel"
+                    prismCommands:Click.Command="{Binding CancelScanCommand}"/>
+        </StackPanel>
+
+        <StatusBar Grid.Row="3" Grid.ColumnSpan="3">
             <StackPanel Orientation="Horizontal">
                 <ProgressBar Value="{Binding CurrentProgress,Mode=OneWay}" 
                              Minimum="0" Maximum="100"  Height="24" Width="186"/>
