@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using BusinessObjects;
+using Common;
 using Microsoft.Practices.Unity;
 using Modules.Import.Model;
 using Modules.Import.Services.Utils;
@@ -52,16 +54,24 @@ namespace Modules.Import.Services
                 var files = fileSystem.GetFiles(currentDir, settings.FileMask);
                 foreach (var f in files)
                 {
-                    var tags = scanner.GetTags(f.FullName);
-
-                    if (tags.Count() > 0)
+                    Thread.Sleep(100);
+                    try
                     {
-                        if (settings.BeginFileScan != null)
-                        {
-                            settings.BeginFileScan(f.Name);
-                        }
+                        var tags = scanner.GetTags(f.FullName);
 
-                        tagsAccumulator.AccumulateTags(tags);
+                        if (tags.Count() > 0)
+                        {
+                            if (settings.BeginFileScan != null)
+                            {
+                                settings.BeginFileScan(f.Name);
+                            }
+
+                            tagsAccumulator.AccumulateTags(tags);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Write(ex);
                     }
                 }
             }

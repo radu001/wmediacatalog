@@ -1,5 +1,6 @@
 ﻿
 using System.Collections.Generic;
+using System.Text;
 using BusinessObjects;
 using Microsoft.Practices.Prism.Commands;
 namespace Modules.Import.ViewModels
@@ -13,6 +14,7 @@ namespace Modules.Import.ViewModels
         bool IsScanning { get; }
         bool IsPaused { get; }
         double CurrentProgress { get; }
+        StringBuilder LogText { get; }
 
         DelegateCommand<object> SelectScanPathCommand { get; }
         DelegateCommand<object> BeginScanCommand { get; }
