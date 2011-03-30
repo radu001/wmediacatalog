@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:localConverters="clr-namespace:Modules.Listenings.Converters"
-             xmlns:converters="clr-namespace:Common.Dialogs.Converters;assembly=Common.Dialogs"
+             xmlns:converters="clr-namespace:Common.Controls.Converters;assembly=Common.Controls"
              xmlns:controls="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
              xmlns:dialogs="clr-namespace:Common.Dialogs;assembly=Common.Dialogs"
              xmlns:prismCommand="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"

@@ -54,7 +54,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ImportController.cs" />
-    <Compile Include="Events\DisplayImportProgressViewEvent.cs" />
+    <Compile Include="Converters\BoolToPauseResumeConverter.cs" />
+    <Compile Include="Events\CompleteScanProgressEvent.cs" />
+    <Compile Include="Events\BeginScanProgressEvent.cs" />
     <Compile Include="ImportModule.cs" />
     <Compile Include="Model\FileTag.cs" />
     <Compile Include="Model\FileTagCollection.cs" />

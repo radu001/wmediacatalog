@@ -1,9 +1,9 @@
-﻿using System;
+﻿
+using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
-
-namespace Common.Dialogs.Converters
+namespace Common.Controls.Converters
 {
     public class EmptyStringToVisibilityConverter : IValueConverter
     {

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:converters="clr-namespace:Common.Dialogs.Converters;assembly=Common.Dialogs"
              mc:Ignorable="d" 
-             Width="329" Height="213">
+             Width="329" Height="120">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
