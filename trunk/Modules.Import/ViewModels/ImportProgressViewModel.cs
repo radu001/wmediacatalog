@@ -14,7 +14,7 @@ using Modules.Import.Services;
 
 namespace Modules.Import.ViewModels
 {
-    public class ImportProgressViewModel : DialogViewModelBase, IImportProgressViewModel
+    public class ImportProgressViewModel : ViewModelBase, IImportProgressViewModel
     {
         public ImportProgressViewModel(IUnityContainer unityContainer, IEventAggregator eventAggregator, IDataService dataService)
             : base(unityContainer, eventAggregator)
@@ -23,16 +23,8 @@ namespace Modules.Import.ViewModels
 
             SelectScanPathCommand = new DelegateCommand<object>(OnSelectScanPathCommand);
             BeginScanCommand = new DelegateCommand<object>(OnBeginScanCommand);
-        }
-
-        public override void OnSuccessCommand(object parameter)
-        {
-            BeginScanCommand.Execute(null);
-        }
-
-        public override void OnCancelCommand(object parameter)
-        {
-            DialogResult = false;
+            PauseScanCommand = new DelegateCommand<object>(OnPauseScanCommand);
+            CancelScanCommand = new DelegateCommand<object>(OnCancelScanCommand);
         }
 
         #region IImportProgressViewModel Members
@@ -102,9 +94,39 @@ namespace Modules.Import.ViewModels
             }
         }
 
+        public bool IsScanning
+        {
+            get
+            {
+                return isScanning;
+            }
+            private set
+            {
+                isScanning = value;
+                NotifyPropertyChanged(() => IsScanning);
+            }
+        }
+
+        public bool IsPaused
+        {
+            get
+            {
+                return isPaused;
+            }
+            private set
+            {
+                isPaused = value;
+                NotifyPropertyChanged(() => IsPaused);
+            }
+        }
+
         public DelegateCommand<object> SelectScanPathCommand { get; private set; }
 
         public DelegateCommand<object> BeginScanCommand { get; private set; }
+
+        public DelegateCommand<object> PauseScanCommand { get; private set; }
+
+        public DelegateCommand<object> CancelScanCommand { get; private set; }
 
         #endregion
 
@@ -125,19 +147,45 @@ namespace Modules.Import.ViewModels
                 Notify("Please select scan path first", NotificationType.Warning);
             else
             {
-                var settings = CreateScanSettings();
+                scanSettings = CreateScanSettings();
 
                 Init();
+
+                IsScanning = true;
+                IsPaused = false;
 
                 Task<IEnumerable<Artist>> scanTask =
                     Task.Factory.StartNew<IEnumerable<Artist>>(() =>
                     {
-                        return dataService.BeginScan(settings);
+                        return dataService.BeginScan(scanSettings);
                     }, TaskScheduler.Default);
 
                 Task finishTask = scanTask.ContinueWith((l) =>
                 {
                 }, TaskScheduler.FromCurrentSynchronizationContext());
+            }
+        }
+
+        private void OnPauseScanCommand(object parameter)
+        {
+            if (!IsScanning)
+                return;
+            else
+            {
+                scanSettings.Pause = true;
+                IsPaused = true;
+            }
+        }
+
+        private void OnCancelScanCommand(object parameter)
+        {
+            if (!IsScanning)
+            {
+                //todo return to import region using event and controller
+            }
+            else
+            {
+                //show confirmation
             }
         }
 
@@ -189,8 +237,11 @@ namespace Modules.Import.ViewModels
         private int scannedFilesCount;
         private string scanPath;
         private double currentProgress;
+        private bool isScanning;
+        private bool isPaused;
 
         private double step;
+        private ScanSettings scanSettings;
 
         #endregion
     }
