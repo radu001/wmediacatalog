@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using BusinessObjects;
 using Common.Enums;
@@ -9,6 +8,7 @@ using FolderPickerLib;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
+using Modules.Import.Events;
 using Modules.Import.Model;
 using Modules.Import.Services;
 
@@ -68,18 +68,7 @@ namespace Modules.Import.ViewModels
             }
         }
 
-        public ObservableCollection<Artist> Artists
-        {
-            get
-            {
-                return artists;
-            }
-            private set
-            {
-                artists = value;
-                NotifyPropertyChanged(() => Artists);
-            }
-        }
+        public IEnumerable<Artist> Artists { get; private set; }
 
         public double CurrentProgress
         {
@@ -162,6 +151,12 @@ namespace Modules.Import.ViewModels
 
                 Task finishTask = scanTask.ContinueWith((l) =>
                 {
+                    IsScanning = false;
+                    IsPaused = false;
+
+                    Artists = l.Result;
+
+                    CompleteScan();
                 }, TaskScheduler.FromCurrentSynchronizationContext());
             }
         }
@@ -172,8 +167,16 @@ namespace Modules.Import.ViewModels
                 return;
             else
             {
-                scanSettings.Pause = true;
-                IsPaused = true;
+                if (!IsPaused)
+                {
+                    scanSettings.Pause = true;
+                    IsPaused = true;
+                }
+                else
+                {
+                    scanSettings.Pause = false;
+                    IsPaused = false;
+                }
             }
         }
 
@@ -194,6 +197,13 @@ namespace Modules.Import.ViewModels
             ScanFilesCount = 0;
             ScannedFilesCount = 0;
             CurrentProgress = 0;
+        }
+
+        private void CompleteScan()
+        {
+            Notify("Scanning has been completed", NotificationType.Success);
+
+            eventAggregator.GetEvent<CompleteScanProgressEvent>().Publish(Artists);
         }
 
         private ScanSettings CreateScanSettings()
@@ -223,6 +233,7 @@ namespace Modules.Import.ViewModels
 
         private void OnBeginDirectoryScan(string pathName)
         {
+
         }
 
         #endregion
@@ -232,7 +243,6 @@ namespace Modules.Import.ViewModels
         #region Private fields
 
         private IDataService dataService;
-        private ObservableCollection<Artist> artists;
         private int scanFilesCount;
         private int scannedFilesCount;
         private string scanPath;

@@ -1,5 +1,5 @@
 ﻿
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using BusinessObjects;
 using Microsoft.Practices.Prism.Commands;
 namespace Modules.Import.ViewModels
@@ -9,7 +9,7 @@ namespace Modules.Import.ViewModels
         int ScanFilesCount { get; set; }
         int ScannedFilesCount { get; }
         string ScanPath { get; }
-        ObservableCollection<Artist> Artists { get; }
+        IEnumerable<Artist> Artists { get; }
         bool IsScanning { get; }
         bool IsPaused { get; }
         double CurrentProgress { get; }

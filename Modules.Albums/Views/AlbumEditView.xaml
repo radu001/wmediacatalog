@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:commands="clr-namespace:Common.Commands;assembly=Common.Commands"
              xmlns:controls="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
-             xmlns:converters="clr-namespace:Common.Dialogs.Converters;assembly=Common.Dialogs"
+             xmlns:converters="clr-namespace:Common.Controls.Converters;assembly=Common.Controls"
              xmlns:dialogs="clr-namespace:Common.Dialogs;assembly=Common.Dialogs"
              xmlns:enums="clr-namespace:Modules.Albums.Enums"
              xmlns:localConverters="clr-namespace:Modules.Albums.Converters"

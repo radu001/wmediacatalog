@@ -1,25 +1,29 @@
-﻿using System;
+﻿
+using System;
 using System.Globalization;
-using System.Windows;
 using System.Windows.Data;
-
-namespace Common.Dialogs.Converters
+namespace Common.Controls.Converters
 {
-    public class BoolToVisibilityConverter : IValueConverter
+    public class RatingConverter : IValueConverter
     {
+        const double Max = 1;
+        const double Min = 0;
+        const int ItemsCount = 7;
+
         #region IValueConverter Members
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if ((bool)value)
-                return Visibility.Visible;
+            int ival = (int)value;
 
-            return Visibility.Collapsed;
+            return (double)ival / ItemsCount;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            double dval = (double)value;
+
+            return (int)(dval * ItemsCount);
         }
 
         #endregion

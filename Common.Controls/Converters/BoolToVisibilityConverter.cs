@@ -9,6 +9,11 @@ namespace Common.Controls.Converters
     {
         public bool UseCollapsed { get; set; }
 
+        public BoolToVisibilityConverter()
+        {
+            UseCollapsed = true;
+        }
+
         #region IValueConverter Members
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

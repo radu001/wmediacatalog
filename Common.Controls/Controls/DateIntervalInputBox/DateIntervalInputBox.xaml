@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Common.Controls.Controls"
+             xmlns:converters="clr-namespace:Common.Controls.Converters"
              mc:Ignorable="d" x:Name="dateInputBox">
     <UserControl.Resources>
         <ToolTip x:Key="ValidationErrorToolTip" DataContext="{Binding Path=PlacementTarget,RelativeSource={x:Static RelativeSource.Self}}" Background="Red">
@@ -53,7 +54,7 @@
         </Style>
 
         <local:ControlBorderBrushConverter x:Key="ControlBorderBrushConverter"/>
-        <local:InverseBoolConverter x:Key="InverseBoolConverter"/>
+        <converters:InverseBoolConverter x:Key="InverseBoolConverter"/>
     </UserControl.Resources>
 
     <Grid x:Name="ControlLayoutRoot">

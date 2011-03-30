@@ -18,7 +18,8 @@ namespace Modules.Import.Controllers
 
             DisplayImportView(ViewNames.ImportView);
 
-            eventAggregator.GetEvent<DisplayImportProgressViewEvent>().Subscribe(OnDisplayImportProgressViewEvent, true);
+            eventAggregator.GetEvent<BeginScanProgressEvent>().Subscribe(OnDisplayImportProgressViewEvent, true);
+            eventAggregator.GetEvent<CompleteScanProgressEvent>().Subscribe(OnCompleteScanProgressEvent, true);
         }
 
         protected override void InitViews()
@@ -37,6 +38,11 @@ namespace Modules.Import.Controllers
         private void OnDisplayImportProgressViewEvent(object parameter)
         {
             DisplayImportView(ViewNames.ImportProgressView);
+        }
+
+        private void OnCompleteScanProgressEvent(object parameter)
+        {
+            DisplayImportView(ViewNames.ImportView);
         }
 
         #region Helpers

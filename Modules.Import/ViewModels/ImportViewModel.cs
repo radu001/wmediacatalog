@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using BusinessObjects;
 using Common.ViewModels;
 using Microsoft.Practices.Prism.Commands;
@@ -25,6 +26,8 @@ namespace Modules.Import.ViewModels
             this.dataService = dataService;
 
             ScanFilesCommand = new DelegateCommand<object>(OnScanFilesCommand);
+
+            eventAggregator.GetEvent<CompleteScanProgressEvent>().Subscribe(OnCompleteScanProgressEvent, true);
         }
 
         #region IImportViewModel Members
@@ -50,18 +53,15 @@ namespace Modules.Import.ViewModels
 
         private void OnScanFilesCommand(object parameter)
         {
-            eventAggregator.GetEvent<DisplayImportProgressViewEvent>().Publish(null);
+            eventAggregator.GetEvent<BeginScanProgressEvent>().Publish(null);
+        }
 
-            //var viewModel = container.Resolve<IImportProgressViewModel>();
-            //var scanProgressDialog = new CommonDialog()
-            //{
-            //    DialogContent = new ImportProgressView(viewModel)
-            //};
+        private void OnCompleteScanProgressEvent(IEnumerable<Artist> artists)
+        {
+            if (artists == null)
+                return;
 
-            //if (scanProgressDialog.ShowDialog() == true)
-            //{
-            //    //TODO
-            //}
+            ImportedArtists = new ObservableCollection<Artist>(artists);
         }
 
         #endregion

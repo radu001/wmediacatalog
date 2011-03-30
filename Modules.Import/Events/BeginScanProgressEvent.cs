@@ -2,7 +2,7 @@
 
 namespace Modules.Import.Events
 {
-    public class DisplayImportProgressViewEvent : CompositePresentationEvent<object>
+    public class BeginScanProgressEvent : CompositePresentationEvent<object>
     {
     }
 }

@@ -7,7 +7,7 @@
              xmlns:commonCommands="clr-namespace:Common.Commands;assembly=Common.Commands"
              xmlns:controls="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
              xmlns:dialogs="clr-namespace:Common.Dialogs;assembly=Common.Dialogs"
-             xmlns:commonConverters="clr-namespace:Common.Dialogs.Converters;assembly=Common.Dialogs"
+             xmlns:commonConverters="clr-namespace:Common.Controls.Converters;assembly=Common.Controls"
              Background="Transparent" commonCommands:Loaded.Command="{Binding ViewLoadedCommand}"
              mc:Ignorable="d" d:DesignWidth="400">
     <UserControl.Resources>
