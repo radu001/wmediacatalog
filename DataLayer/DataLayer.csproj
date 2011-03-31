@@ -88,6 +88,7 @@
     <Content Include="DbSchema\Helpers\insert_test_tags.sql" />
     <Content Include="DbSchema\Helpers\insert_test_artists.sql" />
     <Content Include="hibernate.cfg.xml" />
+    <EmbeddedResource Include="Mappings\StoredProcedures.hbm.xml" />
     <EmbeddedResource Include="Mappings\Place.hbm.xml" />
     <EmbeddedResource Include="Mappings\UserSettings.hbm.xml" />
     <EmbeddedResource Include="Mappings\UserLogin.hbm.xml" />

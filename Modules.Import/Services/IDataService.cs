@@ -7,5 +7,6 @@ namespace Modules.Import.Services
     public interface IDataService
     {
         IEnumerable<Artist> BeginScan(ScanSettings settings);
+        bool BulkImportData(IEnumerable<Artist> artists);
     }
 }

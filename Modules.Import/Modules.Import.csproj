@@ -60,8 +60,11 @@
     <Compile Include="Events\CompleteScanProgressEvent.cs" />
     <Compile Include="Events\BeginScanProgressEvent.cs" />
     <Compile Include="ImportModule.cs" />
+    <Compile Include="Model\Comparers\GenreByNameComparer.cs" />
     <Compile Include="Model\FileTag.cs" />
     <Compile Include="Model\FileTagCollection.cs" />
+    <Compile Include="Model\IImportDataModel.cs" />
+    <Compile Include="Model\ImportDataModel.cs" />
     <Compile Include="Services\Utils\FileSystem.cs" />
     <Compile Include="Services\Utils\IFileSystem.cs" />
     <Compile Include="Services\Utils\IScanner.cs" />
@@ -111,6 +114,10 @@
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{E66025A2-8077-40D1-B627-4D4945CEB365}</Project>
       <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataServices\DataServices.csproj">
+      <Project>{EF68B28D-CEE3-4398-BA62-7C79F5926866}</Project>
+      <Name>DataServices</Name>
     </ProjectReference>
     <ProjectReference Include="..\FolderPickerLib\FolderPickerLib.csproj">
       <Project>{F53582DB-02B7-4864-B7AA-AAD055A591E4}</Project>

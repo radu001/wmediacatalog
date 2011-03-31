@@ -12,6 +12,27 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Common.Content;component/Styles/CommonStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate x:Key="GenreTemplate">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Common.Content;component/Images/Genre_16x16.png" Width="16" Height="16"/>
+                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+                </StackPanel>
+            </DataTemplate>
+            
+            <HierarchicalDataTemplate x:Key="AlbumTemplate" ItemsSource="{Binding Genres}" ItemTemplate="{StaticResource GenreTemplate}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Common.Content;component/Images/CD_normal_16x16.png" Width="16" Height="16"/>
+                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+                </StackPanel>
+            </HierarchicalDataTemplate>
+
+            <HierarchicalDataTemplate x:Key="ArtistTemplate" ItemsSource="{Binding Albums}" ItemTemplate="{StaticResource AlbumTemplate}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Common.Content;component/Images/Conductor_normal_16x16.png" Width="16" Height="16"/>
+                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+                </StackPanel>
+            </HierarchicalDataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid x:Name="LayoutRoot">
@@ -26,7 +47,7 @@
                         ToolTip="Scan files"
                         prismCommands:Click.Command="{Binding ScanFilesCommand}">
                     <Button.Content>
-                        <Image Source="/Common.Content;component/Images/Conductor_add_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
+                        <Image Source="/Common.Content;component/Images/Import_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
                     </Button.Content>
                 </Button>
             </ToolBar>
@@ -34,9 +55,35 @@
             </ToolBar>
         </ToolBarTray>
         <GroupBox Header="Import results" Grid.Row="1" Margin="2">
-            <TreeView x:Name="ImportTreeView"  ItemsSource="{Binding ImportedArtists}" >
-
-            </TreeView>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TreeView x:Name="ImportTreeView" Grid.Column="0" Margin="8"
+                          ItemsSource="{Binding DataModel}" ItemTemplate="{StaticResource ArtistTemplate}"/>
+                <GroupBox Grid.Column="1" Header="Statistics" Margin="4">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="Artists count:" Style="{StaticResource DialogLabelStyle}" Grid.Row="0" Grid.Column="0"/>
+                            <TextBlock Text="{Binding DataModel.ArtistsCount}" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1"/>
+                            <TextBlock Text="Albums count:" Style="{StaticResource DialogLabelStyle}" Grid.Row="1" Grid.Column="0"/>
+                            <TextBlock Text="{Binding DataModel.AlbumsCount}" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1"/>
+                            <TextBlock Text="Genres count:" Style="{StaticResource DialogLabelStyle}" Grid.Row="2" Grid.Column="0"/>
+                            <TextBlock Text="{Binding DataModel.GenresCount}" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1"/>
+                        </Grid>
+                    </ScrollViewer>
+                </GroupBox>
+            </Grid>
         </GroupBox>
     </Grid>
 </UserControl>

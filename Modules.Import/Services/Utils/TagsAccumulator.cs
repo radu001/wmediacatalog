@@ -11,6 +11,7 @@ namespace Modules.Import.Services.Utils
         public static readonly string ArtistTagKey = "ARTIST";
         public static readonly string AlbumTagKey = "ALBUM";
         public static readonly string GenreTagKey = "GENRE";
+        public static readonly string[] YearTagKeys = new string[] { "YEAR", "DATE" };
 
         public TagsAccumulator()
         {
@@ -85,6 +86,8 @@ namespace Modules.Import.Services.Utils
                             albums[albumName] = album;
                         }
 
+                        ProcessYear(tags, album);
+
                         if (artist.Albums.Where(a => a.Name == albumName).Count() == 0)
                         {
                             artist.Albums.Add(album);
@@ -95,13 +98,24 @@ namespace Modules.Import.Services.Utils
                             album.Artists.Add(artist);
                         }
 
-                        ProcessGenre(tags, album);
+                        ProcessGenres(tags, album);
                     }
                 }
             }
         }
 
-        private void ProcessGenre(IEnumerable<FileTag> tags, Album album)
+        private void ProcessYear(IEnumerable<FileTag> tags, Album album)
+        {
+            var yearTag = tags.Where(t => YearTagKeys.Contains(t.Key.ToUpper())).FirstOrDefault();
+            if (yearTag != null)
+            {
+                int yearValue = 1900;
+                Int32.TryParse(yearTag.Value, out yearValue);
+                album.Year = new DateTime(yearValue, 1, 1);
+            }
+        }
+
+        private void ProcessGenres(IEnumerable<FileTag> tags, Album album)
         {
             var genreTags = tags.Where(t => t.Key.ToUpper() == GenreTagKey);
             foreach (var genreTag in genreTags)

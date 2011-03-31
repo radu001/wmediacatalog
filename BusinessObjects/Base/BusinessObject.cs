@@ -1,4 +1,5 @@
 ﻿
+using Common.Data;
 namespace BusinessObjects
 {
     public class BusinessObject : NotificationObject
