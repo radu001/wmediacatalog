@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Linq.Expressions;
 
-namespace BusinessObjects
+namespace Common.Data
 {
     public class NotificationObject : INotifyPropertyChanged
     {

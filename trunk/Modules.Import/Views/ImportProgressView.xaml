@@ -16,6 +16,7 @@
 
             <converters:InverseBoolConverter x:Key="InverseBoolConverter"/>
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+            <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter"/>
             <localConverters:BoolToPauseResumeConverter x:Key="PauseButtonNameConverter"/>
             <localConverters:ProgressPercentageConverter x:Key="PercentageConverter"/>
         </ResourceDictionary>
@@ -49,7 +50,7 @@
         <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="3" Margin="8" HorizontalAlignment="Right">
             <Button Style="{StaticResource DialogButtonStyle}" Width="75"
                     Content="Begin scan" 
-                    IsEnabled="{Binding IsScanning,Converter={StaticResource InverseBoolConverter}}"
+                    Visibility="{Binding IsScanning,Converter={StaticResource InverseBoolToVisibilityConverter}}"
                     prismCommands:Click.Command="{Binding BeginScanCommand}"/>
             <Button Style="{StaticResource DialogButtonStyle}" Width="75"
                     Visibility="{Binding IsScanning,Converter={StaticResource BoolToVisibilityConverter}}"

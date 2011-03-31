@@ -96,6 +96,10 @@
       <Project>{82C52DA4-8017-469C-8665-BE404E072A4B}</Project>
       <Name>BusinessObjects</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{E66025A2-8077-40D1-B627-4D4945CEB365}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataLayer\DataLayer.csproj">
       <Project>{7AA524BE-382B-4B5B-906A-1218ACCF7C76}</Project>
       <Name>DataLayer</Name>

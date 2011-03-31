@@ -603,6 +603,71 @@ namespace MediaCatalog.Tests.TestSuites.Import
             Assert.NotNull(secondGenre);
         }
 
+        [Test]
+        public void SingleYearTagPresent_AppliedToAlbum()
+        {
+            var accumulator = CreateAccumulator();
+
+            var tags = new FileTagCollection();
+            tags.Add(new FileTag()
+            {
+                Key = "Artist",
+                Value = "Artist1"
+            });
+            tags.Add(new FileTag()
+            {
+                Key = "Album",
+                Value = "Album1"
+            });
+            tags.Add(new FileTag()
+            {
+                Key = "Year",
+                Value = "1999"
+            });
+
+            accumulator.AccumulateTags(tags);
+            var result = accumulator.GetAccumulatedResult();
+            var album = result.SingleOrDefault().Albums.SingleOrDefault();
+
+            Assert.IsNotNull(album);
+            Assert.AreEqual(1999, album.Year.Year);
+        }
+
+        [Test]
+        public void MultipleYearsTagsPresent_FirstAppliedToAlbum()
+        {
+            var accumulator = CreateAccumulator();
+
+            var tags = new FileTagCollection();
+            tags.Add(new FileTag()
+            {
+                Key = "Artist",
+                Value = "Artist1"
+            });
+            tags.Add(new FileTag()
+            {
+                Key = "Album",
+                Value = "Album1"
+            });
+            tags.Add(new FileTag()
+            {
+                Key = "Year",
+                Value = "1999"
+            });
+            tags.Add(new FileTag()
+            {
+                Key = "Year",
+                Value = "2001"
+            });
+
+            accumulator.AccumulateTags(tags);
+            var result = accumulator.GetAccumulatedResult();
+            var album = result.SingleOrDefault().Albums.SingleOrDefault();
+
+            Assert.IsNotNull(album);
+            Assert.AreEqual(1999, album.Year.Year);
+        }
+
         private ITagsAccumulator CreateAccumulator()
         {
             return new TagsAccumulator();

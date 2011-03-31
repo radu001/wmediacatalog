@@ -197,6 +197,16 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="PresentationFramework.Aero" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Import_48x48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Genre_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\CD_normal_16x16.png" />
+    <Resource Include="Images\Conductor_normal_16x16.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -192,10 +192,10 @@
                   ItemContainerStyle="{StaticResource GeneralListViewItemStyle}"
                   ItemTemplate="{StaticResource AlbumTemplate}"
                   commands:MouseDoubleClick.Command="{Binding EditAlbumCommand}"/>
-                <TextBlock Text="Loading albums..." FontWeight="Bold" FontSize="14"
+                <!--<TextBlock Text="Loading albums..." FontWeight="Bold" FontSize="14"
                            VerticalAlignment="Center" HorizontalAlignment="Center"
                            Style="{StaticResource AnimatedTextBlockStyle}"
-                           Grid.Row="0"/>
+                           Grid.Row="0"/>-->
             </Grid>
         </GroupBox>
 

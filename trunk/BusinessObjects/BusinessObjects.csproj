@@ -59,13 +59,18 @@
     <Compile Include="CurrentUser.cs" />
     <Compile Include="Genre.cs" />
     <Compile Include="Interfaces\IValueObject.cs" />
-    <Compile Include="Base\NotificationObject.cs" />
     <Compile Include="Place.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tag.cs" />
     <Compile Include="Track.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UserSettings.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{E66025A2-8077-40D1-B627-4D4945CEB365}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

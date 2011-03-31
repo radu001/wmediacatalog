@@ -70,6 +70,7 @@
     <Compile Include="Controllers\WorkspaceControllerBase.cs" />
     <Compile Include="Data\DateInterval.cs" />
     <Compile Include="Data\DateParts.cs" />
+    <Compile Include="Data\NotificationObject.cs" />
     <Compile Include="Entities\AuthorizationInfo.cs" />
     <Compile Include="Entities\NotificationInfo.cs" />
     <Compile Include="Entities\Pagination\Field.cs" />

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using BusinessObjects;
 using Common;
+using DataServices;
 using Microsoft.Practices.Unity;
 using Modules.Import.Model;
 using Modules.Import.Services.Utils;
@@ -54,7 +55,6 @@ namespace Modules.Import.Services
                 var files = fileSystem.GetFiles(currentDir, settings.FileMask);
                 foreach (var f in files)
                 {
-                    Thread.Sleep(100);
                     try
                     {
                         var tags = scanner.GetTags(f.FullName);
@@ -77,6 +77,12 @@ namespace Modules.Import.Services
             }
 
             return tagsAccumulator.GetAccumulatedResult();
+        }
+
+        public bool BulkImportData(IEnumerable<Artist> artists)
+        {
+            DataProvider provider = new DataProvider();
+            return provider.BulkImportData(artists);
         }
 
         #region Private fields

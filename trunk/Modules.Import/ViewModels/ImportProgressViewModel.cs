@@ -206,6 +206,7 @@ namespace Modules.Import.ViewModels
         {
             if (!IsScanning)
             {
+                isCanceled = true;
                 CompleteScan();
             }
             else

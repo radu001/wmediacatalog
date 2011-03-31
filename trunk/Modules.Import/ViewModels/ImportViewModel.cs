@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Xml.Linq;
 using BusinessObjects;
+using Common.Enums;
 using Common.ViewModels;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 using Modules.Import.Events;
+using Modules.Import.Model;
 using Modules.Import.Services;
 
 namespace Modules.Import.ViewModels
@@ -26,26 +28,35 @@ namespace Modules.Import.ViewModels
             this.dataService = dataService;
 
             ScanFilesCommand = new DelegateCommand<object>(OnScanFilesCommand);
+            MatchAgainstDatabaseCommand = new DelegateCommand<object>(OnMatchAgainstDatabaseCommand);
 
             eventAggregator.GetEvent<CompleteScanProgressEvent>().Subscribe(OnCompleteScanProgressEvent, true);
+
+            XElement root = new XElement("genres");
+            for (int i = 1; i < 11; ++i)
+            {
+                root.Add(new XElement("g", "genre" + i.ToString()));
+            }
         }
 
         #region IImportViewModel Members
 
-        public DelegateCommand<object> ScanFilesCommand { get; private set; }
-
-        public ObservableCollection<Artist> ImportedArtists
+        public IImportDataModel DataModel
         {
             get
             {
-                return importedArtists;
+                return dataModel;
             }
             private set
             {
-                importedArtists = value;
-                NotifyPropertyChanged(() => ImportedArtists);
+                dataModel = value;
+                NotifyPropertyChanged(() => DataModel);
             }
         }
+
+        public DelegateCommand<object> ScanFilesCommand { get; private set; }
+
+        public DelegateCommand<object> MatchAgainstDatabaseCommand { get; private set; }
 
         #endregion
 
@@ -61,7 +72,23 @@ namespace Modules.Import.ViewModels
             if (artists == null)
                 return;
 
-            ImportedArtists = new ObservableCollection<Artist>(artists);
+            DataModel = CreateDataModel(artists);
+
+            //debug
+            MatchAgainstDatabaseCommand.Execute(null);
+        }
+
+        private void OnMatchAgainstDatabaseCommand(object parameter)
+        {
+            if (dataService.BulkImportData(DataModel))
+                Notify("Bulk data import has been successful", NotificationType.Success);
+            else
+                Notify("Error during bulk data import. See log for details", NotificationType.Error);
+        }
+
+        private IImportDataModel CreateDataModel(IEnumerable<Artist> artists)
+        {
+            return new ImportDataModel(artists);
         }
 
         #endregion
@@ -69,7 +96,7 @@ namespace Modules.Import.ViewModels
         #region Private fields
 
         private readonly IDataService dataService;
-        private ObservableCollection<Artist> importedArtists;
+        private IImportDataModel dataModel;
 
         #endregion
     }
