@@ -19,6 +19,7 @@ namespace Prism.Wizards.ViewModels
 
             NextStepCommand = new DelegateCommand<object>(OnNextStepCommand);
             PrevStepCommand = new DelegateCommand<object>(OnPrevStepCommand);
+            MoveToStepCommand = new DelegateCommand<object>(OnMoveToStepCommand);
 
             eventAggregator.GetEvent<UpdateNavBarEvent>().Subscribe(OnUpdateNavBarEvent, true);
 
@@ -76,6 +77,8 @@ namespace Prism.Wizards.ViewModels
 
         public DelegateCommand<object> PrevStepCommand { get; private set; }
 
+        public DelegateCommand<object> MoveToStepCommand { get; private set; }
+
         #endregion
 
         #region Private methods
@@ -88,20 +91,30 @@ namespace Prism.Wizards.ViewModels
 
         private void OnNextStepCommand(object parameter)
         {
-            RaiseWizardNavigationEvent(true);
+            RaiseWizardNavigationEvent(true, null);
         }
 
         private void OnPrevStepCommand(object parameter)
         {
-            RaiseWizardNavigationEvent(false);
+            RaiseWizardNavigationEvent(false, null);
         }
 
-        private void RaiseWizardNavigationEvent(bool moveForward)
+        private void OnMoveToStepCommand(object parameter)
+        {
+            var step = parameter as WizardStep;
+            if (step != null)
+            {
+                RaiseWizardNavigationEvent(false, step);
+            }
+        }
+
+        private void RaiseWizardNavigationEvent(bool moveForward, WizardStep step)
         {
             eventAggregator.GetEvent<WizardNavigationEvent>().Publish(new NavigationSettings()
             {
                 WizardName = WizardName,
-                MoveForward = moveForward
+                MoveForward = moveForward,
+                Step = step
             });
         }
 
