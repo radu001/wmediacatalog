@@ -21,6 +21,8 @@ namespace Prism.Wizards
             }
         }
 
+        public int CurrentStep { get; set; }
+
         public void AddStep<IViewModel, ViewModel, View>(int stepIndex, string stepName)
         {
             WizardStep step = new WizardStep()

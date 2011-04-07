@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Data\WizardStep.cs" />
     <Compile Include="Data\WizardStepCollection.cs" />
+    <Compile Include="Events\UpdateNavBarEvent.cs" />
     <Compile Include="Events\WizardNavigationEvent.cs" />
     <Compile Include="IWizardContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
