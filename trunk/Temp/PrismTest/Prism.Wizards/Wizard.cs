@@ -18,6 +18,8 @@ namespace Prism.Wizards
         public Wizard(IUnityContainer container, IWizardContext wizardContext, string wizardRegionName, string wizardName)
         {
             wizardContainer = container.CreateChildContainer();
+            regionManager = wizardContainer.Resolve<IRegionManager>();
+            eventAggregator = wizardContainer.Resolve<IEventAggregator>();
             RegionName = wizardRegionName;
             Name = wizardName;
 
@@ -29,14 +31,44 @@ namespace Prism.Wizards
 
         private void RegisterEvents()
         {
-            var eventAggregator = wizardContainer.Resolve<IEventAggregator>();
-
-            eventAggregator.GetEvent<WizardNavigationEvent>().Subscribe(OnWizardNavigationEvent);
+            eventAggregator.GetEvent<WizardNavigationEvent>().Subscribe(OnWizardNavigationEvent, true);
         }
 
         private void OnWizardNavigationEvent(NavigationSettings settings)
         {
-            //TODO
+            var context = wizardContainer.Resolve<IWizardContext>();
+
+            int currentStep = context.CurrentStep;
+
+            if (settings.MoveForward && currentStep >= context.StepsCount)
+                return;
+
+            if (!settings.MoveForward && currentStep <= 0)
+                return;
+
+            if (settings.MoveForward)
+            {
+                currentStep += 1;
+                context.CurrentStep = currentStep;
+            }
+            else
+            {
+                currentStep -= 1;
+                context.CurrentStep = currentStep;
+            }
+
+            var step = context.Where(s => s.Index == currentStep).FirstOrDefault();
+            if (step != null)
+            {
+                var region = GetStepsRegion(regionManager);
+                var viewToActivate = region.Views.Where((v) => v.GetType() == step.View).FirstOrDefault();
+                if (viewToActivate != null)
+                {
+                    region.Activate(viewToActivate);
+
+                    eventAggregator.GetEvent<UpdateNavBarEvent>().Publish(context);
+                }
+            }
         }
 
         #endregion
@@ -48,7 +80,6 @@ namespace Prism.Wizards
                 new InjectionProperty("WizardName", Name),
                 new InjectionProperty("WizardRegionName", RegionName));
 
-            var regionManager = wizardContainer.Resolve<IRegionManager>();
             regionManager.RegisterViewWithRegion(RegionName, () =>
             {
                 return wizardContainer.Resolve<WizardView>();
@@ -59,7 +90,6 @@ namespace Prism.Wizards
 
         private void RegisterViews(IWizardContext context)
         {
-            var regionManager = wizardContainer.Resolve<IRegionManager>();
             var stepsRegion = GetStepsRegion(regionManager);
 
             var orderedSteps = context.OrderBy((s) => s.Index).ToList();
@@ -72,6 +102,8 @@ namespace Prism.Wizards
                     return wizardContainer.Resolve(viewType);
                 });
             }
+
+            
         }
 
         private IRegion GetStepsRegion(IRegionManager regionManager)
@@ -81,5 +113,7 @@ namespace Prism.Wizards
         }
 
         private IUnityContainer wizardContainer;
+        private IEventAggregator eventAggregator;
+        private IRegionManager regionManager;
     }
 }

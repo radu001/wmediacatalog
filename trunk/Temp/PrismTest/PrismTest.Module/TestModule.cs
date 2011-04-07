@@ -21,6 +21,7 @@ namespace PrismTest.Module
         {
             IWizardContext context = new WizardContext();
             context.AddStep<IInitialViewModel, InitialViewModel, InitialView>(0, "Initial step");
+            context.AddStep<IStep1ViewModel, Step1ViewModel, Step1View>(1, "Step1");
             Wizard w = new Wizard(container, context, "MainRegion", "wizard1");
         }
 

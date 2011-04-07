@@ -79,6 +79,9 @@
     <Compile Include="Views\InitialView.xaml.cs">
       <DependentUpon>InitialView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Step1View.xaml.cs">
+      <DependentUpon>Step1View.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -115,6 +118,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\InitialView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Step1View.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -13,10 +13,11 @@ namespace Prism.Wizards.ViewModels
         {
             this.container = container;
             this.eventAggregator = eventAggregator;
-            Context = container.Resolve<IWizardContext>();
 
             NextStepCommand = new DelegateCommand<object>(OnNextStepCommand);
             PrevStepCommand = new DelegateCommand<object>(OnPrevStepCommand);
+
+            eventAggregator.GetEvent<UpdateNavBarEvent>().Subscribe(OnUpdateNavBarEvent, true);
         }
 
         #region IWizardViewModel Members
@@ -53,18 +54,6 @@ namespace Prism.Wizards.ViewModels
             }
         }
 
-        public IWizardContext Context
-        {
-            get
-            {
-                return context;
-            }
-            private set
-            {
-                context = value;
-            }
-        }
-
         public DelegateCommand<object> NextStepCommand { get; private set; }
 
         public DelegateCommand<object> PrevStepCommand { get; private set; }
@@ -92,13 +81,16 @@ namespace Prism.Wizards.ViewModels
             });
         }
 
+        private void OnUpdateNavBarEvent(IWizardContext context)
+        {
+        }
+
         #endregion
 
         #region Private fields
 
         private IUnityContainer container;
         private IEventAggregator eventAggregator;
-        private IWizardContext context;
 
         private string wizardName;
         private string wizardRegionName;
