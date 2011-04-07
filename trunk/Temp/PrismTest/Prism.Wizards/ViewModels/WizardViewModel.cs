@@ -1,8 +1,11 @@
 ﻿
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.ViewModel;
 using Microsoft.Practices.Unity;
+using Prism.Wizards.Data;
 using Prism.Wizards.Events;
 using Prism.Wizards.Utils;
 namespace Prism.Wizards.ViewModels
@@ -18,6 +21,8 @@ namespace Prism.Wizards.ViewModels
             PrevStepCommand = new DelegateCommand<object>(OnPrevStepCommand);
 
             eventAggregator.GetEvent<UpdateNavBarEvent>().Subscribe(OnUpdateNavBarEvent, true);
+
+            UpdateSteps();
         }
 
         #region IWizardViewModel Members
@@ -54,6 +59,19 @@ namespace Prism.Wizards.ViewModels
             }
         }
 
+        public IEnumerable<WizardStep> Steps
+        {
+            get
+            {
+                return steps;
+            }
+            private set
+            {
+                steps = value;
+                RaisePropertyChanged(() => Steps);
+            }
+        }
+
         public DelegateCommand<object> NextStepCommand { get; private set; }
 
         public DelegateCommand<object> PrevStepCommand { get; private set; }
@@ -61,6 +79,12 @@ namespace Prism.Wizards.ViewModels
         #endregion
 
         #region Private methods
+
+        private void UpdateSteps()
+        {
+            var context = container.Resolve<IWizardContext>();
+            Steps = context.ToArray();
+        }
 
         private void OnNextStepCommand(object parameter)
         {
@@ -83,6 +107,7 @@ namespace Prism.Wizards.ViewModels
 
         private void OnUpdateNavBarEvent(IWizardContext context)
         {
+            UpdateSteps();
         }
 
         #endregion
@@ -94,6 +119,7 @@ namespace Prism.Wizards.ViewModels
 
         private string wizardName;
         private string wizardRegionName;
+        private IEnumerable<WizardStep> steps;
 
         #endregion
 

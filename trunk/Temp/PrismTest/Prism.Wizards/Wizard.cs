@@ -65,8 +65,12 @@ namespace Prism.Wizards
                 if (viewToActivate != null)
                 {
                     region.Activate(viewToActivate);
-
                     eventAggregator.GetEvent<UpdateNavBarEvent>().Publish(context);
+
+                    var previousStep = context.Where(s => s.IsCurrent == true).FirstOrDefault();
+                    if (previousStep != null)
+                        previousStep.IsCurrent = false;
+                    step.IsCurrent = true;
                 }
             }
         }
@@ -103,7 +107,11 @@ namespace Prism.Wizards
                 });
             }
 
-            
+            var firstStep = orderedSteps.FirstOrDefault();
+            if (firstStep != null)
+            {
+                firstStep.IsCurrent = true;
+            }
         }
 
         private IRegion GetStepsRegion(IRegionManager regionManager)
