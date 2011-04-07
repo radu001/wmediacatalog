@@ -10,5 +10,6 @@ namespace Prism.Wizards.ViewModels
 
         DelegateCommand<object> NextStepCommand { get; }
         DelegateCommand<object> PrevStepCommand { get; }
+        DelegateCommand<object> MoveToStepCommand { get; }
     }
 }

@@ -4,8 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:regions="clr-namespace:Microsoft.Practices.Prism.Regions;assembly=Microsoft.Practices.Prism"
+             xmlns:localConverters="clr-namespace:Prism.Wizards.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <localConverters:BoolToBoldFontWeightConverter x:Key="BoolToBoldFontWeightConverter"/>
+        
+        <DataTemplate x:Key="NavigationItemTemplate">
+            <StackPanel Orientation="Horizontal" Cursor="Hand">
+                <TextBlock Text="{Binding Name}" FontWeight="{Binding IsCurrent,Converter={StaticResource BoolToBoldFontWeightConverter}}"
+                           MouseLeftButtonUp="TextBlock_MouseLeftButtonUp"/>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
     <Grid x:Name="LayoutRoot">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -14,20 +25,12 @@
         </Grid.RowDefinitions>
         
         <Grid Grid.Row="1">
-            <ItemsControl ItemsSource="{Binding Steps}">
+            <ItemsControl x:Name="StepsControl" ItemsSource="{Binding Steps}" ItemTemplate="{StaticResource NavigationItemTemplate}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Horizontal"/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Name}"/>
-                            <TextBlock Text="{Binding IsCurrent}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
             </ItemsControl>
         </Grid>
         <Grid Grid.Row="2">

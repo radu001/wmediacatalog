@@ -62,6 +62,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\BoolToBoldFontWeightConverter.cs" />
     <Compile Include="Data\WizardStep.cs" />
     <Compile Include="Data\WizardStepCollection.cs" />
     <Compile Include="Events\UpdateNavBarEvent.cs" />
