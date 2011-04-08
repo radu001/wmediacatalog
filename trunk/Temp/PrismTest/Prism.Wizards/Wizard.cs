@@ -33,63 +33,89 @@ namespace Prism.Wizards
         private void RegisterEvents()
         {
             eventAggregator.GetEvent<WizardNavigationEvent>().Subscribe(OnWizardNavigationEvent, true);
+            eventAggregator.GetEvent<CompleteWizardStepEvent>().Subscribe(OnCompleteWizardStepEvent, true);
+        }
+
+        private void OnCompleteWizardStepEvent(object parameter)
+        {
+            var context = wizardContainer.Resolve<IWizardContext>();
+            var currentStep = context.Where(s => s.IsCurrent == true).FirstOrDefault();
+            currentStep.IsComplete = true;
         }
 
         private void OnWizardNavigationEvent(NavigationSettings settings)
         {
             var context = wizardContainer.Resolve<IWizardContext>();
+            var currentStep = context.Where(s => s.IsCurrent == true).FirstOrDefault();
 
             if (settings.Step == null)
             {
-                int currentStep = context.CurrentStep;
-
-                if (settings.MoveForward && currentStep >= context.StepsCount)
-                    return;
-
-                if (!settings.MoveForward && currentStep <= 0)
-                    return;
-
-                if (settings.MoveForward)
+                
+                if (currentStep != null)
                 {
-                    currentStep += 1;
-                    context.CurrentStep = currentStep;
-                }
-                else
-                {
-                    currentStep -= 1;
-                    context.CurrentStep = currentStep;
-                }
+                    int currentStepIndex = currentStep.Index;
 
-                var step = context.Where(s => s.Index == currentStep).FirstOrDefault();
-                if (step != null)
-                {
-                    SwitchStepView(step, context);
+                    if (settings.MoveForward )
+                    {
+                        if (currentStepIndex >= context.StepsCount || !currentStep.IsComplete)
+                            return;
+                    }
+
+                    if (!settings.MoveForward && currentStepIndex <= 0)
+                        return;
+
+                    if (settings.MoveForward)
+                    {
+                        currentStepIndex += 1;
+                        context.CurrentStep = currentStepIndex;
+                    }
+                    else
+                    {
+                        currentStepIndex -= 1;
+                        context.CurrentStep = currentStepIndex;
+                    }
+
+                    var step = context.Where(s => s.Index == currentStepIndex).FirstOrDefault();
+                    if (step != null)
+                    {
+                        SwitchStepView(currentStep, step, context);
+                    }
                 }
             }
             else
             {
-                SwitchStepView(settings.Step, context);
+                var nextStep = settings.Step;
+
+                var allStepsBeforeNext = context.Where(s => s.Index < nextStep.Index);
+
+                var allStepsBeforeNextCompleted = allStepsBeforeNext.All(s => s.IsComplete);
+
+                if (!allStepsBeforeNextCompleted && nextStep.Index > currentStep.Index)
+                    return;
+
+                SwitchStepView(currentStep, nextStep, context);
             }
         }
 
-        private void SwitchStepView(WizardStep step, IWizardContext context)
+        private void SwitchStepView(WizardStep currentStep, WizardStep nextStep, IWizardContext context)
         {
-            var previousStep = context.Where(s => s.IsCurrent == true).FirstOrDefault();
-            if (previousStep != null)
+            if (currentStep != null)
             {
-                previousStep.IsCurrent = false;
-                if (previousStep.Index == step.Index) // don't switch to already active step
+                if (currentStep.Index == nextStep.Index) // don't switch to already active step
                     return;
-            }
 
-            var region = GetStepsRegion(regionManager);
-            var viewToActivate = region.Views.Where((v) => v.GetType() == step.View).FirstOrDefault();
-            if (viewToActivate != null)
-            {
-                region.Activate(viewToActivate);
-                eventAggregator.GetEvent<UpdateNavBarEvent>().Publish(context);
+                currentStep.IsCurrent = false;
 
-                step.IsCurrent = true;
+
+                var region = GetStepsRegion(regionManager);
+                var viewToActivate = region.Views.Where((v) => v.GetType() == nextStep.View).FirstOrDefault();
+                if (viewToActivate != null)
+                {
+                    region.Activate(viewToActivate);
+                    eventAggregator.GetEvent<UpdateNavBarEvent>().Publish(context);
+
+                    nextStep.IsCurrent = true;
+                }
             }
         }
 
