@@ -76,11 +76,15 @@
     <Compile Include="ViewModels\IStep2ViewModel.cs" />
     <Compile Include="ViewModels\Step1ViewModel.cs" />
     <Compile Include="ViewModels\Step2ViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\InitialView.xaml.cs">
       <DependentUpon>InitialView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Step1View.xaml.cs">
       <DependentUpon>Step1View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Step2View.xaml.cs">
+      <DependentUpon>Step2View.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -122,6 +126,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Step1View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Step2View.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

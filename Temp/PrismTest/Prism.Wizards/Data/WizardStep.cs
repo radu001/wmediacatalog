@@ -8,6 +8,7 @@ namespace Prism.Wizards.Data
         public string Name { get; set; }
         public string Description { get; set; }
         public bool IsCurrent { get; set; }
+        public bool IsComplete { get; set; }
 
         public Type IViewModel { get; set; }
         public Type ViewModel { get; set; }

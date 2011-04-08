@@ -9,10 +9,13 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <localConverters:BoolToBoldFontWeightConverter x:Key="BoolToBoldFontWeightConverter"/>
+        <localConverters:WizardStepColorConverter x:Key="WizardStepColorConverter"/>
         
         <DataTemplate x:Key="NavigationItemTemplate">
             <StackPanel Orientation="Horizontal" Cursor="Hand">
-                <TextBlock Text="{Binding Name}" FontWeight="{Binding IsCurrent,Converter={StaticResource BoolToBoldFontWeightConverter}}"
+                <TextBlock Text="{Binding Name}" 
+                           FontWeight="{Binding IsCurrent,Converter={StaticResource BoolToBoldFontWeightConverter}}"
+                           Foreground="{Binding Converter={StaticResource WizardStepColorConverter}}"
                            MouseLeftButtonUp="TextBlock_MouseLeftButtonUp"/>
             </StackPanel>
         </DataTemplate>
