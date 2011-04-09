@@ -2,7 +2,7 @@
 
 namespace Prism.Wizards.Events
 {
-    public class UpdateNavBarEvent : CompositePresentationEvent<IWizardContext>
+    internal class UpdateNavBarEvent : CompositePresentationEvent<IWizardContext>
     {
     }
 }

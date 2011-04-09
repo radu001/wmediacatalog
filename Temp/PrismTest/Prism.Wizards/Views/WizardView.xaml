@@ -14,7 +14,7 @@
         <DataTemplate x:Key="NavigationItemTemplate">
             <StackPanel Orientation="Horizontal" Cursor="Hand">
                 <TextBlock Text="{Binding Name}" 
-                           FontWeight="{Binding IsCurrent,Converter={StaticResource BoolToBoldFontWeightConverter}}"
+                           FontWeight="{Binding Converter={StaticResource BoolToBoldFontWeightConverter}}"
                            Foreground="{Binding Converter={StaticResource WizardStepColorConverter}}"
                            MouseLeftButtonUp="TextBlock_MouseLeftButtonUp"/>
             </StackPanel>

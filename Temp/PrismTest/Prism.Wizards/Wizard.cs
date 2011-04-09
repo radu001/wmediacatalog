@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
@@ -16,7 +17,7 @@ namespace Prism.Wizards
 
         public string Name { get; private set; }
 
-        public Wizard(IUnityContainer container, IWizardContext wizardContext, string wizardRegionName, string wizardName)
+        public Wizard(IUnityContainer container, IWizardSettings wizardSettings, string wizardRegionName, string wizardName)
         {
             wizardContainer = container.CreateChildContainer();
             regionManager = wizardContainer.Resolve<IRegionManager>();
@@ -25,7 +26,7 @@ namespace Prism.Wizards
             Name = wizardName;
 
             RegisterEvents();
-            RegisterViewModel(wizardContext);
+            RegisterViewModel(wizardSettings);
         }
 
         #region Event handlers
@@ -41,6 +42,7 @@ namespace Prism.Wizards
             var context = wizardContainer.Resolve<IWizardContext>();
             var currentStep = context.Where(s => s.IsCurrent == true).FirstOrDefault();
             currentStep.IsComplete = true;
+            context.LastCompletedStep = currentStep;
         }
 
         private void OnWizardNavigationEvent(NavigationSettings settings)
@@ -50,12 +52,12 @@ namespace Prism.Wizards
 
             if (settings.Step == null)
             {
-                
+
                 if (currentStep != null)
                 {
                     int currentStepIndex = currentStep.Index;
 
-                    if (settings.MoveForward )
+                    if (settings.MoveForward)
                     {
                         if (currentStepIndex >= context.StepsCount || !currentStep.IsComplete)
                             return;
@@ -121,8 +123,10 @@ namespace Prism.Wizards
 
         #endregion
 
-        private void RegisterViewModel(IWizardContext wizardContext)
+        private void RegisterViewModel(IWizardSettings wizardSettings)
         {
+            var wizardContext = new WizardContext(wizardSettings);
+
             wizardContainer.RegisterInstance<IWizardContext>(wizardContext);
             wizardContainer.RegisterType<IWizardViewModel, WizardViewModel>(
                 new InjectionProperty("WizardName", Name),
@@ -138,6 +142,8 @@ namespace Prism.Wizards
 
         private void RegisterViews(IWizardContext context)
         {
+            ValidateContext(context);
+
             var stepsRegion = GetStepsRegion(regionManager);
 
             var orderedSteps = context.OrderBy((s) => s.Index).ToList();
@@ -156,6 +162,21 @@ namespace Prism.Wizards
             {
                 firstStep.IsCurrent = true;
             }
+        }
+
+        private void ValidateContext(IWizardContext context)
+        {
+            var duplicateSteps = context.Select(ci => ci.Index).GroupBy(i => i).
+                Where(g => g.Count() > 1).Select(g => g.Key);
+
+            if (duplicateSteps.Count() > 0)
+                throw new Exception("Found duplicated step indices. All step indices must be unique");
+
+            var duplicateViewTypes = context.Select(ci => ci.View).GroupBy(i => i).
+                Where(g => g.Count() > 1).Select(g => g.Key);
+
+            if (duplicateViewTypes.Count() > 0)
+                throw new Exception("Found duplicated view types. Each step should have it's own unique view type");
         }
 
         private IRegion GetStepsRegion(IRegionManager regionManager)

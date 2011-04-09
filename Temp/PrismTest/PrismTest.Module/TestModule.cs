@@ -19,11 +19,12 @@ namespace PrismTest.Module
 
         public void Initialize()
         {
-            IWizardContext context = new WizardContext();
-            context.AddStep<IInitialViewModel, InitialViewModel, InitialView>(0, "Initial step");
-            context.AddStep<IStep1ViewModel, Step1ViewModel, Step1View>(1, "Step1");
-            context.AddStep<IStep2ViewModel, Step2ViewModel, Step2View>(2, "Step2");
-            Wizard w = new Wizard(container, context, "MainRegion", "wizard1");
+            var settings = new WizardSettings();
+            settings.AddStep<IInitialViewModel, InitialViewModel, InitialView>(0, "Initial step");
+            settings.AddStep<IStep1ViewModel, Step1ViewModel, Step1View>(1, "Step1");
+            settings.AddStep<IStep2ViewModel, Step2ViewModel, Step2View>(2, "Step2");
+            settings.AddStep<ICompleteViewModel, CompleteViewModel, CompleteView>(3, "Complete wizard");
+            Wizard w = new Wizard(container, settings, "MainRegion", "wizard1");
         }
 
         #endregion
