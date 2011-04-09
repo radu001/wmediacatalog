@@ -4,11 +4,12 @@ using Prism.Wizards.Data;
 
 namespace Prism.Wizards
 {
-    public class WizardContext : IWizardContext
+    internal class WizardContext : IWizardContext
     {
-        public WizardContext()
+        public WizardContext(IWizardSettings settings)
         {
             stepsCollection = new WizardStepCollection();
+            stepsCollection.AddRange(settings);
         }
 
         #region IWizardContext Members
@@ -23,19 +24,7 @@ namespace Prism.Wizards
 
         public int CurrentStep { get; set; }
 
-        public void AddStep<IViewModel, ViewModel, View>(int stepIndex, string stepName)
-        {
-            WizardStep step = new WizardStep()
-            {
-                Index = stepIndex,
-                Name = stepName,
-                IViewModel = typeof(IViewModel),
-                ViewModel = typeof(ViewModel),
-                View = typeof(View)
-            };
-
-            stepsCollection.Add(step);
-        }
+        public WizardStep LastCompletedStep { get; set; }
 
         #endregion
 

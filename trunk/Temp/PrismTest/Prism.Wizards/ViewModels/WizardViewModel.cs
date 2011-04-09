@@ -10,7 +10,7 @@ using Prism.Wizards.Events;
 using Prism.Wizards.Utils;
 namespace Prism.Wizards.ViewModels
 {
-    public class WizardViewModel : NotificationObject, IWizardViewModel
+    internal class WizardViewModel : NotificationObject, IWizardViewModel
     {
         public WizardViewModel(IUnityContainer container, IEventAggregator eventAggregator)
         {

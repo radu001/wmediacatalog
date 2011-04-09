@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
+using Prism.Wizards.Data;
 
 namespace Prism.Wizards.Converters
 {
@@ -11,9 +12,6 @@ namespace Prism.Wizards.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if ((bool)value)
-                return FontWeights.Bold;
-
             return FontWeights.Normal;
         }
 

@@ -70,6 +70,7 @@
     <Compile Include="Events\UpdateNavBarEvent.cs" />
     <Compile Include="Events\WizardNavigationEvent.cs" />
     <Compile Include="IWizardContext.cs" />
+    <Compile Include="IWizardSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\StepsRegionNameResolver.cs" />
     <Compile Include="ViewModels\IWizardViewModel.cs" />
@@ -79,6 +80,7 @@
     </Compile>
     <Compile Include="Wizard.cs" />
     <Compile Include="WizardContext.cs" />
+    <Compile Include="WizardSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\WizardView.xaml">
