@@ -2,7 +2,7 @@
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
-using Prism.Wizards;
+using PrismTest.Module.Controllers;
 using PrismTest.Module.ViewModels;
 using PrismTest.Module.Views;
 namespace PrismTest.Module
@@ -19,17 +19,18 @@ namespace PrismTest.Module
 
         public void Initialize()
         {
-            var settings = new WizardSettings();
-            settings.AddStep<IInitialViewModel, InitialViewModel, InitialView>(0, "Initial step");
-            settings.AddStep<IStep1ViewModel, Step1ViewModel, Step1View>(1, "Step1");
-            settings.AddStep<IStep2ViewModel, Step2ViewModel, Step2View>(2, "Step2");
-            settings.AddStep<ICompleteViewModel, CompleteViewModel, CompleteView>(3, "Complete wizard");
-            Wizard w = new Wizard(container, settings, "MainRegion", "wizard1");
+            container.RegisterType<IModuleViewModel, ModuleViewModel>();
+
+            regionManager.RegisterViewWithRegion("MainRegion", typeof(ModuleView));
+            controller = container.Resolve<ModuleController>();
+
+
         }
 
         #endregion
 
         private IUnityContainer container;
         private IRegionManager regionManager;
+        private ModuleController controller;
     }
 }

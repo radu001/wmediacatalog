@@ -67,13 +67,17 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\ModuleController.cs" />
+    <Compile Include="Events\StartWizardEvent.cs" />
     <Compile Include="TestModule.cs" />
     <Compile Include="ViewModels\CompleteViewModel.cs" />
     <Compile Include="ViewModels\ICompleteViewModel.cs" />
     <Compile Include="ViewModels\IInitialViewModel.cs" />
+    <Compile Include="ViewModels\IModuleViewModel.cs" />
     <Compile Include="ViewModels\InitialViewModel.cs" />
     <Compile Include="ViewModels\IStep1ViewModel.cs" />
     <Compile Include="ViewModels\IStep2ViewModel.cs" />
+    <Compile Include="ViewModels\ModuleViewModel.cs" />
     <Compile Include="ViewModels\Step1ViewModel.cs" />
     <Compile Include="ViewModels\Step2ViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
@@ -82,6 +86,9 @@
     </Compile>
     <Compile Include="Views\InitialView.xaml.cs">
       <DependentUpon>InitialView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ModuleView.xaml.cs">
+      <DependentUpon>ModuleView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Step1View.xaml.cs">
       <DependentUpon>Step1View.xaml</DependentUpon>
@@ -114,9 +121,7 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Prism.Wizards\Prism.Wizards.csproj">
       <Project>{2FA69092-283C-4867-8201-2BD7396A6E28}</Project>
@@ -129,6 +134,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\InitialView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ModuleView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
