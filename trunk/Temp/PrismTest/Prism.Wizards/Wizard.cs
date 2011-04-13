@@ -139,7 +139,9 @@ namespace Prism.Wizards
         {
             wizardUiContainer = new Window()
             {
-                WindowStartupLocation = WindowStartupLocation.CenterScreen
+                WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                WindowStyle = WindowStyle.ToolWindow,
+                ResizeMode = ResizeMode.NoResize
 
             };
             wizardUiContainer.Closed += new EventHandler(wizardUiContainer_Closed);
