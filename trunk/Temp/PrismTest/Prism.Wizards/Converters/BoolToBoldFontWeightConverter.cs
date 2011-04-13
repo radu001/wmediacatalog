@@ -12,6 +12,11 @@ namespace Prism.Wizards.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            var step = value as WizardStep;
+
+            if (step != null && step.IsCurrent)
+                return FontWeights.Bold;
+
             return FontWeights.Normal;
         }
 

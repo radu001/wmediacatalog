@@ -13,6 +13,7 @@
         
         <DataTemplate x:Key="NavigationItemTemplate">
             <StackPanel Orientation="Horizontal" Cursor="Hand">
+                <!--Foreground="{Binding Path=ItemsSource, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}, Converter={StaticResource WizardStepColorConverter}}"-->
                 <TextBlock Text="{Binding Name}" 
                            FontWeight="{Binding Converter={StaticResource BoolToBoldFontWeightConverter}}"
                            Foreground="{Binding Converter={StaticResource WizardStepColorConverter}}"

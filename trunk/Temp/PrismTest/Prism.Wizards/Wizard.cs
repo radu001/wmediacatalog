@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Windows;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
@@ -17,16 +18,22 @@ namespace Prism.Wizards
 
         public string Name { get; private set; }
 
-        public Wizard(IUnityContainer container, IWizardSettings wizardSettings, string wizardRegionName, string wizardName)
+        public Wizard(IUnityContainer container, IWizardSettings wizardSettings, string wizardName)
         {
             wizardContainer = container.CreateChildContainer();
-            regionManager = wizardContainer.Resolve<IRegionManager>();
+            wizardRegionManager = wizardContainer.Resolve<IRegionManager>();
             eventAggregator = wizardContainer.Resolve<IEventAggregator>();
-            RegionName = wizardRegionName;
+            RegionName = Guid.NewGuid().ToString();
             Name = wizardName;
 
+            InitWizardUiContainer();
             RegisterEvents();
             RegisterViewModel(wizardSettings);
+        }
+
+        public void Start()
+        {
+            wizardUiContainer.ShowDialog();
         }
 
         #region Event handlers
@@ -43,6 +50,12 @@ namespace Prism.Wizards
             var currentStep = context.Where(s => s.IsCurrent == true).FirstOrDefault();
             currentStep.IsComplete = true;
             context.LastCompletedStep = currentStep;
+
+            OnWizardNavigationEvent(new NavigationSettings()
+            {
+                MoveForward = true,
+                WizardName = Name
+            });
         }
 
         private void OnWizardNavigationEvent(NavigationSettings settings)
@@ -108,8 +121,7 @@ namespace Prism.Wizards
 
                 currentStep.IsCurrent = false;
 
-
-                var region = GetStepsRegion(regionManager);
+                var region = GetStepsRegion(wizardRegionManager);
                 var viewToActivate = region.Views.Where((v) => v.GetType() == nextStep.View).FirstOrDefault();
                 if (viewToActivate != null)
                 {
@@ -123,6 +135,24 @@ namespace Prism.Wizards
 
         #endregion
 
+        private void InitWizardUiContainer()
+        {
+            wizardUiContainer = new Window()
+            {
+                WindowStartupLocation = WindowStartupLocation.CenterScreen
+
+            };
+            wizardUiContainer.Closed += new EventHandler(wizardUiContainer_Closed);
+
+            RegionManager.SetRegionManager(wizardUiContainer, wizardRegionManager);
+            RegionManager.SetRegionName(wizardUiContainer, RegionName);
+        }
+
+        private void wizardUiContainer_Closed(object sender, EventArgs e)
+        {
+            bool success = wizardRegionManager.Regions.Remove(RegionName);
+        }
+
         private void RegisterViewModel(IWizardSettings wizardSettings)
         {
             var wizardContext = new WizardContext(wizardSettings);
@@ -132,7 +162,7 @@ namespace Prism.Wizards
                 new InjectionProperty("WizardName", Name),
                 new InjectionProperty("WizardRegionName", RegionName));
 
-            regionManager.RegisterViewWithRegion(RegionName, () =>
+            wizardRegionManager.RegisterViewWithRegion(RegionName, () =>
             {
                 return wizardContainer.Resolve<WizardView>();
             });
@@ -144,13 +174,13 @@ namespace Prism.Wizards
         {
             ValidateContext(context);
 
-            var stepsRegion = GetStepsRegion(regionManager);
+            var stepsRegion = GetStepsRegion(wizardRegionManager);
 
             var orderedSteps = context.OrderBy((s) => s.Index).ToList();
             foreach (var step in orderedSteps)
             {
                 wizardContainer.RegisterType(step.IViewModel, step.ViewModel);
-                regionManager.RegisterViewWithRegion(stepsRegion.Name, () =>
+                wizardRegionManager.RegisterViewWithRegion(stepsRegion.Name, () =>
                 {
                     var viewType = step.View;
                     return wizardContainer.Resolve(viewType);
@@ -187,6 +217,7 @@ namespace Prism.Wizards
 
         private IUnityContainer wizardContainer;
         private IEventAggregator eventAggregator;
-        private IRegionManager regionManager;
+        private IRegionManager wizardRegionManager;
+        private Window wizardUiContainer;
     }
 }

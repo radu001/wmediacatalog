@@ -15,6 +15,11 @@ namespace Prism.Wizards.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            //var steps = value as IEnumerable<WizardStep>;
+
+            //if (steps != null)
+            //{
+            //}
             WizardStep step = value as WizardStep;
             if (!step.IsComplete && !step.IsCurrent)
                 return notCompletedTextColorBrush;
