@@ -26,6 +26,11 @@ namespace Prism.Wizards.ViewModels
             UpdateSteps();
         }
 
+        public void UnsubscribeEvents()
+        {
+            eventAggregator.GetEvent<UpdateNavBarEvent>().Unsubscribe(OnUpdateNavBarEvent);
+        }
+
         #region IWizardViewModel Members
 
         public string WizardName
