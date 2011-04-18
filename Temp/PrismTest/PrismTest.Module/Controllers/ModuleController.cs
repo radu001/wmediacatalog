@@ -14,7 +14,6 @@ namespace PrismTest.Module.Controllers
         {
             this.eventAggregator = eventAggregator;
             this.container = container;
-            this.regionManager = regionManager;
 
             eventAggregator.GetEvent<StartWizardEvent>().Subscribe(OnStartWizardEvent, true);
         }
@@ -32,6 +31,5 @@ namespace PrismTest.Module.Controllers
 
         private IEventAggregator eventAggregator;
         private IUnityContainer container;
-        private IRegionManager regionManager;
     }
 }

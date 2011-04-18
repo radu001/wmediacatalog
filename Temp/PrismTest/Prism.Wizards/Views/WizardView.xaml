@@ -17,7 +17,7 @@
                 <TextBlock Text="{Binding Name}" 
                            FontWeight="{Binding Converter={StaticResource BoolToBoldFontWeightConverter}}"
                            Foreground="{Binding Converter={StaticResource WizardStepColorConverter}}"
-                           MouseLeftButtonUp="TextBlock_MouseLeftButtonUp"/>
+                           />
             </StackPanel>
         </DataTemplate>
     </UserControl.Resources>

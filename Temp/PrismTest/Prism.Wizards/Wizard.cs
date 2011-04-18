@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using Microsoft.Practices.Prism.Events;
@@ -42,6 +43,12 @@ namespace Prism.Wizards
         {
             eventAggregator.GetEvent<WizardNavigationEvent>().Subscribe(OnWizardNavigationEvent, true);
             eventAggregator.GetEvent<CompleteWizardStepEvent>().Subscribe(OnCompleteWizardStepEvent, true);
+        }
+
+        private void UnsubscribeEvents()
+        {
+            eventAggregator.GetEvent<WizardNavigationEvent>().Unsubscribe(OnWizardNavigationEvent);
+            eventAggregator.GetEvent<CompleteWizardStepEvent>().Unsubscribe(OnCompleteWizardStepEvent);
         }
 
         private void OnCompleteWizardStepEvent(object parameter)
@@ -144,15 +151,50 @@ namespace Prism.Wizards
                 ResizeMode = ResizeMode.NoResize
 
             };
+            wizardUiContainer.Closing += new CancelEventHandler(wizardUiContainer_Closing);
             wizardUiContainer.Closed += new EventHandler(wizardUiContainer_Closed);
 
             RegionManager.SetRegionManager(wizardUiContainer, wizardRegionManager);
             RegionManager.SetRegionName(wizardUiContainer, RegionName);
         }
 
+        void wizardUiContainer_Closing(object sender, CancelEventArgs e)
+        {
+            UnsubscribeEvents();
+
+            var context = wizardContainer.Resolve<IWizardContext>();
+            context = null;
+
+            var stepsRegion = GetStepsRegion(wizardRegionManager);
+            var views = stepsRegion.Views;
+            foreach (var v in views)
+            {
+                stepsRegion.Remove(v);
+            }
+
+            var mainRegion = wizardRegionManager.Regions[RegionName];
+            var wizardView = mainRegion.Views.OfType<WizardView>().FirstOrDefault();
+            if (wizardView != null && wizardView.DataContext is WizardViewModel)
+            {
+                var viewModel = wizardView.DataContext as WizardViewModel;
+                viewModel.UnsubscribeEvents();
+            }
+            else
+            {
+                throw new Exception("Memory leak possible");
+            }
+            foreach (var v in mainRegion.Views)
+            {
+                mainRegion.Remove(v);
+            }
+        }
+
         private void wizardUiContainer_Closed(object sender, EventArgs e)
         {
             bool success = wizardRegionManager.Regions.Remove(RegionName);
+
+            wizardUiContainer.Closing -= wizardUiContainer_Closing;
+            wizardUiContainer.Closed -= wizardUiContainer_Closed;
         }
 
         private void RegisterViewModel(IWizardSettings wizardSettings)
