@@ -1,6 +1,7 @@
 ﻿
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.ViewModel;
@@ -62,6 +63,18 @@ namespace Prism.Wizards.ViewModels
             get
             {
                 return StepsRegionNameResolver.ResolveRegionName(WizardName, WizardRegionName);
+            }
+        }
+
+        public Visibility NavBarVisible
+        {
+            get
+            {
+                return navBarVisible;
+            }
+            set
+            {
+                navBarVisible = value;
             }
         }
 
@@ -138,6 +151,7 @@ namespace Prism.Wizards.ViewModels
         private string wizardName;
         private string wizardRegionName;
         private IEnumerable<WizardStep> steps;
+        private Visibility navBarVisible;
 
         #endregion
 

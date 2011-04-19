@@ -207,7 +207,8 @@ namespace Prism.Wizards
             wizardContainer.RegisterInstance<IWizardContext>(wizardContext);
             wizardContainer.RegisterType<IWizardViewModel, WizardViewModel>(
                 new InjectionProperty("WizardName", Name),
-                new InjectionProperty("WizardRegionName", RegionName));
+                new InjectionProperty("WizardRegionName", RegionName),
+                new InjectionProperty("NavBarVisible", GetNavBarVisibility(wizardSettings)));
 
             wizardRegionManager.RegisterViewWithRegion(RegionName, () =>
             {
@@ -260,6 +261,14 @@ namespace Prism.Wizards
         {
             string stepsRegionName = StepsRegionNameResolver.ResolveRegionName(Name, RegionName);
             return regionManager.Regions[stepsRegionName];
+        }
+
+        private Visibility GetNavBarVisibility(IWizardSettings settings)
+        {
+            if (settings.EnableNavBar)
+                return Visibility.Visible;
+
+            return Visibility.Collapsed;
         }
 
         private IUnityContainer wizardContainer;
