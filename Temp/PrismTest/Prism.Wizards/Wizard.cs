@@ -163,7 +163,7 @@ namespace Prism.Wizards
             UnsubscribeEvents();
 
             var context = wizardContainer.Resolve<IWizardContext>();
-            context = null;
+            wizardContainer.Teardown(context);
 
             var stepsRegion = GetStepsRegion(wizardRegionManager);
             var views = stepsRegion.Views;
@@ -187,6 +187,9 @@ namespace Prism.Wizards
             {
                 mainRegion.Remove(v);
             }
+
+            wizardContainer.RemoveAllExtensions();
+            wizardContainer.Dispose();
         }
 
         private void wizardUiContainer_Closed(object sender, EventArgs e)
