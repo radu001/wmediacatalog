@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Xml.Linq;
 using BusinessObjects;
 using Common.Enums;
 using Common.ViewModels;
@@ -31,12 +30,6 @@ namespace Modules.Import.ViewModels
             MatchAgainstDatabaseCommand = new DelegateCommand<object>(OnMatchAgainstDatabaseCommand);
 
             eventAggregator.GetEvent<CompleteScanProgressEvent>().Subscribe(OnCompleteScanProgressEvent, true);
-
-            XElement root = new XElement("genres");
-            for (int i = 1; i < 11; ++i)
-            {
-                root.Add(new XElement("g", "genre" + i.ToString()));
-            }
         }
 
         #region IImportViewModel Members
@@ -74,8 +67,8 @@ namespace Modules.Import.ViewModels
 
             DataModel = CreateDataModel(artists);
 
-            //debug
-            MatchAgainstDatabaseCommand.Execute(null);
+            ////debug
+            //MatchAgainstDatabaseCommand.Execute(null);
         }
 
         private void OnMatchAgainstDatabaseCommand(object parameter)

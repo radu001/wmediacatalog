@@ -5,7 +5,10 @@ using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
 using Modules.Import.Events;
+using Modules.Import.ViewModels.Wizard;
 using Modules.Import.Views;
+using Modules.Import.Views.Wizard;
+using Prism.Wizards;
 
 namespace Modules.Import.Controllers
 {
@@ -19,6 +22,8 @@ namespace Modules.Import.Controllers
             DisplayImportView(ViewNames.ImportView);
 
             eventAggregator.GetEvent<BeginScanProgressEvent>().Subscribe(OnDisplayImportProgressViewEvent, true);
+
+            //obsolete
             eventAggregator.GetEvent<CompleteScanProgressEvent>().Subscribe(OnCompleteOrCancelScanProgressEvent, true);
             eventAggregator.GetEvent<CancelScanProgressEvent>().Subscribe(OnCompleteOrCancelScanProgressEvent, true);
         }
@@ -38,7 +43,13 @@ namespace Modules.Import.Controllers
 
         private void OnDisplayImportProgressViewEvent(object parameter)
         {
-            DisplayImportView(ViewNames.ImportProgressView);
+            var settings = new WizardSettings();
+            settings.AddStep<IInitialStepViewModel,InitialStepViewModel,InitialStep>(0, "Initial");
+            settings.AddStep<ITagsProviderStepViewModel, TagsProviderStepViewModel, TagsProviderStep>(1, "First");
+
+            var w = new Wizard(container, settings, "wizard");
+            w.Start();
+            //DisplayImportView(ViewNames.ImportProgressView);
         }
 
         private void OnCompleteOrCancelScanProgressEvent(object parameter)
