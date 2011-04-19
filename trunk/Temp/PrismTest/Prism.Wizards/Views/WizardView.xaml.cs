@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 using Microsoft.Practices.Prism.Regions;
 using Prism.Wizards.ViewModels;
 
@@ -9,6 +10,27 @@ namespace Prism.Wizards.Views
     /// </summary>
     public partial class WizardView : UserControl
     {
+        #region Dependency properties
+
+        public static readonly DependencyProperty NavBarVisibleProperty =
+            DependencyProperty.Register("NavBarVisible", typeof(Visibility), typeof(WizardView),
+            new PropertyMetadata(Visibility.Collapsed));
+
+        public Visibility NavBarVisible
+        {
+            get
+            {
+                return (Visibility)GetValue(NavBarVisibleProperty);
+            }
+            set
+            {
+                SetValue(NavBarVisibleProperty, value);
+            }
+        }
+        
+
+        #endregion
+
         public WizardView(IWizardViewModel viewModel)
         {
             InitializeComponent();

@@ -25,6 +25,8 @@ namespace Prism.Wizards
             });
         }
 
+        public bool EnableNavBar { get; set; }
+
         #endregion
 
         #region IEnumerable<WizardStep> Members

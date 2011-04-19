@@ -1,4 +1,5 @@
 ﻿
+using System.Windows;
 using Microsoft.Practices.Prism.Commands;
 namespace Prism.Wizards.ViewModels
 {
@@ -7,6 +8,7 @@ namespace Prism.Wizards.ViewModels
         string WizardName { get; set; }
         string WizardRegionName { get; set; }
         string StepRegionName { get; }
+        Visibility NavBarVisible { get; set; }
 
         DelegateCommand<object> NextStepCommand { get; }
         DelegateCommand<object> PrevStepCommand { get; }
