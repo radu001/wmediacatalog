@@ -65,6 +65,7 @@
     <Compile Include="Model\FileTagCollection.cs" />
     <Compile Include="Model\IImportDataModel.cs" />
     <Compile Include="Model\ImportDataModel.cs" />
+    <Compile Include="Model\TagsProvider.cs" />
     <Compile Include="Services\Utils\FileSystem.cs" />
     <Compile Include="Services\Utils\IFileSystem.cs" />
     <Compile Include="Services\Utils\IScanner.cs" />
@@ -82,7 +83,9 @@
     <Compile Include="ViewModels\Wizard\IInitialStepViewModel.cs" />
     <Compile Include="ViewModels\Wizard\InitialStepViewModel.cs" />
     <Compile Include="ViewModels\Wizard\ITagsProviderStepViewModel.cs" />
+    <Compile Include="ViewModels\Wizard\Common\IWizardViewModel.cs" />
     <Compile Include="ViewModels\Wizard\TagsProviderStepViewModel.cs" />
+    <Compile Include="ViewModels\Wizard\Common\WizardViewModelBase.cs" />
     <Compile Include="Views\ImportProgressView.xaml.cs">
       <DependentUpon>ImportProgressView.xaml</DependentUpon>
     </Compile>
