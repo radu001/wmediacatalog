@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -129,7 +130,7 @@ namespace Prism.Wizards
                 currentStep.IsCurrent = false;
 
                 var region = GetStepsRegion(wizardRegionManager);
-                var viewToActivate = region.Views.Where((v) => v.GetType() == nextStep.View).FirstOrDefault();
+                var viewToActivate = stepViews[nextStep.Index]; //region.Views.Where((v) => v.GetType() == nextStep.View).FirstOrDefault();
                 if (viewToActivate != null)
                 {
                     region.Activate(viewToActivate);
@@ -158,9 +159,11 @@ namespace Prism.Wizards
             RegionManager.SetRegionName(wizardUiContainer, RegionName);
         }
 
-        void wizardUiContainer_Closing(object sender, CancelEventArgs e)
+        private void wizardUiContainer_Closing(object sender, CancelEventArgs e)
         {
             UnsubscribeEvents();
+
+            stepViews.Clear();
 
             var context = wizardContainer.Resolve<IWizardContext>();
             wizardContainer.Teardown(context);
@@ -222,6 +225,8 @@ namespace Prism.Wizards
         {
             ValidateContext(context);
 
+            stepViews = new List<object>();
+
             var stepsRegion = GetStepsRegion(wizardRegionManager);
 
             var orderedSteps = context.OrderBy((s) => s.Index).ToList();
@@ -231,7 +236,9 @@ namespace Prism.Wizards
                 wizardRegionManager.RegisterViewWithRegion(stepsRegion.Name, () =>
                 {
                     var viewType = step.View;
-                    return wizardContainer.Resolve(viewType);
+                    var stepViewInstance = wizardContainer.Resolve(viewType);
+                    stepViews.Add(stepViewInstance);
+                    return stepViewInstance;
                 });
             }
 
@@ -275,5 +282,7 @@ namespace Prism.Wizards
         private IEventAggregator eventAggregator;
         private IRegionManager wizardRegionManager;
         private Window wizardUiContainer;
+
+        private List<object> stepViews;
     }
 }
