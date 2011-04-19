@@ -238,6 +238,7 @@ namespace Prism.Wizards
             foreach (var step in orderedSteps)
             {
                 wizardContainer.RegisterType(step.IViewModel, step.ViewModel);
+
                 wizardRegionManager.RegisterViewWithRegion(stepsRegion.Name, () =>
                 {
                     var viewType = step.View;

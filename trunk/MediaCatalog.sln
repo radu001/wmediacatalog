@@ -133,6 +133,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FolderPickerLib", "FolderPi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Content", "Common.Content\Common.Content.csproj", "{43AB1E81-C1D5-477C-9C71-DC60CF72D0BB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prism.Wizards", "Utils\Wizards\Prism.Wizards\Prism.Wizards.csproj", "{2FA69092-283C-4867-8201-2BD7396A6E28}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -363,6 +365,16 @@ Global
 		{43AB1E81-C1D5-477C-9C71-DC60CF72D0BB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{43AB1E81-C1D5-477C-9C71-DC60CF72D0BB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{43AB1E81-C1D5-477C-9C71-DC60CF72D0BB}.Release|x86.ActiveCfg = Release|Any CPU
+		{2FA69092-283C-4867-8201-2BD7396A6E28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FA69092-283C-4867-8201-2BD7396A6E28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FA69092-283C-4867-8201-2BD7396A6E28}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{2FA69092-283C-4867-8201-2BD7396A6E28}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{2FA69092-283C-4867-8201-2BD7396A6E28}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2FA69092-283C-4867-8201-2BD7396A6E28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FA69092-283C-4867-8201-2BD7396A6E28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FA69092-283C-4867-8201-2BD7396A6E28}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{2FA69092-283C-4867-8201-2BD7396A6E28}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{2FA69092-283C-4867-8201-2BD7396A6E28}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

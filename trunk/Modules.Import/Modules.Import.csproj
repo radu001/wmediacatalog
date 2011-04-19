@@ -79,6 +79,10 @@
     <Compile Include="ViewModels\IImportViewModel.cs" />
     <Compile Include="ViewModels\ImportProgressViewModel.cs" />
     <Compile Include="ViewModels\ImportViewModel.cs" />
+    <Compile Include="ViewModels\Wizard\IInitialStepViewModel.cs" />
+    <Compile Include="ViewModels\Wizard\InitialStepViewModel.cs" />
+    <Compile Include="ViewModels\Wizard\ITagsProviderStepViewModel.cs" />
+    <Compile Include="ViewModels\Wizard\TagsProviderStepViewModel.cs" />
     <Compile Include="Views\ImportProgressView.xaml.cs">
       <DependentUpon>ImportProgressView.xaml</DependentUpon>
     </Compile>
@@ -87,6 +91,12 @@
     </Compile>
     <Compile Include="Views\ImportView.xaml.cs">
       <DependentUpon>ImportView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Wizard\InitialStep.xaml.cs">
+      <DependentUpon>InitialStep.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Wizard\TagsProviderStep.xaml.cs">
+      <DependentUpon>TagsProviderStep.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup />
@@ -123,6 +133,10 @@
       <Project>{F53582DB-02B7-4864-B7AA-AAD055A591E4}</Project>
       <Name>FolderPickerLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Utils\Wizards\Prism.Wizards\Prism.Wizards.csproj">
+      <Project>{2FA69092-283C-4867-8201-2BD7396A6E28}</Project>
+      <Name>Prism.Wizards</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\ImportProgressView.xaml">
@@ -134,6 +148,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ImportView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Wizard\InitialStep.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Wizard\TagsProviderStep.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
