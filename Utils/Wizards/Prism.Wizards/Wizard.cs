@@ -168,6 +168,9 @@ namespace Prism.Wizards
             var context = wizardContainer.Resolve<IWizardContext>();
             wizardContainer.Teardown(context);
 
+            var data = wizardContainer.Resolve<IWizardData>();
+            wizardContainer.Teardown(data);
+
             var stepsRegion = GetStepsRegion(wizardRegionManager);
             var views = stepsRegion.Views;
             foreach (var v in views)
@@ -206,8 +209,10 @@ namespace Prism.Wizards
         private void RegisterViewModel(IWizardSettings wizardSettings)
         {
             var wizardContext = new WizardContext(wizardSettings);
+            var wizardData = new WizardData();
 
             wizardContainer.RegisterInstance<IWizardContext>(wizardContext);
+            wizardContainer.RegisterInstance<IWizardData>(wizardData);
             wizardContainer.RegisterType<IWizardViewModel, WizardViewModel>(
                 new InjectionProperty("WizardName", Name),
                 new InjectionProperty("WizardRegionName", RegionName),
