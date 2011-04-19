@@ -1,17 +1,13 @@
-﻿using Microsoft.Practices.Prism.Commands;
-using Microsoft.Practices.Prism.Events;
-using Prism.Wizards.Events;
+﻿using Microsoft.Practices.Prism.Events;
+using Modules.Import.ViewModels.Wizard.Common;
 
 namespace Modules.Import.ViewModels.Wizard
 {
-    public class InitialStepViewModel : IInitialStepViewModel
+    public class InitialStepViewModel : WizardViewModelBase, IInitialStepViewModel
     {
         public InitialStepViewModel(IEventAggregator eventAggregator)
+            :base(eventAggregator)
         {
-            ContinueCommand = new DelegateCommand<object>((o) =>
-            {
-                eventAggregator.GetEvent<CompleteWizardStepEvent>().Publish(null);
-            });
         }
 
         #region IInitialStepViewModel Members
@@ -24,8 +20,6 @@ namespace Modules.Import.ViewModels.Wizard
                          "importing data from your local storage(s) into media library";
             }
         }
-
-        public DelegateCommand<object> ContinueCommand { get; private set; }
 
         #endregion
     }

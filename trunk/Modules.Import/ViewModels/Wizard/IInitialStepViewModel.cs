@@ -1,11 +1,9 @@
-﻿using Microsoft.Practices.Prism.Commands;
-
+﻿
+using Modules.Import.ViewModels.Wizard.Common;
 namespace Modules.Import.ViewModels.Wizard
 {
-    public interface IInitialStepViewModel
+    public interface IInitialStepViewModel : IWizardViewModel
     {
         string Message { get; }
-
-        DelegateCommand<object> ContinueCommand { get; }
     }
 }
