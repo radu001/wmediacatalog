@@ -1,4 +1,5 @@
-﻿using Common;
+﻿using System.Windows;
+using Common;
 using Common.Controllers;
 using Common.Enums;
 using Microsoft.Practices.Prism.Events;
@@ -43,7 +44,14 @@ namespace Modules.Import.Controllers
 
         private void OnDisplayImportProgressViewEvent(object parameter)
         {
-            var settings = new WizardSettings();
+            var settings = new WizardSettings()
+            {
+                Size = new Size()
+                {
+                    Width = 640,
+                    Height = 480
+                }
+            };
             settings.AddStep<IInitialStepViewModel,InitialStepViewModel,InitialStep>(0, "Initial");
             settings.AddStep<ITagsProviderStepViewModel, TagsProviderStepViewModel, TagsProviderStep>(1, "First");
 

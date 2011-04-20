@@ -1,6 +1,7 @@
 ﻿
 using System.Collections;
 using System.Collections.Generic;
+using System.Windows;
 using Prism.Wizards.Data;
 namespace Prism.Wizards
 {
@@ -9,6 +10,7 @@ namespace Prism.Wizards
         public WizardSettings()
         {
             steps = new List<WizardStep>();
+            Size = new Size(800, 600);
         }
 
         #region IWizardSettings Members
@@ -26,6 +28,8 @@ namespace Prism.Wizards
         }
 
         public bool EnableNavBar { get; set; }
+
+        public Size Size { get; set; }
 
         #endregion
 

@@ -8,6 +8,6 @@ namespace Modules.Import.ViewModels.Wizard
     {
         string Message { get; }
         IEnumerable<TagsProvider> AvaliableProviders { get; }
-        bool ProviderSelected { get; }
+        TagsProvider SelectedProvider { get; }
     }
 }

@@ -18,7 +18,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="{Binding Message}" VerticalAlignment="Center" HorizontalAlignment="Center"/> 
+        <TextBlock Text="{Binding Message}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap"/> 
         <Button Content="Continue" Grid.Row="1" Width="75" Margin="8" HorizontalAlignment="Right" Style="{StaticResource DialogButtonStyle}"
                 prismCommands:Click.Command="{Binding ContinueCommand}"/>
     </Grid>

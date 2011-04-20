@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:prismCommands="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"
+             xmlns:commonConverters="clr-namespace:Common.Controls.Converters;assembly=Common.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -11,21 +12,25 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Common.Content;component/Styles/CommonStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
+            <commonConverters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
-        <TextBlock Text="{Binding Message}" Grid.Row="0"/>
-        
-        <ComboBox ItemsSource="{Binding AvaliableProviders}" DisplayMemberPath="Name" Grid.Row="1"/>
 
-        <Button Content="Continue" Grid.Row="2" Width="75" Margin="8" HorizontalAlignment="Right" Style="{StaticResource DialogButtonStyle}"
+        <StackPanel Grid.Row="0">
+            <TextBlock Text="{Binding Message}" VerticalAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="16"/>
+            <ComboBox ItemsSource="{Binding AvaliableProviders}" 
+                      SelectedItem="{Binding SelectedProvider}"
+                      DisplayMemberPath="Name" VerticalAlignment="Center" Margin="16"/>
+        </StackPanel>
+        
+        <Button Content="Continue" Grid.Row="1" Width="75" Margin="8" HorizontalAlignment="Right" Style="{StaticResource DialogButtonStyle}"
                 prismCommands:Click.Command="{Binding ContinueCommand}"
-                IsEnabled="{Binding ProviderSelected}"/>
+                Visibility="{Binding SelectedProvider,Converter={StaticResource NullToVisibilityConverter}}"/>
     </Grid>
 </UserControl>

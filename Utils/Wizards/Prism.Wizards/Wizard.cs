@@ -28,7 +28,7 @@ namespace Prism.Wizards
             RegionName = Guid.NewGuid().ToString();
             Name = wizardName;
 
-            InitWizardUiContainer();
+            InitWizardUiContainer(wizardSettings);
             RegisterEvents();
             RegisterViewModel(wizardSettings);
         }
@@ -143,14 +143,15 @@ namespace Prism.Wizards
 
         #endregion
 
-        private void InitWizardUiContainer()
+        private void InitWizardUiContainer(IWizardSettings settings)
         {
             wizardUiContainer = new Window()
             {
                 WindowStartupLocation = WindowStartupLocation.CenterScreen,
                 WindowStyle = WindowStyle.ToolWindow,
-                ResizeMode = ResizeMode.NoResize
-
+                ResizeMode = ResizeMode.NoResize,
+                Width = settings.Size.Width,
+                Height = settings.Size.Height
             };
             wizardUiContainer.Closing += new CancelEventHandler(wizardUiContainer_Closing);
             wizardUiContainer.Closed += new EventHandler(wizardUiContainer_Closed);
