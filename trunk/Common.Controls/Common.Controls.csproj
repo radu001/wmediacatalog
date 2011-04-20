@@ -86,6 +86,7 @@
     <Compile Include="Converters\InverseBoolConverter.cs" />
     <Compile Include="Converters\InverseBoolToVisibilityConverter.cs" />
     <Compile Include="Converters\DateFilterInputVisibilityConverter.cs" />
+    <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Converters\RatingConverter.cs" />
     <Compile Include="Converters\TextFilterInputVisibilityConverter.cs" />
     <Compile Include="Events\FilterFieldChangedArgs.cs" />

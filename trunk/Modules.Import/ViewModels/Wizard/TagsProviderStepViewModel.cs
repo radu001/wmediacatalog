@@ -36,16 +36,16 @@ namespace Modules.Import.ViewModels.Wizard
             }
         }
 
-        public bool ProviderSelected
+        public TagsProvider SelectedProvider
         {
             get
             {
-                return providerSelected;
+                return selectedProvider;
             }
-            private set
+            set
             {
-                providerSelected = value;
-                NotifyPropertyChanged(() => ProviderSelected);
+                selectedProvider = value;
+                NotifyPropertyChanged(() => SelectedProvider);
             }
         }
 
@@ -72,7 +72,7 @@ namespace Modules.Import.ViewModels.Wizard
 
         #region Private fields
 
-        private bool providerSelected;
+        private TagsProvider selectedProvider;
         private IEnumerable<TagsProvider> avaliableProviders;
 
         #endregion
