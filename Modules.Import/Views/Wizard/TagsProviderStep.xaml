@@ -13,24 +13,45 @@
                 <ResourceDictionary Source="/Common.Content;component/Styles/CommonStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
-            <commonConverters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+            <commonConverters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+        
+        <TextBlock Text="On this step you should select tags provider and path on filesystem which will be scanned for media files recursively" Margin="16" 
+                   TextWrapping="Wrap" VerticalAlignment="Center" />
 
-        <StackPanel Grid.Row="0">
-            <TextBlock Text="{Binding Message}" VerticalAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="16"/>
-            <ComboBox ItemsSource="{Binding AvaliableProviders}" 
-                      SelectedItem="{Binding SelectedProvider}"
-                      DisplayMemberPath="Name" VerticalAlignment="Center" Margin="16"/>
+        <StackPanel Grid.Row="1" Margin="0,32,0,0">
+            <GroupBox>
+                <StackPanel>
+                    <TextBlock Text="{Binding Message}" VerticalAlignment="Center" TextWrapping="Wrap" Margin="16"/>
+                    <ComboBox ItemsSource="{Binding AvaliableProviders}" 
+                          SelectedItem="{Binding SelectedProvider}"
+                          DisplayMemberPath="Name" VerticalAlignment="Center" Margin="16"/>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox>
+                <StackPanel>
+                    <TextBlock Text="{Binding PathMessage}" VerticalAlignment="Center" TextWrapping="Wrap" Margin="16"/>
+                    <DockPanel Margin="16" LastChildFill="True">
+                        <Button prismCommands:Click.Command="{Binding SelectScanPathCommand}" DockPanel.Dock="Right">
+                            <Button.Content>
+                                <Image Source="/Common.Content;component/Images/ZoomHS.png" Width="16" Height="16" Stretch="Fill"/>
+                            </Button.Content>
+                        </Button>
+                        <TextBox Text="{Binding ScanPath, Mode=OneWay}" IsReadOnly="True" DockPanel.Dock="Left" />
+                    </DockPanel>
+                </StackPanel>
+            </GroupBox>
         </StackPanel>
         
-        <Button Content="Continue" Grid.Row="1" Width="75" Margin="8" HorizontalAlignment="Right" Style="{StaticResource DialogButtonStyle}"
+        <Button Content="Continue" Grid.Row="2" Width="75" Margin="8" HorizontalAlignment="Right" Style="{StaticResource DialogButtonStyle}"
                 prismCommands:Click.Command="{Binding ContinueCommand}"
-                Visibility="{Binding SelectedProvider,Converter={StaticResource NullToVisibilityConverter}}"/>
+                Visibility="{Binding CanContinue,Converter={StaticResource BoolToVisibilityConverter}}"/>
     </Grid>
 </UserControl>
