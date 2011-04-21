@@ -50,6 +50,14 @@
                         <Image Source="/Common.Content;component/Images/Import_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
                     </Button.Content>
                 </Button>
+                <Button Margin="2"
+                        Style="{StaticResource ToolbarImageButtonStyle}"
+                        ToolTip="Import scanned data"
+                        prismCommands:Click.Command="{Binding MatchAgainstDatabaseCommand}">
+                    <Button.Content>
+                        <Image Source="/Common.Content;component/Images/Import_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
+                    </Button.Content>
+                </Button>
             </ToolBar>
             <ToolBar HorizontalAlignment="Left">
             </ToolBar>
