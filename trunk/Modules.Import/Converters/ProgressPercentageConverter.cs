@@ -10,7 +10,7 @@ namespace Modules.Import.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            double dval = (double)value;
+            float dval = (float)value;
             return String.Format("{0:0.00}", dval) + "%";
         }
 

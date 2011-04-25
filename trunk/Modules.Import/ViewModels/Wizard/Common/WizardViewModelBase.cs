@@ -1,4 +1,6 @@
-﻿using Common.Data;
+﻿using System.Collections.Generic;
+using BusinessObjects;
+using Common.ViewModels;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
@@ -7,9 +9,10 @@ using Prism.Wizards;
 
 namespace Modules.Import.ViewModels.Wizard.Common
 {
-    public abstract class WizardViewModelBase : NotificationObject
+    public abstract class WizardViewModelBase : ViewModelBase
     {
         public WizardViewModelBase(IUnityContainer container, IEventAggregator eventAggregator)
+            : base(container, eventAggregator)
         {
             this.container = container;
 
@@ -41,5 +44,6 @@ namespace Modules.Import.ViewModels.Wizard.Common
     {
         public string ScanPath { get; set; }
         public TagsProvider TagsProvider { get; set; }
+        public IEnumerable<Artist> ScannedArtists { get; set; }
     }
 }

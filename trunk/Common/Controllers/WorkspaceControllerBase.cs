@@ -6,16 +6,12 @@ using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
 namespace Common.Controllers
 {
-    public abstract class WorkspaceControllerBase
+    public abstract class WorkspaceControllerBase : ControllerBase
     {
         public WorkspaceControllerBase(IUnityContainer container, IRegionManager regionManager, IEventAggregator eventAggregator)
+            : base(container, regionManager, eventAggregator)
         {
-            this.container = container;
-            this.regionManager = regionManager;
-            this.eventAggregator = eventAggregator;
-
             eventAggregator.GetEvent<ChangeWorkspaceEvent>().Subscribe(OnChangeWorkspaceViewEventHandler, true);
-
             InitViews();
         }
 
@@ -25,8 +21,6 @@ namespace Common.Controllers
         {
             return regionManager.Regions[RegionNames.WorkspaceRegion];
         }
-
-
 
         private void OnChangeWorkspaceViewEventHandler(WorkspaceNameEnum workspace)
         {
@@ -50,9 +44,5 @@ namespace Common.Controllers
         {
             return region.ActiveViews.Contains(view);
         }
-
-        protected readonly IUnityContainer container;
-        protected readonly IEventAggregator eventAggregator;
-        protected readonly IRegionManager regionManager;
     }
 }
