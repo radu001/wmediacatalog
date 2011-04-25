@@ -8,6 +8,7 @@ namespace Prism.Wizards.ViewModels
         string WizardName { get; set; }
         string WizardRegionName { get; set; }
         string StepRegionName { get; }
+        string CurrentStepName { get; }
         Visibility NavBarVisible { get; set; }
 
         DelegateCommand<object> NextStepCommand { get; }

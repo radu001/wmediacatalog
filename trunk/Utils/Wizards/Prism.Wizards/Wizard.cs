@@ -153,6 +153,7 @@ namespace Prism.Wizards
                 Width = settings.Size.Width,
                 Height = settings.Size.Height
             };
+
             wizardUiContainer.Closing += new CancelEventHandler(wizardUiContainer_Closing);
             wizardUiContainer.Closed += new EventHandler(wizardUiContainer_Closed);
 

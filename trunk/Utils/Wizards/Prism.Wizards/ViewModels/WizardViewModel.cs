@@ -58,6 +58,19 @@ namespace Prism.Wizards.ViewModels
             }
         }
 
+        public string CurrentStepName
+        {
+            get
+            {
+                return currentStepName;
+            }
+            private set
+            {
+                currentStepName = value;
+                RaisePropertyChanged(() => CurrentStepName);
+            }
+        }
+
         public string StepRegionName
         {
             get
@@ -105,6 +118,12 @@ namespace Prism.Wizards.ViewModels
         {
             var context = container.Resolve<IWizardContext>();
             Steps = context.ToArray();
+
+            var currentStep = context.Where(s => s.Index == context.CurrentStep).FirstOrDefault();
+            if (currentStep != null)
+            {
+                CurrentStepName = currentStep.Name;
+            }
         }
 
         private void OnNextStepCommand(object parameter)
@@ -150,6 +169,7 @@ namespace Prism.Wizards.ViewModels
 
         private string wizardName;
         private string wizardRegionName;
+        private string currentStepName;
         private IEnumerable<WizardStep> steps;
         private Visibility navBarVisible;
 
