@@ -56,9 +56,6 @@
     <Compile Include="Controllers\ImportController.cs" />
     <Compile Include="Converters\BoolToPauseResumeConverter.cs" />
     <Compile Include="Converters\ProgressPercentageConverter.cs" />
-    <Compile Include="Events\CancelScanProgressEvent.cs" />
-    <Compile Include="Events\CompleteScanProgressEvent.cs" />
-    <Compile Include="Events\BeginScanProgressEvent.cs" />
     <Compile Include="ImportModule.cs" />
     <Compile Include="Model\Comparers\GenreByNameComparer.cs" />
     <Compile Include="Model\FileTag.cs" />
@@ -76,27 +73,19 @@
     <Compile Include="Services\Utils\ITagsAccumulator.cs" />
     <Compile Include="Services\Utils\TagsAccumulator.cs" />
     <Compile Include="Services\Utils\VorbisCommentsScanner.cs" />
-    <Compile Include="ViewModels\IImportProgressViewModel.cs" />
-    <Compile Include="ViewModels\IImportViewModel.cs" />
-    <Compile Include="ViewModels\ImportProgressViewModel.cs" />
-    <Compile Include="ViewModels\ImportViewModel.cs" />
+    <Compile Include="ViewModels\Wizard\IScanProgressStepViewModel.cs" />
     <Compile Include="ViewModels\Wizard\IInitialStepViewModel.cs" />
+    <Compile Include="ViewModels\Wizard\ScanProgressStepViewModel.cs" />
     <Compile Include="ViewModels\Wizard\InitialStepViewModel.cs" />
     <Compile Include="ViewModels\Wizard\ITagsProviderStepViewModel.cs" />
     <Compile Include="ViewModels\Wizard\Common\IWizardViewModel.cs" />
     <Compile Include="ViewModels\Wizard\TagsProviderStepViewModel.cs" />
     <Compile Include="ViewModels\Wizard\Common\WizardViewModelBase.cs" />
-    <Compile Include="Views\ImportProgressView.xaml.cs">
-      <DependentUpon>ImportProgressView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ImportRegionView.xaml.cs">
-      <DependentUpon>ImportRegionView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ImportView.xaml.cs">
-      <DependentUpon>ImportView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Wizard\InitialStep.xaml.cs">
       <DependentUpon>InitialStep.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Wizard\ScanProgressStep.xaml.cs">
+      <DependentUpon>ScanProgressStep.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Wizard\TagsProviderStep.xaml.cs">
       <DependentUpon>TagsProviderStep.xaml</DependentUpon>
@@ -142,19 +131,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\ImportProgressView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ImportRegionView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ImportView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\Wizard\InitialStep.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Wizard\ScanProgressStep.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
