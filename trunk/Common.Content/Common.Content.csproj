@@ -198,9 +198,6 @@
     <Reference Include="PresentationFramework.Aero" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Import_48x48.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\Genre_16x16.png" />
   </ItemGroup>
   <ItemGroup>
