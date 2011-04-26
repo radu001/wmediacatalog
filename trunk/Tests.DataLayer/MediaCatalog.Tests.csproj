@@ -58,6 +58,10 @@
     <Reference Include="NMock2">
       <HintPath>..\Lib\NMock\NMock2.dll</HintPath>
     </Reference>
+    <Reference Include="Npgsql, Version=2.0.11.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Npgsql\Npgsql.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\Lib\NUnit\nunit.framework.dll</HintPath>
     </Reference>
@@ -86,6 +90,7 @@
     <Compile Include="Extensions\StubFileSystem.cs" />
     <Compile Include="Mocks\StubTagsScanner.cs" />
     <Compile Include="Mocks\TagDataResolver.cs" />
+    <Compile Include="TestSuites\Import\BulkImportTests.cs" />
     <Compile Include="TestSuites\Import\ImportTests.cs" />
     <Compile Include="TestSuites\Import\StubFileSystemTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -103,6 +108,10 @@
     <ProjectReference Include="..\DataLayer\DataLayer.csproj">
       <Project>{7AA524BE-382B-4B5B-906A-1218ACCF7C76}</Project>
       <Name>DataLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataServices\DataServices.csproj">
+      <Project>{EF68B28D-CEE3-4398-BA62-7C79F5926866}</Project>
+      <Name>DataServices</Name>
     </ProjectReference>
     <ProjectReference Include="..\Modules.Import\Modules.Import.csproj">
       <Project>{A226F52F-EE4A-4AF8-AC8A-95350E893E2C}</Project>

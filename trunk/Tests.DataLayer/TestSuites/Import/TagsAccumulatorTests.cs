@@ -179,8 +179,45 @@ namespace MediaCatalog.Tests.TestSuites.Import
 
             var secondArtist = result.LastOrDefault();
 
-            Assert.NotNull(firstArtist);
+            Assert.NotNull(secondArtist);
             Assert.AreEqual("Artist2", secondArtist.Name);
+        }
+
+        [Test]
+        public void AccumulateMultipleArtists_OneAlbum_ArtistsAreAddedToAlbum()
+        {
+            var accumulator = CreateAccumulator();
+
+            var tags = new FileTagCollection();
+            tags.Add(new FileTag()
+            {
+                Key = "Artist",
+                Value = "Artist1, Artist2",
+            });
+            tags.Add(new FileTag()
+            {
+                Key = "Album",
+                Value = "Album1",
+            });
+
+            accumulator.AccumulateTags(tags);
+
+            var result = accumulator.GetAccumulatedResult();
+            var firstArtist = result.FirstOrDefault();
+            var secondArtist = result.LastOrDefault();
+
+            var firstAlbums = firstArtist.Albums;
+            var secondAlbums = secondArtist.Albums;
+            Assert.NotNull(firstAlbums);
+            Assert.NotNull(secondAlbums);
+            Assert.AreEqual(1, firstAlbums.Count);
+            Assert.AreEqual(firstAlbums.Count, secondAlbums.Count);
+
+            var album = firstAlbums[0];
+            Assert.NotNull(album);
+            Assert.AreSame(firstAlbums[0], secondAlbums[0]);
+
+            Assert.AreEqual(2, album.Artists.Count);
         }
 
         [Test]
