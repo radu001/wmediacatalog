@@ -28,5 +28,7 @@ namespace Modules.Artists.ViewModels
         DelegateCommand<object> CreateAlbumCommand { get; }
         DelegateCommand<object> EditAlbumCommand { get; }
         DelegateCommand<object> RemoveAlbumCommand { get; }
+
+        DelegateCommand<object> BulkImportDataCommand { get; }
     }
 }

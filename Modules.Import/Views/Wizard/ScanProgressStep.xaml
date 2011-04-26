@@ -29,11 +29,11 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0">
-            <ProgressBar Minimum="{Binding MinProgress}" Maximum="{Binding MaxProgress}"  
+        <DockPanel Width="Auto" HorizontalAlignment="Stretch" LastChildFill="True" Grid.Row="1" Grid.Column="0">
+            <TextBlock Text="{Binding CurrentProgress,Converter={StaticResource ProgressPercentageConverter}}" Margin="8,0,8,0" DockPanel.Dock="Right"/>
+            <ProgressBar Minimum="{Binding MinProgress}" Maximum="{Binding MaxProgress}" Grid.Row="1" Grid.Column="0" DockPanel.Dock="Left"
                              Value="{Binding CurrentProgress,Mode=OneWay}" />
-            <TextBlock Text="{Binding CurrentProgress,Converter={StaticResource ProgressPercentageConverter}}" Margin="8,0,8,0"/>
-        </StackPanel>
+        </DockPanel>
         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
         <Button Style="{StaticResource DialogButtonStyle}" Width="75"
                     Content="Begin scan" 

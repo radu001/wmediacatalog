@@ -38,6 +38,7 @@ namespace Modules.Albums.ViewModels
             CreateAlbumCommand = new DelegateCommand<object>(OnCreateAlbumCommand);
             RemoveAlbumCommand = new DelegateCommand<object>(OnRemoveAlbumCommand);
             PageChangedCommand = new DelegateCommand<PageChangedArgs>(OnPageChangedCommand);
+            BulkImportDataCommand = new DelegateCommand<object>(OnBulkImportDataCommand);
         }
 
         #region IAlbumsViewModel Members
@@ -105,6 +106,8 @@ namespace Modules.Albums.ViewModels
         public DelegateCommand<object> RemoveAlbumCommand { get; private set; }
 
         public DelegateCommand<PageChangedArgs> PageChangedCommand { get; private set; }
+
+        public DelegateCommand<object> BulkImportDataCommand { get; private set; }
 
         #endregion
 
@@ -263,6 +266,11 @@ namespace Modules.Albums.ViewModels
         private void OnRemoveAlbumEvent(int albumID)
         {
             RemoveAlbumImpl(albumID);
+        }
+
+        private void OnBulkImportDataCommand(object parameter)
+        {
+            eventAggregator.GetEvent<ImportDataEvent>().Publish(null);
         }
 
         private void RemoveAlbumImpl(int albumID)
