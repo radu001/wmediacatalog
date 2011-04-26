@@ -101,6 +101,16 @@
                     </Button.Content>
                 </Button>
             </ToolBar>
+            <ToolBar HorizontalAlignment="Left">
+                <Button Margin="2"
+                        Style="{StaticResource ToolbarImageButtonStyle}"
+                        ToolTip="Import data wizard"
+                        prismCommands:Click.Command="{Binding BulkImportDataCommand}">
+                    <Button.Content>
+                        <Image Source="/Common.Content;component/Images/db_comit_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
+                    </Button.Content>
+                </Button>
+            </ToolBar>
         </ToolBarTray>
         <commonControls:FilterControl Grid.Row="1" Margin="4"
                                           FilterFields="{Binding Fields}"

@@ -12,11 +12,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaCatalog.Tests", "Tests.DataLayer\MediaCatalog.Tests.csproj", "{ED14E9D4-01F2-4CAB-BBEB-99406744E3FA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D0BBAE76-1E76-434E-9A46-0B5B7008E820}"
-	ProjectSection(SolutionItems) = preProject
-		Local.testsettings = Local.testsettings
-		MediaCatalog.vsmdi = MediaCatalog.vsmdi
-		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessObjects", "BusinessObjects\BusinessObjects.csproj", "{82C52DA4-8017-469C-8665-BE404E072A4B}"
 EndProject
@@ -139,9 +134,6 @@ Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
 		Manager = AnkhSVN - Subversion Support for Visual Studio
-	EndGlobalSection
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = MediaCatalog.vsmdi
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

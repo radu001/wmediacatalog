@@ -20,5 +20,6 @@ namespace Modules.Albums.ViewModels
         DelegateCommand<object> CreateAlbumCommand { get; }
         DelegateCommand<object> RemoveAlbumCommand { get; }
         DelegateCommand<PageChangedArgs> PageChangedCommand { get; }
+        DelegateCommand<object> BulkImportDataCommand { get; }
     }
 }

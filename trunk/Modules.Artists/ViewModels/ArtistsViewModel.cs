@@ -36,6 +36,7 @@ namespace Modules.Artists.ViewModels
             RemoveAlbumCommand = new DelegateCommand<object>(OnRemoveAlbumCommand);
             CreateAlbumCommand = new DelegateCommand<object>(OnCreateAlbumCommand);
             PageChangedCommand = new DelegateCommand<PageChangedArgs>(OnPageChangedCommand);
+            BulkImportDataCommand = new DelegateCommand<object>(OnBulkImportDataCommand);
         }
 
         public override IEnumerable<IField> InitializeFields()
@@ -176,6 +177,8 @@ namespace Modules.Artists.ViewModels
 
         public DelegateCommand<object> RemoveAlbumCommand { get; private set; }
 
+        public DelegateCommand<object> BulkImportDataCommand { get; private set; }
+
         #endregion
 
         #region Private methods
@@ -292,6 +295,11 @@ namespace Modules.Artists.ViewModels
             eventAggregator.GetEvent<RemoveAlbumEvent>().Publish(CurrentAlbum.ID);
         }
 
+        private void OnBulkImportDataCommand(object parameter)
+        {
+            eventAggregator.GetEvent<ImportDataEvent>().Publish(null);
+        }
+
         private void EditArtistImpl()
         {
             if (CurrentArtist == null)
@@ -387,7 +395,5 @@ namespace Modules.Artists.ViewModels
         private bool isLoadingAlbums;
 
         #endregion
-
-
     }
 }
