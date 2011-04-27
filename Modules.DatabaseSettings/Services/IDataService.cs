@@ -7,7 +7,10 @@ namespace Modules.DatabaseSettings.Services
     public interface IDataService
     {
         Exception ValidateConnection();
-        TextResult ValidateProviderSettings(ExportProviderSettings settings);
-        void BeginExport(ExportProviderSettings settings, Action<TextResult> completeAction);
+        TextResult ValidateExportSettings(ExportProviderSettings settings);
+        TextResult ValidateImportSettings(ImportProviderSettings settings);
+
+        TextResult Export(ExportProviderSettings settings);
+        TextResult Import(ImportProviderSettings settings);
     }
 }

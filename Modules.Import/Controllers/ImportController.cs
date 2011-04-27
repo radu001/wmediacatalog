@@ -31,6 +31,8 @@ namespace Modules.Import.Controllers
             settings.AddStep<IInitialStepViewModel,InitialStepViewModel,InitialStep>(0, "Initial");
             settings.AddStep<ITagsProviderStepViewModel, TagsProviderStepViewModel, TagsProviderStep>(1, "First");
             settings.AddStep<IScanProgressStepViewModel, ScanProgressStepViewModel, ScanProgressStep>(2, "Second");
+            settings.AddStep<IBulkImportViewModel, BulkImportViewModel, BulkImportStep>(3, "Third");
+            settings.AddStep<ICompleteViewModel, CompleteViewModel, CompleteStep>(4, "Final");
 
             var w = new Wizard(container, settings, "wizard");
             w.Start();

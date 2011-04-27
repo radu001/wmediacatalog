@@ -1,15 +1,15 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using Common;
 using Common.Entities;
-using DataServices.NHibernate;
+using DataServices.Additional.Base;
 
-namespace DataServices.Additional
+namespace DataServices.Additional.Postgre
 {
-    public class PostgreExportProvider : IExportProvider
+    public class PostgreExportProvider : PostgreProviderBase, IExportProvider
     {
-        private static string PgDumpFileName = "pg_dump.exe";
+        private static readonly string PgDumpFileName = "pg_dump.exe";
 
         #region IExportProvider Members
 
@@ -108,43 +108,54 @@ namespace DataServices.Additional
             };
         }
 
-        public void BeginExport(Action<TextResult> finishAction)
+        public TextResult Export()
         {
             try
             {
                 string dbName = GetDatabaseName();
 
-                //TODO: setup PGPASSWORD variable and run pg_dump
+                var args = String.Format("-O -c -f \"{2}\" -U {0} {1} ", Settings.UserName, dbName,
+                    Path.Combine(Settings.ExportPath, Settings.ExportFileName));
 
-                throw new NotImplementedException();
+                var process = new Process();
+                process.StartInfo = new ProcessStartInfo()
+                {
+                    FileName = Path.Combine(Settings.ProviderPath, PgDumpFileName),
+                    Arguments = args,
+                    RedirectStandardInput = true,
+                    RedirectStandardError = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                };
+                process.StartInfo.EnvironmentVariables.Add("PGPASSWORD", Settings.Password);
+
+                process.Start();
+                process.WaitForExit();
+
+                var errorMessage = process.StandardError.ReadToEnd();
+                if (String.IsNullOrEmpty(errorMessage))
+                {
+                    return new TextResult()
+                    {
+                        Success = true,
+                        Message = "Database dump has been successfully created."
+                    };
+                }
+                else
+                {
+                    throw new Exception(errorMessage);
+                }
             }
             catch (Exception ex)
             {
                 Logger.Write(ex);
 
-                finishAction(new TextResult()
+                return new TextResult()
                 {
                     Success = false,
-                    Message = "Error while exporting database occured. Please see log for details"
-                });
+                    Message = "Error while exporting database. Please see log for details"
+                };
             }
-        }
-
-        #endregion
-
-        #region Private methods
-
-        private string GetDatabaseName()
-        {
-            //TODO locate nhibernate config and grab database name from it
-            INHibernateConfig config = new NHibernateConfigModel();
-            if (!config.Load())
-                throw new Exception("Can't load NHibernate configuration file");
-
-            var connectionString = config.Properties.Where(p => p.Name == "connection.connection_string").FirstOrDefault();
-            var dbName = connectionString.Values.Where(cp => cp.Name == "Database").FirstOrDefault();
-
-            return dbName.Value;
         }
 
         #endregion

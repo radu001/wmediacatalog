@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="Modules.Import.Views.Wizard.BulkImportStep"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:controls="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
+             xmlns:commonCommands="clr-namespace:Common.Commands;assembly=Common.Commands"
+             xmlns:converters="clr-namespace:Common.Controls.Converters;assembly=Common.Controls"
+             xmlns:prismCommands="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"
+             mc:Ignorable="d" commonCommands:Loaded.Command="{Binding ViewLoadedCommand}"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Common.Content;component/Styles/CommonStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter"/>
+            
+            <DataTemplate x:Key="GenreTemplate">
+                <TextBlock Text="{Binding Name}"/>
+            </DataTemplate>
+
+            <HierarchicalDataTemplate x:Key="AlbumTemplate" ItemsSource="{Binding Genres}" ItemTemplate="{StaticResource GenreTemplate}" >
+                <TextBlock Text="{Binding Name}"/>
+            </HierarchicalDataTemplate>
+
+            <HierarchicalDataTemplate x:Key="ArtistTemplate" ItemsSource="{Binding Albums}" ItemTemplate="{StaticResource AlbumTemplate}" >
+                <TextBlock Text="{Binding Name}"/>
+            </HierarchicalDataTemplate>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid x:Name="LayoutRoot" 
+          controls:BusyIndicatorBehavior.AddMargins="True" 
+          controls:BusyIndicatorBehavior.BusyState="{Binding IsBusy}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock TextWrapping="Wrap" Grid.Row="0" Margin="16">
+            <TextBlock.Text>
+                Filesystem scan is complete. Please review data that will be imported and click 'Begin import' in order to initiate import 
+                into media library. Please be patient since this process can't be interruped and can take a while.
+            </TextBlock.Text>
+        </TextBlock>
+        
+        <GroupBox Header="Data import preview" Grid.Row="1" Margin="8">
+            <TreeView x:Name="ImportDataTreeView" ItemsSource="{Binding Artists}" Grid.Row="1"
+                      ItemTemplate="{StaticResource ArtistTemplate}"/>
+        </GroupBox>
+        
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2" Margin="8">
+            <Button Content="Begin import" Grid.Row="1" Width="75" Margin="8" HorizontalAlignment="Right" Style="{StaticResource DialogButtonStyle}"
+                Visibility="{Binding ImportCompleted,Converter={StaticResource InverseBoolToVisibilityConverter}}"
+                prismCommands:Click.Command="{Binding BeginImportCommand}"/>
+            <Button Content="Continue" Grid.Row="1" Width="75" Margin="8" HorizontalAlignment="Right" Style="{StaticResource DialogButtonStyle}"
+                prismCommands:Click.Command="{Binding ContinueCommand}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

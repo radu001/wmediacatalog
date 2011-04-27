@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using Common;
@@ -151,6 +152,11 @@ namespace DataServices.NHibernate
             }
 
             return result;
+        }
+
+        public ConfigurationProperty GetConnectionString()
+        {
+            return Properties.Where(p => p.Name == "connection.connection_string").FirstOrDefault();
         }
 
         #endregion

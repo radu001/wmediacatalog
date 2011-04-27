@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:controls="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
              xmlns:prismCommands="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"
              mc:Ignorable="d" 
              d:DesignHeight="243" d:DesignWidth="386">
@@ -13,7 +14,9 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid x:Name="LayoutRoot">
+    <Grid x:Name="LayoutRoot" 
+          controls:BusyIndicatorBehavior.AddMargins="True" 
+          controls:BusyIndicatorBehavior.BusyState="{Binding IsBusy}">
         <TabControl TabStripPlacement="Right" ItemContainerStyle="{StaticResource VerticalTabItemHeaderStyle}">
             <TabItem Header="Database export">
                 <Grid>
@@ -58,10 +61,54 @@
                     <TextBox Text="{Binding ExportFileName}" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="8" />
                     
                     <Button Content="Export database" prismCommands:Click.Command="{Binding ExportDatabaseCommand}" 
+                            Style="{StaticResource DialogButtonStyle}"
                             Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="8" VerticalAlignment="Bottom"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Database import">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Username:" Grid.Row="0" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
+                    <TextBox Text="{Binding UserName}" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="8"/>
+
+                    <TextBlock Text="Password:" Grid.Row="1" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
+                    <TextBox Text="{Binding Password}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"  Margin="8" />
+
+                    <TextBlock Text="Provider path:" Grid.Row="2" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
+                    <TextBox Text="{Binding ProviderPath}" Grid.Row="2" Grid.Column="1" Margin="8" />
+                    <Button Grid.Row="2" Grid.Column="2" Margin="8"
+                            prismCommands:Click.Command="{Binding SelectProviderPathCommand}">
+                        <Button.Content>
+                            <Image Source="/Common.Content;component/Images/ZoomHS.png" Width="16" Height="16" Stretch="Fill"/>
+                        </Button.Content>
+                    </Button>
+
+                    <TextBlock Text="Backup file:" Grid.Row="3" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
+                    <TextBox Text="{Binding BackupFullPath}" Grid.Row="3" Grid.Column="1" Margin="8" />
+                    <Button Grid.Row="3" Grid.Column="2" Margin="8"
+                            prismCommands:Click.Command="{Binding SelectBackupCommand}">
+                        <Button.Content>
+                            <Image Source="/Common.Content;component/Images/ZoomHS.png" Width="16" Height="16" Stretch="Fill"/>
+                        </Button.Content>
+                    </Button>
+
+
+                    <Button Content="Import database" prismCommands:Click.Command="{Binding ImportDatabaseCommand}" 
+                            Style="{StaticResource DialogButtonStyle}"
+                            Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="8" VerticalAlignment="Bottom"/>
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>

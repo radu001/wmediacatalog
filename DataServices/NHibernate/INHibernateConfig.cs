@@ -9,5 +9,6 @@ namespace DataServices.NHibernate
 
         bool Load();
         bool Save(string fileName);
+        ConfigurationProperty GetConnectionString();
     }
 }

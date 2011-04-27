@@ -1,4 +1,5 @@
-﻿using DataServices.Additional;
+﻿using DataServices.Additional.Base;
+using DataServices.Additional.Postgre;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
@@ -21,6 +22,7 @@ namespace Modules.DatabaseSettings
         public void Initialize()
         {
             container.RegisterType<IExportProvider, PostgreExportProvider>();
+            container.RegisterType<IImportProvider, PostgreImportProvider>();
             container.RegisterType<IDataService, DataService>();
 
             container.RegisterType<IConnectionSettingsViewModel, ConnectionSettingsViewModel>();

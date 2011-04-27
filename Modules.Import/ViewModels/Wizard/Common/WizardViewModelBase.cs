@@ -14,8 +14,6 @@ namespace Modules.Import.ViewModels.Wizard.Common
         public WizardViewModelBase(IUnityContainer container, IEventAggregator eventAggregator)
             : base(container, eventAggregator)
         {
-            this.container = container;
-
             ContinueCommand = new DelegateCommand<object>(OnContinueCommand);
         }
 
@@ -36,8 +34,6 @@ namespace Modules.Import.ViewModels.Wizard.Common
         public DelegateCommand<object> ContinueCommand { get; private set; }
 
         public abstract void OnContinueCommand(object parameter);
-
-        private IUnityContainer container;
     }
 
     public class Data

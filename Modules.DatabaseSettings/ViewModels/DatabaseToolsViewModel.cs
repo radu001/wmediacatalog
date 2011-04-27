@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Common.Entities;
 using Common.Enums;
 using Common.ViewModels;
@@ -7,6 +8,7 @@ using FolderPickerLib;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
+using Microsoft.Win32;
 using Modules.DatabaseSettings.Services;
 
 namespace Modules.DatabaseSettings.ViewModels
@@ -21,6 +23,9 @@ namespace Modules.DatabaseSettings.ViewModels
             ExportDatabaseCommand = new DelegateCommand<object>(OnExportDatabaseCommand);
             SelectExportPathCommand = new DelegateCommand<object>(OnSelectExportPathCommand);
             SelectProviderPathCommand = new DelegateCommand<object>(OnSelectProviderPathCommand);
+
+            SelectBackupCommand = new DelegateCommand<object>(OnSelectBackupCommand);
+            ImportDatabaseCommand = new DelegateCommand<object>(OnImportDatabaseCommand);
 
             InitDefaultSettings();
         }
@@ -92,27 +97,56 @@ namespace Modules.DatabaseSettings.ViewModels
             }
         }
 
+        public string BackupFullPath
+        {
+            get
+            {
+                return backupFullPath;
+            }
+            set
+            {
+                backupFullPath = value;
+                NotifyPropertyChanged(() => BackupFullPath);
+            }
+        }
+
         public DelegateCommand<object> ExportDatabaseCommand { get; private set; }
 
         public DelegateCommand<object> SelectProviderPathCommand { get; private set; }
 
         public DelegateCommand<object> SelectExportPathCommand { get; private set; }
 
+        public DelegateCommand<object> SelectBackupCommand { get; private set; }
+
+        public DelegateCommand<object> ImportDatabaseCommand { get; private set; }
+
         #endregion
 
         #region Private methods
 
+        #region Export
+
         private void OnExportDatabaseCommand(object parameter)
         {
             var settings = CreateExportSettings();
-            TextResult validationResult = dataService.ValidateProviderSettings(settings);
+            var validationResult = dataService.ValidateExportSettings(settings);
+
             if (!validationResult.Success)
-            {
                 Notify(String.Format("Illegal export settings. {0}", validationResult.Message), NotificationType.Error);
-            }
             else
             {
-                dataService.BeginExport(settings, OnExportCompleted);
+                IsBusy = true;
+
+                Task<TextResult> exportTask = Task.Factory.StartNew<TextResult>(() =>
+                {
+                    return dataService.Export(settings);
+                }, TaskScheduler.Default);
+
+                Task finishExportTask = exportTask.ContinueWith((t) =>
+                {
+                    IsBusy = false;
+                    OnExportCompleted(t.Result);
+                },TaskScheduler.FromCurrentSynchronizationContext());
             }
         }
 
@@ -155,9 +189,86 @@ namespace Modules.DatabaseSettings.ViewModels
             };
         }
 
-        private void OnExportCompleted(TextResult exportResult)
+        private void OnExportCompleted(TextResult result)
         {
+            IsBusy = false;
+            if (result.Success)
+            {
+                Notify("Database has been successfully exported", NotificationType.Success);
+            }
+            else
+            {
+                Notify(
+                    String.Format( "Error while exporting database: [{0}]", result.Message),
+                    NotificationType.Error);
+            }
         }
+
+        #endregion
+
+        #region Import
+
+        private void OnSelectBackupCommand(object parameter)
+        {
+            var fileDialog = new OpenFileDialog();
+            if (fileDialog.ShowDialog() == true)
+            {
+                BackupFullPath = fileDialog.FileName;
+            }
+        }
+
+        private void OnImportDatabaseCommand(object parameter)
+        {
+            var settings = CreateImportSettings();
+            var validationResult = dataService.ValidateImportSettings(settings);
+
+            if (!validationResult.Success)
+                Notify(String.Format("Illegal import settings. {0}", validationResult.Message), NotificationType.Error);
+            else
+            {
+                IsBusy = true;
+
+                Task<TextResult> exportTask = Task.Factory.StartNew<TextResult>(() =>
+                {
+                    return dataService.Import(settings);
+                }, TaskScheduler.Default);
+
+                Task finishExportTask = exportTask.ContinueWith((t) =>
+                {
+                    IsBusy = false;
+                    OnImportCompleted(t.Result);
+                }, TaskScheduler.FromCurrentSynchronizationContext());
+            }
+        }
+
+        private ImportProviderSettings CreateImportSettings()
+        {
+            return new ImportProviderSettings()
+            {
+                BackupFullName = BackupFullPath,
+                ProviderPath = ProviderPath,
+                UserName = UserName,
+                Password = Password
+            };
+        }
+
+        private void OnImportCompleted(TextResult result)
+        {
+            IsBusy = false;
+            if (result.Success)
+            {
+                Notify("Database has been successfully imported. It is recommended to restart " + 
+                       "application in order to apply data changes", NotificationType.Success);
+            }
+            else
+            {
+                Notify(
+                    String.Format("Error while importing database: [{0}]", result.Message),
+                    NotificationType.Error);
+            }
+        }
+
+        #endregion
 
         #endregion
 
@@ -170,6 +281,7 @@ namespace Modules.DatabaseSettings.ViewModels
         private string providerPath;
         private string exportPath;
         private string exportFileName;
+        private string backupFullPath;
 
         #endregion
     }

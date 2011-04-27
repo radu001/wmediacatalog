@@ -15,8 +15,6 @@ namespace Modules.Import.ViewModels.Wizard
         public TagsProviderStepViewModel(IUnityContainer container, IEventAggregator eventAggregator)
             : base(container, eventAggregator)
         {
-            this.eventAggregator = eventAggregator;
-
             InitAvaliableProviders();
 
             SelectScanPathCommand = new DelegateCommand<object>(OnSelectScanPathCommand);
@@ -149,7 +147,6 @@ namespace Modules.Import.ViewModels.Wizard
 
         #region Private fields
 
-        private IEventAggregator eventAggregator;
         private TagsProvider selectedProvider;
         private IEnumerable<TagsProvider> avaliableProviders;
         private string scanPath;

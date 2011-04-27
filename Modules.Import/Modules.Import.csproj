@@ -73,6 +73,10 @@
     <Compile Include="Services\Utils\ITagsAccumulator.cs" />
     <Compile Include="Services\Utils\TagsAccumulator.cs" />
     <Compile Include="Services\Utils\VorbisCommentsScanner.cs" />
+    <Compile Include="ViewModels\Wizard\BulkImportViewModel.cs" />
+    <Compile Include="ViewModels\Wizard\CompleteViewModel.cs" />
+    <Compile Include="ViewModels\Wizard\IBulkImportViewModel.cs" />
+    <Compile Include="ViewModels\Wizard\ICompleteViewModel.cs" />
     <Compile Include="ViewModels\Wizard\IScanProgressStepViewModel.cs" />
     <Compile Include="ViewModels\Wizard\IInitialStepViewModel.cs" />
     <Compile Include="ViewModels\Wizard\ScanProgressStepViewModel.cs" />
@@ -81,6 +85,12 @@
     <Compile Include="ViewModels\Wizard\Common\IWizardViewModel.cs" />
     <Compile Include="ViewModels\Wizard\TagsProviderStepViewModel.cs" />
     <Compile Include="ViewModels\Wizard\Common\WizardViewModelBase.cs" />
+    <Compile Include="Views\Wizard\BulkImportStep.xaml.cs">
+      <DependentUpon>BulkImportStep.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Wizard\CompleteStep.xaml.cs">
+      <DependentUpon>CompleteStep.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Wizard\InitialStep.xaml.cs">
       <DependentUpon>InitialStep.xaml</DependentUpon>
     </Compile>
@@ -131,6 +141,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\Wizard\BulkImportStep.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Wizard\CompleteStep.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Wizard\InitialStep.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

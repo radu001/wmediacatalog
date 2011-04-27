@@ -10,7 +10,6 @@ namespace Modules.Import.ViewModels.Wizard
         public InitialStepViewModel(IUnityContainer container, IEventAggregator eventAggregator)
             : base(container, eventAggregator)
         {
-            this.eventAggregator = eventAggregator;
         }
 
         #region IInitialStepViewModel Members
@@ -30,7 +29,5 @@ namespace Modules.Import.ViewModels.Wizard
         {
             eventAggregator.GetEvent<CompleteWizardStepEvent>().Publish(null);
         }
-
-        private IEventAggregator eventAggregator;
     }
 }

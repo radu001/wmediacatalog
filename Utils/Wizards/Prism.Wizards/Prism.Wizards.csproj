@@ -66,6 +66,7 @@
     <Compile Include="Converters\WizardStepColorConverter.cs" />
     <Compile Include="Data\WizardStep.cs" />
     <Compile Include="Data\WizardStepCollection.cs" />
+    <Compile Include="Events\CompleteWizardEvent.cs" />
     <Compile Include="Events\CompleteWizardStepEvent.cs" />
     <Compile Include="Events\UpdateNavBarEvent.cs" />
     <Compile Include="Events\WizardNavigationEvent.cs" />

@@ -12,6 +12,7 @@ namespace MediaCatalog.Tests.TestSuites.Import
     [TestFixture]
     public class BulkImportTests
     {
+        //DON'T RUN ON PERSONAL DATABASE! THIS WILL CLEAN ALL DATA DURING TEST RUNS
         private readonly string ConnectionString = "Server=127.0.0.1;Port=5432;Database=media;User Id=user;Password=user;Timeout=300;";
 
         [TestFixtureSetUp]

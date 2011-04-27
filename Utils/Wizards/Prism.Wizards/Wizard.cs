@@ -44,12 +44,22 @@ namespace Prism.Wizards
         {
             eventAggregator.GetEvent<WizardNavigationEvent>().Subscribe(OnWizardNavigationEvent, true);
             eventAggregator.GetEvent<CompleteWizardStepEvent>().Subscribe(OnCompleteWizardStepEvent, true);
+            eventAggregator.GetEvent<CompleteWizardEvent>().Subscribe(OnCompleteWizardEvent, true);
         }
 
         private void UnsubscribeEvents()
         {
             eventAggregator.GetEvent<WizardNavigationEvent>().Unsubscribe(OnWizardNavigationEvent);
             eventAggregator.GetEvent<CompleteWizardStepEvent>().Unsubscribe(OnCompleteWizardStepEvent);
+            eventAggregator.GetEvent<CompleteWizardEvent>().Unsubscribe(OnCompleteWizardEvent);
+        }
+
+        private void OnCompleteWizardEvent(object parameter)
+        {
+            if (wizardUiContainer != null)
+            {
+                wizardUiContainer.Close();
+            }
         }
 
         private void OnCompleteWizardStepEvent(object parameter)

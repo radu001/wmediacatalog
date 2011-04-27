@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using BusinessObjects;
 using Common.Enums;
@@ -10,6 +11,7 @@ using Microsoft.Practices.Unity;
 using Modules.Import.Model;
 using Modules.Import.Services;
 using Modules.Import.ViewModels.Wizard.Common;
+using Prism.Wizards.Events;
 namespace Modules.Import.ViewModels.Wizard
 {
     public class ScanProgressStepViewModel : WizardViewModelBase, IScanProgressStepViewModel
@@ -26,8 +28,9 @@ namespace Modules.Import.ViewModels.Wizard
 
         public override void OnContinueCommand(object parameter)
         {
-            throw new System.NotImplementedException();
+            eventAggregator.GetEvent<CompleteWizardStepEvent>().Publish(null);
         }
+
         #region IScanProgressStepViewModel Members
 
         public string ScanPath { get; private set; }
@@ -113,6 +116,19 @@ namespace Modules.Import.ViewModels.Wizard
             }
         }
 
+        public StringBuilder Log
+        {
+            get
+            {
+                return log;
+            }
+            private set
+            {
+                log = value;
+                NotifyPropertyChanged(() => Log);
+            }
+        }
+
         public DelegateCommand<object> BeginScanCommand { get; private set; }
 
         public DelegateCommand<object> PauseScanCommand { get; private set; }
@@ -158,6 +174,19 @@ namespace Modules.Import.ViewModels.Wizard
 
         private void OnPauseScanCommand(object parameter)
         {
+            if (IsScanning && !IsPaused && !IsCompleted && scanSettings != null)
+            {
+                IsPaused = true;
+                scanSettings.Pause = true;
+            }
+            else
+            {
+                if (IsScanning && IsPaused && !IsCompleted)
+                {
+                    IsPaused = false;
+                    scanSettings.Pause = false;
+                }
+            }
         }
 
         private void OnCancelScanCommand(object parameter)
@@ -181,7 +210,7 @@ namespace Modules.Import.ViewModels.Wizard
             IsCompleted = false;
             ScanFilesCount = 0;
             CurrentProgress = MinProgress;
-            //LogText = new StringBuilder();
+            Log = new StringBuilder();
         }
 
         private void CompleteScan(IEnumerable<Artist> artists)
@@ -206,8 +235,8 @@ namespace Modules.Import.ViewModels.Wizard
 
         private void OnBeginDirectoryScan(string pathName)
         {
-            //LogText.AppendLine(pathName);
-            //NotifyPropertyChanged(() => LogText);
+            Log.AppendLine(pathName);
+            NotifyPropertyChanged(() => Log);
         }
 
         #endregion
@@ -224,11 +253,10 @@ namespace Modules.Import.ViewModels.Wizard
         private int scanFilesCount;
         private float step;
         private float currentProgress;
+        private StringBuilder log;
 
         private ScanSettings scanSettings;
 
         #endregion
-
-
     }
 }

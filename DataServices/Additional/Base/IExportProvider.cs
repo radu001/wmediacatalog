@@ -1,13 +1,12 @@
 ﻿
-using System;
 using Common.Entities;
-namespace DataServices.Additional
+namespace DataServices.Additional.Base
 {
     public interface IExportProvider
     {
         ExportProviderSettings Settings { get; set; }
 
         TextResult ValidateSettings();
-        void BeginExport(Action<TextResult> finishAction);
+        TextResult Export();
     }
 }

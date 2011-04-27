@@ -6,6 +6,7 @@
              xmlns:prismCommands="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"
              xmlns:localConverters="clr-namespace:Modules.Import.Converters"
              xmlns:converters="clr-namespace:Common.Controls.Converters;assembly=Common.Controls"
+             xmlns:controls="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -20,8 +21,9 @@
             <localConverters:ProgressPercentageConverter x:Key="ProgressPercentageConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
+    <Grid Margin="8">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -29,24 +31,33 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <DockPanel Width="Auto" HorizontalAlignment="Stretch" LastChildFill="True" Grid.Row="1" Grid.Column="0">
-            <TextBlock Text="{Binding CurrentProgress,Converter={StaticResource ProgressPercentageConverter}}" Margin="8,0,8,0" DockPanel.Dock="Right"/>
+        <TextBlock Text="Wizard is ready to scan tags from file system. Please click 'Begin scan' button when ready" 
+                   TextWrapping="Wrap" Grid.Row="0" Grid.ColumnSpan="2" Margin="8"/>
+        <GroupBox Header="Scan output:" Grid.Row="1" Grid.ColumnSpan="2" Margin="8">
+            <controls:AutoScrolledTextBox IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding Log,Mode=OneWay}" 
+                     VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
+        </GroupBox>
+        <DockPanel Width="Auto" HorizontalAlignment="Stretch" LastChildFill="True" Grid.Row="2" Grid.Column="0">
+            <TextBlock Text="{Binding CurrentProgress,Converter={StaticResource ProgressPercentageConverter}}" Margin="0,8,8,8" DockPanel.Dock="Right"/>
             <ProgressBar Minimum="{Binding MinProgress}" Maximum="{Binding MaxProgress}" Grid.Row="1" Grid.Column="0" DockPanel.Dock="Left"
-                             Value="{Binding CurrentProgress,Mode=OneWay}" />
+                             Value="{Binding CurrentProgress,Mode=OneWay}" Margin="8" />
         </DockPanel>
-        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
-        <Button Style="{StaticResource DialogButtonStyle}" Width="75"
-                    Content="Begin scan" 
-                    Visibility="{Binding IsScanning,Converter={StaticResource InverseBoolToVisibilityConverter}}"
-                    prismCommands:Click.Command="{Binding BeginScanCommand}"/>
-            <Button Style="{StaticResource DialogButtonStyle}" Width="75"
-                    Visibility="{Binding IsScanning,Converter={StaticResource BoolToVisibilityConverter}}"
-                    Content="{Binding IsPaused,Converter={StaticResource PauseButtonNameConverter}}" 
-                    prismCommands:Click.Command="{Binding PauseScanCommand}"/>
-            <Button Style="{StaticResource DialogButtonStyle}" Width="75"
-                    Content="Cancel"
-                    prismCommands:Click.Command="{Binding CancelScanCommand}"/>
-            <Button Style="{StaticResource DialogButtonStyle}" Width="75" 
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1">
+            <StackPanel Orientation="Horizontal"
+                        Visibility="{Binding IsCompleted,Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                <Button Style="{StaticResource DialogButtonStyle}" Width="75" Margin="8"
+                        Content="Begin scan" 
+                        Visibility="{Binding IsScanning,Converter={StaticResource InverseBoolToVisibilityConverter}}"
+                        prismCommands:Click.Command="{Binding BeginScanCommand}"/>
+                <Button Style="{StaticResource DialogButtonStyle}" Width="75" Margin="8"
+                        Visibility="{Binding IsScanning,Converter={StaticResource BoolToVisibilityConverter}}"
+                        Content="{Binding IsPaused,Converter={StaticResource PauseButtonNameConverter}}" 
+                        prismCommands:Click.Command="{Binding PauseScanCommand}"/>
+                <Button Style="{StaticResource DialogButtonStyle}" Width="75" Margin="8"
+                        Content="Cancel"
+                        prismCommands:Click.Command="{Binding CancelScanCommand}"/>
+            </StackPanel>
+            <Button Style="{StaticResource DialogButtonStyle}" Width="75" Margin="8"
                     Content="Continue"
                     Visibility="{Binding IsCompleted,Converter={StaticResource BoolToVisibilityConverter}}"
                     prismCommands:Click.Command="{Binding ContinueCommand}"/>
