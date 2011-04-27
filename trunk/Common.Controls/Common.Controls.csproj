@@ -58,6 +58,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\AutoScrolledTextBox.cs" />
     <Compile Include="Controls\BusyIndicator\BusyIndicatorBehavior.cs" />
     <Compile Include="Controls\BusyIndicator\CircularProgressBar.xaml.cs">
       <DependentUpon>CircularProgressBar.xaml</DependentUpon>

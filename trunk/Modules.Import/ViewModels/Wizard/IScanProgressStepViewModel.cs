@@ -1,4 +1,5 @@
 ﻿
+using System.Text;
 using Microsoft.Practices.Prism.Commands;
 using Modules.Import.ViewModels.Wizard.Common;
 namespace Modules.Import.ViewModels.Wizard
@@ -15,6 +16,7 @@ namespace Modules.Import.ViewModels.Wizard
         float MinProgress { get; }
         float MaxProgress { get; }
         float CurrentProgress { get; }
+        StringBuilder Log { get; }
 
         DelegateCommand<object> BeginScanCommand { get; }
         DelegateCommand<object> PauseScanCommand { get; }

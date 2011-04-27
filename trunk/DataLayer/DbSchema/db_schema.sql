@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
--- Started on 2011-03-31 21:35:07
+-- Started on 2011-04-26 17:18:55
 
 SET statement_timeout = 0;
 SET client_encoding = 'UTF8';
@@ -68,6 +68,8 @@ CREATE FUNCTION import_media(xmlstr character varying) RETURNS integer
 declare
  xml_data xml;
  albumsCount integer;
+ genresCount integer;
+ artistsCount integer;
  artistList text[];
  albumList text[];
  genreList text[];
@@ -76,74 +78,85 @@ declare
  xpathQuery character varying;
  currentAlbum character varying; currentArtist character varying;
  currentGenre character varying;
- albumYear int; genreCount int;
+ albumYear int;
 begin
  xml_data = xmlStr::xml;
  --process all genres and ensure all of them are persisted into db
  genreList := (select xpath('//artists/a/al/gn/g/@name',xml_data)::text[] x);
 
- --loop throigh unique genre names
- for currentGenre in ( select distinct lower(a) from unnest(genreList) a) loop
-   --make first chars of genre words capital
-   insert into genres (name) select initcap(currentGenre)
-     where not exists (select g.name from genres g where
-	g.name=initcap(currentGenre));
- end loop;
+ genresCount := array_upper(genreList,1);
+ if genresCount > 0 then
+	 --loop throigh unique genre names
+	 for currentGenre in ( select distinct lower(a) from unnest(genreList) a) loop
+	   --make first chars of genre words capital
+	   insert into genres (name) select initcap(currentGenre)
+	     where not exists (select g.name from genres g where
+		g.name=initcap(currentGenre));
+	 end loop;
+ end if;
 
 
  artistList := (select xpath('//artists/a/@name',xml_data)::text[] x);
 
- for i in 1..array_upper(artistList,1) loop
-   currentArtist := artistList[i];
+ artistsCount := array_upper(artistList,1);
+ if artistsCount > 0 then
+	 for i in 1..artistsCount loop
+	   currentArtist := artistList[i];
 
-   --get or create new artist by name and fetch it's id
-    artistID = (select id from artists a where lower(a.name) =
-	trim(lower(currentArtist)));
-    if artistID is null then
-      insert into artists(name) values(trim(currentArtist)) returning	id into artistID;
-    end if;
+	   --get or create new artist by name and fetch it's id
+	    artistID = (select id from artists a where lower(a.name) =
+		trim(lower(currentArtist)));
+	    if artistID is null then
+	      insert into artists(name) values(trim(currentArtist)) returning	id into artistID;
+	    end if;
 
-   --process albums for given artist
-   xpathQuery := '//artists/a[@name="' || currentArtist || '"]/al/@name';
-   albumList := (select xpath(xpathQuery,xml_data)::text[] y);
+	   --process albums for given artist
+	   xpathQuery := '//artists/a[@name="' || currentArtist || '"]/al/@name';
+	   albumList := (select xpath(xpathQuery,xml_data)::text[] y);
+           if ( array_upper(albumList,1) > 0 ) then
+		   for j in 1..array_upper(albumList,1) loop
+		     currentAlbum := albumList[j];
 
-   for j in 1..array_upper(albumList,1) loop
-     currentAlbum := albumList[j];
-     albumsCount = (select count(1) from albums a
-                    where a.id in( select album_id from artists_albums where
-		      artist_id = artistID ) and
-                      a.name = currentAlbum);
-     if ( albumsCount = 0 ) then
-       --get album year
-       xpathQuery := '//artists/a[@name="' || currentArtist || '"]/al[@name="' || currentAlbum || '"]/@year';
-       albumYear := (select y[1] from (select xpath(xpathQuery,xml_data)::text[] y) as y);
+		     --check whether album with given name exists in database
+		     albumsCount = (select count(1) from albums a where a.name = currentAlbum);
+		     if ( albumsCount = 0 ) then
+		       --get album year
+		       xpathQuery := '//artists/a[@name="' || currentArtist || '"]/al[@name="' || currentAlbum || '"]/@year';
+		       albumYear := (select y[1] from (select xpath(xpathQuery,xml_data)::text[] y) as y);
 
-       if ( albumYear is null ) then
-         albumYear := 1900;
-       end if;
+		       if ( albumYear is null ) then
+			 albumYear := 1900;
+		       end if;
 
-       --raise notice 'album year %', albumYear;
-       
-       --create new album and link with artist
-       insert into albums(name,rating,year) values(trim(currentAlbum),0,to_date('01 01 ' || albumYear, 'DD MM YYYY'))
-         returning id into albumID;
-       insert into artists_albums(artist_id,album_id) values(artistID,albumID);
-     end if;
+		       --create new album and link with artist
+		       insert into albums(name,rating,year) values(trim(currentAlbum),0,to_date('01 01 ' || albumYear, 'DD MM YYYY'))
+			 returning id into albumID;
+		     else
+		       albumID := (select a.id from albums a where a.name = currentAlbum);
+		     end if;
 
-     --process genres of given album
-     xpathQuery := '//artists/a[@name="' || currentArtist ||
-	'"]/al[@name="' || currentAlbum || '"]/gn/g/@name';
-     genreList := (select xpath(xpathQuery,xml_data)::text[] z);
+		     --check whether album is already bound to artists
+		     albumsCount := (select count(1) from artists_albums where artist_id = artistID and album_id = albumID);
+		     if ( albumsCount = 0 ) then
+		       insert into artists_albums(artist_id,album_id) values(artistID,albumID);
+		     end if;
 
-     genreCount := array_upper(genreList,1);
-     if genreCount > 0 then
-       for k in 1..genreCount loop
-         currentGenre := genreList[k];
-         raise notice 'genre %',currentGenre;
-       end loop;
-     end if;
-   end loop;
- end loop;
+		     --process genres of given album
+		     xpathQuery := '//artists/a[@name="' || currentArtist ||
+			'"]/al[@name="' || currentAlbum || '"]/gn/g/@name';
+		     genreList := (select xpath(xpathQuery,xml_data)::text[] z);
+
+		     genresCount := array_upper(genreList,1);
+		     if genresCount > 0 then
+		       for k in 1..genresCount loop
+			 currentGenre := genreList[k];
+			 raise notice 'genre %',currentGenre;
+		       end loop;
+		     end if;
+		   end loop;
+	  end if;
+	 end loop;
+ end if;
 
  return 0;
 end;
@@ -1655,7 +1668,7 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2011-03-31 21:35:08
+-- Completed on 2011-04-26 17:18:57
 
 --
 -- PostgreSQL database dump complete
