@@ -8,7 +8,6 @@ namespace Modules.DatabaseSettings.ViewModels
         INHibernateConfig NHibernateConfig { get; }
 
         DelegateCommand<object> ViewLoadedCommand { get; }
-        DelegateCommand<object> TestConfigurationCommand { get; }
         DelegateCommand<object> SaveConfigurationCommand { get; }
         DelegateCommand<object> CloseSettingsCommand { get; }
     }
