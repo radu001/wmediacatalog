@@ -21,7 +21,6 @@ namespace Modules.DatabaseSettings.ViewModels
             this.dataService = dataService;
 
             ViewLoadedCommand = new DelegateCommand<object>(OnViewLoadedCommand);
-            TestConfigurationCommand = new DelegateCommand<object>(OnTestConfigurationCommand);
             SaveConfigurationCommand = new DelegateCommand<object>(OnSaveConfigurationCommand);
             CloseSettingsCommand = new DelegateCommand<object>(OnCloseSettingsCommand);
         }
@@ -44,8 +43,6 @@ namespace Modules.DatabaseSettings.ViewModels
 
         public DelegateCommand<object> ViewLoadedCommand { get; private set; }
 
-        public DelegateCommand<object> TestConfigurationCommand { get; private set; }
-
         public DelegateCommand<object> SaveConfigurationCommand { get; private set; }
 
         public DelegateCommand<object> CloseSettingsCommand { get; private set; }
@@ -65,40 +62,6 @@ namespace Modules.DatabaseSettings.ViewModels
             {
                 Notify(String.Format("Can't load NHibernate configuration from {0}", NHibernateConfig.FileName), NotificationType.Error);
             }
-        }
-
-        private void OnTestConfigurationCommand(object parameter)
-        {
-            if (NHibernateConfig == null)
-            {
-                Notify("Config isn't loaded", NotificationType.Error);
-                return;
-            }
-
-            IsBusy = true;
-
-            Task<Exception> validateDatabaseTask = Task.Factory.StartNew<Exception>(() =>
-            {
-                return dataService.ValidateConnection();
-            }, TaskScheduler.Default);
-
-            Task finishTask = validateDatabaseTask.ContinueWith((t) =>
-            {
-                IsBusy = false;
-
-                Exception connectionResult = t.Result;
-
-                if (connectionResult == null)
-                {
-                    Notify("Successfully connected to database", NotificationType.Success);
-                }
-                else
-                {
-                    Notify(String.Format("Error: {0}", connectionResult.Message), NotificationType.Error);
-                }
-
-            }, TaskScheduler.FromCurrentSynchronizationContext());
-
         }
 
         private void OnSaveConfigurationCommand(object parameter)
@@ -127,12 +90,41 @@ namespace Modules.DatabaseSettings.ViewModels
                 File.Copy(NHibernateConfig.FileName, fullPath, true);
 
                 if (NHibernateConfig.Save(NHibernateConfig.FileName))
+                {
                     Notify(
                         String.Format("Configuration has been successfully saved. Created backup {0}", newName),
                         NotificationType.Success);
+
+                    TestNewNHibernateConfiguration();
+                }
                 else
                     Notify("Can't save configuration. Unexpected error", NotificationType.Error);
             }
+        }
+
+        private void TestNewNHibernateConfiguration()
+        {
+            Task<Exception> validateDatabaseTask = Task.Factory.StartNew<Exception>(() =>
+            {
+                return dataService.ValidateConnection();
+            }, TaskScheduler.Default);
+
+            Task finishTask = validateDatabaseTask.ContinueWith((t) =>
+            {
+                IsBusy = false;
+
+                Exception connectionResult = t.Result;
+
+                if (connectionResult == null)
+                {
+                    Notify("Successfully connected to database", NotificationType.Success);
+                }
+                else
+                {
+                    Notify(String.Format("Error: {0}", connectionResult.Message), NotificationType.Error);
+                }
+
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         private void OnCloseSettingsCommand(object parameter)
@@ -146,7 +138,6 @@ namespace Modules.DatabaseSettings.ViewModels
 
         private IDataService dataService;
         private INHibernateConfig config;
-
 
         private static readonly string BackupDir = "backup";
 

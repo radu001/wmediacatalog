@@ -24,7 +24,6 @@ namespace DataServices
             try
             {
                 session = SessionFactory.GetSession();
-                //result = true;
             }
             catch (Exception ex)
             {

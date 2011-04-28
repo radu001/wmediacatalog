@@ -69,12 +69,9 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                     <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="8">
-                        <Button Content="Test settings" Style="{StaticResource DialogButtonStyle}" Width="120" Margin="4,0,0,0"
-                                commands:Click.Command="{Binding TestConfigurationCommand}"
-                                ToolTip="Tests configuration against database"/>
-                        <Button Content="Save configuration" Style="{StaticResource DialogButtonStyle}" Width="120" Margin="4,0,0,0" 
+                        <Button Content="Save and test configuration" Style="{StaticResource DialogButtonStyle}" Width="170" Margin="4,0,0,0" 
                                 commands:Click.Command="{Binding SaveConfigurationCommand}"
-                                ToolTip="Creates backup and saves new configuration"/>
+                                ToolTip="Creates backup, saves new configuration and finally tests it"/>
                     </StackPanel>
                 </Grid>
             </GroupBox>
