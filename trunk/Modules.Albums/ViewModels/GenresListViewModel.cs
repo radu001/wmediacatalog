@@ -29,7 +29,7 @@ namespace Modules.Albums.ViewModels
 
             FilterField = new Field("Name", "Name");
 
-            eventAggregator.GetEvent<GenresChangedEvent>().Subscribe(OnGenresChangedEvent, true);
+            SubscribeEvents();
 
             HideShowGenresListCommand = new DelegateCommand<object>(OnHideShowGenresListCommand);
             SelectedGenresChangedCommand = new DelegateCommand<MultiSelectionChangedArgs>(OnSelectedGenresChangedCommand);
@@ -41,8 +41,21 @@ namespace Modules.Albums.ViewModels
             EditGenreCommand = new DelegateCommand<MouseDoubleClickArgs>(OnEditGenreCommand);
 
             GenresFilterValue = String.Empty;
-            //LoadGenres();
         }
+
+        #region IEventSubscriber Members
+
+        public void SubscribeEvents()
+        {
+            eventAggregator.GetEvent<GenresChangedEvent>().Subscribe(OnGenresChangedEvent, true);
+        }
+
+        public void UnsubscribeEvents()
+        {
+            eventAggregator.GetEvent<GenresChangedEvent>().Unsubscribe(OnGenresChangedEvent);
+        }
+
+        #endregion
 
         #region IGenresListViewModel Members
 

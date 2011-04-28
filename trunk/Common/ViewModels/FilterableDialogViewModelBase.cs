@@ -38,6 +38,8 @@ namespace Common.ViewModels
 
         public DelegateCommand<object> SuccessCommand { get; private set; }
 
+        public DelegateCommand<object> DialogClosingCommand { get; private set; }
+
         #endregion
 
         public FilterableDialogViewModelBase(IUnityContainer container, IEventAggregator eventAggregator)

@@ -4,10 +4,11 @@ using BusinessObjects;
 using Common.Commands;
 using Common.Controls.Controls;
 using Common.Entities.Pagination;
+using Common.ViewModels;
 using Microsoft.Practices.Prism.Commands;
 namespace Modules.Albums.ViewModels
 {
-    public interface IGenresListViewModel
+    public interface IGenresListViewModel : IEventSubscriber
     {
         IList<Genre> Genres { get; }
         IList<Genre> SelectedGenres { get; }

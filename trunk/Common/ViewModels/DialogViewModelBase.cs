@@ -38,6 +38,8 @@ namespace Common.ViewModels
 
         public DelegateCommand<object> SuccessCommand { get; private set; }
 
+        public DelegateCommand<object> DialogClosingCommand { get; private set; }
+
         #endregion
 
         public DialogViewModelBase(IUnityContainer container, IEventAggregator eventAggregator)
@@ -45,6 +47,7 @@ namespace Common.ViewModels
         {
             SuccessCommand = new DelegateCommand<object>(OnSuccessCommand);
             CancelCommand = new DelegateCommand<object>(OnCancelCommand);
+            DialogClosingCommand = new DelegateCommand<object>(OnDialogClosingCommand);
         }
 
         #region Public methods
@@ -52,6 +55,11 @@ namespace Common.ViewModels
         public abstract void OnSuccessCommand(object parameter);
 
         public abstract void OnCancelCommand(object parameter);
+
+        //TODO Refactor to abstract method
+        public virtual void OnDialogClosingCommand(object parameter)
+        {
+        }
 
         #endregion
 

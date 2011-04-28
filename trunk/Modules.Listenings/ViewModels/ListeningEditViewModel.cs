@@ -18,16 +18,14 @@ using Modules.Listenings.Views;
 
 namespace Modules.Listenings.ViewModels
 {
-    public class ListeningEditViewModel : DialogViewModelBase, IListeningEditViewModel
+    public class ListeningEditViewModel : DialogViewModelBase, IListeningEditViewModel, IEventSubscriber
     {
         public ListeningEditViewModel(IUnityContainer container, IEventAggregator eventAggregator, IDataService dataService)
             : base(container, eventAggregator)
         {
             this.dataService = dataService;
 
-            eventAggregator.GetEvent<ReloadMoodsEvent>().Subscribe(OnReloadMoodsEvent, true);
-            eventAggregator.GetEvent<ReloadPlacesEvent>().Subscribe(OnReloadPlacesEvent, true);
-            eventAggregator.GetEvent<AlbumSelectedEvent>().Subscribe(OnAlbumSelectedEvent, true);
+            SubscribeEvents();
 
             SearchAlbumCommand = new DelegateCommand<object>(OnSearchAlbumCommand);
             CreatePlaceCommand = new DelegateCommand<object>(OnCreatePlaceCommand);
@@ -48,6 +46,29 @@ namespace Modules.Listenings.ViewModels
                 }
             });
         }
+
+        public override void OnDialogClosingCommand(object parameter)
+        {
+            UnsubscribeEvents();
+        }
+
+        #region IEventSubscriber Members
+
+        public void SubscribeEvents()
+        {
+            eventAggregator.GetEvent<ReloadMoodsEvent>().Subscribe(OnReloadMoodsEvent, true);
+            eventAggregator.GetEvent<ReloadPlacesEvent>().Subscribe(OnReloadPlacesEvent, true);
+            eventAggregator.GetEvent<AlbumSelectedEvent>().Subscribe(OnAlbumSelectedEvent, true);
+        }
+
+        public void UnsubscribeEvents()
+        {
+            eventAggregator.GetEvent<ReloadMoodsEvent>().Unsubscribe(OnReloadMoodsEvent);
+            eventAggregator.GetEvent<ReloadPlacesEvent>().Unsubscribe(OnReloadPlacesEvent);
+            eventAggregator.GetEvent<AlbumSelectedEvent>().Unsubscribe(OnAlbumSelectedEvent);
+        }
+
+        #endregion
 
         #region IListeningEditViewModel Members
 
