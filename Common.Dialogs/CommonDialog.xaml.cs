@@ -1,4 +1,5 @@
 ﻿
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -153,6 +154,22 @@ namespace Common.Dialogs
 
             DefaultOkCommand = new DelegateCommand<object>(OnDefaultOkCommand);
             DefaultCancelCommand = new DelegateCommand<object>(OnDefaultCancelCommand);
+
+            Closing += new System.ComponentModel.CancelEventHandler(CommonDialog_Closing);
+        }
+
+        private void CommonDialog_Closing(object sender, CancelEventArgs e)
+        {
+            this.Closing -= CommonDialog_Closing;
+
+            if (DialogContent != null && DialogContent.DataContext != null)
+            {
+                var viewModel = DialogContent.DataContext as IDialogViewModel;
+                if (viewModel != null)
+                {
+                    viewModel.DialogClosingCommand.Execute(this);
+                }
+            }
         }
 
         public DelegateCommand<object> DefaultOkCommand { get; private set; }

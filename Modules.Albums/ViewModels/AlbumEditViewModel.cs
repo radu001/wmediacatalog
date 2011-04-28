@@ -21,18 +21,14 @@ using Modules.Tags.ViewModels;
 using Modules.Tags.Views;
 namespace Modules.Albums.ViewModels
 {
-    public class AlbumEditViewModel : DialogViewModelBase, IAlbumEditViewModel
+    public class AlbumEditViewModel : DialogViewModelBase, IAlbumEditViewModel, IEventSubscriber
     {
         public AlbumEditViewModel(IUnityContainer container, IEventAggregator eventAggregator, IDataService dataService)
             : base(container, eventAggregator)
         {
             this.dataService = dataService;
 
-            eventAggregator.GetEvent<TagsChangedEvent>().Subscribe(OnTagsChangedEvent, true);
-            eventAggregator.GetEvent<AttachGenresEvent>().Subscribe(OnAttachGenresEvent, true);
-            eventAggregator.GetEvent<DetachGenresEvent>().Subscribe(OnDetachGenresEvent, true);
-            eventAggregator.GetEvent<AttachArtistsEvent>().Subscribe(OnAttachArtistsEvent, true);
-            eventAggregator.GetEvent<DetachArtistsEvent>().Subscribe(OnDetachArtistsEvent, true);
+            SubscribeEvents();
 
             FilterTagCommand = new AutoCompleteFilterPredicate<object>(FilterTag);
             AttachTagCommand = new DelegateCommand<object>(OnAttachTagCommand);
@@ -54,6 +50,30 @@ namespace Modules.Albums.ViewModels
             ArtistsListViewModel = container.Resolve<IArtistListViewModel>();
             TracksListViewModel = container.Resolve<ITracksListViewModel>();
         }
+
+        #region IEventSubscriber Members
+
+        public void SubscribeEvents()
+        {
+            eventAggregator.GetEvent<TagsChangedEvent>().Subscribe(OnTagsChangedEvent, true);
+            eventAggregator.GetEvent<AttachGenresEvent>().Subscribe(OnAttachGenresEvent, true);
+            eventAggregator.GetEvent<DetachGenresEvent>().Subscribe(OnDetachGenresEvent, true);
+            eventAggregator.GetEvent<AttachArtistsEvent>().Subscribe(OnAttachArtistsEvent, true);
+            eventAggregator.GetEvent<DetachArtistsEvent>().Subscribe(OnDetachArtistsEvent, true);
+        }
+
+        public void UnsubscribeEvents()
+        {
+            eventAggregator.GetEvent<TagsChangedEvent>().Unsubscribe(OnTagsChangedEvent);
+            eventAggregator.GetEvent<AttachGenresEvent>().Unsubscribe(OnAttachGenresEvent);
+            eventAggregator.GetEvent<DetachGenresEvent>().Unsubscribe(OnDetachGenresEvent);
+            eventAggregator.GetEvent<AttachArtistsEvent>().Unsubscribe(OnAttachArtistsEvent);
+            eventAggregator.GetEvent<DetachArtistsEvent>().Unsubscribe(OnDetachArtistsEvent);
+
+            GenresListViewModel.UnsubscribeEvents();
+        }
+
+        #endregion
 
         #region IAlbumEditViewModel Members
 
@@ -236,6 +256,10 @@ namespace Modules.Albums.ViewModels
             DialogResult = false;
         }
 
+        public override void OnDialogClosingCommand(object parameter)
+        {
+            UnsubscribeEvents();
+        }
 
         #region Private methods
 

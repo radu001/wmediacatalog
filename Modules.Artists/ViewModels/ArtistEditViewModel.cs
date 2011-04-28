@@ -20,14 +20,14 @@ using Modules.Tags.ViewModels;
 using Modules.Tags.Views;
 namespace Modules.Artists.ViewModels
 {
-    public class ArtistEditViewModel : DialogViewModelBase, IArtistEditViewModel
+    public class ArtistEditViewModel : DialogViewModelBase, IArtistEditViewModel, IEventSubscriber
     {
         public ArtistEditViewModel(IUnityContainer container, IEventAggregator eventAggregator, IDataService dataService)
             : base(container, eventAggregator)
         {
             this.dataService = dataService;
 
-            eventAggregator.GetEvent<TagsChangedEvent>().Subscribe(OnTagsChangedEvent, true);
+            SubscribeEvents();
 
             FilterTagCommand = new AutoCompleteFilterPredicate<object>(FilterTag);
             AttachTagCommand = new DelegateCommand<object>(OnAttachTagCommand);
@@ -62,6 +62,25 @@ namespace Modules.Artists.ViewModels
         {
             DialogResult = false;
         }
+
+        public override void OnDialogClosingCommand(object parameter)
+        {
+            UnsubscribeEvents();
+        }
+
+        #region IEventSubscriber Members
+
+        public void SubscribeEvents()
+        {
+            eventAggregator.GetEvent<TagsChangedEvent>().Subscribe(OnTagsChangedEvent, true);
+        }
+
+        public void UnsubscribeEvents()
+        {
+            eventAggregator.GetEvent<TagsChangedEvent>().Unsubscribe(OnTagsChangedEvent);
+        }
+
+        #endregion
 
         #region IArtistEditViewModel Members
 
