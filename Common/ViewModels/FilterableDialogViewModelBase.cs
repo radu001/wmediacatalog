@@ -47,6 +47,7 @@ namespace Common.ViewModels
         {
             SuccessCommand = new DelegateCommand<object>(OnSuccessCommand);
             CancelCommand = new DelegateCommand<object>(OnCancelCommand);
+            DialogClosingCommand = new DelegateCommand<object>(OnDialogClosingCommand);
         }
 
         #region Public methods
@@ -54,6 +55,10 @@ namespace Common.ViewModels
         public abstract void OnSuccessCommand(object parameter);
 
         public abstract void OnCancelCommand(object parameter);
+
+        public virtual void OnDialogClosingCommand(object parameter)
+        {
+        }
 
         #endregion
 

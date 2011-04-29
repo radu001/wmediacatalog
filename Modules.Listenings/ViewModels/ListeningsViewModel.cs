@@ -25,6 +25,7 @@ namespace Modules.Listenings.ViewModels
             this.dataService = dataService;
 
             eventAggregator.GetEvent<ReloadListeningsEvent>().Subscribe(OnReloadListeningsEvent, true);
+            eventAggregator.GetEvent<AlbumRemovedEvent>().Subscribe(OnAlbumRemovedEvent, true);
 
             ViewLoadedCommand = new DelegateCommand<object>(OnViewLoadedCommand);
             AddListeningCommand = new DelegateCommand<object>(OnAddListeningCommand);
@@ -116,6 +117,11 @@ namespace Modules.Listenings.ViewModels
         #endregion
 
         #region Private methods
+
+        private void OnAlbumRemovedEvent(int albumID)
+        {
+            LoadListenings();
+        }
 
         private void OnViewLoadedCommand(object parameter)
         {

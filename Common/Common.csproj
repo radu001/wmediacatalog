@@ -84,6 +84,7 @@
     <Compile Include="Enums\NotificationType.cs" />
     <Compile Include="Enums\WorkspaceNameEnum.cs" />
     <Compile Include="Events\AlbumLoadedEvent.cs" />
+    <Compile Include="Events\AlbumRemovedEvent.cs" />
     <Compile Include="Events\AlbumSelectedEvent.cs" />
     <Compile Include="Events\ChangeWorkspaceEvent.cs" />
     <Compile Include="Events\CreateAlbumEvent.cs" />

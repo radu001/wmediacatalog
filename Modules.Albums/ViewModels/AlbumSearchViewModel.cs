@@ -196,7 +196,5 @@ namespace Modules.Albums.ViewModels
         private int albumsCount;
 
         #endregion
-
-
     }
 }

@@ -58,6 +58,12 @@ namespace Modules.Albums.Services
             return provider.SaveGenre(genre);
         }
 
+        public bool RemoveAlbum(Album album)
+        {
+            DataProvider provider = new DataProvider();
+            return provider.RemoveAlbum(album);
+        }
+
         #endregion
     }
 }

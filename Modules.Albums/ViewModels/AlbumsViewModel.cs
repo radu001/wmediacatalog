@@ -260,12 +260,12 @@ namespace Modules.Albums.ViewModels
             if (CurrentAlbum == null)
                 Notify("You must select artist to be removed", NotificationType.Info);
 
-            RemoveAlbumImpl(CurrentAlbum.ID);
+            ConfirmAlbumRemove(CurrentAlbum.ID);
         }
 
         private void OnRemoveAlbumEvent(int albumID)
         {
-            RemoveAlbumImpl(albumID);
+            ConfirmAlbumRemove(albumID);
         }
 
         private void OnBulkImportDataCommand(object parameter)
@@ -273,9 +273,64 @@ namespace Modules.Albums.ViewModels
             eventAggregator.GetEvent<ImportDataEvent>().Publish(null);
         }
 
-        private void RemoveAlbumImpl(int albumID)
+        private void ConfirmAlbumRemove(int albumID)
         {
-            Notify("Not yet implemented", NotificationType.Info);
+            IsBusy = true;
+
+            Task<Album> albumFetchTask = Task.Factory.StartNew<Album>(() =>
+                {
+                    return dataService.GetAlbum(albumID);
+                }, TaskScheduler.Default);
+
+            Task finishFetchTask = albumFetchTask.ContinueWith((a) =>
+                {
+                    IsBusy = false;
+                    var removingAlbum = a.Result;
+
+                    if (removingAlbum != null)
+                    {
+                        ConfirmDialog confirm = new ConfirmDialog()
+                        {
+                            HeaderText = "Remove album confirmation",
+                            MessageText = String.Format("Do you really want to delete album {0}? " + 
+                                                        "All listenings and tracks will be also removed", removingAlbum.Name)
+                        };
+
+                        if (confirm.ShowDialog() == true)
+                        {
+                            RemoveAlbumImpl(removingAlbum);
+                        }
+                    }
+                }, TaskScheduler.FromCurrentSynchronizationContext());
+
+            //var album = dataService.GetAlbum(albumID);
+        }
+
+        private void RemoveAlbumImpl(Album album)
+        {
+            IsBusy = true;
+
+            Task<bool> removeAlbumTask = Task.Factory.StartNew<bool>(() =>
+                {
+                    return dataService.RemoveAlbum(album);
+                }, TaskScheduler.Default);
+
+            Task finishTask = removeAlbumTask.ContinueWith((r) =>
+                {
+                    IsBusy = false;
+
+                    if (r.Result)
+                    {
+                        Notify("Album has been successfully removed.", NotificationType.Success);
+                        LoadAlbums();
+
+                        eventAggregator.GetEvent<AlbumRemovedEvent>().Publish(album.ID);
+                    }
+                    else
+                    {
+                        Notify("Can't remove album. Please see log for details.", NotificationType.Error);
+                    }
+                }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         private void FilterByWaste(bool showWaste)
