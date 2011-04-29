@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:converters="clr-namespace:Common.Controls.Converters;assembly=Common.Controls"
              xmlns:commonControls="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
+             xmlns:localConverters="clr-namespace:Modules.Artists.Converters"
              xmlns:pagerCommands="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
              xmlns:commands="clr-namespace:Common.Commands;assembly=Common.Commands"
              xmlns:prismCommands="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"
@@ -89,7 +90,10 @@
             </DataTemplate>
 
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+            <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter"/>
             <converters:BoolToOpacityConverter x:Key="BoolToOpacityConverter"/>
+            <localConverters:ArtistWastedToVisibilityConvreter x:Key="ArtistWastedToVisibilityConvreter"/>
+            <localConverters:ArtistWastedToVisibilityConvreter x:Key="InverseArtistWastedToVisibilityConvreter" Inverse="True"/>
 
         </ResourceDictionary>
     </UserControl.Resources>
@@ -158,6 +162,40 @@
                         prismCommands:Click.Command="{Binding RemoveAlbumCommand}">
                     <Button.Content>
                         <Image Source="/Common.Content;component/Images/CD_remove_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
+                    </Button.Content>
+                </Button>
+            </ToolBar>
+            <ToolBar>
+                <Button Margin="2"
+                        Style="{StaticResource ToolbarImageButtonStyle}"
+                        ToolTip="Show waste artists"
+                        prismCommands:Click.Command="{Binding ShowWasteCommand}" Visibility="{Binding IsWasteVisible,Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                    <Button.Content>
+                        <Image Source="/Common.Content;component/Images/waste_plus_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
+                    </Button.Content>
+                </Button>
+                <Button Margin="2"
+                        Style="{StaticResource ToolbarImageButtonStyle}"
+                        ToolTip="Hide waste artists"
+                        prismCommands:Click.Command="{Binding HideWasteCommand}" Visibility="{Binding IsWasteVisible,Converter={StaticResource BoolToVisibilityConverter}}">
+                    <Button.Content>
+                        <Image Source="/Common.Content;component/Images/waste_minus_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
+                    </Button.Content>
+                </Button>
+                <Button Margin="2"
+                        Style="{StaticResource ToolbarImageButtonStyle}"
+                        ToolTip="Mark artist as waste"
+                        prismCommands:Click.Command="{Binding MarkAsWasteCommand}" Visibility="{Binding CurrentArtist,Converter={StaticResource ArtistWastedToVisibilityConvreter}}">
+                    <Button.Content>
+                        <Image Source="/Common.Content;component/Images/waste_arrow_red_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
+                    </Button.Content>
+                </Button>
+                <Button Margin="2"
+                        Style="{StaticResource ToolbarImageButtonStyle}"
+                        ToolTip="Unmark artist as waste"
+                        prismCommands:Click.Command="{Binding UnMarkAsWasteCommand}" Visibility="{Binding CurrentArtist,Converter={StaticResource InverseArtistWastedToVisibilityConvreter}}">
+                    <Button.Content>
+                        <Image Source="/Common.Content;component/Images/waste_arrow_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
                     </Button.Content>
                 </Button>
             </ToolBar>
