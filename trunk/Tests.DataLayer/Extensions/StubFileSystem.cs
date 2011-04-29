@@ -81,9 +81,7 @@ namespace MediaCatalog.Tests.Extensions
             if (directory == null)
                 return new FileInfo[] { };
 
-            return null;
-
-            //return directory.Files.Select(f => f.File).Where(f => f.Name.Contains(searchPattern));
+            return directory.Files.Select(f => f.File).Where(f => f.Name.Contains(".flac"));
         }
 
         public IEnumerable<DirectoryInfo> GetSubDirectories(DirectoryInfo dir)

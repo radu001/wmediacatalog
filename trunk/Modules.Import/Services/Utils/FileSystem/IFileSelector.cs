@@ -6,6 +6,6 @@ namespace Modules.Import.Services.Utils.FileSystem
     public interface IFileSelector
     {
         void Init(IFileSelectorSettings settings);
-        IEnumerable<FileInfo> SelectFiles(DirectoryInfo dir);
+        IEnumerable<FileInfo> SelectFiles(string dirPath);
     }
 }

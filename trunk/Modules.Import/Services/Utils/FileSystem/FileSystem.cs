@@ -10,7 +10,7 @@ namespace Modules.Import.Services.Utils.FileSystem
 
         public IEnumerable<FileInfo> GetFiles(DirectoryInfo dir, IFileSelector selector)
         {
-            return selector.SelectFiles(dir);
+            return selector.SelectFiles(dir.FullName);
         }
 
         public IEnumerable<DirectoryInfo> GetSubDirectories(DirectoryInfo dir)
@@ -33,7 +33,7 @@ namespace Modules.Import.Services.Utils.FileSystem
                 foreach (var sd in subDirs)
                     stack.Push(sd);
 
-                result += selector.SelectFiles(top).Count();
+                result += selector.SelectFiles(top.FullName).Count();
             }
 
             return result;
