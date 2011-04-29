@@ -918,6 +918,43 @@ namespace DataServices
             return result;
         }
 
+        public bool RemoveAlbum(Album album)
+        {
+            bool result = false;
+
+            ISession session = SessionFactory.GetSession();
+
+            ITransaction tx = session.BeginTransaction();
+
+            try
+            {
+
+                AlbumEntity dataEntity = session.CreateCriteria<AlbumEntity>().
+                    Add(Restrictions.Eq("ID", album.ID)).UniqueResult<AlbumEntity>();
+
+                if (dataEntity != null)
+                {
+                    session.Delete(dataEntity);
+
+                    tx.Commit();
+                }
+
+                result = true;
+            }
+            catch (Exception ex)
+            {
+                Logger.Write(ex);
+                tx.Rollback();
+            }
+            finally
+            {
+                session.Close();
+                tx.Dispose();
+            }
+
+            return result;
+        }
+
         public IPagedList<Genre> GetGenres(ILoadOptions options)
         {
             IPagedList<Genre> result = new PagedList<Genre>();

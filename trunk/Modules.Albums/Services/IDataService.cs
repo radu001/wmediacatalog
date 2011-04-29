@@ -14,5 +14,6 @@ namespace Modules.Albums.Services
         IPagedList<Genre> GetGenres(ILoadOptions loadOptions);
         bool SaveAlbum(Album album);
         bool SaveGenre(Genre genre);
+        bool RemoveAlbum(Album album);
     }
 }

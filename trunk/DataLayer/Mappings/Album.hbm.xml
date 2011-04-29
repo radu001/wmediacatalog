@@ -40,8 +40,8 @@
          class="DataLayer.Entities.TrackEntity, NHibernateOneToMany"/>
     </bag>
 
-    <bag name="Listens" cascade="none" lazy="true">
-      <key column="album_id"/>
+    <bag name="Listens" cascade="delete" lazy="true">
+      <key column="album_id" not-null="true"/>
       <one-to-many
          class="DataLayer.Entities.ListeningEntity, NHibernateOneToMany"/>
     </bag>
