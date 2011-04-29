@@ -7,8 +7,6 @@ namespace Common.Dialogs.Views
     /// </summary>
     public partial class ConfirmDialogView : UserControl
     {
-        public string MessageText { get; set; }
-
         public ConfirmDialogView()
         {
             InitializeComponent();

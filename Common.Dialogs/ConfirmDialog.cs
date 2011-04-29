@@ -1,5 +1,4 @@
 ﻿
-using System;
 using System.Windows;
 using Common.Dialogs.Views;
 namespace Common.Dialogs
@@ -9,7 +8,7 @@ namespace Common.Dialogs
         #region Dependency properties
 
         public static readonly DependencyProperty MessageTextProperty =
-            DependencyProperty.RegisterAttached("MessageText", typeof(string), typeof(DialogWindow),
+            DependencyProperty.Register("MessageText", typeof(string), typeof(DialogWindow),
             new PropertyMetadata(OnMessageTextPropertyChanged));
 
         public string MessageText
@@ -26,17 +25,46 @@ namespace Common.Dialogs
 
         private static void OnMessageTextPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ConfirmDialog dialog = d as ConfirmDialog;
-            if (dialog != null)
+            //ConfirmDialog dialog = d as ConfirmDialog;
+            //if (dialog != null)
+            //{
+            //    ConfirmDialogView view = dialog.DialogContent as ConfirmDialogView;
+            //    if (view != null)
+            //    {
+            //        view.MessageText = e.NewValue != null ? e.NewValue.ToString() : String.Empty;
+            //    }
+            //}
+        }
+
+        public static readonly DependencyProperty CheckBoxTextProperty =
+            DependencyProperty.Register("CheckBoxText", typeof(string), typeof(ConfirmDialog));
+
+        public string CheckBoxText
+        {
+            get
             {
-                ConfirmDialogView view = dialog.DialogContent as ConfirmDialogView;
-                if (view != null)
-                {
-                    view.MessageText = e.NewValue != null ? e.NewValue.ToString() : String.Empty;
-                }
+                return (string)GetValue(CheckBoxTextProperty);
+            }
+            set
+            {
+                SetValue(CheckBoxTextProperty, value);
             }
         }
 
+        public static readonly DependencyProperty CheckBoxCheckedProperty =
+            DependencyProperty.Register("CheckBoxChecked", typeof(bool), typeof(ConfirmDialog));
+
+        public bool CheckBoxChecked
+        {
+            get
+            {
+                return (bool)GetValue(CheckBoxCheckedProperty);
+            }
+            set
+            {
+                SetValue(CheckBoxCheckedProperty, value);
+            }
+        }
 
         #endregion
 
@@ -45,9 +73,10 @@ namespace Common.Dialogs
             InitializeComponent();
 
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
-            DialogContent = new ConfirmDialogView();
-
+            DialogContent = new ConfirmDialogView()
+            {
+                DataContext = this
+            };
         }
     }
 }

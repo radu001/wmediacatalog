@@ -418,39 +418,65 @@ namespace Modules.Artists.ViewModels
 
             if (CurrentArtist.IsWaste != isWaste) // we're actually changing waste status
             {
-                ConfirmDialog confirm = new ConfirmDialog()
+                IsBusy = true;
+
+                Task<IList<Album>> loadArtistAlbumsTask = Task.Factory.StartNew<IList<Album>>(() =>
                 {
-                    HeaderText =
-                        isWaste == true ? "Confirm waste mark" : "Confirm waste mark removal",
-                    MessageText =
-                        isWaste == true ? String.Format("Do you really want to mark artist {0} as wasted?", CurrentArtist.Name) :
-                                          String.Format("Do you really want to unmark artist {0} as wasted?", CurrentArtist.Name)
-                };
+                    return dataService.GetAlbumsByArtistID(CurrentArtist.ID);
+                }, TaskScheduler.Default);
 
-                if (confirm.ShowDialog() == true)
+
+                Task finishTask = loadArtistAlbumsTask.ContinueWith((t) =>
                 {
-                    CurrentArtist.IsWaste = isWaste;
-                    IsBusy = true;
+                    IsBusy = false;
 
-                    Task<bool> saveArtistTask = Task.Factory.StartNew<bool>(() =>
+                    ConfirmAndWasteArtist(isWaste, t.Result);
+                }, TaskScheduler.FromCurrentSynchronizationContext());
+            }
+        }
+
+        private void ConfirmAndWasteArtist(bool isWaste, IList<Album> albums)
+        {
+            ConfirmDialog confirm = new ConfirmDialog()
+            {
+                HeaderText =
+                    isWaste == true ? "Confirm waste mark" : "Confirm waste mark removal",
+                MessageText =
+                    isWaste == true ? String.Format("Do you really want to mark artist {0} as wasted?", CurrentArtist.Name) :
+                                      String.Format("Do you really want to unmark artist {0} as wasted?", CurrentArtist.Name),
+                CheckBoxText = String.Format("Also waste all albums of {0}", CurrentArtist.Name)                     
+            };
+
+            if (confirm.ShowDialog() == true)
+            {
+                bool wasteChildAlbums = confirm.CheckBoxChecked;
+                CurrentArtist.IsWaste = isWaste;
+                IsBusy = true;
+
+                Task<bool> saveArtistTask = Task.Factory.StartNew<bool>(() =>
+                {
+                    return dataService.SaveArtistWasted(CurrentArtist, wasteChildAlbums);
+                }, TaskScheduler.Default);
+
+                Task finishedTask = saveArtistTask.ContinueWith((t) =>
+                {
+                    IsBusy = false;
+
+                    if (t.Result)
                     {
-                        return dataService.SaveArtistWasted(CurrentArtist);
-                    }, TaskScheduler.Default);
+                        LoadArtists();
 
-                    Task finishedTask = saveArtistTask.ContinueWith((t) =>
+                        if (!IsWasteVisible)
+                        {
+                            // selected artists becomes invisible, so hide it's albums also
+                            ArtistAlbums.Clear();
+                        }
+                    }
+                    else
                     {
-                        IsBusy = false;
-
-                        if (t.Result)
-                        {
-                            LoadArtists();
-                        }
-                        else
-                        {
-                            Notify("Can't update artist. See log for details", NotificationType.Error);
-                        }
-                    }, TaskScheduler.FromCurrentSynchronizationContext());
-                }
+                        Notify("Can't update artist. See log for details", NotificationType.Error);
+                    }
+                }, TaskScheduler.FromCurrentSynchronizationContext());
             }
         }
 
