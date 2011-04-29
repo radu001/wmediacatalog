@@ -21,14 +21,15 @@ namespace MediaCatalog.Tests.TestSuites.Import
             var resolver = new TagDataResolver();
 
             var scanner = new StubTagsScanner(xml);
+            var fileSelector = new StubFileSelector();
 
             string path = @"d:\";
-            var service = new DataService(container, scanner, scanner, new TagsAccumulator());
+            var service = new DataService(container, scanner, scanner, new TagsAccumulator(), new StubFileSelector());
             var artists =
                 service.BeginScan(new ScanSettings()
                 {
                     ScanPath = path,
-                    FileMask = ".flac"
+                    FileMasks = new string[] { ".flac" }
                 });
 
             Assert.NotNull(artists);

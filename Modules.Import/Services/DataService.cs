@@ -9,28 +9,32 @@ using DataServices;
 using Microsoft.Practices.Unity;
 using Modules.Import.Model;
 using Modules.Import.Services.Utils;
+using Modules.Import.Services.Utils.FileSystem;
 
 namespace Modules.Import.Services
 {
     public class DataService : IDataService
     {
-        public DataService(IUnityContainer container, IScanner scanner, IFileSystem fileSystem, ITagsAccumulator tagsAccumulator)
+        public DataService(IUnityContainer container, IScanner scanner, IFileSystem fileSystem, ITagsAccumulator tagsAccumulator, IFileSelector fileSelector)
         {
             this.container = container;
             this.scanner = scanner;
             this.fileSystem = fileSystem;
             this.tagsAccumulator = tagsAccumulator;
+            this.fileSelector = fileSelector;
         }
 
         public IEnumerable<Artist> BeginScan(ScanSettings settings)
         {
+            fileSelector.Init(settings);
+
             DirectoryInfo dir = new DirectoryInfo(settings.ScanPath);
             Stack<DirectoryInfo> stack = new Stack<DirectoryInfo>();
             stack.Push(dir);
 
             if (settings.BeforeScan != null)
             {
-                int totalFiles = fileSystem.CountFilesRecursively(dir, settings.FileMask);
+                int totalFiles = fileSystem.CountFilesRecursively(dir, fileSelector);
                 settings.BeforeScan(totalFiles);
             }
 
@@ -52,7 +56,7 @@ namespace Modules.Import.Services
                     settings.BeginDirectoryScan(currentDir.FullName);
                 }
 
-                var files = fileSystem.GetFiles(currentDir, settings.FileMask);
+                var files = fileSystem.GetFiles(currentDir, fileSelector);
                 foreach (var f in files)
                 {
                     try
@@ -91,6 +95,7 @@ namespace Modules.Import.Services
         private readonly IScanner scanner;
         private readonly IFileSystem fileSystem;
         private readonly ITagsAccumulator tagsAccumulator;
+        private readonly IFileSelector fileSelector;
 
         #endregion
     }

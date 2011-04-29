@@ -198,7 +198,7 @@ namespace Modules.Import.ViewModels.Wizard
             return new ScanSettings()
             {
                 ScanPath = ScanPath,
-                FileMask = "*.flac", // todo from provider
+                FileMasks = new string[] { "*.flac" }, // todo from provider
                 BeginFileScan = OnBeginFileScan,
                 BeginDirectoryScan = OnBeginDirectoryScan,
                 BeforeScan = OnBeforeScan
