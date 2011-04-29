@@ -10,7 +10,7 @@
     <property name="IsWaste" column="is_waste" not-null="true"/>
 
     <!--Owns relation and persists bindings into artists_albums table-->
-    <bag name="Albums" table="artists_albums" lazy="true">
+    <bag name="Albums" table="artists_albums" cascade="delete" lazy="true">
       <key column="artist_id"/>
       <many-to-many column="album_id"
          class="DataLayer.Entities.AlbumEntity, NHibernateManyToMany"/>

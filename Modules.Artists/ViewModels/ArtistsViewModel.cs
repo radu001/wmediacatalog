@@ -260,19 +260,32 @@ namespace Modules.Artists.ViewModels
             ConfirmDialog dialog = new ConfirmDialog()
             {
                 HeaderText = "Artist remove confirmation",
-                MessageText = "Do you really want to remove artist: " + CurrentArtist.Name + " ?"
+                MessageText = "Do you really want to remove artist: " + CurrentArtist.Name + 
+                              " ? All referenced albums, listenings and tracks will be also removed."
             };
 
             if (dialog.ShowDialog() == true)
             {
-                bool deleted = dataService.RemoveArtist(CurrentArtist);
+                IsBusy = true;
 
-                if (deleted)
-                    Notify("Artist has been successfully removed", NotificationType.Success);
-                else
-                    Notify("Can't remove selected artist. See log for details", NotificationType.Error);
+                Task<bool> removeArtistTask = Task.Factory.StartNew<bool>(() =>
+                    {
+                        return dataService.RemoveArtist(CurrentArtist);
+                    }, TaskScheduler.Default);
 
-                LoadArtists();
+                Task finishTask = removeArtistTask.ContinueWith((r) =>
+                    {
+                        IsBusy = false;
+
+                        if (r.Result)
+                        {
+                            Notify("Artist has been successfully removed", NotificationType.Success);
+                            eventAggregator.GetEvent<ArtistRemovedEvent>().Publish(CurrentArtist.ID);
+                            LoadArtists();
+                        }
+                        else
+                            Notify("Can't remove selected artist. See log for details", NotificationType.Error);
+                    }, TaskScheduler.FromCurrentSynchronizationContext());
             }
         }
 
