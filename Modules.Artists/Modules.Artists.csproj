@@ -67,6 +67,7 @@
   <ItemGroup>
     <Compile Include="ArtistsModule.cs" />
     <Compile Include="Controllers\ArtistsController.cs" />
+    <Compile Include="Converters\WastedToForegroundConverter.cs" />
     <Compile Include="Converters\ArtistWastedToVisibilityConvreter.cs" />
     <Compile Include="Enums\ArtistTabsEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

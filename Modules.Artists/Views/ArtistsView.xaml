@@ -81,19 +81,20 @@
                 </Style.Triggers>
             </Style>
 
-            <DataTemplate x:Key="ArtistTemplate">
-                <TextBlock Text="{Binding Name}"/>
-            </DataTemplate>
-
-            <DataTemplate x:Key="AlbumTemplate">
-                <TextBlock Text="{Binding Name}"/>
-            </DataTemplate>
-
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
             <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter"/>
             <converters:BoolToOpacityConverter x:Key="BoolToOpacityConverter"/>
             <localConverters:ArtistWastedToVisibilityConvreter x:Key="ArtistWastedToVisibilityConvreter"/>
             <localConverters:ArtistWastedToVisibilityConvreter x:Key="InverseArtistWastedToVisibilityConvreter" Inverse="True"/>
+            <localConverters:WastedToForegroundConverter x:Key="WastedToForegroundConverter"/>
+
+            <DataTemplate x:Key="ArtistTemplate">
+                <TextBlock Text="{Binding Name}" Foreground="{Binding IsWaste,Converter={StaticResource WastedToForegroundConverter}}"/>
+            </DataTemplate>
+
+            <DataTemplate x:Key="AlbumTemplate">
+                <TextBlock Text="{Binding Name}" Foreground="{Binding IsWaste,Converter={StaticResource WastedToForegroundConverter}}"/>
+            </DataTemplate>
 
         </ResourceDictionary>
     </UserControl.Resources>

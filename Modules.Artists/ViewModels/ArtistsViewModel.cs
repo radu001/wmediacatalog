@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -71,10 +72,12 @@ namespace Modules.Artists.ViewModels
 
         public override void OnMarkAsWasteCommand(object parameter)
         {
+            UpdateWasteMark(true);
         }
 
         public override void OnUnMarkAsWasteCommand(object parameter)
         {
+            UpdateWasteMark(false);
         }
 
         #region IArtistsViewModel Members
@@ -403,6 +406,52 @@ namespace Modules.Artists.ViewModels
             LoadOptions.IncludeWaste = showWaste;
 
             LoadArtists();
+        }
+
+        private void UpdateWasteMark(bool isWaste)
+        {
+            if (CurrentArtist == null)
+            {
+                Notify("Please select artist first", NotificationType.Info);
+                return;
+            }
+
+            if (CurrentArtist.IsWaste != isWaste) // we're actually changing waste status
+            {
+                ConfirmDialog confirm = new ConfirmDialog()
+                {
+                    HeaderText =
+                        isWaste == true ? "Confirm waste mark" : "Confirm waste mark removal",
+                    MessageText =
+                        isWaste == true ? String.Format("Do you really want to mark artist {0} as wasted?", CurrentArtist.Name) :
+                                          String.Format("Do you really want to unmark artist {0} as wasted?", CurrentArtist.Name)
+                };
+
+                if (confirm.ShowDialog() == true)
+                {
+                    CurrentArtist.IsWaste = isWaste;
+                    IsBusy = true;
+
+                    Task<bool> saveArtistTask = Task.Factory.StartNew<bool>(() =>
+                    {
+                        return dataService.SaveArtistWasted(CurrentArtist);
+                    }, TaskScheduler.Default);
+
+                    Task finishedTask = saveArtistTask.ContinueWith((t) =>
+                    {
+                        IsBusy = false;
+
+                        if (t.Result)
+                        {
+                            LoadArtists();
+                        }
+                        else
+                        {
+                            Notify("Can't update artist. See log for details", NotificationType.Error);
+                        }
+                    }, TaskScheduler.FromCurrentSynchronizationContext());
+                }
+            }
         }
 
         #endregion
