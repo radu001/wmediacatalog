@@ -3,12 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:converters="clr-namespace:Common.Controls.Converters;assembly=Common.Controls"
              mc:Ignorable="d" Height="130" Width="300" x:Name="view">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Common.Content;component/Styles/CommonStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
+            <converters:EmptyStringToVisibilityConverter x:Key="EmptyStringToVisibilityConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid x:Name="LayoutRoot">
@@ -18,11 +21,17 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Image Source="/Common.Content;component/Images/109_AllAnnotations_Help_48x48_72.png" Width="48" Height="48"  Grid.Column="0" Margin="8"/>
-            <ScrollViewer Grid.Column="1" Margin="8" >
-                <TextBox  Style="{StaticResource NotificationTextBoxStyle}" Margin="8" IsReadOnly="True"
+            <StackPanel Grid.Column="1" Margin="8" VerticalAlignment="Center">
+                <ScrollViewer Grid.Column="1" Margin="8" VerticalScrollBarVisibility="Auto">
+                    <TextBox  Style="{StaticResource NotificationTextBoxStyle}" Margin="8" IsReadOnly="True"
                     VerticalContentAlignment="Center"
                     Text="{Binding MessageText}" AcceptsReturn="True" TextWrapping="Wrap" />
-            </ScrollViewer>
+                </ScrollViewer>
+                <CheckBox Margin="16" VerticalAlignment="Center" IsChecked="{Binding CheckBoxChecked}"
+                          Visibility="{Binding CheckBoxText,Converter={StaticResource EmptyStringToVisibilityConverter}}">
+                    <TextBlock VerticalAlignment="Center" Text="{Binding CheckBoxText}" TextWrapping="Wrap"/>
+                </CheckBox>
+            </StackPanel>
         </Grid>
     </Grid>
 </UserControl>

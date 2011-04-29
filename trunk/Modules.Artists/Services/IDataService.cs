@@ -11,7 +11,7 @@ namespace Modules.Artists.Services
         Artist GetArtist(int artistID);
         IList<Tag> GetTags();
         bool SaveArtist(Artist artist);
-        bool SaveArtistWasted(Artist artist);
+        bool SaveArtistWasted(Artist artist, bool includeAlbums);
         bool RemoveArtist(Artist artist);
         IList<Album> GetAlbumsByArtistID(int artistID);
     }

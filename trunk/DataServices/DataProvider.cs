@@ -589,7 +589,7 @@ namespace DataServices
             return result;
         }
 
-        public bool SaveArtistWasted(Artist artist)
+        public bool SaveArtistWasted(Artist artist, bool includeAlbums)
         {
             bool result = false;
 
@@ -603,6 +603,15 @@ namespace DataServices
                 dataEntity.IsWaste = artist.IsWaste;
 
                 session.Update(dataEntity);
+
+                if (includeAlbums)
+                {
+                    foreach (var albumEntity in dataEntity.Albums)
+                    {
+                        albumEntity.IsWaste = true;
+                        session.Update(albumEntity);
+                    }
+                }
 
                 tx.Commit();
 
