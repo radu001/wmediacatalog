@@ -224,6 +224,13 @@ namespace Modules.Albums.ViewModels
             if (Album == null)
                 return;
 
+            if (!ValidateBusinessRules(Album))
+            {
+                Notify("Album should have non-empty name and at least one artist and one genre attached. " +
+                       "Please attach at least one artist or genre to album", NotificationType.Warning);
+                return;
+            }
+
             IsBusy = true;
 
             Task<bool> saveAlbumTask = Task.Factory.StartNew<bool>(() =>
@@ -545,6 +552,19 @@ namespace Modules.Albums.ViewModels
             {
                 Album.Artists.Remove(a);
             }
+        }
+
+        private bool ValidateBusinessRules(Album album)
+        {
+            if (album != null)
+            {
+                if (String.IsNullOrEmpty(album.Name))
+                    return false;
+
+                if (album.Genres.Count > 0 && album.Artists.Count > 0)
+                    return true;
+            }
+            return false;
         }
 
         #endregion
