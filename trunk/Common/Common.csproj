@@ -86,6 +86,7 @@
     <Compile Include="Events\AlbumLoadedEvent.cs" />
     <Compile Include="Events\AlbumRemovedEvent.cs" />
     <Compile Include="Events\AlbumSelectedEvent.cs" />
+    <Compile Include="Events\ArtistRemovedEvent.cs" />
     <Compile Include="Events\ChangeWorkspaceEvent.cs" />
     <Compile Include="Events\CreateAlbumEvent.cs" />
     <Compile Include="Events\CreateArtistEvent.cs" />

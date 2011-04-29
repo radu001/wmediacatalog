@@ -292,7 +292,7 @@ namespace Modules.Albums.ViewModels
                         ConfirmDialog confirm = new ConfirmDialog()
                         {
                             HeaderText = "Remove album confirmation",
-                            MessageText = String.Format("Do you really want to delete album {0}? " + 
+                            MessageText = String.Format("Do you really want to delete album {0}? " +
                                                         "All listenings and tracks will be also removed", removingAlbum.Name)
                         };
 
