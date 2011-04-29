@@ -12,7 +12,7 @@ namespace MediaCatalog.Tests.Mocks
         {
         }
 
-        public IEnumerable<FileInfo> SelectFiles(DirectoryInfo dir)
+        public IEnumerable<FileInfo> SelectFiles(string dirPath)
         {
             return null;
         }
