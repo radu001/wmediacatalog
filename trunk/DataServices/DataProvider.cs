@@ -589,6 +589,39 @@ namespace DataServices
             return result;
         }
 
+        public bool SaveArtistWasted(Artist artist)
+        {
+            bool result = false;
+
+            ISession session = SessionFactory.GetSession();
+
+            ITransaction tx = session.BeginTransaction();
+
+            try
+            {
+                var dataEntity = session.Load<ArtistEntity>(artist.ID);
+                dataEntity.IsWaste = artist.IsWaste;
+
+                session.Update(dataEntity);
+
+                tx.Commit();
+
+                result = true;
+            }
+            catch (Exception ex)
+            {
+                Logger.Write(ex);
+                tx.Rollback();
+            }
+            finally
+            {
+                session.Close();
+                tx.Dispose();
+            }
+
+            return result;
+        }
+
         public bool RemoveArtist(Artist artist)
         {
             bool result = false;

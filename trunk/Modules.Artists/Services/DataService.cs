@@ -39,6 +39,12 @@ namespace Modules.Artists.Services
             return provider.SaveArtist(artist);
         }
 
+        public bool SaveArtistWasted(Artist artist)
+        {
+            DataProvider provider = new DataProvider();
+            return provider.SaveArtistWasted(artist);
+        }
+
         public bool RemoveArtist(Artist artist)
         {
             DataProvider provider = new DataProvider();
