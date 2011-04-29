@@ -17,7 +17,7 @@ using Modules.Artists.Services;
 using Modules.Artists.Views;
 namespace Modules.Artists.ViewModels
 {
-    public class ArtistsViewModel : FilterViewModelBase, IArtistsViewModel
+    public class ArtistsViewModel : WasteableViewModelBase, IArtistsViewModel
     {
         public ArtistsViewModel(IUnityContainer container, IEventAggregator eventAggregator, IDataService dataService)
             : base(container, eventAggregator)
@@ -57,6 +57,24 @@ namespace Modules.Artists.ViewModels
             LoadOptions.FilterValue = selectedValue;
 
             LoadArtists();
+        }
+
+        public override void OnShowWasteCommand(object parameter)
+        {
+            FilterByWaste(true);
+        }
+
+        public override void OnHideWasteCommand(object parameter)
+        {
+            FilterByWaste(false);
+        }
+
+        public override void OnMarkAsWasteCommand(object parameter)
+        {
+        }
+
+        public override void OnUnMarkAsWasteCommand(object parameter)
+        {
         }
 
         #region IArtistsViewModel Members
@@ -377,6 +395,14 @@ namespace Modules.Artists.ViewModels
                     IsLoadingAlbums = false;
                     ArtistAlbums = new ObservableCollection<Album>(t.Result);
                 }, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        private void FilterByWaste(bool showWaste)
+        {
+            IsWasteVisible = showWaste;
+            LoadOptions.IncludeWaste = showWaste;
+
+            LoadArtists();
         }
 
         #endregion

@@ -327,6 +327,9 @@ namespace DataServices
 
             DetachedCriteria criteria = DetachedCriteria.For<ArtistEntity>();
 
+            if (!options.IncludeWaste)
+                criteria.Add(Restrictions.Eq("IsWaste", false));
+
             if (fieldName != "Tag")
             {
                 criteria.
