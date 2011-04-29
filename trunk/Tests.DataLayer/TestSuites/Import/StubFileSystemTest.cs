@@ -2,7 +2,8 @@
 using System.IO;
 using System.Linq;
 using MediaCatalog.Tests.Extensions;
-using Modules.Import.Services.Utils;
+using MediaCatalog.Tests.Mocks;
+using Modules.Import.Services.Utils.FileSystem;
 using NUnit.Framework;
 
 namespace MediaCatalog.Tests.TestSuites.Import
@@ -82,7 +83,10 @@ namespace MediaCatalog.Tests.TestSuites.Import
             var xml = File.ReadAllText(@"FileSystems\FSEmpty.xml");
             var filesystem = CreateFileSystem(xml) as StubFileSystem<object>;
 
-            Assert.AreEqual(0, filesystem.CountFilesRecursively(filesystem.Root.Dir, ""));
+            var fileSelector = new StubFileSelector();
+            fileSelector.Init(new StubFileSelectorSettings(new string[] { "" }));
+
+            Assert.AreEqual(0, filesystem.CountFilesRecursively(filesystem.Root.Dir, fileSelector));
         }
 
         [Test]
@@ -91,7 +95,10 @@ namespace MediaCatalog.Tests.TestSuites.Import
             var xml = File.ReadAllText(@"FileSystems\FS1.xml");
             var filesystem = CreateFileSystem(xml) as StubFileSystem<object>;
 
-            Assert.AreEqual(6, filesystem.CountFilesRecursively(filesystem.Root.Dir, ""));
+            var fileSelector = new StubFileSelector();
+            fileSelector.Init(new StubFileSelectorSettings(new string[] { "" }));
+
+            Assert.AreEqual(6, filesystem.CountFilesRecursively(filesystem.Root.Dir, fileSelector));
         }
 
         private void AssertHasFiles(DirectoryItem<object> item, params string[] fileNames)

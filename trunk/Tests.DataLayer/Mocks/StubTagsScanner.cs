@@ -3,6 +3,7 @@ using System.IO;
 using MediaCatalog.Tests.Extensions;
 using Modules.Import.Model;
 using Modules.Import.Services.Utils;
+using Modules.Import.Services.Utils.FileSystem;
 
 namespace MediaCatalog.Tests.Mocks
 {
@@ -25,14 +26,14 @@ namespace MediaCatalog.Tests.Mocks
 
         #region IFileSystem Members
 
-        public int CountFilesRecursively(DirectoryInfo dir, string searchPattern)
+        public int CountFilesRecursively(DirectoryInfo dir, IFileSelector fileSelector)
         {
-            return fs.CountFilesRecursively(dir, searchPattern);
+            return fs.CountFilesRecursively(dir, fileSelector);
         }
 
-        public IEnumerable<FileInfo> GetFiles(DirectoryInfo dir, string searchPattern)
+        public IEnumerable<FileInfo> GetFiles(DirectoryInfo dir, IFileSelector fileSelector)
         {
-            return fs.GetFiles(dir, searchPattern);
+            return fs.GetFiles(dir, fileSelector);
         }
 
         public IEnumerable<DirectoryInfo> GetSubDirectories(DirectoryInfo dir)

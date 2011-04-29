@@ -99,7 +99,9 @@
     <EmbeddedResource Include="Mappings\Mood.hbm.xml" />
     <EmbeddedResource Include="Mappings\Album.hbm.xml" />
     <EmbeddedResource Include="Mappings\Genre.hbm.xml" />
-    <EmbeddedResource Include="Mappings\Artist.hbm.xml" />
+    <EmbeddedResource Include="Mappings\Artist.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

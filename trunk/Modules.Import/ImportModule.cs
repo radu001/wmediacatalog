@@ -4,6 +4,7 @@ using Microsoft.Practices.Unity;
 using Modules.Import.Controllers;
 using Modules.Import.Services;
 using Modules.Import.Services.Utils;
+using Modules.Import.Services.Utils.FileSystem;
 
 namespace Modules.Import
 {
@@ -23,6 +24,7 @@ namespace Modules.Import
             container.RegisterType<ITagsAccumulator, TagsAccumulator>();
             container.RegisterType<IScanner, VorbisCommentsScanner>();
             container.RegisterType<IFileSystem, FileSystem>();
+            container.RegisterType<IFileSelector, FileByExtensionSelector>();
 
             importController = container.Resolve<ImportController>();
         }

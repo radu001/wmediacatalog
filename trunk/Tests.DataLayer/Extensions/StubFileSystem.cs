@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
-using Modules.Import.Services.Utils;
+using Modules.Import.Services.Utils.FileSystem;
 
 namespace MediaCatalog.Tests.Extensions
 {
@@ -69,19 +69,21 @@ namespace MediaCatalog.Tests.Extensions
 
         #region IFileSystem Members
 
-        public int CountFilesRecursively(DirectoryInfo dir, string searchPattern)
+        public int CountFilesRecursively(DirectoryInfo dir, IFileSelector fileSelector)
         {
             var allFiles = EnumerateFiles();
             return allFiles.Count();
         }
 
-        public IEnumerable<FileInfo> GetFiles(DirectoryInfo dir, string searchPattern)
+        public IEnumerable<FileInfo> GetFiles(DirectoryInfo dir, IFileSelector fileSelector)
         {
             var directory = FindDirectory(dir.FullName);
             if (directory == null)
                 return new FileInfo[] { };
 
-            return directory.Files.Select(f => f.File).Where(f => f.Name.Contains(searchPattern));
+            return null;
+
+            //return directory.Files.Select(f => f.File).Where(f => f.Name.Contains(searchPattern));
         }
 
         public IEnumerable<DirectoryInfo> GetSubDirectories(DirectoryInfo dir)
