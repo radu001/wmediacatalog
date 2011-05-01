@@ -401,20 +401,8 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <toolkit:AutoCompleteBox x:Name="TagAutocompleteBox" Grid.Column="0"
-                                                     ItemsSource="{Binding Tags}"
-                                                     ItemFilter="{Binding FilterTagCommand}"
-                                                     SelectedItem="{Binding SelectedTag,Mode=TwoWay}"
-                                                     Text="{Binding NewTagName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                                     IsTextCompletionEnabled="True"
-                                                     commands:PreviewKeyDown.Command="{Binding AttachTagKeyboardCommand}"
-                                                     ValueMemberPath="Name">
-                        <toolkit:AutoCompleteBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}"/>
-                            </DataTemplate>
-                        </toolkit:AutoCompleteBox.ItemTemplate>
-                    </toolkit:AutoCompleteBox>
+                    <controls:AutoCompleteBox ItemsSource="{Binding Tags}" DisplayMemberPath="Name" Text="{Binding TagName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                  Filter="{Binding FilterTag}" SelectCommand="{Binding AttachTagCommand}" NewItemCommand="{Binding CreateTagCommand}"/>
                     <Button x:Name="AttachTagButton" Grid.Column="1"
                                         Style="{StaticResource ImageButtonStyle}"
                                         ToolTip="Assign tag to this artist"

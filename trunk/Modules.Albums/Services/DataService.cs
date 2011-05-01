@@ -40,6 +40,12 @@ namespace Modules.Albums.Services
             return provider.GetTags();
         }
 
+        public bool SaveTag(Tag tag)
+        {
+            DataProvider provider = new DataProvider();
+            return provider.SaveTag(tag);
+        }
+
         public IPagedList<Genre> GetGenres(ILoadOptions options)
         {
             DataProvider provider = new DataProvider();

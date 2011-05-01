@@ -1,6 +1,6 @@
 ﻿
+using System;
 using System.Collections.Generic;
-using System.Windows.Controls;
 using BusinessObjects;
 using Common.Commands;
 using Common.ViewModels;
@@ -15,18 +15,16 @@ namespace Modules.Albums.ViewModels
 
         Album Album { get; set; }
 
-        AutoCompleteFilterPredicate<object> FilterTagCommand { get; }
-
+        Func<object, string, bool> FilterTag { get; }
         IList<Tag> Tags { get; set; }
-        Tag SelectedTag { get; set; }
-        string NewTagName { get; set; }
+        string TagName { get; set; }
 
         IList<Genre> SelectedGenres { get; }
         IList<Artist> SelectedArtists { get; }
 
         DelegateCommand<object> AttachTagCommand { get; }
-        DelegateCommand<KeyDownArgs> AttachTagKeyboardCommand { get; }
         DelegateCommand<object> DetachTagCommand { get; }
+        DelegateCommand<object> CreateTagCommand { get; }
         DelegateCommand<MouseDoubleClickArgs> EditTagCommand { get; }
 
         DelegateCommand<DragArgs> DropGenreCommand { get; }
