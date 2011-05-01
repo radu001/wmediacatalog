@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using System.Windows.Input;
 using BusinessObjects;
 using Common.Commands;
 using Common.Dialogs;
@@ -30,10 +29,9 @@ namespace Modules.Albums.ViewModels
 
             SubscribeEvents();
 
-            FilterTagCommand = new AutoCompleteFilterPredicate<object>(FilterTag);
             AttachTagCommand = new DelegateCommand<object>(OnAttachTagCommand);
-            AttachTagKeyboardCommand = new DelegateCommand<KeyDownArgs>(OnAttachTagKeyboardCommand);
             DetachTagCommand = new DelegateCommand<object>(OnDetachTagCommand);
+            CreateTagCommand = new DelegateCommand<object>(OnCreateTagCommand);
             EditTagCommand = new DelegateCommand<MouseDoubleClickArgs>(OnEditTagCommand);
 
             DropGenreCommand = new DelegateCommand<DragArgs>(OnDropGenreCommand);
@@ -130,6 +128,18 @@ namespace Modules.Albums.ViewModels
             }
         }
 
+        public Func<object, string, bool> FilterTag
+        {
+            get
+            {
+                return (t, s) =>
+                {
+                    var tag = t as Tag;
+                    return tag.Name.ToUpper().Contains(s.ToUpper());
+                };
+            }
+        }
+
         public IList<Tag> Tags
         {
             get
@@ -143,29 +153,16 @@ namespace Modules.Albums.ViewModels
             }
         }
 
-        public Tag SelectedTag
+        public string TagName
         {
             get
             {
-                return selectedTag;
+                return tagName;
             }
             set
             {
-                selectedTag = value;
-                NotifyPropertyChanged(() => SelectedTag);
-            }
-        }
-
-        public string NewTagName
-        {
-            get
-            {
-                return newTagName;
-            }
-            set
-            {
-                newTagName = value;
-                NotifyPropertyChanged(() => NewTagName);
+                tagName = value;
+                NotifyPropertyChanged(() => TagName);
             }
         }
 
@@ -195,13 +192,11 @@ namespace Modules.Albums.ViewModels
             }
         }
 
-        public AutoCompleteFilterPredicate<object> FilterTagCommand { get; private set; }
-
         public DelegateCommand<object> AttachTagCommand { get; private set; }
 
-        public DelegateCommand<KeyDownArgs> AttachTagKeyboardCommand { get; private set; }
-
         public DelegateCommand<object> DetachTagCommand { get; private set; }
+
+        public DelegateCommand<object> CreateTagCommand { get; private set; }
 
         public DelegateCommand<MouseDoubleClickArgs> EditTagCommand { get; private set; }
 
@@ -270,40 +265,23 @@ namespace Modules.Albums.ViewModels
 
         #region Private methods
 
-        private bool FilterTag(string search, object item)
+        private void OnCreateTagCommand(object parameter)
         {
-            Tag tag = item as Tag;
-            if (tag != null)
-            {
-                string tagName = tag.Name;
-                if (tagName != null && tagName.Contains(search))
-                    return true;
-            }
-
-            return false;
-        }
-
-        private void OnAttachTagKeyboardCommand(KeyDownArgs parameter)
-        {
-            KeyEventArgs e = parameter.Settings;
-
-            if (e != null && e.Key == Key.Return)
-                OnAttachTagCommand(null);
+            CreateNewTagAndAttach(TagName, Album);
         }
 
         private void OnAttachTagCommand(object parameter)
         {
-            if (SelectedTag == null)
+            var selectedTag = Tags.Where(t => t.Name == TagName).FirstOrDefault();
+
+            if (selectedTag == null)
             {
-                CreateNewTagAndAttach(NewTagName, Album);
+                CreateNewTagAndAttach(TagName, Album);
             }
             else
             {
-                AttachTag(SelectedTag);
+                AttachTag(selectedTag);
             }
-
-            SelectedTag = null;
-            NewTagName = String.Empty;
         }
 
         private void CreateNewTagAndAttach(string tagName, Album album)
@@ -318,29 +296,43 @@ namespace Modules.Albums.ViewModels
                 Comments = "Created from Artist edit/create dialog"
             };
 
-            ITagEditViewModel viewModel = PrepareTagEditOrCreate(newTag, false);
+            IsBusy = true;
 
-            if (viewModel.DialogResult == true)
+            Task<bool> saveTagTask = Task.Factory.StartNew<bool>(() =>
             {
-                AttachTag(viewModel.Tag);
-            }
+                return dataService.SaveTag(newTag);
+            }, TaskScheduler.Default);
+
+            Task attachTask = saveTagTask.ContinueWith((t) =>
+            {
+                IsBusy = false;
+
+                if (t.Result)
+                {
+                    AttachTag(newTag);
+                    LoadTags();
+                }
+                else
+                {
+                    Notify("Error while saving new tag into database. See log for details",
+                        NotificationType.Error);
+                }
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        private ITagEditViewModel PrepareTagEditOrCreate(Tag editable, bool isEditMode)
+        private void EditTag(Tag editable)
         {
-            ITagEditViewModel viewModel = container.Resolve<ITagEditViewModel>();
+            var viewModel = container.Resolve<ITagEditViewModel>();
             viewModel.Tag = editable;
-            viewModel.IsEditMode = isEditMode;
+            viewModel.IsEditMode = true;
             viewModel.Tag.NeedValidate = true;
 
             var dialog = new CommonDialog()
             {
                 DialogContent = new TagEditView(viewModel),
-                HeaderText = HeaderTextHelper.CreateHeaderText( typeof(Tag), isEditMode)
+                HeaderText = HeaderTextHelper.CreateHeaderText(typeof(Tag), true)
             };
             dialog.ShowDialog();
-
-            return viewModel;
         }
 
         private void AttachTag(Tag tag)
@@ -386,7 +378,7 @@ namespace Modules.Albums.ViewModels
             if (selectedTag == null)
                 return;
 
-            PrepareTagEditOrCreate(selectedTag, true);
+            EditTag(selectedTag);
         }
 
         private void RaiseReloadAlbums()
@@ -580,8 +572,7 @@ namespace Modules.Albums.ViewModels
         private IDataService dataService;
 
         private IList<Tag> tags;
-        private Tag selectedTag;
-        private string newTagName;
+        private string tagName;
 
         private IList<Genre> selectedGenres;
         private IList<Artist> selectedArtists;

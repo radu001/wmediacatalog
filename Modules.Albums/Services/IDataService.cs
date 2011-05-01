@@ -11,6 +11,7 @@ namespace Modules.Albums.Services
         Album GetAlbum(int albumID);
         bool SaveAlbumWasted(Album album);
         IList<Tag> GetTags();
+        bool SaveTag(Tag tag);
         IPagedList<Genre> GetGenres(ILoadOptions loadOptions);
         bool SaveAlbum(Album album);
         bool SaveGenre(Genre genre);

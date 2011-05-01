@@ -231,6 +231,7 @@ namespace Modules.Artists.ViewModels
                     if (t.Result)
                     {
                         AttachTag(newTag);
+                        LoadTags();
                     }
                     else
                     {
