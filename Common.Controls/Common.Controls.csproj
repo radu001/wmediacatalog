@@ -58,6 +58,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\AutoCompleteBox.xaml.cs">
+      <DependentUpon>AutoCompleteBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\AutoScrolledTextBox.cs" />
     <Compile Include="Controls\BusyIndicator\BusyIndicatorBehavior.cs" />
     <Compile Include="Controls\BusyIndicator\CircularProgressBar.xaml.cs">
@@ -95,6 +98,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\AutoCompleteBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\BusyIndicator\CircularProgressBar.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

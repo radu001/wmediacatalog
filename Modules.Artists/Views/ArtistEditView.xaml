@@ -110,7 +110,9 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <toolkit:AutoCompleteBox x:Name="TagAutocompleteBox" Grid.Column="0"
+                        <controls:AutoCompleteBox ItemsSource="{Binding Tags}" DisplayMemberPath="Name" Text="{Binding TagName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                  Filter="{Binding FilterTag}" SelectCommand="{Binding AttachTagCommand}" NewItemCommand="{Binding CreateTagCommand}"/>
+                        <!--<toolkit:AutoCompleteBox x:Name="TagAutocompleteBox" Grid.Column="0"
                                                      ItemsSource="{Binding Tags}"
                                                      ItemFilter="{Binding FilterTagCommand}"
                                                      SelectedItem="{Binding SelectedTag,Mode=TwoWay}"
@@ -123,7 +125,7 @@
                                     <TextBlock Text="{Binding Name}"/>
                                 </DataTemplate>
                             </toolkit:AutoCompleteBox.ItemTemplate>
-                        </toolkit:AutoCompleteBox>
+                        </toolkit:AutoCompleteBox>-->
                         <Button x:Name="AttachTagButton" Grid.Column="1"
                                         Style="{StaticResource ImageButtonStyle}"
                                         ToolTip="Assign tag to this artist"
