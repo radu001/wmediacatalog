@@ -33,6 +33,12 @@ namespace Modules.Artists.Services
             return provider.GetTags();
         }
 
+        public bool SaveTag(Tag tag)
+        {
+            DataProvider provider = new DataProvider();
+            return provider.SaveTag(tag);
+        }
+
         public bool SaveArtist(Artist artist)
         {
             DataProvider provider = new DataProvider();

@@ -1,9 +1,9 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using System.Windows.Input;
 using BusinessObjects;
 using Common.Commands;
 using Common.Dialogs;
@@ -29,11 +29,10 @@ namespace Modules.Artists.ViewModels
 
             SubscribeEvents();
 
-            FilterTagCommand = new AutoCompleteFilterPredicate<object>(FilterTag);
             AttachTagCommand = new DelegateCommand<object>(OnAttachTagCommand);
-            AttachTagKeyboardCommand = new DelegateCommand<KeyDownArgs>(OnAttachTagKeyboardCommand);
             DetachTagCommand = new DelegateCommand<object>(OnDetachTagCommand);
             EditTagCommand = new DelegateCommand<MouseDoubleClickArgs>(OnEditTagCommand);
+            CreateTagCommand = new DelegateCommand<object>(OnCreateTagCommand);
 
             LoadTags();
         }
@@ -110,45 +109,47 @@ namespace Modules.Artists.ViewModels
             }
         }
 
-        public Tag SelectedTag
+        public string TagName
         {
             get
             {
-                return selectedTag;
+                return tagName;
             }
             set
             {
-                selectedTag = value;
-                NotifyPropertyChanged(() => SelectedTag);
+                tagName = value;
+                NotifyPropertyChanged(() => TagName);
             }
         }
 
-        public string NewTagName
+        public Func<object, string, bool> FilterTag
         {
             get
             {
-                return newTagName;
-            }
-            set
-            {
-                newTagName = value;
-                NotifyPropertyChanged(() => NewTagName);
+                return (t, s) =>
+                {
+                    var tag = t as Tag;
+                    return tag.Name.ToUpper().Contains(s.ToUpper());
+                };
             }
         }
-
-        public AutoCompleteFilterPredicate<object> FilterTagCommand { get; private set; }
 
         public DelegateCommand<object> AttachTagCommand { get; private set; }
 
-        public DelegateCommand<KeyDownArgs> AttachTagKeyboardCommand { get; private set; }
-
         public DelegateCommand<object> DetachTagCommand { get; private set; }
+
+        public DelegateCommand<object> CreateTagCommand { get; private set; }
 
         public DelegateCommand<MouseDoubleClickArgs> EditTagCommand { get; private set; }
 
         #endregion
 
         #region Private methods
+
+        private void OnCreateTagCommand(object parameter)
+        {
+            CreateNewTagAndAttach(TagName, Artist);
+        }
 
         private void SaveArtistImpl()
         {
@@ -190,40 +191,18 @@ namespace Modules.Artists.ViewModels
             return validator.Validate(parameter);
         }
 
-        private bool FilterTag(string search, object item)
-        {
-            Tag tag = item as Tag;
-            if (tag != null)
-            {
-                string tagName = tag.Name;
-                if (tagName != null && tagName.Contains(search))
-                    return true;
-            }
-
-            return false;
-        }
-
-        private void OnAttachTagKeyboardCommand(KeyDownArgs parameter)
-        {
-            KeyEventArgs e = parameter.Settings;
-
-            if (e != null && e.Key == Key.Return)
-                OnAttachTagCommand(null);
-        }
-
         private void OnAttachTagCommand(object parameter)
         {
-            if (SelectedTag == null)
+            var selectedTag = Tags.Where(t => t.Name == TagName).FirstOrDefault();
+
+            if (selectedTag == null)
             {
-                CreateNewTagAndAttach(NewTagName, Artist);
+                CreateNewTagAndAttach(TagName, Artist);
             }
             else
             {
-                AttachTag(SelectedTag);
+                AttachTag(selectedTag);
             }
-
-            SelectedTag = null;
-            NewTagName = String.Empty;
         }
 
         private void CreateNewTagAndAttach(string tagName, Artist artist)
@@ -238,12 +217,27 @@ namespace Modules.Artists.ViewModels
                 Comments = "Created from Artist edit/create dialog"
             };
 
-            ITagEditViewModel viewModel = PrepareTagEditOrCreate(newTag, false);
+            IsBusy = true;
 
-            if (viewModel.DialogResult == true)
-            {
-                AttachTag(viewModel.Tag);
-            }
+            Task<bool> saveTagTask = Task.Factory.StartNew<bool>(() =>
+                {
+                    return dataService.SaveTag(newTag);
+                }, TaskScheduler.Default);
+
+            Task attachTask = saveTagTask.ContinueWith((t) =>
+                {
+                    IsBusy = false;
+
+                    if (t.Result)
+                    {
+                        AttachTag(newTag);
+                    }
+                    else
+                    {
+                        Notify("Error while saving new tag into database. See log for details",
+                            NotificationType.Error);
+                    }
+                }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         private void OnDetachTagCommand(object parameter)
@@ -267,25 +261,23 @@ namespace Modules.Artists.ViewModels
             if (selectedTag == null)
                 return;
 
-            PrepareTagEditOrCreate(selectedTag, true);
+            EditTag(selectedTag);
         }
 
-        private ITagEditViewModel PrepareTagEditOrCreate(Tag editable, bool isEditMode)
+        private void EditTag(Tag editable)
         {
-            ITagEditViewModel viewModel = container.Resolve<ITagEditViewModel>();
+            var viewModel = container.Resolve<ITagEditViewModel>();
             viewModel.Tag = editable;
-            viewModel.IsEditMode = isEditMode;
+            viewModel.IsEditMode = true;
             viewModel.Tag.NeedValidate = true;
 
 
             var dialog = new CommonDialog()
             {
                 DialogContent = new TagEditView(viewModel),
-                HeaderText = HeaderTextHelper.CreateHeaderText(typeof(Tag), isEditMode)
+                HeaderText = HeaderTextHelper.CreateHeaderText(typeof(Tag), true)
             };
             dialog.ShowDialog();
-
-            return viewModel;
         }
 
         private void AttachTag(Tag tag)
@@ -340,8 +332,7 @@ namespace Modules.Artists.ViewModels
         private IDataService dataService;
         private Artist artist;
         private IList<Tag> tags;
-        private Tag selectedTag;
-        private string newTagName;
+        private string tagName;
 
         #endregion
     }
