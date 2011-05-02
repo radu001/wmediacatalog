@@ -111,7 +111,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <controls:AutoCompleteBox ItemsSource="{Binding Tags}" DisplayMemberPath="Name" Text="{Binding TagName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                                  Filter="{Binding FilterTag}" SelectCommand="{Binding AttachTagCommand}" NewItemCommand="{Binding CreateTagCommand}"/>
+                                                  Filter="{Binding FilterTag}" SelectCommand="{Binding AttachTagCommand}" NewItemCommand="{Binding AttachTagCommand}"/>
                         <Button x:Name="AttachTagButton" Grid.Column="1"
                                         Style="{StaticResource ImageButtonStyle}"
                                         ToolTip="Assign tag to this artist"

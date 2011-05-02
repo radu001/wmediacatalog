@@ -15,7 +15,6 @@ namespace Modules.Artists.ViewModels
         IList<Tag> Tags { get; set; }
         string TagName { get; set; }
 
-        DelegateCommand<object> CreateTagCommand { get; }
         DelegateCommand<object> AttachTagCommand { get; }
         DelegateCommand<object> DetachTagCommand { get; }
         DelegateCommand<MouseDoubleClickArgs> EditTagCommand { get; }
