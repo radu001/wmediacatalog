@@ -24,7 +24,6 @@ namespace Modules.Albums.ViewModels
 
         DelegateCommand<object> AttachTagCommand { get; }
         DelegateCommand<object> DetachTagCommand { get; }
-        DelegateCommand<object> CreateTagCommand { get; }
         DelegateCommand<MouseDoubleClickArgs> EditTagCommand { get; }
 
         DelegateCommand<DragArgs> DropGenreCommand { get; }

@@ -385,7 +385,7 @@
                                     <TextBlock Text="{Binding Name}" FontWeight="Bold" Grid.Column="0" VerticalAlignment="Center"/>
                                     <Button Style="{StaticResource TransparentImageButtonStyle}" Grid.Column="1" Margin="6,0,0,0" VerticalAlignment="Center"
                                                         ToolTip="Detach this tag from artist" Cursor="Hand"
-                                                        prismCommands:Click.Command="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.DetachTagCommand}"
+                                                        prismCommands:Click.Command="{Binding ElementName=dialogWindow,Path=DataContext.DetachTagCommand}"
                                                         prismCommands:Click.CommandParameter="{Binding}">
                                         <Button.Content>
                                             <Image Source="/Common.Content;component/Images/Remove_16x16.png" Height="16" Width="16"/>
@@ -402,7 +402,7 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
                     <controls:AutoCompleteBox ItemsSource="{Binding Tags}" DisplayMemberPath="Name" Text="{Binding TagName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                                  Filter="{Binding FilterTag}" SelectCommand="{Binding AttachTagCommand}" NewItemCommand="{Binding CreateTagCommand}"/>
+                                                  Filter="{Binding FilterTag}" SelectCommand="{Binding AttachTagCommand}" NewItemCommand="{Binding AttachTagCommand}"/>
                     <Button x:Name="AttachTagButton" Grid.Column="1"
                                         Style="{StaticResource ImageButtonStyle}"
                                         ToolTip="Assign tag to this artist"

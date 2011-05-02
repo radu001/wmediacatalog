@@ -32,7 +32,6 @@ namespace Modules.Artists.ViewModels
             AttachTagCommand = new DelegateCommand<object>(OnAttachTagCommand);
             DetachTagCommand = new DelegateCommand<object>(OnDetachTagCommand);
             EditTagCommand = new DelegateCommand<MouseDoubleClickArgs>(OnEditTagCommand);
-            CreateTagCommand = new DelegateCommand<object>(OnCreateTagCommand);
 
             LoadTags();
         }
@@ -129,7 +128,7 @@ namespace Modules.Artists.ViewModels
                 return (t, s) =>
                 {
                     var tag = t as Tag;
-                    return tag.Name.ToUpper().Contains(s.ToUpper());
+                    return tag.Name.Contains(s);
                 };
             }
         }
@@ -138,18 +137,11 @@ namespace Modules.Artists.ViewModels
 
         public DelegateCommand<object> DetachTagCommand { get; private set; }
 
-        public DelegateCommand<object> CreateTagCommand { get; private set; }
-
         public DelegateCommand<MouseDoubleClickArgs> EditTagCommand { get; private set; }
 
         #endregion
 
         #region Private methods
-
-        private void OnCreateTagCommand(object parameter)
-        {
-            CreateNewTagAndAttach(TagName, Artist);
-        }
 
         private void SaveArtistImpl()
         {
@@ -294,13 +286,7 @@ namespace Modules.Artists.ViewModels
 
         private bool AlreadyAttached(Tag tag)
         {
-            foreach (Tag t in Artist.Tags)
-            {
-                if (t == tag)
-                    return true;
-            }
-
-            return false;
+            return Artist.Tags.Any(t => t.Name == tag.Name);
         }
 
         private void OnTagsChangedEvent(object parameter)

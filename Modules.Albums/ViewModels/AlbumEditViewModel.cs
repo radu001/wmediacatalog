@@ -31,7 +31,6 @@ namespace Modules.Albums.ViewModels
 
             AttachTagCommand = new DelegateCommand<object>(OnAttachTagCommand);
             DetachTagCommand = new DelegateCommand<object>(OnDetachTagCommand);
-            CreateTagCommand = new DelegateCommand<object>(OnCreateTagCommand);
             EditTagCommand = new DelegateCommand<MouseDoubleClickArgs>(OnEditTagCommand);
 
             DropGenreCommand = new DelegateCommand<DragArgs>(OnDropGenreCommand);
@@ -135,7 +134,7 @@ namespace Modules.Albums.ViewModels
                 return (t, s) =>
                 {
                     var tag = t as Tag;
-                    return tag.Name.ToUpper().Contains(s.ToUpper());
+                    return tag.Name.Contains(s);
                 };
             }
         }
@@ -195,8 +194,6 @@ namespace Modules.Albums.ViewModels
         public DelegateCommand<object> AttachTagCommand { get; private set; }
 
         public DelegateCommand<object> DetachTagCommand { get; private set; }
-
-        public DelegateCommand<object> CreateTagCommand { get; private set; }
 
         public DelegateCommand<MouseDoubleClickArgs> EditTagCommand { get; private set; }
 
@@ -264,11 +261,6 @@ namespace Modules.Albums.ViewModels
         }
 
         #region Private methods
-
-        private void OnCreateTagCommand(object parameter)
-        {
-            CreateNewTagAndAttach(TagName, Album);
-        }
 
         private void OnAttachTagCommand(object parameter)
         {
@@ -348,13 +340,7 @@ namespace Modules.Albums.ViewModels
 
         private bool AlreadyAttached(Tag tag)
         {
-            foreach (Tag t in Album.Tags)
-            {
-                if (t == tag)
-                    return true;
-            }
-
-            return false;
+            return Album.Tags.Any(t => t.Name == tag.Name);
         }
 
         private void OnDetachTagCommand(object parameter)
