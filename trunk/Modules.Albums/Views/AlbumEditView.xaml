@@ -55,7 +55,7 @@
                         <TextBlock Text="{Binding Name}" FontWeight="Bold" Grid.Column="0" VerticalAlignment="Center"/>
                         <Button Style="{StaticResource TransparentImageButtonStyle}" Grid.Column="1" Margin="6,0,0,0" VerticalAlignment="Center"
                                                         ToolTip="Detach this tag from artist" Cursor="Hand"
-                                                        prismCommands:Click.Command="{Binding ElementName=dialogWindow, Path=DetachGenreCommand}"
+                                                        prismCommands:Click.Command="{Binding ElementName=dialogWindow, Path=DataContext.DetachGenreCommand}"
                                                         prismCommands:Click.CommandParameter="{Binding}">
                             <Button.Content>
                                 <Image Source="/Common.Content;component/Images/Remove_16x16.png" Height="16" Width="16"/>
@@ -281,7 +281,8 @@
                                     </Button.Content>
                                 </Button>
                                 <controls:SearchControl Margin="4"
-                                                                SelectedFilterValue="{Binding GenresFilterValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                                        SelectedFilterValue="{Binding GenresFilterValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                        KeyDownCommand="{Binding AttachGenresKeyboardCommand}" />
                             </DockPanel>
                             <ListView Grid.Row="1" ItemsSource="{Binding Genres}" 
                                               SelectionMode="Extended"

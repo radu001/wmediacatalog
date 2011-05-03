@@ -21,6 +21,7 @@ namespace Modules.Albums.ViewModels
 
         DelegateCommand<object> HideShowGenresListCommand { get; }
         DelegateCommand<object> AttachGenresCommand { get; }
+        DelegateCommand<object> AttachGenresKeyboardCommand { get; }
         DelegateCommand<object> DetachGenresCommand { get; }
         DelegateCommand<MultiSelectionChangedArgs> SelectedGenresChangedCommand { get; }
         DelegateCommand<MouseMoveArgs> DragGenresCommand { get; }
