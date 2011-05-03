@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -10,6 +11,7 @@ using Common.Controls.Controls;
 using Common.Dialogs;
 using Common.Dialogs.Helpers;
 using Common.Entities.Pagination;
+using Common.Enums;
 using Common.Events;
 using Common.ViewModels;
 using Microsoft.Practices.Prism.Commands;
@@ -35,6 +37,7 @@ namespace Modules.Albums.ViewModels
             SelectedGenresChangedCommand = new DelegateCommand<MultiSelectionChangedArgs>(OnSelectedGenresChangedCommand);
             CreateGenreCommand = new DelegateCommand<object>(OnCreateGenreCommand);
             AttachGenresCommand = new DelegateCommand<object>(OnAttachGenresCommand);
+            AttachGenresKeyboardCommand = new DelegateCommand<object>(OnAttachGenresKeyboardCommand);
             DetachGenresCommand = new DelegateCommand<object>(OnDetachGenresCommand);
             DragGenresCommand = new DelegateCommand<MouseMoveArgs>(OnDragGenresCommand);
             PageChangedCommand = new DelegateCommand<PageChangedArgs>(OnPageChangedCommand);
@@ -168,6 +171,8 @@ namespace Modules.Albums.ViewModels
 
         public DelegateCommand<object> AttachGenresCommand { get; private set; }
 
+        public DelegateCommand<object> AttachGenresKeyboardCommand { get; private set; }
+
         public DelegateCommand<object> DetachGenresCommand { get; private set; }
 
         public DelegateCommand<MultiSelectionChangedArgs> SelectedGenresChangedCommand { get; private set; }
@@ -267,7 +272,54 @@ namespace Modules.Albums.ViewModels
         {
             if (SelectedGenres != null && SelectedGenres.Count > 0)
             {
-                eventAggregator.GetEvent<AttachGenresEvent>().Publish(SelectedGenres);
+                RaiseAttachGenresEvent(SelectedGenres);
+            }
+        }
+
+        private void OnAttachGenresKeyboardCommand(object parameter)
+        {
+            /*
+             * Currently Genres filtered collection is loaded synchronously. This means that when we press Enter key
+             * Genres is already loaded. Please take into account this behavour in case of any changes 
+             */
+
+            KeyEventArgs args = parameter as KeyEventArgs;
+            if (args != null && args.Key == Key.Enter)
+            {
+                var matchingGenre = Genres.Where(g => g.Name == GenresFilterValue).FirstOrDefault();
+                if (matchingGenre == null)
+                {
+                    ConfirmDialog confirm = new ConfirmDialog()
+                    {
+                        HeaderText = "Create new genre confirmation",
+                        MessageText = String.Format("Do you really want to create new genre {0}", GenresFilterValue)
+                    };
+
+                    if (confirm.ShowDialog() == true)
+                    {
+                        matchingGenre = new Genre()
+                        {
+                            Name = GenresFilterValue
+                        };
+
+                        if (!dataService.SaveGenre(matchingGenre))
+                        {
+                            Notify("Can't save new genre to database. See log for details", NotificationType.Error);
+                            matchingGenre = null;
+                        }
+                        else
+                        {
+                            LoadGenres();
+                        }
+                    }
+                }
+
+
+                if (matchingGenre != null)
+                {
+                    SelectedGenres = new List<Genre>() { matchingGenre };
+                }
+                RaiseAttachGenresEvent(SelectedGenres);
             }
         }
 
@@ -313,6 +365,14 @@ namespace Modules.Albums.ViewModels
         private void OnGenresChangedEvent(object payload)
         {
             LoadGenresImpl();
+        }
+
+        private void RaiseAttachGenresEvent(IList<Genre> genres)
+        {
+            if (genres == null)
+                throw new NullReferenceException("Illegal null-reference genres");
+
+            eventAggregator.GetEvent<AttachGenresEvent>().Publish(genres);
         }
 
         #endregion
