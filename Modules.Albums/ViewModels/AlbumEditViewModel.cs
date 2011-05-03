@@ -68,6 +68,7 @@ namespace Modules.Albums.ViewModels
             eventAggregator.GetEvent<DetachArtistsEvent>().Unsubscribe(OnDetachArtistsEvent);
 
             GenresListViewModel.UnsubscribeEvents();
+            ArtistsListViewModel.UnsubscribeEvents();
         }
 
         #endregion

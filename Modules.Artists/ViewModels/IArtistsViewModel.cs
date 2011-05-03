@@ -21,7 +21,7 @@ namespace Modules.Artists.ViewModels
         DelegateCommand<object> ViewLoadedCommand { get; }
         DelegateCommand<PageChangedArgs> PageChangedCommand { get; }
 
-        DelegateCommand<object> CreateArtistCommand { get; }
+        DelegateCommand<string> CreateArtistCommand { get; }
         DelegateCommand<object> EditArtistCommand { get; }
         DelegateCommand<object> RemoveArtistCommand { get; }
 

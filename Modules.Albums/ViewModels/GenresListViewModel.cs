@@ -280,7 +280,7 @@ namespace Modules.Albums.ViewModels
         {
             /*
              * Currently Genres filtered collection is loaded synchronously. This means that when we press Enter key
-             * Genres is already loaded. Please take into account this behavour in case of any changes 
+             * Genres collection is already loaded. Please take into account this behavour in case of any changes 
              */
 
             KeyEventArgs args = parameter as KeyEventArgs;
