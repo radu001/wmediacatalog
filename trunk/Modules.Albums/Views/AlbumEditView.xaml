@@ -346,8 +346,19 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <controls:SearchControl Grid.Row="0" Margin="4"
-                                                            SelectedFilterValue="{Binding ArtistsFilterValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DockPanel Grid.Row="0" LastChildFill="True">
+                                <Button x:Name="CreateArtistButton"
+                                            Style="{StaticResource ToolbarImageButtonStyle}"  Margin="0"
+                                            ToolTip="Create new artist" DockPanel.Dock="Right" Width="16" Height="16"
+                                            prismCommands:Click.Command="{Binding CreateArtistCommand}">
+                                    <Button.Content>
+                                        <Image Source="/Common.Content;component/Images/add_15x15.png" Width="16" Height="16"/>
+                                    </Button.Content>
+                                </Button>
+                                <controls:SearchControl Margin="4"
+                                                        SelectedFilterValue="{Binding ArtistsFilterValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                        KeyDownCommand="{Binding AttachArtistsKeyboardCommand}"/>
+                            </DockPanel>
                             <ListView Grid.Row="1" ItemsSource="{Binding Artists}" 
                                               SelectionMode="Extended"
                                               ItemTemplate="{StaticResource ArtistDataTemplate}"

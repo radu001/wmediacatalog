@@ -32,7 +32,7 @@ namespace Modules.Artists.ViewModels
             ViewLoadedCommand = new DelegateCommand<object>(OnViewLoadedCommand);
             EditArtistCommand = new DelegateCommand<object>(OnEditArtistCommand);
             RemoveArtistCommand = new DelegateCommand<object>(OnRemoveArtistCommand);
-            CreateArtistCommand = new DelegateCommand<object>(OnCreateArtistCommand);
+            CreateArtistCommand = new DelegateCommand<string>(OnCreateArtistCommand);
             EditAlbumCommand = new DelegateCommand<object>(OnEditAlbumCommand);
             RemoveAlbumCommand = new DelegateCommand<object>(OnRemoveAlbumCommand);
             CreateAlbumCommand = new DelegateCommand<object>(OnCreateAlbumCommand);
@@ -186,7 +186,7 @@ namespace Modules.Artists.ViewModels
 
         public DelegateCommand<PageChangedArgs> PageChangedCommand { get; private set; }
 
-        public DelegateCommand<object> CreateArtistCommand { get; private set; }
+        public DelegateCommand<string> CreateArtistCommand { get; private set; }
 
         public DelegateCommand<object> EditArtistCommand { get; private set; }
 
@@ -241,10 +241,15 @@ namespace Modules.Artists.ViewModels
             }
         }
 
-        private void OnCreateArtistCommand(object parameter)
+        private void OnCreateArtistCommand(string parameter)
         {
             Artist artist = new Artist();
             artist.NeedValidate = true;
+
+            if (!String.IsNullOrEmpty(parameter))
+            {
+                artist.Name = parameter;
+            }
 
             CreateOrEditArtist(artist, false);
         }

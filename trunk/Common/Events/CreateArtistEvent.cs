@@ -2,7 +2,7 @@
 
 namespace Common.Events
 {
-    public class CreateArtistEvent : CompositePresentationEvent<object>
+    public class CreateArtistEvent : CompositePresentationEvent<string>
     {
     }
 }

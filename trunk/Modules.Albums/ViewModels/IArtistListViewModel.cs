@@ -4,10 +4,11 @@ using BusinessObjects;
 using Common.Commands;
 using Common.Controls.Controls;
 using Common.Entities.Pagination;
+using Common.ViewModels;
 using Microsoft.Practices.Prism.Commands;
 namespace Modules.Albums.ViewModels
 {
-    public interface IArtistListViewModel
+    public interface IArtistListViewModel : IEventSubscriber
     {
         IList<Artist> Artists { get; }
         IList<Artist> SelectedArtists { get; }
@@ -20,7 +21,9 @@ namespace Modules.Albums.ViewModels
 
         DelegateCommand<object> HideShowArtistsListCommand { get; }
         DelegateCommand<object> AttachArtistsCommand { get; }
+        DelegateCommand<object> AttachArtistsKeyboardCommand { get; }
         DelegateCommand<object> DetachArtistsCommand { get; }
+        DelegateCommand<object> CreateArtistCommand { get; }
         DelegateCommand<MultiSelectionChangedArgs> SelectedArtistsChangedCommand { get; }
         DelegateCommand<MouseMoveArgs> DragArtistCommand { get; }
         DelegateCommand<PageChangedArgs> PageChangedCommand { get; }
