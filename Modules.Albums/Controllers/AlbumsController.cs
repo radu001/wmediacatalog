@@ -26,8 +26,7 @@ namespace Modules.Albums.Controllers
 
         private void OnSearchAlbumEvent(object parameter)
         {
-            IAlbumSearchViewModel viewModel = container.Resolve<IAlbumSearchViewModel>();
-
+            var viewModel = container.Resolve<IAlbumSearchViewModel>();
             var dialog = new CommonDialog()
             {
                 DialogContent = new AlbumSearchView(viewModel)
