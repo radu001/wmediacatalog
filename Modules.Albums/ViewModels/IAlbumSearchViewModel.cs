@@ -7,7 +7,7 @@ using Microsoft.Practices.Prism.Commands;
 
 namespace Modules.Albums.ViewModels
 {
-    public interface IAlbumSearchViewModel : IDialogViewModel, IFilterViewModel
+    public interface IAlbumSearchViewModel : IDialogViewModel, IFilterViewModel, IEventSubscriber
     {
         ObservableCollection<Album> AlbumsCollection { get; }
         Album CurrentAlbum { get; set; }
@@ -16,6 +16,7 @@ namespace Modules.Albums.ViewModels
 
         DelegateCommand<object> ViewLoadedCommand { get; }
         DelegateCommand<object> SelectAlbumCommand { get; }
+        DelegateCommand<object> CreateAlbumCommand { get; }
         DelegateCommand<PageChangedArgs> PageChangedCommand { get; }
 
     }
