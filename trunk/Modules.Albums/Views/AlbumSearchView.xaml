@@ -31,12 +31,23 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <commonControls:FilterControl Grid.Row="0" Margin="4"
+        <DockPanel LastChildFill="True" Grid.Row="0" Margin="4">
+            <Button x:Name="CreateAlbumButton"
+                                            Style="{StaticResource ToolbarImageButtonStyle}"  Margin="8"
+                                            ToolTip="Create new album" DockPanel.Dock="Right" Width="16" Height="16"
+                                            prismCommands:Click.Command="{Binding CreateAlbumCommand}">
+                <Button.Content>
+                    <Image Source="/Common.Content;component/Images/add_15x15.png" Width="16" Height="16"/>
+                </Button.Content>
+            </Button>
+            <commonControls:FilterControl Grid.Row="0" 
                                           FilterFields="{Binding Fields}"
                                           GroupingEnabled="{Binding GroupingEnabled}"
                                           SelectedFilterField="{Binding SelectedField,Mode=TwoWay}"
                                           SelectedFilterValue="{Binding SelectedValue,Mode=TwoWay}"
                                           ItemContainerStyle="{StaticResource GeneralComboBoxItemStyle}"/>
+        </DockPanel>
+
         <ListView x:Name="AlbumsListView" Grid.Row="1"
                       commands:MouseDoubleClick.Command="{Binding SelectAlbumCommand}"
                       ItemsSource="{Binding AlbumsCollection}" ItemTemplate="{StaticResource AlbumSimpleTemplate}"

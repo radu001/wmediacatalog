@@ -170,12 +170,12 @@ namespace Modules.Albums.ViewModels
 
         public void SubscribeEvents()
         {
-            eventAggregator.GetEvent<ReloadArtistsEvent>().Subscribe(OnArtistCreatedEvent, true);
+            eventAggregator.GetEvent<ReloadArtistsEvent>().Subscribe(OnReloadArtistsEvent, true);
         }
 
         public void UnsubscribeEvents()
         {
-            eventAggregator.GetEvent<ReloadArtistsEvent>().Unsubscribe(OnArtistCreatedEvent);
+            eventAggregator.GetEvent<ReloadArtistsEvent>().Unsubscribe(OnReloadArtistsEvent);
         }
 
         #endregion
@@ -294,7 +294,7 @@ namespace Modules.Albums.ViewModels
             }
         }
 
-        private void OnArtistCreatedEvent(object parameter)
+        private void OnReloadArtistsEvent(object parameter)
         {
             LoadArtists();
         }

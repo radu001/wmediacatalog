@@ -22,10 +22,13 @@ namespace Modules.Albums.ViewModels
         {
             this.dataService = dataService;
 
+            SubscribeEvents();
+
             GroupingEnabled = true;
 
             ViewLoadedCommand = new DelegateCommand<object>(OnViewLoadedCommand);
             SelectAlbumCommand = new DelegateCommand<object>(OnSelectAlbumCommand);
+            CreateAlbumCommand = new DelegateCommand<object>(OnCreateAlbumCommand);
             PageChangedCommand = new DelegateCommand<PageChangedArgs>(OnPageChangedCommand);
         }
 
@@ -59,6 +62,11 @@ namespace Modules.Albums.ViewModels
             LoadOptions.FilterValue = selectedValue;
 
             LoadAlbums();
+        }
+
+        public override void OnDialogClosingCommand(object parameter)
+        {
+            UnsubscribeEvents();
         }
 
         #endregion
@@ -121,11 +129,32 @@ namespace Modules.Albums.ViewModels
 
         public DelegateCommand<object> SelectAlbumCommand { get; private set; }
 
+        public DelegateCommand<object> CreateAlbumCommand { get; private set; } 
+
         public DelegateCommand<PageChangedArgs> PageChangedCommand { get; private set; }
 
         #endregion
 
+        #region IEventSubscriber Members
+
+        public void SubscribeEvents()
+        {
+            eventAggregator.GetEvent<ReloadAlbumsEvent>().Subscribe(OnReloadAlbumsEvent, true);
+        }
+
+        public void UnsubscribeEvents()
+        {
+            eventAggregator.GetEvent<ReloadAlbumsEvent>().Unsubscribe(OnReloadAlbumsEvent);
+        }
+
+        #endregion
+
         #region Private methods
+
+        private void OnReloadAlbumsEvent(object parameter)
+        {
+            LoadAlbums();
+        }
 
         private void OnViewLoadedCommand(object parameter)
         {
@@ -153,6 +182,11 @@ namespace Modules.Albums.ViewModels
         private void OnSelectAlbumCommand(object parameter)
         {
             RaiseAlbumSelected();
+        }
+
+        private void OnCreateAlbumCommand(object parameter)
+        {
+            eventAggregator.GetEvent<CreateAlbumEvent>().Publish(null);
         }
 
         private void OnPageChangedCommand(PageChangedArgs parameter)
