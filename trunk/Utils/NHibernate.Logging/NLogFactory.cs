@@ -1,57 +1,137 @@
 ﻿using System;
-using System.Collections.Specialized;
-using System.Configuration;
-using NLog;
+using System.Linq.Expressions;
+using System.Reflection;
 
 namespace NHibernate.Logging
 {
     public class NLogFactory : ILoggerFactory
     {
+        private static readonly System.Type LogManagerType = System.Type.GetType("NLog.LogManager, NLog");
+
+        private static Func<string, object> CreateLoggerInstanceFunc;
+
+        static NLogFactory()
+        {
+            CreateLoggerInstanceFunc = CreateLoggerInstance();
+        }
+
         #region ILoggerFactory Members
 
         public IInternalLogger LoggerFor(System.Type type)
         {
-            return new NLogLogger();
+            return new NLogLogger(CreateLoggerInstanceFunc(type.Name));
         }
 
         public IInternalLogger LoggerFor(string keyName)
         {
-            return new NLogLogger();
+            return new NLogLogger(CreateLoggerInstanceFunc(keyName));
         }
 
         #endregion
+
+        private static Func<string, object> CreateLoggerInstance()
+        {
+            var method = LogManagerType.GetMethod("GetLogger", new[] { typeof(string) });
+            ParameterExpression nameParam = Expression.Parameter(typeof(string));
+            MethodCallExpression methodCall = Expression.Call(null, method, new Expression[] { nameParam });
+
+            return Expression.Lambda<Func<string, object>>(methodCall, new[] { nameParam }).Compile();
+        }
     }
 
     public class NLogLogger : IInternalLogger
     {
-        private static readonly NLog.Logger log = LogManager.GetCurrentClassLogger();
+        private static readonly System.Type LoggerType = System.Type.GetType("NLog.Logger, NLog");
 
-        private static readonly string ConfigSectionName = "nhibernate_nlog";
+        private static readonly Func<object, bool> DebugPropertyGetter;
+        private static readonly Func<object, bool> ErrorPropertyGetter;
+        private static readonly Func<object, bool> FatalPropertyGetter;
+        private static readonly Func<object, bool> InfoPropertyGetter;
+        private static readonly Func<object, bool> WarnPropertyGetter;
 
-        private static readonly string DebugKey = "debug";
-        private static readonly string ErrorKey = "error";
-        private static readonly string FatalKey = "fatal";
-        private static readonly string InfoKey = "info";
-        private static readonly string WarnKey = "warn";
+        private static readonly Action<object, string> DebugAction;
+        private static readonly Action<object, string> ErrorAction;
+        private static readonly Action<object, string> WarnAction;
+        private static readonly Action<object, string> InfoAction;
+        private static readonly Action<object, string> FatalAction;
 
-        public NLogLogger()
+        private static readonly Action<object, string, Exception> DebugExceptionAction;
+        private static readonly Action<object, string, Exception> ErrorExceptionAction;
+        private static readonly Action<object, string, Exception> WarnExceptionAction;
+        private static readonly Action<object, string, Exception> InfoExceptionAction;
+        private static readonly Action<object, string, Exception> FatalExceptionAction;
+
+        private object log;
+
+        static NLogLogger()
         {
-            InitProperties();
+            DebugPropertyGetter = CreatePropertyGetter("IsDebugEnabled");
+            ErrorPropertyGetter = CreatePropertyGetter("IsErrorEnabled");
+            FatalPropertyGetter = CreatePropertyGetter("IsFatalEnabled");
+            InfoPropertyGetter = CreatePropertyGetter("IsInfoEnabled");
+            WarnPropertyGetter = CreatePropertyGetter("IsWarnEnabled");
+
+            DebugAction = CreateSimpleAction("Debug");
+            ErrorAction = CreateSimpleAction("Error");
+            WarnAction = CreateSimpleAction("Warn");
+            InfoAction = CreateSimpleAction("Info");
+            FatalAction = CreateSimpleAction("Fatal");
+
+            DebugExceptionAction = CreateExceptionAction("Debug");
+            ErrorExceptionAction = CreateExceptionAction("Error");
+            WarnExceptionAction = CreateExceptionAction("Warn");
+            InfoExceptionAction = CreateExceptionAction("Info");
+            FatalExceptionAction = CreateExceptionAction("Fatal");
+        }
+
+        public NLogLogger(object log)
+        {
+            this.log = log;
         }
 
         #region IInternalLogger Members
 
         #region Properties
 
-        public bool IsDebugEnabled { get; private set; }
+        public bool IsDebugEnabled
+        {
+            get
+            {
+                return DebugPropertyGetter(log);
+            }
+        }
 
-        public bool IsErrorEnabled { get; private set; }
+        public bool IsErrorEnabled
+        {
+            get
+            {
+                return ErrorPropertyGetter(log);
+            }
+        }
 
-        public bool IsFatalEnabled { get; private set; }
+        public bool IsFatalEnabled
+        {
+            get
+            {
+                return FatalPropertyGetter(log);
+            }
+        }
 
-        public bool IsInfoEnabled { get; private set; }
+        public bool IsInfoEnabled
+        {
+            get
+            {
+                return InfoPropertyGetter(log);
+            }
+        }
 
-        public bool IsWarnEnabled { get; private set; }
+        public bool IsWarnEnabled
+        {
+            get
+            {
+                return WarnPropertyGetter(log);
+            }
+        }
 
         #endregion
 
@@ -59,86 +139,102 @@ namespace NHibernate.Logging
 
         public void Debug(object message, Exception exception)
         {
-            if (IsDebugEnabled)
-                log.DebugException(message.ToString(), exception);
+            if (message == null || exception == null)
+                return;
+
+            DebugExceptionAction(log, message.ToString(), exception);
         }
 
         public void Debug(object message)
         {
-            if (IsDebugEnabled)
-                log.Debug(message.ToString());
+            if (message == null)
+                return;
+
+            DebugAction(log, message.ToString());
         }
 
         public void DebugFormat(string format, params object[] args)
         {
-            if (IsDebugEnabled)
-                log.Debug(String.Format(format, args));
+            Debug(String.Format(format, args));
         }
 
         public void Error(object message, Exception exception)
         {
-            if (IsErrorEnabled)
-                log.ErrorException(message.ToString(), exception);
+            if (message == null || exception == null)
+                return;
+
+            ErrorExceptionAction(log, message.ToString(), exception);
         }
 
         public void Error(object message)
         {
-            if (IsErrorEnabled)
-                log.Error(message.ToString());
+            if (message == null)
+                return;
+
+            ErrorAction(log, message.ToString());
         }
 
         public void ErrorFormat(string format, params object[] args)
         {
-            if (IsErrorEnabled)
-                log.Error(String.Format(format, args));
+            Error(String.Format(format, args));
         }
 
         public void Fatal(object message, Exception exception)
         {
-            if (IsFatalEnabled)
-                log.FatalException(message.ToString(), exception);
+            if (message == null || exception == null)
+                return;
+
+            FatalExceptionAction(log, message.ToString(), exception);
         }
 
         public void Fatal(object message)
         {
-            if (IsFatalEnabled)
-                log.Fatal(message.ToString());
+            if (message == null)
+                return;
+
+            FatalAction(log, message.ToString());
         }
 
         public void Info(object message, Exception exception)
         {
-            if (IsInfoEnabled)
-                log.InfoException(message.ToString(), exception);
+            if (message == null || exception == null)
+                return;
+
+            InfoExceptionAction(log, message.ToString(), exception);
         }
 
         public void Info(object message)
         {
-            if (IsInfoEnabled)
-                log.Info(message.ToString());
+            if (message == null)
+                return;
+
+            InfoAction(log, message.ToString());
         }
 
         public void InfoFormat(string format, params object[] args)
         {
-            if (IsInfoEnabled)
-                log.Info(String.Format(format, args));
+            Info(String.Format(format, args));
         }
 
         public void Warn(object message, Exception exception)
         {
-            if (IsWarnEnabled)
-                log.WarnException(message.ToString(), exception);
+            if (message == null || exception == null)
+                return;
+
+            WarnExceptionAction(log, message.ToString(), exception);
         }
 
         public void Warn(object message)
         {
-            if (IsWarnEnabled)
-                log.Warn(message.ToString());
+            if (message == null)
+                return;
+
+            WarnAction(log, message.ToString());
         }
 
         public void WarnFormat(string format, params object[] args)
         {
-            if (IsWarnEnabled)
-                log.Warn(String.Format(format, args));
+            Warn(String.Format(format, args));
         }
 
         #endregion
@@ -147,35 +243,46 @@ namespace NHibernate.Logging
 
         #region Private methods
 
-        private void InitProperties()
+        private static Func<object, bool> CreatePropertyGetter(string propertyName)
         {
-            IsErrorEnabled = true;
-            IsFatalEnabled = true;
-            IsWarnEnabled = true;
+            ParameterExpression paramExpr = Expression.Parameter(typeof(object), "pv");
+            Expression convertedExpr = Expression.Convert(paramExpr, LoggerType);
+            Expression property = Expression.Property(convertedExpr, propertyName);
 
-            //System.Diagnostics.Debug.WriteLine("Finding section");
-            var section = ConfigurationManager.GetSection(ConfigSectionName) as NameValueCollection;
+            return Expression.Lambda<Func<object, bool>>(property, new[] { paramExpr }).Compile();
+        }
 
-            //System.Diagnostics.Debug.WriteLine(section != null ? "Section found" : "Section not found");
+        private static Action<object, string> CreateSimpleAction(string methodName)
+        {
+            MethodInfo methodInfo = GetMethodInfo(methodName, new[] { typeof(string) });
+            ParameterExpression instanceParam = Expression.Parameter(typeof(object), "i");
+            var converterInstanceParam = Expression.Convert(instanceParam, LoggerType);
+            ParameterExpression messageParam = Expression.Parameter(typeof(string), "m");
 
-            if (section != null)
-            {
-                bool flag = false;
+            MethodCallExpression methodCall = Expression.Call(converterInstanceParam, methodInfo, new Expression[] { messageParam });
 
-                if (section[DebugKey] != null && Boolean.TryParse(section[DebugKey], out flag))
-                    IsDebugEnabled = flag;
-                if (section[ErrorKey] != null && Boolean.TryParse(section[ErrorKey], out flag))
-                    IsErrorEnabled = flag;
-                if (section[FatalKey] != null && Boolean.TryParse(section[FatalKey], out flag))
-                    IsFatalEnabled = flag;
-                if (section[InfoKey] != null && Boolean.TryParse(section[InfoKey], out flag))
-                    IsInfoEnabled = flag;
-                if (section[WarnKey] != null && Boolean.TryParse(section[WarnKey], out flag))
-                    IsWarnEnabled = flag;
-            }
+            return (Action<object, string>)Expression.Lambda(methodCall, new[] { instanceParam, messageParam }).Compile();
+        }
+
+        private static Action<object, string, Exception> CreateExceptionAction(string methodName)
+        {
+            MethodInfo methodInfo = GetMethodInfo(methodName, new[] { typeof(string), typeof(Exception) });
+
+            ParameterExpression messageParam = Expression.Parameter(typeof(string), "m");
+            ParameterExpression instanceParam = Expression.Parameter(typeof(object), "i");
+            ParameterExpression exceptionParam = Expression.Parameter(typeof(Exception), "e");
+            var convertedParam = Expression.Convert(instanceParam, LoggerType);
+
+            MethodCallExpression methodCall = Expression.Call(convertedParam, methodInfo, new Expression[] { messageParam, exceptionParam });
+
+            return (Action<object, string, Exception>)Expression.Lambda(methodCall, new[] { instanceParam, messageParam, exceptionParam }).Compile();
+        }
+
+        private static MethodInfo GetMethodInfo(string methodName, System.Type[] parameters)
+        {
+            return LoggerType.GetMethod(methodName, parameters);
         }
 
         #endregion
     }
-
 }
