@@ -7,6 +7,7 @@ namespace NHibernate.Logging
     public class NLogFactory : ILoggerFactory
     {
         private static readonly System.Type LogManagerType = System.Type.GetType("NLog.LogManager, NLog");
+        private static readonly string NHibernateLoggerName = "nhibernate";
 
         private static Func<string, object> CreateLoggerInstanceFunc;
 
@@ -19,12 +20,12 @@ namespace NHibernate.Logging
 
         public IInternalLogger LoggerFor(System.Type type)
         {
-            return new NLogLogger(CreateLoggerInstanceFunc(type.Name));
+            return new NLogLogger(CreateLoggerInstanceFunc(NHibernateLoggerName));
         }
 
         public IInternalLogger LoggerFor(string keyName)
         {
-            return new NLogLogger(CreateLoggerInstanceFunc(keyName));
+            return new NLogLogger(CreateLoggerInstanceFunc(NHibernateLoggerName));
         }
 
         #endregion
