@@ -1,6 +1,5 @@
 ﻿using System;
-using log4net;
-using log4net.Config;
+using NLog;
 
 namespace Common
 {
@@ -10,13 +9,12 @@ namespace Common
         {
             if (log == null)
             {
-                XmlConfigurator.Configure();
-                log = LogManager.GetLogger("Default");
+                log = LogManager.GetCurrentClassLogger();
             }
 
-            log.Error("Exception", ex);
+            log.ErrorException("Exception", ex);
         }
 
-        private static ILog log;
+        private static NLog.Logger log;
     }
 }

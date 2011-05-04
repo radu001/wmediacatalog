@@ -87,7 +87,9 @@
     <Content Include="DbSchema\Helpers\insert_test_genres.sql" />
     <Content Include="DbSchema\Helpers\insert_test_tags.sql" />
     <Content Include="DbSchema\Helpers\insert_test_artists.sql" />
-    <Content Include="hibernate.cfg.xml" />
+    <Content Include="hibernate.cfg.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <EmbeddedResource Include="Mappings\StoredProcedures.hbm.xml" />
     <EmbeddedResource Include="Mappings\Place.hbm.xml" />
     <EmbeddedResource Include="Mappings\UserSettings.hbm.xml" />
