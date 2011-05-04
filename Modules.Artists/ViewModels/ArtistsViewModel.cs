@@ -462,7 +462,7 @@ namespace Modules.Artists.ViewModels
                 MessageText =
                     isWaste == true ? String.Format("Do you really want to mark artist {0} as wasted?", CurrentArtist.Name) :
                                       String.Format("Do you really want to unmark artist {0} as wasted?", CurrentArtist.Name),
-                CheckBoxText = String.Format("Also waste all albums of {0}", CurrentArtist.Name)                     
+                CheckBoxText = isWaste ? String.Format("Also waste all albums of {0}", CurrentArtist.Name) : String.Empty                     
             };
 
             if (confirm.ShowDialog() == true)
