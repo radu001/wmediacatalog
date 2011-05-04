@@ -1,8 +1,8 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
+using DataLayer.Caching;
 using NHibernate;
 using NHibernate.Cfg;
-using DataLayer.Caching;
-using System;
 
 namespace DataLayer
 {

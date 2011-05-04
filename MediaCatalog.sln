@@ -41,12 +41,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modules.Listenings", "Modul
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{EED3D0DF-F921-4817-B284-0AE429FEA339}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Log4Net", "Log4Net", "{B52A3233-0C4E-4541-B72F-F32EFAE96219}"
-	ProjectSection(SolutionItems) = preProject
-		Lib\Log4net\log4net.dll = Lib\Log4net\log4net.dll
-		Lib\Log4net\log4net.xml = Lib\Log4net\log4net.xml
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NHibernate", "NHibernate", "{767F21E4-2EF3-434C-9872-655F1057B99E}"
 	ProjectSection(SolutionItems) = preProject
 		Lib\NHibernate\Antlr3.Runtime.dll = Lib\NHibernate\Antlr3.Runtime.dll
@@ -129,6 +123,16 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Content", "Common.Content\Common.Content.csproj", "{43AB1E81-C1D5-477C-9C71-DC60CF72D0BB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prism.Wizards", "Utils\Wizards\Prism.Wizards\Prism.Wizards.csproj", "{2FA69092-283C-4867-8201-2BD7396A6E28}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NLog", "NLog", "{36B7D69B-4F61-4BB2-AC66-30B8577C750B}"
+	ProjectSection(SolutionItems) = preProject
+		Lib\NLog\NLog.dll = Lib\NLog\NLog.dll
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logging", "Logging", "{91BDF526-D3EF-4917-86E2-F57B53175BC0}"
+	ProjectSection(SolutionItems) = preProject
+		Utils\NHibernate.Logging\bin\Debug\NHibernate.Logging.dll = Utils\NHibernate.Logging\bin\Debug\NHibernate.Logging.dll
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
@@ -372,7 +376,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{B52A3233-0C4E-4541-B72F-F32EFAE96219} = {EED3D0DF-F921-4817-B284-0AE429FEA339}
 		{767F21E4-2EF3-434C-9872-655F1057B99E} = {EED3D0DF-F921-4817-B284-0AE429FEA339}
 		{E3E86D80-372C-46C6-BD96-757AFE7A2A81} = {EED3D0DF-F921-4817-B284-0AE429FEA339}
 		{2A4139D5-B4D1-4494-AFDD-4CBEA3A40EA1} = {EED3D0DF-F921-4817-B284-0AE429FEA339}
@@ -380,5 +383,7 @@ Global
 		{7A498CC9-88E1-4723-8872-041E050AF0A0} = {EED3D0DF-F921-4817-B284-0AE429FEA339}
 		{3EBD4435-2853-4D56-BDFD-4DE1B13DB312} = {EED3D0DF-F921-4817-B284-0AE429FEA339}
 		{0DF7A59C-C2CC-4FCA-9C90-4F07558B4C94} = {EED3D0DF-F921-4817-B284-0AE429FEA339}
+		{36B7D69B-4F61-4BB2-AC66-30B8577C750B} = {EED3D0DF-F921-4817-B284-0AE429FEA339}
+		{91BDF526-D3EF-4917-86E2-F57B53175BC0} = {767F21E4-2EF3-434C-9872-655F1057B99E}
 	EndGlobalSection
 EndGlobal
