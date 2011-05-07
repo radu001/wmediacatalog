@@ -31,6 +31,7 @@ namespace DataServices
                         foreach (var g in al.Genres)
                         {
                             XElement genreElement = new XElement("g", new XAttribute("name", g.Name));
+                            genresElement.Add(genreElement);
                         }
                     }
                 }
