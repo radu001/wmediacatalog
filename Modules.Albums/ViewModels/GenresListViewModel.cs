@@ -255,7 +255,7 @@ namespace Modules.Albums.ViewModels
 
         private void CreateOrEditGenre(Genre genre, bool isEditMode)
         {
-            IGenreEditViewModel viewModel = container.Resolve<IGenreEditViewModel>();
+            var viewModel = container.Resolve<IGenreEditViewModel>();
             viewModel.IsEditMode = isEditMode;
             viewModel.Genre = genre;
 

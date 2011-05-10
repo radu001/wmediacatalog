@@ -57,7 +57,7 @@ namespace Common.Controls.Controls
         public SearchControl()
         {
             InitializeComponent();
-
+            
             KeyDown += new KeyEventHandler(SearchControl_KeyDown);
         }
 
