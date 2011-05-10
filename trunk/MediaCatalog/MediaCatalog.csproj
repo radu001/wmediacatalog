@@ -197,7 +197,7 @@
   <PropertyGroup>
     <PostBuildEvent>copy "$(SolutionDir)\Lib\Npgsql\Npgsql.dll" "$(TargetDir)"
 copy "$(SolutionDir)\Lib\Npgsql\Mono.Security.dll" "$(TargetDir)"
-copy "$(SolutionDir)\Lib\NHibernate\log4net.dll" "$(TargetDir)"
+copy "$(SolutionDir)\Lib\NHibernate.Logging\NHibernate.Logging.dll" "$(TargetDir)"
 copy "$(SolutionDir)\Lib\NHibernate\NHibernate.ByteCode.LinFu.dll" "$(TargetDir)"
 copy "$(SolutionDir)\Lib\NHibernate\NHibernate.dll" "$(TargetDir)"
 copy "$(SolutionDir)\Lib\NHibernate\Antlr3.Runtime.dll" "$(TargetDir)"

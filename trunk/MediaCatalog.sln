@@ -48,9 +48,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NHibernate", "NHibernate", 
 		Lib\NHibernate\Iesi.Collections.license.txt = Lib\NHibernate\Iesi.Collections.license.txt
 		Lib\NHibernate\Iesi.Collections.xml = Lib\NHibernate\Iesi.Collections.xml
 		Lib\NHibernate\LinFu.DynamicProxy.dll = Lib\NHibernate\LinFu.DynamicProxy.dll
-		Lib\NHibernate\log4net.dll = Lib\NHibernate\log4net.dll
-		Lib\NHibernate\log4net.license.txt = Lib\NHibernate\log4net.license.txt
-		Lib\NHibernate\log4net.xml = Lib\NHibernate\log4net.xml
 		Lib\NHibernate\nhibernate-configuration.xsd = Lib\NHibernate\nhibernate-configuration.xsd
 		Lib\NHibernate\nhibernate-mapping.xsd = Lib\NHibernate\nhibernate-mapping.xsd
 		Lib\NHibernate\NHibernate.ByteCode.LinFu.dll = Lib\NHibernate\NHibernate.ByteCode.LinFu.dll
@@ -137,14 +134,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NLog", "NLog", "{36B7D69B-4
 		Lib\NLog\NLog.license.txt = Lib\NLog\NLog.license.txt
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logging", "Logging", "{91BDF526-D3EF-4917-86E2-F57B53175BC0}"
-	ProjectSection(SolutionItems) = preProject
-		Utils\NHibernate.Logging\bin\Debug\NHibernate.Logging.dll = Utils\NHibernate.Logging\bin\Debug\NHibernate.Logging.dll
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Licensing", "Licensing", "{114A0132-C445-4E9D-A20D-45A2CEF4DA64}"
 	ProjectSection(SolutionItems) = preProject
 		Lib\Licensing\Licenses.txt = Lib\Licensing\Licenses.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NHibernate.Logging", "NHibernate.Logging", "{7BF1D808-2C8E-42A7-B697-A0D481104EE9}"
+	ProjectSection(SolutionItems) = preProject
+		Lib\NHibernate.Logging\NHibernate.Logging.dll = Lib\NHibernate.Logging\NHibernate.Logging.dll
+		Lib\NHibernate.Logging\NHibernate.Logging.license.txt = Lib\NHibernate.Logging\NHibernate.Logging.license.txt
 	EndProjectSection
 EndProject
 Global
@@ -398,6 +396,6 @@ Global
 		{0DF7A59C-C2CC-4FCA-9C90-4F07558B4C94} = {EED3D0DF-F921-4817-B284-0AE429FEA339}
 		{36B7D69B-4F61-4BB2-AC66-30B8577C750B} = {EED3D0DF-F921-4817-B284-0AE429FEA339}
 		{114A0132-C445-4E9D-A20D-45A2CEF4DA64} = {EED3D0DF-F921-4817-B284-0AE429FEA339}
-		{91BDF526-D3EF-4917-86E2-F57B53175BC0} = {767F21E4-2EF3-434C-9872-655F1057B99E}
+		{7BF1D808-2C8E-42A7-B697-A0D481104EE9} = {EED3D0DF-F921-4817-B284-0AE429FEA339}
 	EndGlobalSection
 EndGlobal
