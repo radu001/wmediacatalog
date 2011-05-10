@@ -5,7 +5,7 @@ namespace ExCopy
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static int Main(string[] args)
         {
             /*
              * --base <dir> --extension <ex> --output <dir>
@@ -14,6 +14,7 @@ namespace ExCopy
             if (!parser.Parse(args))
             {
                 PrintUsage();
+                return -1;
             }
             else
             {
@@ -22,8 +23,10 @@ namespace ExCopy
                 foreach (var f in filesToCopy)
                 {
                     var outPath = Path.Combine(outDirName, f.Name);
-                    File.Copy(f.FullName, outPath);
+                    File.Copy(f.FullName, outPath, true);
                 }
+
+                return 0;
             }
         }
 
@@ -51,15 +54,22 @@ namespace ExCopy
 
             try
             {
-                var baseDirStr = args[1];
+                var baseDirStr = args[1].TrimEnd(new char[] { '\\', '\"' });
                 var extensionStr = args[3];
-                var outDirStr = args[5];
+                var outDirStr = args[5].TrimEnd(new char[] { '\\', '\"' });
+
+                Console.WriteLine(baseDirStr);
+                Console.WriteLine(outDirStr);
 
                 var baseDir = new DirectoryInfo(baseDirStr);
                 var outDir = new DirectoryInfo(outDirStr);
 
                 if (!baseDir.Exists || !outDir.Exists || String.IsNullOrEmpty(extensionStr))
+                {
+                    Console.WriteLine("Base or output dir doesn't exist or empty extension");
+
                     return false;
+                }
 
                 BaseDir = baseDir;
                 Extension = extensionStr;
@@ -67,7 +77,10 @@ namespace ExCopy
 
                 return true;
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
 
             return false;
         }
