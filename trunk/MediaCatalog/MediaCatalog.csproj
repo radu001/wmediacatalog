@@ -203,7 +203,8 @@ copy "$(SolutionDir)\Lib\NHibernate\NHibernate.dll" "$(TargetDir)"
 copy "$(SolutionDir)\Lib\NHibernate\Antlr3.Runtime.dll" "$(TargetDir)"
 copy "$(SolutionDir)\Lib\NHibernate\Iesi.Collections.dll" "$(TargetDir)"
 copy "$(SolutionDir)\Lib\NHibernate\LinFu.DynamicProxy.dll" "$(TargetDir)"
-copy "$(SolutionDir)\DataLayer\hibernate.cfg.xml" "$(TargetDir)"</PostBuildEvent>
+copy "$(SolutionDir)\DataLayer\hibernate.cfg.xml" "$(TargetDir)"
+$(SolutionDir)\Utils\ExCopy\V1\ExCopy.exe --base "$(SolutionDir)\Lib" --extension "license.txt" --output "$(TargetDir)"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
