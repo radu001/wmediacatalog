@@ -1,0 +1,9 @@
+1. Antlr3.Runtime.dll - ?
+2. LinFu.DynamicProxy - separate license file LGPL
+3. NHibernate - separate license file LGPL
+4. NHibernate.ByteCode.LinFu - ?
+5. NLog - separate license file
+6. NMock2 - separate license file
+7. SharpFlacLib - my own GPLv3
+8. Prism framework - separate license file
+9. WPFToolkit - Separate license file (MS-PL)

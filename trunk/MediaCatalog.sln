@@ -45,6 +45,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NHibernate", "NHibernate", 
 	ProjectSection(SolutionItems) = preProject
 		Lib\NHibernate\Antlr3.Runtime.dll = Lib\NHibernate\Antlr3.Runtime.dll
 		Lib\NHibernate\Iesi.Collections.dll = Lib\NHibernate\Iesi.Collections.dll
+		Lib\NHibernate\Iesi.Collections.license.txt = Lib\NHibernate\Iesi.Collections.license.txt
 		Lib\NHibernate\Iesi.Collections.xml = Lib\NHibernate\Iesi.Collections.xml
 		Lib\NHibernate\LinFu.DynamicProxy.dll = Lib\NHibernate\LinFu.DynamicProxy.dll
 		Lib\NHibernate\log4net.dll = Lib\NHibernate\log4net.dll
@@ -55,6 +56,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NHibernate", "NHibernate", 
 		Lib\NHibernate\NHibernate.ByteCode.LinFu.dll = Lib\NHibernate\NHibernate.ByteCode.LinFu.dll
 		Lib\NHibernate\NHibernate.ByteCode.LinFu.xml = Lib\NHibernate\NHibernate.ByteCode.LinFu.xml
 		Lib\NHibernate\NHibernate.dll = Lib\NHibernate\NHibernate.dll
+		Lib\NHibernate\NHibernate.license.txt = Lib\NHibernate\NHibernate.license.txt
 		Lib\NHibernate\NHibernate.xml = Lib\NHibernate\NHibernate.xml
 	EndProjectSection
 EndProject
@@ -62,6 +64,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Npgsql", "Npgsql", "{E3E86D
 	ProjectSection(SolutionItems) = preProject
 		Lib\Npgsql\Mono.Security.dll = Lib\Npgsql\Mono.Security.dll
 		Lib\Npgsql\Npgsql.dll = Lib\Npgsql\Npgsql.dll
+		Lib\Npgsql\Npgsql.license.txt = Lib\Npgsql\Npgsql.license.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Prism", "Prism", "{2A4139D5-B4D1-4494-AFDD-4CBEA3A40EA1}"
@@ -72,6 +75,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Prism", "Prism", "{2A4139D5
 		Lib\Prism\Microsoft.Practices.Prism.UnityExtensions.dll = Lib\Prism\Microsoft.Practices.Prism.UnityExtensions.dll
 		Lib\Prism\Microsoft.Practices.ServiceLocation.dll = Lib\Prism\Microsoft.Practices.ServiceLocation.dll
 		Lib\Prism\Microsoft.Practices.Unity.dll = Lib\Prism\Microsoft.Practices.Unity.dll
+		Lib\Prism\Prism.license.txt = Lib\Prism\Prism.license.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NUnit", "NUnit", "{553095A0-9B0D-4C29-8028-295E4D99C096}"
@@ -103,6 +107,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WPFToolkit", "WPFToolkit", 
 		Lib\WPFToolkit\System.Windows.Controls.Layout.Toolkit.VisualStudio.Design.dll = Lib\WPFToolkit\System.Windows.Controls.Layout.Toolkit.VisualStudio.Design.dll
 		Lib\WPFToolkit\WPFToolkit.Design.dll = Lib\WPFToolkit\WPFToolkit.Design.dll
 		Lib\WPFToolkit\WPFToolkit.dll = Lib\WPFToolkit\WPFToolkit.dll
+		Lib\WPFToolkit\WPFToolkit.license.txt = Lib\WPFToolkit\WPFToolkit.license.txt
 		Lib\WPFToolkit\WPFToolkit.VisualStudio.Design.dll = Lib\WPFToolkit\WPFToolkit.VisualStudio.Design.dll
 	EndProjectSection
 EndProject
@@ -111,11 +116,13 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NMock", "NMock", "{3EBD4435-2853-4D56-BDFD-4DE1B13DB312}"
 	ProjectSection(SolutionItems) = preProject
 		Lib\NMock\NMock2.dll = Lib\NMock\NMock2.dll
+		Lib\NMock\NMock2.license.txt = Lib\NMock\NMock2.license.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharpFlac", "SharpFlac", "{0DF7A59C-C2CC-4FCA-9C90-4F07558B4C94}"
 	ProjectSection(SolutionItems) = preProject
 		Lib\SharpFlac\SharpFlacLib.dll = Lib\SharpFlac\SharpFlacLib.dll
+		Lib\SharpFlac\SharpFlacLib.license.txt = Lib\SharpFlac\SharpFlacLib.license.txt
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FolderPickerLib", "FolderPickerLib\FolderPickerLib.csproj", "{F53582DB-02B7-4864-B7AA-AAD055A591E4}"
@@ -127,11 +134,17 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NLog", "NLog", "{36B7D69B-4F61-4BB2-AC66-30B8577C750B}"
 	ProjectSection(SolutionItems) = preProject
 		Lib\NLog\NLog.dll = Lib\NLog\NLog.dll
+		Lib\NLog\NLog.license.txt = Lib\NLog\NLog.license.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logging", "Logging", "{91BDF526-D3EF-4917-86E2-F57B53175BC0}"
 	ProjectSection(SolutionItems) = preProject
 		Utils\NHibernate.Logging\bin\Debug\NHibernate.Logging.dll = Utils\NHibernate.Logging\bin\Debug\NHibernate.Logging.dll
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Licensing", "Licensing", "{114A0132-C445-4E9D-A20D-45A2CEF4DA64}"
+	ProjectSection(SolutionItems) = preProject
+		Lib\Licensing\Licenses.txt = Lib\Licensing\Licenses.txt
 	EndProjectSection
 EndProject
 Global
@@ -384,6 +397,7 @@ Global
 		{3EBD4435-2853-4D56-BDFD-4DE1B13DB312} = {EED3D0DF-F921-4817-B284-0AE429FEA339}
 		{0DF7A59C-C2CC-4FCA-9C90-4F07558B4C94} = {EED3D0DF-F921-4817-B284-0AE429FEA339}
 		{36B7D69B-4F61-4BB2-AC66-30B8577C750B} = {EED3D0DF-F921-4817-B284-0AE429FEA339}
+		{114A0132-C445-4E9D-A20D-45A2CEF4DA64} = {EED3D0DF-F921-4817-B284-0AE429FEA339}
 		{91BDF526-D3EF-4917-86E2-F57B53175BC0} = {767F21E4-2EF3-434C-9872-655F1057B99E}
 	EndGlobalSection
 EndGlobal
