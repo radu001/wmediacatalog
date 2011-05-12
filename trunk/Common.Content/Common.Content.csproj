@@ -136,12 +136,6 @@
     <Resource Include="Images\Music-icon_remove_48x48.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Page.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\PageBlue.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\Remove_16x16.png" />
   </ItemGroup>
   <ItemGroup>
