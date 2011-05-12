@@ -136,9 +136,6 @@
     <Resource Include="Images\Music-icon_remove_48x48.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\NotePlus_24x24.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\Page.png" />
   </ItemGroup>
   <ItemGroup>
@@ -152,21 +149,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\RightArrowHS.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Saxophone_add_48x48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Saxophone_edit_48x48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Saxophone_normal_48x48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Saxophone_remove_48x48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Trash_48x48.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\waste_48x48.png" />
@@ -196,9 +178,6 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="PresentationFramework.Aero" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Genre_16x16.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\CD_normal_16x16.png" />
