@@ -181,7 +181,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\CD_normal_16x16.png" />
-    <Resource Include="Images\Conductor_normal_16x16.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\db_comit_48x48.png" />
