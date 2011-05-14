@@ -5,8 +5,8 @@ namespace Modules.Import.Services.Utils.FileSystem
 {
     public interface IFileSystem
     {
-        int CountFilesRecursively(DirectoryInfo dir, IFileSelector selector);
+        int CountFilesRecursively(Dir dir, IFileSelector selector);
         IEnumerable<FileInfo> GetFiles(DirectoryInfo dir, IFileSelector selector);
-        IEnumerable<DirectoryInfo> GetSubDirectories(DirectoryInfo dir);
+        IEnumerable<Dir> GetSubDirectories(Dir dir);
     }
 }
