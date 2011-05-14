@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using BusinessObjects;
@@ -28,8 +27,8 @@ namespace Modules.Import.Services
         {
             fileSelector.Init(settings);
 
-            DirectoryInfo dir = new DirectoryInfo(settings.ScanPath);
-            Stack<DirectoryInfo> stack = new Stack<DirectoryInfo>();
+            var dir = new Dir(settings.ScanPath);
+            var stack = new Stack<Dir>();
             stack.Push(dir);
 
             if (settings.BeforeScan != null)
@@ -46,7 +45,7 @@ namespace Modules.Import.Services
                     continue;
                 }
 
-                DirectoryInfo currentDir = stack.Pop();
+                var currentDir = stack.Pop();
                 var subDirectories = fileSystem.GetSubDirectories(currentDir);
                 foreach (var subDir in subDirectories)
                     stack.Push(subDir);
