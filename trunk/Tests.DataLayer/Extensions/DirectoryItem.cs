@@ -1,11 +1,11 @@
 ﻿
 using System.Collections.Generic;
-using System.IO;
+using Modules.Import.Services.Utils.FileSystem;
 namespace MediaCatalog.Tests.Extensions
 {
     public class DirectoryItem<T>
     {
-        public DirectoryInfo Dir { get; set; }
+        public Dir Dir { get; set; }
 
         public DirectoryItem<T> Parent { get; set; }
 

@@ -9,14 +9,22 @@ namespace Modules.Import.Services.Utils.FileSystem
     {
         #region IFileSystem Members
 
-        public IEnumerable<FileInfo> GetFiles(DirectoryInfo dir, IFileSelector selector)
+        public IEnumerable<FsFile> GetFiles(Dir dir, IFileSelector selector)
         {
             return selector.SelectFiles(dir.FullName);
         }
 
         public IEnumerable<Dir> GetSubDirectories(Dir dir)
         {
-            return dir.GetDirectories();
+            if (dir == null)
+                return new Dir[] { };
+
+            if (!Directory.Exists(dir.FullName))
+                return new Dir[] { };
+
+            var dirInfo = new DirectoryInfo(dir.FullName);
+
+            return dirInfo.GetDirectories().Select<DirectoryInfo, Dir>(d => new Dir(d.FullName));
         }
 
         public int CountFilesRecursively(Dir dir, IFileSelector selector)

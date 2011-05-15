@@ -66,7 +66,7 @@ namespace Modules.Import.Services
                         {
                             if (settings.BeginFileScan != null)
                             {
-                                settings.BeginFileScan(f.Name);
+                                settings.BeginFileScan(f.FullName);
                             }
 
                             tagsAccumulator.AccumulateTags(tags);

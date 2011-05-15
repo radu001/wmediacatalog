@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using MediaCatalog.Tests.Extensions;
 using Modules.Import.Model;
 using Modules.Import.Services.Utils;
@@ -7,11 +6,16 @@ using Modules.Import.Services.Utils.FileSystem;
 
 namespace MediaCatalog.Tests.Mocks
 {
-    public class StubTagsScanner : IScanner, IFileSystem
+    public class TransparentFileSystemMock : IScanner, IFileSystem
     {
-        public StubTagsScanner(string xml)
+        public TransparentFileSystemMock(string xml)
         {
             fs = new StubFileSystem<FileTagCollection>(xml, new TagDataResolver());
+        }
+
+        public IDictionary<Dir, IEnumerable<FsFile>> GetDirectories()
+        {
+            return fs.GetDirectories();
         }
 
         #region IScanner Members
@@ -26,17 +30,17 @@ namespace MediaCatalog.Tests.Mocks
 
         #region IFileSystem Members
 
-        public int CountFilesRecursively(DirectoryInfo dir, IFileSelector fileSelector)
+        public int CountFilesRecursively(Dir dir, IFileSelector fileSelector)
         {
             return fs.CountFilesRecursively(dir, fileSelector);
         }
 
-        public IEnumerable<FileInfo> GetFiles(DirectoryInfo dir, IFileSelector fileSelector)
+        public IEnumerable<FsFile> GetFiles(Dir dir, IFileSelector fileSelector)
         {
             return fs.GetFiles(dir, fileSelector);
         }
 
-        public IEnumerable<DirectoryInfo> GetSubDirectories(DirectoryInfo dir)
+        public IEnumerable<Dir> GetSubDirectories(Dir dir)
         {
             return fs.GetSubDirectories(dir);
         }

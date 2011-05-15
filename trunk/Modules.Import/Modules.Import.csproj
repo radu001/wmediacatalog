@@ -64,6 +64,7 @@
     <Compile Include="Model\ImportDataModel.cs" />
     <Compile Include="Model\TagsProvider.cs" />
     <Compile Include="Services\Utils\FileSystem\Dir.cs" />
+    <Compile Include="Services\Utils\FileSystem\FsFile.cs" />
     <Compile Include="Services\Utils\FileSystem\FileByExtensionSelector.cs" />
     <Compile Include="Services\Utils\FileSystem\FileSystem.cs" />
     <Compile Include="Services\Utils\FileSystem\IFileSelector.cs" />

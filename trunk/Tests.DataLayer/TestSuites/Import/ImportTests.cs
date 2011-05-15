@@ -20,11 +20,11 @@ namespace MediaCatalog.Tests.TestSuites.Import
             var container = new UnityContainer();
             var resolver = new TagDataResolver();
 
-            var scanner = new StubTagsScanner(xml);
-            var fileSelector = new StubFileSelector();
+            var scanner = new TransparentFileSystemMock(xml);
+            var fileSelector = new StubFileSelector(scanner.GetDirectories());
 
             string path = @"d:\";
-            var service = new DataService(container, scanner, scanner, new TagsAccumulator(), new StubFileSelector());
+            var service = new DataService(container, scanner, scanner, new TagsAccumulator(), fileSelector);
             var artists =
                 service.BeginScan(new ScanSettings()
                 {
