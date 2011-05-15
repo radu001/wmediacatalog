@@ -90,7 +90,7 @@
     <Compile Include="Extensions\StubFileSystem.cs" />
     <Compile Include="Mocks\StubFileSelector.cs" />
     <Compile Include="Mocks\StubFileSelectorSettings.cs" />
-    <Compile Include="Mocks\StubTagsScanner.cs" />
+    <Compile Include="Mocks\TransparentFileSystemMock.cs" />
     <Compile Include="Mocks\TagDataResolver.cs" />
     <Compile Include="TestSuites\Import\BulkImportTests.cs" />
     <Compile Include="TestSuites\Import\ImportTests.cs" />

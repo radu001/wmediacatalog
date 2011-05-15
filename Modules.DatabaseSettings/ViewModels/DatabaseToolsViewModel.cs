@@ -152,7 +152,10 @@ namespace Modules.DatabaseSettings.ViewModels
 
         private void OnSelectProviderPathCommand(object parameter)
         {
-            var dialog = new FolderPickerDialog();
+            var dialog = new FolderPickerDialog()
+            {
+                InitialPath = @"I:\Graphics\Tiffany Toth\PB- CGOM March 2006\02"
+            };
             if (dialog.ShowDialog() == true)
             {
                 ProviderPath = dialog.SelectedPath;

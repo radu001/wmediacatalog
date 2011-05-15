@@ -67,28 +67,42 @@ namespace MediaCatalog.Tests.Extensions
             return default(T);
         }
 
+        public IDictionary<Dir, IEnumerable<FsFile>> GetDirectories()
+        {
+            var dirs = EnumerateDirectories();
+
+            var result = new Dictionary<Dir, IEnumerable<FsFile>>();
+
+            foreach (var d in dirs)
+            {
+                result[d.Dir] = d.Files.Select(f => f.File);
+            }
+
+            return result;
+        }
+
         #region IFileSystem Members
 
-        public int CountFilesRecursively(DirectoryInfo dir, IFileSelector fileSelector)
+        public int CountFilesRecursively(Dir dir, IFileSelector fileSelector)
         {
             var allFiles = EnumerateFiles();
             return allFiles.Count();
         }
 
-        public IEnumerable<FileInfo> GetFiles(DirectoryInfo dir, IFileSelector fileSelector)
+        public IEnumerable<FsFile> GetFiles(Dir dir, IFileSelector fileSelector)
         {
             var directory = FindDirectory(dir.FullName);
             if (directory == null)
-                return new FileInfo[] { };
+                return new FsFile[] { };
 
-            return directory.Files.Select(f => f.File).Where(f => f.Name.Contains(".flac"));
+            return fileSelector.SelectFiles(dir.FullName);
         }
 
-        public IEnumerable<DirectoryInfo> GetSubDirectories(DirectoryInfo dir)
+        public IEnumerable<Dir> GetSubDirectories(Dir dir)
         {
             var directory = FindDirectory(dir.FullName);
             if (directory == null)
-                return new DirectoryInfo[] { };
+                return new Dir[] { };
 
             return directory.Childs.Select(c => c.Dir);
         }
@@ -113,7 +127,7 @@ namespace MediaCatalog.Tests.Extensions
 
             Root = new DirectoryItem<T>(null)
             {
-                Dir = new DirectoryInfo(rootAttribute.Value)
+                Dir = new Dir(rootAttribute.Value)
             };
 
             foreach (var child in rootElement.Elements("dir"))
@@ -154,7 +168,7 @@ namespace MediaCatalog.Tests.Extensions
             {
                 var subDir = new DirectoryItem<T>(parent)
                 {
-                    Dir = new DirectoryInfo(directoryName)
+                    Dir = new Dir(directoryName)
                 };
 
                 parent.Childs.Add(subDir);
@@ -174,7 +188,7 @@ namespace MediaCatalog.Tests.Extensions
             {
                 dir.Files.Add(new FileItem<T>()
                 {
-                    File = new FileInfo(fullFileName),
+                    File = new FsFile(fullFileName),
                     Data = fileData
                 });
             }

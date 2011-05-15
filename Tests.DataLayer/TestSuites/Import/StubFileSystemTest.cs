@@ -18,7 +18,7 @@ namespace MediaCatalog.Tests.TestSuites.Import
             var fs = CreateFileSystem(xml) as StubFileSystem<object>;
 
             Assert.True(fs.Root.IsRoot);
-            Assert.AreEqual(@"d:\", fs.Root.Dir.Name);
+            Assert.AreEqual(@"d:\", fs.Root.Dir.FullName);
 
             Assert.AreEqual(1, fs.Root.Childs.Count);
             AssertHasFiles(fs.Root, "file3.png", "file4.png", "file5.png");
@@ -83,7 +83,7 @@ namespace MediaCatalog.Tests.TestSuites.Import
             var xml = File.ReadAllText(@"FileSystems\FSEmpty.xml");
             var filesystem = CreateFileSystem(xml) as StubFileSystem<object>;
 
-            var fileSelector = new StubFileSelector();
+            var fileSelector = new StubFileSelector(null);
             fileSelector.Init(new StubFileSelectorSettings(new string[] { "" }));
 
             Assert.AreEqual(0, filesystem.CountFilesRecursively(filesystem.Root.Dir, fileSelector));
@@ -95,7 +95,7 @@ namespace MediaCatalog.Tests.TestSuites.Import
             var xml = File.ReadAllText(@"FileSystems\FS1.xml");
             var filesystem = CreateFileSystem(xml) as StubFileSystem<object>;
 
-            var fileSelector = new StubFileSelector();
+            var fileSelector = new StubFileSelector(null);
             fileSelector.Init(new StubFileSelectorSettings(new string[] { "" }));
 
             Assert.AreEqual(6, filesystem.CountFilesRecursively(filesystem.Root.Dir, fileSelector));

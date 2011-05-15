@@ -20,10 +20,11 @@ namespace Modules.Import.Services.Utils.FileSystem
             Settings = settings;
         }
 
-        public IEnumerable<FileInfo> SelectFiles(string dirPath)
+        public IEnumerable<FsFile> SelectFiles(string dirPath)
         {
             DirectoryInfo dir = new DirectoryInfo(dirPath);
-            return dir.GetFiles(Settings.FileMasks.First()); // temporary dirty hack
+            return dir.GetFiles(Settings.FileMasks.First()).
+                Select<FileInfo, FsFile>(f => new FsFile(f.FullName)); // temporary dirty hack
         }
 
         #endregion
