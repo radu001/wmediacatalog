@@ -4,9 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
-using Common;
 
-namespace DataServices.NHibernate
+namespace Common.Utilities.NHibernate
 {
     public class NHibernateConfigModel : INHibernateConfig
     {
