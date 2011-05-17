@@ -1,7 +1,7 @@
 ﻿
 using System;
 using System.Linq;
-using DataServices.NHibernate;
+using Common.Utilities.NHibernate;
 namespace DataServices.Additional.Postgre
 {
     public abstract class PostgreProviderBase

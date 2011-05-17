@@ -1,6 +1,6 @@
 ﻿
 using System.Collections.ObjectModel;
-namespace DataServices.NHibernate
+namespace Common.Utilities.NHibernate
 {
     public interface INHibernateConfig
     {

@@ -1,10 +1,23 @@
-﻿using System;
+﻿
+using System.Collections.ObjectModel;
 using System.ComponentModel;
-
-namespace DataServices.NHibernate
+namespace Common.Utilities.NHibernate
 {
-    public class ConfigurationValue : INotifyPropertyChanged
+    public class ConfigurationProperty : INotifyPropertyChanged
     {
+        public ObservableCollection<ConfigurationValue> Values
+        {
+            get
+            {
+                return values;
+            }
+            set
+            {
+                values = value;
+                OnPropertyChanged("Values");
+            }
+        }
+
         public string Name
         {
             get
@@ -18,25 +31,25 @@ namespace DataServices.NHibernate
             }
         }
 
-        public string Value
+        public bool HasMultipleValues
         {
             get
             {
-                return value;
-            }
-            set
-            {
-                this.value = value;
-                OnPropertyChanged("Value");
+                return Values.Count > 1;
             }
         }
 
-        public bool IsEmpty
+        public string PlainValue
         {
             get
             {
-                return String.IsNullOrEmpty(Name) && String.IsNullOrEmpty(Value);
+                return Values[0].Value;
             }
+        }
+
+        public ConfigurationProperty()
+        {
+            Values = new ObservableCollection<ConfigurationValue>();
         }
 
         #region INotifyPropertyChanged Members
@@ -53,7 +66,7 @@ namespace DataServices.NHibernate
 
         #endregion
 
+        private ObservableCollection<ConfigurationValue> values;
         private string name;
-        private string value;
     }
 }

@@ -1,5 +1,5 @@
 ﻿
-using DataServices.NHibernate;
+using Common.Utilities.NHibernate;
 using Microsoft.Practices.Prism.Commands;
 namespace Modules.DatabaseSettings.ViewModels
 {

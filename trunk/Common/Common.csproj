@@ -115,6 +115,10 @@
     <Compile Include="RegionNames.cs" />
     <Compile Include="Utilities\Async\ParallelExtensions.cs" />
     <Compile Include="Utilities\Async\StaTaskScheduler.cs" />
+    <Compile Include="Utilities\NHibernate\ConfigurationProperty.cs" />
+    <Compile Include="Utilities\NHibernate\ConfigurationValue.cs" />
+    <Compile Include="Utilities\NHibernate\INHibernateConfig.cs" />
+    <Compile Include="Utilities\NHibernate\NHibernateConfigModel.cs" />
     <Compile Include="Utilities\PasswordHelper.cs" />
     <Compile Include="Utilities\ValidationHelper.cs" />
     <Compile Include="ViewModels\DialogViewModelBase.cs" />
