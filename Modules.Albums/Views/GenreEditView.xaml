@@ -6,7 +6,6 @@
              xmlns:controls="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
              xmlns:dialogs="clr-namespace:Common.Dialogs;assembly=Common.Dialogs"
              xmlns:converters="clr-namespace:Common.Dialogs.Converters;assembly=Common.Dialogs"
-             xmlns:prismCommands="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"                      
              mc:Ignorable="d" 
              x:Name="dialogWindow"
              Height="562" Width="507">

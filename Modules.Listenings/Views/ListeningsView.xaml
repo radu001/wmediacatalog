@@ -7,7 +7,6 @@
              xmlns:commonControls="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
              xmlns:pagerCommands="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
              xmlns:localConverters="clr-namespace:Modules.Listenings.Converters"
-             xmlns:prismCommands="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" commands:Loaded.Command="{Binding ViewLoadedCommand}"
              x:Name="listeningsView"
@@ -30,14 +29,14 @@
             <ToolBar>
                 <Button Margin="2" Style="{StaticResource ToolbarImageButtonStyle}"
                     ToolTip="Add new listening"
-                    prismCommands:Click.Command="{Binding AddListeningCommand}">
+                    commands:Clicked.Command="{Binding AddListeningCommand}">
                     <Button.Content>
                         <Image Source="/Common.Content;component/Images/Music-icon_plus_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
                     </Button.Content>
                 </Button>
                 <Button Margin="2" Style="{StaticResource ToolbarImageButtonStyle}"
                     ToolTip="Remove listening"
-                    prismCommands:Click.Command="{Binding RemoveListeningCommand}">
+                    commands:Clicked.Command="{Binding RemoveListeningCommand}">
                     <Button.Content>
                         <Image Source="/Common.Content;component/Images/Music-icon_remove_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
                     </Button.Content>
@@ -46,14 +45,14 @@
             <ToolBar>
                 <Button Margin="2" Style="{StaticResource ToolbarImageButtonStyle}"
                     ToolTip="Add new artist"
-                    prismCommands:Click.Command="{Binding CreateArtistCommand}">
+                    commands:Clicked.Command="{Binding CreateArtistCommand}">
                     <Button.Content>
                         <Image Source="/Common.Content;component/Images/Conductor_add_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
                     </Button.Content>
                 </Button>
                 <Button Margin="2" Style="{StaticResource ToolbarImageButtonStyle}"
                     ToolTip="Add new album"
-                    prismCommands:Click.Command="{Binding CreateAlbumCommand}">
+                    commands:Clicked.Command="{Binding CreateAlbumCommand}">
                     <Button.Content>
                         <Image Source="/Common.Content;component/Images/CD_add_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
                     </Button.Content>
@@ -73,11 +72,6 @@
                   CellStyle="{StaticResource ListeningsDataGridCellStyle}" 
                   HorizontalGridLinesBrush="Transparent" VerticalGridLinesBrush="Transparent"
                   commands:MouseDoubleClick.Command="{Binding DisplayListeningCommand}">
-            <!--<DataGrid.RowDetailsTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Review}"/>
-                </DataTemplate>
-            </DataGrid.RowDetailsTemplate>-->
             <DataGrid.Columns>
                 <DataGridTextColumn Width="25*" IsReadOnly="True"
                                             Binding="{Binding Path=Date}" Header="Date" />

@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:controls="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
-             xmlns:prismCommands="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"
+             xmlns:commands="clr-namespace:Common.Commands;assembly=Common.Commands"
              mc:Ignorable="d" 
              d:DesignHeight="243" d:DesignWidth="386">
     <UserControl.Resources>
@@ -42,7 +42,7 @@
                     <TextBlock Text="Provider path:" Grid.Row="2" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
                     <TextBox Text="{Binding ProviderPath}" Grid.Row="2" Grid.Column="1" Margin="8" />
                     <Button Grid.Row="2" Grid.Column="2" Margin="8"
-                            prismCommands:Click.Command="{Binding SelectProviderPathCommand}">
+                            commands:Clicked.Command="{Binding SelectProviderPathCommand}">
                         <Button.Content>
                                 <Image Source="/Common.Content;component/Images/ZoomHS.png" Width="16" Height="16" Stretch="Fill"/>
                         </Button.Content>
@@ -51,7 +51,7 @@
                     <TextBlock Text="Export file path:" Grid.Row="3" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
                     <TextBox Text="{Binding ExportPath}" Grid.Row="3" Grid.Column="1" Margin="8" />
                     <Button Grid.Row="3" Grid.Column="2" Margin="8"
-                            prismCommands:Click.Command="{Binding SelectExportPathCommand}">
+                            commands:Clicked.Command="{Binding SelectExportPathCommand}">
                         <Button.Content>
                             <Image Source="/Common.Content;component/Images/ZoomHS.png" Width="16" Height="16" Stretch="Fill"/>
                         </Button.Content>
@@ -59,8 +59,9 @@
                     
                     <TextBlock Text="Export file name:" Grid.Row="4" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
                     <TextBox Text="{Binding ExportFileName}" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="8" />
-                    
-                    <Button Content="Export database" prismCommands:Click.Command="{Binding ExportDatabaseCommand}" 
+
+                    <Button Content="Export database" 
+                            commands:Clicked.Command="{Binding ExportDatabaseCommand}" 
                             Style="{StaticResource DialogButtonStyle}"
                             Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="8" VerticalAlignment="Bottom"/>
                 </Grid>
@@ -89,7 +90,7 @@
                     <TextBlock Text="Provider path:" Grid.Row="2" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
                     <TextBox Text="{Binding ProviderPath}" Grid.Row="2" Grid.Column="1" Margin="8" />
                     <Button Grid.Row="2" Grid.Column="2" Margin="8"
-                            prismCommands:Click.Command="{Binding SelectProviderPathCommand}">
+                            commands:Clicked.Command="{Binding SelectProviderPathCommand}">
                         <Button.Content>
                             <Image Source="/Common.Content;component/Images/ZoomHS.png" Width="16" Height="16" Stretch="Fill"/>
                         </Button.Content>
@@ -98,14 +99,15 @@
                     <TextBlock Text="Backup file:" Grid.Row="3" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
                     <TextBox Text="{Binding BackupFullPath}" Grid.Row="3" Grid.Column="1" Margin="8" />
                     <Button Grid.Row="3" Grid.Column="2" Margin="8"
-                            prismCommands:Click.Command="{Binding SelectBackupCommand}">
+                            commands:Clicked.Command="{Binding SelectBackupCommand}">
                         <Button.Content>
                             <Image Source="/Common.Content;component/Images/ZoomHS.png" Width="16" Height="16" Stretch="Fill"/>
                         </Button.Content>
                     </Button>
 
 
-                    <Button Content="Import database" prismCommands:Click.Command="{Binding ImportDatabaseCommand}" 
+                    <Button Content="Import database" 
+                            commands:Clicked.Command="{Binding ImportDatabaseCommand}" 
                             Style="{StaticResource DialogButtonStyle}"
                             Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="8" VerticalAlignment="Bottom"/>
                 </Grid>

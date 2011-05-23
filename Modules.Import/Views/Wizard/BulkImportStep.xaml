@@ -4,10 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:controls="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
-             xmlns:commonCommands="clr-namespace:Common.Commands;assembly=Common.Commands"
+             xmlns:commands="clr-namespace:Common.Commands;assembly=Common.Commands"
              xmlns:converters="clr-namespace:Common.Controls.Converters;assembly=Common.Controls"
-             xmlns:prismCommands="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"
-             mc:Ignorable="d" commonCommands:Loaded.Command="{Binding ViewLoadedCommand}"
+             mc:Ignorable="d" commands:Loaded.Command="{Binding ViewLoadedCommand}"
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -53,9 +52,9 @@
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2" Margin="8">
             <Button Content="Begin import" Grid.Row="1" Width="75" Margin="8" HorizontalAlignment="Right" Style="{StaticResource DialogButtonStyle}"
                 Visibility="{Binding ImportCompleted,Converter={StaticResource InverseBoolToVisibilityConverter}}"
-                prismCommands:Click.Command="{Binding BeginImportCommand}"/>
+                commands:Clicked.Command="{Binding BeginImportCommand}"/>
             <Button Content="Continue" Grid.Row="1" Width="75" Margin="8" HorizontalAlignment="Right" Style="{StaticResource DialogButtonStyle}"
-                prismCommands:Click.Command="{Binding ContinueCommand}"/>
+                commands:Clicked.Command="{Binding ContinueCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>

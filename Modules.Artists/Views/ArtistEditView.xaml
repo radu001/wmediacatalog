@@ -6,7 +6,6 @@
              xmlns:controls="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
              xmlns:commands="clr-namespace:Common.Commands;assembly=Common.Commands"
              xmlns:dialogs="clr-namespace:Common.Dialogs;assembly=Common.Dialogs"
-             xmlns:prismCommand="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"
              xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
              xmlns:enums="clr-namespace:Modules.Artists.Enums"
              mc:Ignorable="d" 
@@ -94,8 +93,8 @@
                                         <TextBlock Text="{Binding Name}" FontWeight="Bold" Grid.Column="0" VerticalAlignment="Center"/>
                                         <Button Style="{StaticResource TransparentImageButtonStyle}" Grid.Column="1" Margin="6,0,0,0" VerticalAlignment="Center"
                                                         ToolTip="Detach this tag from artist" Cursor="Hand"
-                                                        prismCommand:Click.Command="{Binding ElementName=dialogWindow,Path=DataContext.DetachTagCommand}"
-                                                        prismCommand:Click.CommandParameter="{Binding}">
+                                                        commands:Clicked.Command="{Binding ElementName=dialogWindow,Path=DataContext.DetachTagCommand}"
+                                                        commands:Clicked.CommandParameter="{Binding}">
                                             <Button.Content>
                                                 <Image Source="/Common.Content;component/Images/Remove_16x16.png" Height="16" Width="16"/>
                                             </Button.Content>
@@ -115,7 +114,7 @@
                         <Button x:Name="AttachTagButton" Grid.Column="1"
                                         Style="{StaticResource ImageButtonStyle}"
                                         ToolTip="Assign tag to this artist"
-                                        prismCommand:Click.Command="{Binding AttachTagCommand}">
+                                        commands:Clicked.Command="{Binding AttachTagCommand}">
                             <Button.Content>
                                 <Image Source="/Common.Content;component/Images/command_link_16x16.png" Width="16" Height="16"/>
                             </Button.Content>

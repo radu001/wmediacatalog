@@ -10,7 +10,6 @@
              xmlns:enums="clr-namespace:Modules.Albums.Enums"
              xmlns:localConverters="clr-namespace:Modules.Albums.Converters"
              xmlns:pagerCommands="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
-             xmlns:prismCommands="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"
              xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
              xmlns:toolkit2="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit"
              mc:Ignorable="d" x:Name="dialogWindow"
@@ -55,8 +54,8 @@
                         <TextBlock Text="{Binding Name}" FontWeight="Bold" Grid.Column="0" VerticalAlignment="Center"/>
                         <Button Style="{StaticResource TransparentImageButtonStyle}" Grid.Column="1" Margin="6,0,0,0" VerticalAlignment="Center"
                                                         ToolTip="Detach this tag from artist" Cursor="Hand"
-                                                        prismCommands:Click.Command="{Binding ElementName=dialogWindow, Path=DataContext.DetachGenreCommand}"
-                                                        prismCommands:Click.CommandParameter="{Binding}">
+                                                        commands:Clicked.Command="{Binding ElementName=dialogWindow, Path=DataContext.DetachGenreCommand}"
+                                                        commands:Clicked.CommandParameter="{Binding}">
                             <Button.Content>
                                 <Image Source="/Common.Content;component/Images/Remove_16x16.png" Height="16" Width="16"/>
                             </Button.Content>
@@ -75,8 +74,8 @@
                         <TextBlock Text="{Binding Name}" FontWeight="Bold" Grid.Column="0" VerticalAlignment="Center"/>
                         <Button Style="{StaticResource TransparentImageButtonStyle}" Grid.Column="1" Margin="6,0,0,0" VerticalAlignment="Center"
                                                         ToolTip="Detach this tag from artist" Cursor="Hand"
-                                                        prismCommands:Click.Command="{Binding ElementName=dialogWindow, Path=DataContext.DetachArtistCommand}"
-                                                        prismCommands:Click.CommandParameter="{Binding}">
+                                                        commands:Clicked.Command="{Binding ElementName=dialogWindow, Path=DataContext.DetachArtistCommand}"
+                                                        commands:Clicked.CommandParameter="{Binding}">
                             <Button.Content>
                                 <Image Source="/Common.Content;component/Images/Remove_16x16.png" Height="16" Width="16"/>
                             </Button.Content>
@@ -192,15 +191,15 @@
                         <GroupBox Header="Commands" Grid.Column="1" Width="180" Margin="4">
                             <StackPanel>
                                 <Button Content="Add track" Margin="4"
-                                                prismCommands:Click.Command="{Binding AddTrackCommand}"/>
+                                                commands:Clicked.Command="{Binding AddTrackCommand}"/>
                                 <Button Content="Remove track(s)" Margin="4"
-                                                prismCommands:Click.Command="{Binding RemoveTracksCommand}"/>
+                                                commands:Clicked.Command="{Binding RemoveTracksCommand}"/>
                                 <Button Content="Move up" Margin="4" 
-                                                prismCommands:Click.Command="{Binding MoveTracksUpCommand}"
-                                                prismCommands:Click.CommandParameter="{Binding ElementName=TrackListDataGrid}"/>
+                                                commands:Clicked.Command="{Binding MoveTracksUpCommand}"
+                                                commands:Clicked.CommandParameter="{Binding ElementName=TrackListDataGrid}"/>
                                 <Button Content="Move down" Margin="4"
-                                                prismCommands:Click.Command="{Binding MoveTracksDownCommand}"
-                                                prismCommands:Click.CommandParameter="{Binding ElementName=TrackListDataGrid}"/>
+                                                commands:Clicked.Command="{Binding MoveTracksDownCommand}"
+                                                commands:Clicked.CommandParameter="{Binding ElementName=TrackListDataGrid}"/>
                                 <Separator Margin="4"/>
                                 <Button Content="Import FreeDB" Margin="4"/>
                                 <Button Content="Import TrackType.org" Margin="4"/>
@@ -241,7 +240,7 @@
                             <Button x:Name="AddGenresButton"
                                         Style="{StaticResource ToolbarImageButtonStyle}"  Margin="4"
                                         ToolTip="Attach genre(s) to this album"
-                                        prismCommands:Click.Command="{Binding HideShowGenresListCommand}">
+                                        commands:Clicked.Command="{Binding HideShowGenresListCommand}">
                                 <Button.Content>
                                     <Image Source="/Common.Content;component/Images/add_15x15.png" Width="16" Height="16"/>
                                 </Button.Content>
@@ -249,7 +248,7 @@
                             <Button x:Name="AttachGenresButton"
                                             Visibility="{Binding IsGenresListVisible,Converter={StaticResource BoolToVisibilityConverter}}"
                                             Style="{StaticResource ToolbarImageButtonStyle}" Margin="4"
-                                            prismCommands:Click.Command="{Binding AttachGenresCommand}">
+                                            commands:Clicked.Command="{Binding AttachGenresCommand}">
                                 <Button.Content>
                                     <Image Source="/Common.Content;component/Images/GoToPrevious.png" Width="16" Height="16"/>
                                 </Button.Content>
@@ -257,7 +256,7 @@
                             <Button x:Name="DetachGenresButton"
                                             Visibility="{Binding IsGenresListVisible,Converter={StaticResource BoolToVisibilityConverter}}"
                                             Style="{StaticResource ToolbarImageButtonStyle}"  Margin="4"
-                                            prismCommands:Click.Command="{Binding DetachGenresCommand}">
+                                            commands:Clicked.Command="{Binding DetachGenresCommand}">
                                 <Button.Content>
                                     <Image Source="/Common.Content;component/Images/GoToNextHS.png" Width="16" Height="16"/>
                                 </Button.Content>
@@ -275,7 +274,7 @@
                                 <Button x:Name="CreateGenreButton"
                                             Style="{StaticResource ToolbarImageButtonStyle}"  Margin="0"
                                             ToolTip="Create new genre" DockPanel.Dock="Right" Width="16" Height="16"
-                                            prismCommands:Click.Command="{Binding CreateGenreCommand}">
+                                            commands:Clicked.Command="{Binding CreateGenreCommand}">
                                     <Button.Content>
                                         <Image Source="/Common.Content;component/Images/add_15x15.png" Width="16" Height="16"/>
                                     </Button.Content>
@@ -316,7 +315,7 @@
                             <Button x:Name="AddArtistsButton"
                                         Style="{StaticResource ToolbarImageButtonStyle}"  Margin="4"
                                         ToolTip="Attach genre(s) to this album"
-                                        prismCommands:Click.Command="{Binding HideShowArtistsListCommand}">
+                                        commands:Clicked.Command="{Binding HideShowArtistsListCommand}">
                                 <Button.Content>
                                     <Image Source="/Common.Content;component/Images/add_15x15.png" Width="16" Height="16"/>
                                 </Button.Content>
@@ -324,7 +323,7 @@
                             <Button x:Name="AttachArtistsButton"
                                             Visibility="{Binding IsArtistsListVisible,Converter={StaticResource BoolToVisibilityConverter}}"
                                             Style="{StaticResource ToolbarImageButtonStyle}" Margin="4"
-                                            prismCommands:Click.Command="{Binding AttachArtistsCommand}">
+                                            commands:Clicked.Command="{Binding AttachArtistsCommand}">
                                 <Button.Content>
                                     <Image Source="/Common.Content;component/Images/GoToPrevious.png" Width="16" Height="16"/>
                                 </Button.Content>
@@ -332,7 +331,7 @@
                             <Button x:Name="DetachArtistsButton"
                                             Visibility="{Binding IsArtistsListVisible,Converter={StaticResource BoolToVisibilityConverter}}"
                                             Style="{StaticResource ToolbarImageButtonStyle}"  Margin="4"
-                                            prismCommands:Click.Command="{Binding DetachArtistsCommand}">
+                                            commands:Clicked.Command="{Binding DetachArtistsCommand}">
                                 <Button.Content>
                                     <Image Source="/Common.Content;component/Images/GoToNextHS.png" Width="16" Height="16"/>
                                 </Button.Content>
@@ -350,7 +349,7 @@
                                 <Button x:Name="CreateArtistButton"
                                             Style="{StaticResource ToolbarImageButtonStyle}"  Margin="0"
                                             ToolTip="Create new artist" DockPanel.Dock="Right" Width="16" Height="16"
-                                            prismCommands:Click.Command="{Binding CreateArtistCommand}">
+                                            commands:Clicked.Command="{Binding CreateArtistCommand}">
                                     <Button.Content>
                                         <Image Source="/Common.Content;component/Images/add_15x15.png" Width="16" Height="16"/>
                                     </Button.Content>
@@ -397,8 +396,8 @@
                                     <TextBlock Text="{Binding Name}" FontWeight="Bold" Grid.Column="0" VerticalAlignment="Center"/>
                                     <Button Style="{StaticResource TransparentImageButtonStyle}" Grid.Column="1" Margin="6,0,0,0" VerticalAlignment="Center"
                                                         ToolTip="Detach this tag from artist" Cursor="Hand"
-                                                        prismCommands:Click.Command="{Binding ElementName=dialogWindow,Path=DataContext.DetachTagCommand}"
-                                                        prismCommands:Click.CommandParameter="{Binding}">
+                                                        commands:Clicked.Command="{Binding ElementName=dialogWindow,Path=DataContext.DetachTagCommand}"
+                                                        commands:Clicked.CommandParameter="{Binding}">
                                         <Button.Content>
                                             <Image Source="/Common.Content;component/Images/Remove_16x16.png" Height="16" Width="16"/>
                                         </Button.Content>
@@ -418,7 +417,7 @@
                     <Button x:Name="AttachTagButton" Grid.Column="1"
                                         Style="{StaticResource ImageButtonStyle}"
                                         ToolTip="Assign tag to this artist"
-                                        prismCommands:Click.Command="{Binding AttachTagCommand}">
+                                        commands:Clicked.Command="{Binding AttachTagCommand}">
                         <Button.Content>
                             <Image Source="/Common.Content;component/Images/command_link_16x16.png" Width="16" Height="16"/>
                         </Button.Content>
