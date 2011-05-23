@@ -3,9 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:commands="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"
              xmlns:controls="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
-             xmlns:extCommands="clr-namespace:Common.Commands;assembly=Common.Commands"
+             xmlns:commands="clr-namespace:Common.Commands;assembly=Common.Commands"
              mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -34,25 +33,22 @@
             
             <TextBox x:Name="UserNameTextBox" Grid.Column="1" Margin="12,0" VerticalAlignment="Center"
                      PreviewKeyDown="UserNameTextBox_PreviewKeyDown"
-                     Text="{Binding UserName,UpdateSourceTrigger=PropertyChanged}"
-                     />
+                     Text="{Binding UserName,UpdateSourceTrigger=PropertyChanged}"/>
             
             <TextBlock Text="Password:" FontWeight="Bold" Grid.Row="1" Grid.Column="0" Margin="12,0,12,0"
                        HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
             <PasswordBox x:Name="PasswordBox" Grid.Row="1" Grid.Column="1" Margin="12,0" VerticalAlignment="Center"
                      PreviewKeyDown="PasswordBox_PreviewKeyDown"
-                     extCommands:KeyUp.Command="{Binding KeyUpCommand}"
-                     />
+                     commands:KeyUp.Command="{Binding KeyUpCommand}"/>
 
             <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right">
                 <Label Content="Create new account" Cursor="Hand" Foreground="Blue"
                        VerticalAlignment="Center"
-                       extCommands:MouseDown.Command="{Binding RegisterNewUserCommand}"
-                       />
+                       commands:MouseDown.Command="{Binding RegisterNewUserCommand}"/>
                 <Button x:Name="LoginButton" Content="Ok" Height="24" Width="75" Margin="12,0"
                         Style="{StaticResource DialogButtonStyle}"
-                        commands:Click.Command="{Binding LoginCommand}"/>
+                        commands:Clicked.Command="{Binding LoginCommand}"/>
             </StackPanel>
         </Grid>
     </Border>

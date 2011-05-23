@@ -7,7 +7,6 @@
              xmlns:commonControls="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
              xmlns:converters="clr-namespace:Common.Controls.Converters;assembly=Common.Controls"
              xmlns:localConverters="clr-namespace:Modules.Albums.Converters"
-             xmlns:prismCommands="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"
              xmlns:pagerCommands="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
              mc:Ignorable="d" commands:Loaded.Command="{Binding ViewLoadedCommand}"
              d:DesignHeight="300" d:DesignWidth="300">
@@ -45,7 +44,7 @@
                 <Button Margin="2"
                         Style="{StaticResource ToolbarImageButtonStyle}"
                         ToolTip="Create new album"
-                        prismCommands:Click.Command="{Binding CreateAlbumCommand}">
+                        commands:Clicked.Command="{Binding CreateAlbumCommand}">
                     <Button.Content>
                         <Image Source="/Common.Content;component/Images/CD_add_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
                     </Button.Content>
@@ -53,7 +52,7 @@
                 <Button Margin="2"
                         Style="{StaticResource ToolbarImageButtonStyle}"
                         ToolTip="Edit selected album"
-                        prismCommands:Click.Command="{Binding EditAlbumCommand}">
+                        commands:Clicked.Command="{Binding EditAlbumCommand}">
                     <Button.Content>
                         <Image Source="/Common.Content;component/Images/CD_edit_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
                     </Button.Content>
@@ -61,7 +60,7 @@
                 <Button Margin="2"
                         Style="{StaticResource ToolbarImageButtonStyle}"
                         ToolTip="Remove selected album"
-                        prismCommands:Click.Command="{Binding RemoveAlbumCommand}">
+                        commands:Clicked.Command="{Binding RemoveAlbumCommand}">
                     <Button.Content>
                         <Image Source="/Common.Content;component/Images/CD_remove_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
                     </Button.Content>
@@ -71,7 +70,7 @@
                 <Button Margin="2"
                         Style="{StaticResource ToolbarImageButtonStyle}"
                         ToolTip="Show waste albums"
-                        prismCommands:Click.Command="{Binding ShowWasteCommand}" Visibility="{Binding IsWasteVisible,Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                        commands:Clicked.Command="{Binding ShowWasteCommand}" Visibility="{Binding IsWasteVisible,Converter={StaticResource InverseBoolToVisibilityConverter}}">
                     <Button.Content>
                         <Image Source="/Common.Content;component/Images/waste_plus_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
                     </Button.Content>
@@ -79,7 +78,7 @@
                 <Button Margin="2"
                         Style="{StaticResource ToolbarImageButtonStyle}"
                         ToolTip="Hide waste albums"
-                        prismCommands:Click.Command="{Binding HideWasteCommand}" Visibility="{Binding IsWasteVisible,Converter={StaticResource BoolToVisibilityConverter}}">
+                        commands:Clicked.Command="{Binding HideWasteCommand}" Visibility="{Binding IsWasteVisible,Converter={StaticResource BoolToVisibilityConverter}}">
                     <Button.Content>
                         <Image Source="/Common.Content;component/Images/waste_minus_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
                     </Button.Content>
@@ -87,7 +86,7 @@
                 <Button Margin="2"
                         Style="{StaticResource ToolbarImageButtonStyle}"
                         ToolTip="Mark album as waste"
-                        prismCommands:Click.Command="{Binding MarkAsWasteCommand}" Visibility="{Binding CurrentAlbum,Converter={StaticResource AlbumWastedToVisibilityConverter}}">
+                        commands:Clicked.Command="{Binding MarkAsWasteCommand}" Visibility="{Binding CurrentAlbum,Converter={StaticResource AlbumWastedToVisibilityConverter}}">
                     <Button.Content>
                         <Image Source="/Common.Content;component/Images/waste_arrow_red_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
                     </Button.Content>
@@ -95,7 +94,7 @@
                 <Button Margin="2"
                         Style="{StaticResource ToolbarImageButtonStyle}"
                         ToolTip="Unmark album as waste"
-                        prismCommands:Click.Command="{Binding UnMarkAsWasteCommand}" Visibility="{Binding CurrentAlbum,Converter={StaticResource InverseAlbumWastedToVisibilityConverter}}">
+                        commands:Clicked.Command="{Binding UnMarkAsWasteCommand}" Visibility="{Binding CurrentAlbum,Converter={StaticResource InverseAlbumWastedToVisibilityConverter}}">
                     <Button.Content>
                         <Image Source="/Common.Content;component/Images/waste_arrow_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
                     </Button.Content>
@@ -105,7 +104,7 @@
                 <Button Margin="2"
                         Style="{StaticResource ToolbarImageButtonStyle}"
                         ToolTip="Import data wizard"
-                        prismCommands:Click.Command="{Binding BulkImportDataCommand}">
+                        commands:Clicked.Command="{Binding BulkImportDataCommand}">
                     <Button.Content>
                         <Image Source="/Common.Content;component/Images/db_comit_48x48.png" Style="{StaticResource ToolBarImageStyle}"/>
                     </Button.Content>

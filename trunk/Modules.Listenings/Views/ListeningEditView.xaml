@@ -7,7 +7,7 @@
              xmlns:converters="clr-namespace:Common.Controls.Converters;assembly=Common.Controls"
              xmlns:controls="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
              xmlns:dialogs="clr-namespace:Common.Dialogs;assembly=Common.Dialogs"
-             xmlns:prismCommand="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"
+             xmlns:commands="clr-namespace:Common.Commands;assembly=Common.Commands"
              xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
              mc:Ignorable="d" 
              x:Name="dialogWindow"
@@ -61,7 +61,7 @@
                     <DockPanel Grid.Row="2" Grid.Column="1" LastChildFill="True">
                         <Button DockPanel.Dock="Right" Margin="{StaticResource DialogMargin}" Style="{StaticResource ImageButtonStyle}"
                                         Visibility="{Binding IsViewMode,Converter={StaticResource InverseBoolToVisibilityConverter}}"
-                                        prismCommand:Click.Command="{Binding SearchAlbumCommand}">
+                                        commands:Clicked.Command="{Binding SearchAlbumCommand}">
                             <Button.Content>
                                 <Image Source="/Common.Content;component/Images/ZoomHS.png" Width="16" Height="16"/>
                             </Button.Content>
@@ -76,7 +76,7 @@
                     <DockPanel Grid.Row="3" Grid.Column="1" LastChildFill="True" 
                                        Visibility="{Binding IsViewMode,Converter={StaticResource InverseBoolToVisibilityConverter}}">
                         <Button DockPanel.Dock="Right" Margin="{StaticResource DialogMargin}" Style="{StaticResource ImageButtonStyle}"
-                                        prismCommand:Click.Command="{Binding CreatePlaceCommand}">
+                                        commands:Clicked.Command="{Binding CreatePlaceCommand}">
                             <Button.Content>
                                 <Image Source="/Common.Content;component/Images/add_15x15.png" Width="15" Height="15"/>
                             </Button.Content>
@@ -92,7 +92,7 @@
                     <DockPanel Grid.Row="4" Grid.Column="1" LastChildFill="True"
                                        Visibility="{Binding IsViewMode,Converter={StaticResource InverseBoolToVisibilityConverter}}">
                         <Button DockPanel.Dock="Right" Margin="{StaticResource DialogMargin}" Style="{StaticResource ImageButtonStyle}"
-                                        prismCommand:Click.Command="{Binding CreateMoodCommand}">
+                                        commands:Clicked.Command="{Binding CreateMoodCommand}">
                             <Button.Content>
                                 <Image Source="/Common.Content;component/Images/add_15x15.png" Width="15" Height="15"/>
                             </Button.Content>

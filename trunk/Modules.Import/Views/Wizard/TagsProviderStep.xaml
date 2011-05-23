@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:prismCommands="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"
+             xmlns:commands="clr-namespace:Common.Commands;assembly=Common.Commands"
              xmlns:commonConverters="clr-namespace:Common.Controls.Converters;assembly=Common.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
@@ -39,7 +39,7 @@
                 <StackPanel>
                     <TextBlock Text="{Binding PathMessage}" VerticalAlignment="Center" TextWrapping="Wrap" Margin="16"/>
                     <DockPanel Margin="16" LastChildFill="True">
-                        <Button prismCommands:Click.Command="{Binding SelectScanPathCommand}" DockPanel.Dock="Right">
+                        <Button commands:Clicked.Command="{Binding SelectScanPathCommand}" DockPanel.Dock="Right">
                             <Button.Content>
                                 <Image Source="/Common.Content;component/Images/ZoomHS.png" Width="16" Height="16" Stretch="Fill"/>
                             </Button.Content>
@@ -51,7 +51,7 @@
         </StackPanel>
         
         <Button Content="Continue" Grid.Row="2" Width="75" Margin="8" HorizontalAlignment="Right" Style="{StaticResource DialogButtonStyle}"
-                prismCommands:Click.Command="{Binding ContinueCommand}"
+                commands:Clicked.Command="{Binding ContinueCommand}"
                 Visibility="{Binding CanContinue,Converter={StaticResource BoolToVisibilityConverter}}"/>
     </Grid>
 </UserControl>

@@ -55,6 +55,8 @@
     <Compile Include="Activated.cs" />
     <Compile Include="ActivatedArgs.cs" />
     <Compile Include="ActivatedBehavior.cs" />
+    <Compile Include="Clicked.cs" />
+    <Compile Include="ClickedBehavior.cs" />
     <Compile Include="MouseLeftButtonDown.cs" />
     <Compile Include="MouseLeftButtonDownBehavior.cs" />
     <Compile Include="MenuItemClick.cs" />

@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:prismCommands="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"
+             xmlns:commands="clr-namespace:Common.Commands;assembly=Common.Commands"
              xmlns:localConverters="clr-namespace:Modules.Import.Converters"
              xmlns:converters="clr-namespace:Common.Controls.Converters;assembly=Common.Controls"
              xmlns:controls="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
@@ -48,19 +48,19 @@
                 <Button Style="{StaticResource DialogButtonStyle}" Width="75" Margin="8"
                         Content="Begin scan" 
                         Visibility="{Binding IsScanning,Converter={StaticResource InverseBoolToVisibilityConverter}}"
-                        prismCommands:Click.Command="{Binding BeginScanCommand}"/>
+                        commands:Clicked.Command="{Binding BeginScanCommand}"/>
                 <Button Style="{StaticResource DialogButtonStyle}" Width="75" Margin="8"
                         Visibility="{Binding IsScanning,Converter={StaticResource BoolToVisibilityConverter}}"
                         Content="{Binding IsPaused,Converter={StaticResource PauseButtonNameConverter}}" 
-                        prismCommands:Click.Command="{Binding PauseScanCommand}"/>
+                        commands:Clicked.Command="{Binding PauseScanCommand}"/>
                 <Button Style="{StaticResource DialogButtonStyle}" Width="75" Margin="8"
                         Content="Cancel"
-                        prismCommands:Click.Command="{Binding CancelScanCommand}"/>
+                        commands:Clicked.Command="{Binding CancelScanCommand}"/>
             </StackPanel>
             <Button Style="{StaticResource DialogButtonStyle}" Width="75" Margin="8"
                     Content="Continue"
                     Visibility="{Binding IsCompleted,Converter={StaticResource BoolToVisibilityConverter}}"
-                    prismCommands:Click.Command="{Binding ContinueCommand}"/>
+                    commands:Clicked.Command="{Binding ContinueCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>
