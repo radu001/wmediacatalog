@@ -45,6 +45,10 @@
     <Reference Include="FolderPickerLib">
       <HintPath>..\..\..\FolderPickerLib\bin\Debug\FolderPickerLib.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Lib\NLog\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="PsqlDotnet">
       <HintPath>..\..\..\..\psqldotnet\PsqlDotnet\PsqlDotnet\bin\Debug\PsqlDotnet.dll</HintPath>
     </Reference>
@@ -71,7 +75,16 @@
     <Compile Include="Data\ItemStatus.cs" />
     <Compile Include="Data\PsqlScriptTask.cs" />
     <Compile Include="Data\ScriptTask.cs" />
+    <Compile Include="LogWindow.xaml.cs">
+      <DependentUpon>LogWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\ILog.cs" />
+    <Compile Include="Utils\Log.cs" />
     <Compile Include="ViewModel.cs" />
+    <Page Include="LogWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -104,6 +117,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

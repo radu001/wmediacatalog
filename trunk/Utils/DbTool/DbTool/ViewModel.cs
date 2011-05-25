@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Xml.Linq;
 using Common.Data;
 using DbTool.Data;
+using DbTool.Utils;
 using FolderPickerLib;
 using PsqlDotnet;
 namespace DbTool
@@ -25,10 +26,14 @@ namespace DbTool
             UILoadedCommand = new DelegateCommand<object>(OnUILoadedCommand);
             StartDeployCommand = new DelegateCommand<object>(OnStartDeployCommand);
             LocatePsqlCommand = new DelegateCommand<object>(OnLocatePsqlCommand);
+            FinishToolCommand = new DelegateCommand<object>(OnFinishToolCommand);
+            ShowLogCommand = new DelegateCommand<object>(OnShowLogCommand);
 
             Login = "postgres";
             Password = "password";
             Database = "media";
+
+            log = new Log();
         }
 
         #region IViewModel Members
@@ -43,6 +48,19 @@ namespace DbTool
             {
                 deployStarted = value;
                 NotifyPropertyChanged(() => DeployStarted);
+            }
+        }
+
+        public bool DeployFinished
+        {
+            get
+            {
+                return deployFinished;
+            }
+            private set
+            {
+                deployFinished = value;
+                NotifyPropertyChanged(() => DeployFinished);
             }
         }
 
@@ -143,6 +161,10 @@ namespace DbTool
 
         public DelegateCommand<object> LocatePsqlCommand { get; private set; }
 
+        public DelegateCommand<object> FinishToolCommand { get; private set; }
+
+        public DelegateCommand<object> ShowLogCommand { get; private set; }
+
         #endregion
 
         #region Private methods
@@ -201,6 +223,18 @@ namespace DbTool
             Tasks = InitDeployTasks();
         }
 
+        private void OnFinishToolCommand(object parameter)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void OnShowLogCommand(object parameter)
+        {
+            var logText = log.GetAllLog();
+            var logWindow = new LogWindow();
+            logWindow.ShowLog(logText);
+        }
+
         private void OnStartDeployCommand(object parameter)
         {
             if (String.IsNullOrEmpty(PsqlPath))
@@ -210,6 +244,7 @@ namespace DbTool
             }
 
             DeployStarted = true;
+            DeployFinished = false;
 
             PerformDeploy();
         }
@@ -224,14 +259,32 @@ namespace DbTool
             }
 
             //perform deploy
-            var deployTasks = Task.Factory.StartNew(() =>
+            var deployTask = Task.Factory.StartNew(() =>
             {
                 foreach (var task in Tasks)
                     task.Deploy();
             }, CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+
+            var finishDeploy = deployTask.ContinueWith((t) =>
+                {
+                    DeployFinished = true;
+
+                    var hasErrors = Tasks.Any( te => te.Status == ItemStatus.Error);
+
+                    if (hasErrors)
+                    {
+                        MessageBox.Show("Some errors occured while creating database schema. Please send report to developers");
+                        ShowLogCommand.Execute(null);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Database schema deploy has been successful");
+                    }
+
+                }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        private IList<PsqlScriptTask> InitDeployTasks() // may be long running
+        private IList<PsqlScriptTask> InitDeployTasks()
         {
             var result = new List<PsqlScriptTask>();
 
@@ -307,6 +360,7 @@ namespace DbTool
         #region Private fields
 
         private bool deployStarted;
+        private bool deployFinished;
         private string login;
         private string password;
         private string database;
@@ -316,6 +370,7 @@ namespace DbTool
         private IList<PsqlScriptTask> tasks;
 
         private CancellationTokenSource cancelToken;
+        private ILog log;
 
         #endregion
     }

@@ -64,9 +64,18 @@
                 </ListView.ItemTemplate>
             </ListView>
         </GroupBox>
-        <Button Content="Start deploy" Width="100" Grid.Row="5" Grid.ColumnSpan="3" HorizontalAlignment="Right" Margin="8"
+        <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.ColumnSpan="3" HorizontalAlignment="Right" Margin="8">
+            <Button Content="Start deploy" Width="100" 
                 commands:Clicked.Command="{Binding StartDeployCommand}"
                 Visibility="{Binding DeployStarted,Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
+            <Button Content="Finish" Width="100" 
+                commands:Clicked.Command="{Binding FinishToolCommand}"
+                Visibility="{Binding DeployFinished,Converter={StaticResource BoolToVisibilityConverter}}"/>
+            <Button Content="Show log" Width="100" 
+                commands:Clicked.Command="{Binding ShowLogCommand}"
+                Visibility="{Binding DeployFinished,Converter={StaticResource BoolToVisibilityConverter}}"/>
+        </StackPanel>
+
 
         <StatusBar Grid.Row="6" Grid.ColumnSpan="3" Visibility="{Binding IsSearching,Converter={StaticResource BoolToVisibilityConverter}}">
             <StackPanel Orientation="Horizontal">
