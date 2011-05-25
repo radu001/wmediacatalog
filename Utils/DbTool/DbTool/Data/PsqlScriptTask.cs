@@ -1,4 +1,6 @@
 ﻿
+using System;
+using DbTool.Utils;
 using PsqlDotnet;
 namespace DbTool.Data
 {
@@ -25,7 +27,10 @@ namespace DbTool.Data
                 Shell.ExecuteScript(Script, DbName);
                 success = true;
             }
-            catch { }
+            catch (Exception ex)
+            {
+                new Log().Write(ex);
+            }
 
             FinishDeploy(success);
 

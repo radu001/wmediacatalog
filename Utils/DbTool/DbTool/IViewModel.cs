@@ -12,10 +12,13 @@ namespace DbTool
         string CurrentLookupDir { get; }
         bool IsSearching { get; }
         bool DeployStarted { get; }
+        bool DeployFinished { get; }
         IList<PsqlScriptTask> Tasks { get; }
 
         DelegateCommand<object> UILoadedCommand { get; }
         DelegateCommand<object> StartDeployCommand { get; }
         DelegateCommand<object> LocatePsqlCommand { get; }
+        DelegateCommand<object> FinishToolCommand { get; }
+        DelegateCommand<object> ShowLogCommand { get; }
     }
 }
