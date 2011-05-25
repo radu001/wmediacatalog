@@ -1,3 +1,5 @@
+Copyright (C) 2011 Ilya N. Ternovikh (ternovich at gmail dot com)
+
 GNU LESSER GENERAL PUBLIC LICENSE
 
 Version 3, 29 June 2007
