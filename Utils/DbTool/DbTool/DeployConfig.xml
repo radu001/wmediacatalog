@@ -1,0 +1,303 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<config>
+  <task name="Create or replace language" description="none">
+    CREATE OR REPLACE FUNCTION make_plpgsql()
+    RETURNS VOID
+    LANGUAGE SQL
+    AS $$
+    CREATE LANGUAGE plpgsql;
+    $$;
+
+    SELECT
+    CASE
+    WHEN EXISTS(
+    SELECT 1
+    FROM pg_catalog.pg_language
+    WHERE lanname='plpgsql'
+    )
+    THEN NULL
+    ELSE make_plpgsql() END;
+
+    DROP FUNCTION make_plpgsql();
+  </task>
+  <task name="Create missing genres sp" description="none">
+    CREATE OR REPLACE FUNCTION find_missing_genres(genresxml xml) RETURNS xml
+    LANGUAGE plpgsql
+    AS $$
+    declare
+    xmlStr xml;
+    missingGenresXml text;
+    arrayLength integer;
+    xelement xml;
+    list text[];
+    begin
+    list := (select * from (select xpath('/genres/g/text()',genresXml)::text[] x) as x);
+    arrayLength := (select array_upper(list, 1));
+    missingGenresXml := '<genres>
+      ';
+
+      FOR i IN 1..arrayLength LOOP
+      if ((select count(1) from genres where name like list[i]) = 0) then
+      --RAISE NOTICE 'array[i][1]=% not found in db', list[i];
+      xelement := (select xmlelement(name g, text (list[i])));
+      missingGenresXml := missingGenresXml || xelement;
+      end if;
+      END LOOP;
+
+      missingGenresXml := missingGenresXml || '
+    </genres>';
+
+    return missingGenresXml;
+
+    end; $$;
+  </task>
+  <task name="Create bulk import sp" description="none">
+CREATE OR REPLACE FUNCTION import_media(xmlstr character varying) RETURNS integer
+    LANGUAGE plpgsql
+    AS $$
+declare
+ xml_data xml;
+ albumsCount integer;
+ genresCount integer;
+ artistsCount integer;
+ artistList text[];
+ albumList text[];
+ genreList text[];
+ i int; j int; k int;
+ artistID int; albumID int;
+ xpathQuery character varying;
+ currentAlbum character varying; currentArtist character varying;
+ currentGenre character varying;
+ albumYear int;
+ genreID int;
+begin
+ xml_data = xmlStr::xml;
+ --process all genres and ensure all of them are persisted into db
+ genreList := (select xpath('//artists/a/al/gn/g/@name',xml_data)::text[] x);
+
+ genresCount := array_upper(genreList,1);
+ if genresCount > 0 then
+	 --loop throigh unique genre names
+	 for currentGenre in ( select distinct lower(a) from unnest(genreList) a) loop
+	   --make first chars of genre words capital
+	   insert into genres (name) select initcap(currentGenre)
+	     where not exists (select g.name from genres g where
+		g.name=initcap(currentGenre));
+	 end loop;
+ end if;
+
+
+ artistList := (select xpath('//artists/a/@name',xml_data)::text[] x);
+
+ artistsCount := array_upper(artistList,1);
+ if artistsCount > 0 then
+	 for i in 1..artistsCount loop
+	   currentArtist := artistList[i];
+
+	   --get or create new artist by name and fetch it's id
+	    artistID = (select id from artists a where lower(a.name) =
+		trim(lower(currentArtist)));
+	    if artistID is null then
+	      insert into artists(name) values(trim(currentArtist)) returning	id into artistID;
+	    end if;
+
+	   --process albums for given artist
+	   xpathQuery := '//artists/a[@name="' || currentArtist || '"]/al/@name';
+	   albumList := (select xpath(xpathQuery,xml_data)::text[] y);
+           if ( array_upper(albumList,1) > 0 ) then
+		   for j in 1..array_upper(albumList,1) loop
+		     currentAlbum := albumList[j];
+
+		     --check whether album with given name exists in database
+		     albumsCount = (select count(1) from albums a where a.name = currentAlbum);
+		     if ( albumsCount = 0 ) then
+		       --get album year
+		       xpathQuery := '//artists/a[@name="' || currentArtist || '"]/al[@name="' || currentAlbum || '"]/@year';
+		       albumYear := (select y[1] from (select xpath(xpathQuery,xml_data)::text[] y) as y);
+
+		       if ( albumYear is null ) then
+			 albumYear := 1900;
+		       end if;
+
+		       --create new album and link with artist
+		       insert into albums(name,rating,year) values(trim(currentAlbum),0,to_date('01 01 ' || albumYear, 'DD MM YYYY'))
+			 returning id into albumID;
+		     else
+		       albumID := (select a.id from albums a where a.name = currentAlbum);
+		     end if;
+
+		     --check whether album is already bound to artists
+		     albumsCount := (select count(1) from artists_albums where artist_id = artistID and album_id = albumID);
+		     if ( albumsCount = 0 ) then
+		       insert into artists_albums(artist_id,album_id) values(artistID,albumID);
+		     end if;
+
+		     --process genres of given album
+		     xpathQuery := '//artists/a[@name="' || currentArtist ||
+			'"]/al[@name="' || currentAlbum || '"]/gn/g/@name';
+		     genreList := (select xpath(xpathQuery,xml_data)::text[] z);
+
+		     genresCount := array_upper(genreList,1);
+		     if genresCount > 0 then
+		       for k in 1..genresCount loop
+			 currentGenre := genreList[k];
+			 genreID := (select id from genres g where g.name = currentGenre );
+			 if genreID is not null then
+			   if ( select count(1) from albums_genres where album_id = albumID and genre_id = genreID ) = 0 then
+			     insert into albums_genres(album_id,genre_id) values(albumID, genreID);
+			   end if;
+			 end if;
+		       end loop;
+		     end if;
+		   end loop;
+	  end if;
+	 end loop;
+ end if;
+
+ return 0;
+end;
+$$;
+
+  </task>
+  <task name="Create albums table" description="none">
+    CREATE TABLE albums (
+    id serial NOT NULL,
+    name character varying NOT NULL,
+    description character varying,
+    private_marks character varying,
+    label character varying(128),
+    asin character varying,
+    freedb_id character varying,
+    year date,
+    discs_count integer,
+    rating integer NOT NULL,
+    is_waste boolean DEFAULT false NOT NULL
+    );
+  </task>
+  <task name="Create albums_genres table" description="none">
+    CREATE TABLE albums_genres (
+    album_id integer NOT NULL,
+    genre_id integer NOT NULL
+    );
+  </task>
+  <task name="Create artists table" description="none">
+    CREATE TABLE artists (
+    id serial NOT NULL,
+    name character varying NOT NULL,
+    private_marks character varying,
+    biography character varying,
+    is_waste boolean DEFAULT false NOT NULL
+    );
+  </task>
+  <task name="Create artists_albums table" description="none">
+    CREATE TABLE artists_albums (
+    artist_id integer NOT NULL,
+    album_id integer NOT NULL
+    );
+  </task>
+  <task name="Create genres table" description="none">
+    CREATE TABLE genres (
+    id serial NOT NULL,
+    name character varying NOT NULL,
+    private_marks character varying,
+    comments character varying,
+    description character varying
+    );
+  </task>
+  <task name="Create listens table" description="none">
+    CREATE TABLE listens (
+    id serial NOT NULL,
+    date timestamp with time zone NOT NULL,
+    review character varying,
+    private_marks character varying,
+    comments character varying,
+    mood_id integer NOT NULL,
+    album_id integer NOT NULL,
+    listen_rating integer,
+    place_id integer NOT NULL
+    );
+  </task>
+  <task name="Create moods table" description="none">
+    CREATE TABLE moods (
+    id serial NOT NULL,
+    name character varying NOT NULL,
+    private_marks character varying,
+    comment character varying,
+    description character varying
+    );
+  </task>
+  <task name="Create places table" description="none">
+    CREATE TABLE places (
+    id serial NOT NULL,
+    name character varying NOT NULL,
+    private_marks character varying,
+    comment character varying,
+    description character varying
+    );
+  </task>
+  <task name="Create tags table" description="none">
+    CREATE TABLE tags (
+    id serial NOT NULL,
+    name character varying NOT NULL,
+    private_marks character varying,
+    comments character varying,
+    description character varying,
+    create_date timestamp with time zone
+    );
+
+  </task>
+  <task name="Create tags_albums table" description="none">
+    CREATE TABLE tags_albums (
+    tag_id integer NOT NULL,
+    album_id integer NOT NULL
+    );
+  </task>
+  <task name="Create tags_artists table" description="none">
+    CREATE TABLE tags_artists (
+    tag_id integer NOT NULL,
+    artist_id integer NOT NULL
+    );
+  </task>
+  <task name="Create tracks table" description="none">
+    CREATE TABLE tracks (
+    id integer NOT NULL,
+    name character varying NOT NULL,
+    track_index integer,
+    length integer,
+    album_id integer NOT NULL
+    );
+  </task>
+  <task name="Create user_logins table" description="none">
+    CREATE TABLE user_logins (
+    id serial NOT NULL,
+    user_id integer NOT NULL,
+    login_date timestamp without time zone NOT NULL
+    );
+  </task>
+  <task name="Create user_settings table" description="none">
+    CREATE TABLE user_settings (
+    id serial NOT NULL,
+    user_id integer NOT NULL,
+    value1 character varying
+    );
+  </task>
+  <task name="Create users table" description="none">
+    CREATE TABLE users (
+    id serial NOT NULL,
+    user_name character varying NOT NULL,
+    password character varying NOT NULL
+    );
+  </task>
+  <!--<task name="Create table" description="none">
+
+  </task>
+  <task name="Create table" description="none">
+
+  </task>
+  <task name="Create table" description="none">
+
+  </task>
+  <task name="Create table" description="none">
+
+  </task>-->
+</config>

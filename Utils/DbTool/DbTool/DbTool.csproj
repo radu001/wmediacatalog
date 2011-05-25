@@ -39,6 +39,15 @@
     <Reference Include="Common">
       <HintPath>..\..\..\Common\bin\Debug\Common.dll</HintPath>
     </Reference>
+    <Reference Include="Common.Commands">
+      <HintPath>..\..\..\CommonCommands\bin\Debug\Common.Commands.dll</HintPath>
+    </Reference>
+    <Reference Include="FolderPickerLib">
+      <HintPath>..\..\..\FolderPickerLib\bin\Debug\FolderPickerLib.dll</HintPath>
+    </Reference>
+    <Reference Include="PsqlDotnet">
+      <HintPath>..\..\..\..\psqldotnet\PsqlDotnet\PsqlDotnet\bin\Debug\PsqlDotnet.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -58,6 +67,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Data\IDeployTask.cs" />
+    <Compile Include="Data\ItemStatus.cs" />
+    <Compile Include="Data\PsqlScriptTask.cs" />
+    <Compile Include="Data\ScriptTask.cs" />
     <Compile Include="ViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -97,6 +110,16 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="DeployConfig.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Icons\arrow-right-3.png" />
+    <Resource Include="Icons\dialog-cancel-3.png" />
+    <Resource Include="Icons\dialog-ok-2.png" />
+    <Resource Include="Icons\hourglass-2.png" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
