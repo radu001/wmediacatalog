@@ -123,6 +123,7 @@
   <ItemGroup>
     <Content Include="DeployConfig.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Resource Include="Icons\arrow-right-3.png" />
     <Resource Include="Icons\dialog-cancel-3.png" />

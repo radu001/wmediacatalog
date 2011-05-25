@@ -269,7 +269,7 @@ namespace DbTool
                 {
                     DeployFinished = true;
 
-                    var hasErrors = Tasks.Any( te => te.Status == ItemStatus.Error);
+                    var hasErrors = Tasks.Any(te => te.Status == ItemStatus.Error);
 
                     if (hasErrors)
                     {
@@ -288,16 +288,27 @@ namespace DbTool
         {
             var result = new List<PsqlScriptTask>();
 
+            //no-database
+
             var document = XDocument.Load("DeployConfig.xml");
             var tasks = document.Descendants("task").ToArray();
 
             for (int i = 0; i < tasks.Length; ++i)
             {
                 var node = tasks[i];
-                result.Add(new PsqlScriptTask(i,
+                var noDbAttribute = node.Attributes("no-database").FirstOrDefault();
+
+                var task = new PsqlScriptTask(i,
                     node.Attributes("name").First().Value,
                     node.Attributes("description").First().Value,
-                    node.Value, Database));
+                    node.Value, Database);
+
+                if (noDbAttribute != null)
+                {
+                    task.DontUseDatabase = Boolean.Parse(noDbAttribute.Value);
+                }
+
+                result.Add(task);
             }
 
             return result;
@@ -348,11 +359,14 @@ namespace DbTool
                 || (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))))
             {
                 result.Add(Environment.GetEnvironmentVariable("ProgramFiles(x86)"));
+                result.Add(Environment.GetEnvironmentVariable("ProgramW6432"));
+            }
+            else
+            {
+                result.Add(Environment.GetEnvironmentVariable("ProgramFiles"));
             }
 
-            result.Add(Environment.GetEnvironmentVariable("ProgramFiles"));
-
-            return result.Where(s => !String.IsNullOrEmpty(s)).ToArray();
+            return result.Where(s => !String.IsNullOrEmpty(s)).Distinct().ToArray();
         }
 
         #endregion

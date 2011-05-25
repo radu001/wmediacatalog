@@ -43,8 +43,8 @@
                  Grid.ColumnSpan="2"/>
 
         <TextBlock Text="Database:" Grid.Row="2" Grid.Column="0" Style="{StaticResource TitleStyle}"/>
-        <TextBox Text="{Binding Database,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1" Margin="8"
-                 Grid.ColumnSpan="2"/>
+        <TextBox Text="{Binding Database,Mode=OneWay}" Grid.Row="2" Grid.Column="1" Margin="8"
+                 IsReadOnly="True" Grid.ColumnSpan="2"/>
 
         <TextBlock Text="Psql location:" Grid.Row="3" Grid.Column="0" Style="{StaticResource TitleStyle}"/>
         <TextBox Text="{Binding PsqlPath,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" Margin="8"

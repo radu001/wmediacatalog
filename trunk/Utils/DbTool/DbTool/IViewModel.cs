@@ -7,7 +7,7 @@ namespace DbTool
     {
         string Login { get; set; }
         string Password { get; set; }
-        string Database { get; set; }
+        string Database { get; }
         string PsqlPath { get; }
         string CurrentLookupDir { get; }
         bool IsSearching { get; }
