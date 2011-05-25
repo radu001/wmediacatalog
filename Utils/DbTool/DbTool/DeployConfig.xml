@@ -1,5 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <config>
+  <task name="Create user" description="none" no-database="true">
+    create user \"user\" with password 'user'
+  </task>
+  <task name="Create database" description="none" no-database="true">
+    CREATE DATABASE media WITH OWNER \"user\"
+  </task>
   <task name="Create or replace language" description="none">
     CREATE OR REPLACE FUNCTION make_plpgsql()
     RETURNS VOID
@@ -288,16 +294,79 @@ $$;
     password character varying NOT NULL
     );
   </task>
-  <!--<task name="Create table" description="none">
-
+  <task name="Create primary keys" description="none">
+    ALTER TABLE ONLY albums
+    ADD CONSTRAINT pk_albums PRIMARY KEY (id);
+    ALTER TABLE ONLY artists
+    ADD CONSTRAINT pk_artists PRIMARY KEY (id);
+    ALTER TABLE ONLY genres
+    ADD CONSTRAINT pk_genres PRIMARY KEY (id);
+    ALTER TABLE ONLY listens
+    ADD CONSTRAINT pk_listens PRIMARY KEY (id);
+    ALTER TABLE ONLY moods
+    ADD CONSTRAINT pk_moods PRIMARY KEY (id);
+    ALTER TABLE ONLY places
+    ADD CONSTRAINT pk_places PRIMARY KEY (id);
+    ALTER TABLE ONLY tags
+    ADD CONSTRAINT pk_tags PRIMARY KEY (id);
+    ALTER TABLE ONLY tracks
+    ADD CONSTRAINT pk_tracks PRIMARY KEY (id);
+    ALTER TABLE ONLY user_logins
+    ADD CONSTRAINT pk_user_logins PRIMARY KEY (id);
+    ALTER TABLE ONLY user_settings
+    ADD CONSTRAINT pk_user_settings PRIMARY KEY (id);
+    ALTER TABLE ONLY users
+    ADD CONSTRAINT pk_users PRIMARY KEY (id);
   </task>
-  <task name="Create table" description="none">
-
+  <task name="Create unique constraints" description="none">
+    ALTER TABLE ONLY artists
+    ADD CONSTRAINT \"uq_artists(name)\" UNIQUE (name);
+    ALTER TABLE ONLY genres
+    ADD CONSTRAINT \"uq_genres(name)\" UNIQUE (name);
+    ALTER TABLE ONLY moods
+    ADD CONSTRAINT \"uq_moods(name)\" UNIQUE (name);
+    ALTER TABLE ONLY places
+    ADD CONSTRAINT \"uq_places(name)\" UNIQUE (name);
+    ALTER TABLE ONLY tags
+    ADD CONSTRAINT \"uq_tags(name)\" UNIQUE (name);
+    ALTER TABLE ONLY users
+    ADD CONSTRAINT \"uq_users(user_name)\" UNIQUE (user_name);
   </task>
-  <task name="Create table" description="none">
-
+  <task name="Create indices and foreign key constraints" description="none">
+    CREATE INDEX fki_listens_places ON listens USING btree (place_id);
+    ALTER TABLE ONLY albums_genres
+    ADD CONSTRAINT albums_genres_to_albums FOREIGN KEY (album_id) REFERENCES albums(id);
+    ALTER TABLE ONLY albums_genres
+    ADD CONSTRAINT albums_genres_to_genres FOREIGN KEY (genre_id) REFERENCES genres(id);
+    ALTER TABLE ONLY artists_albums
+    ADD CONSTRAINT fk_artists_albums_to_albums FOREIGN KEY (album_id) REFERENCES albums(id);
+    ALTER TABLE ONLY artists_albums
+    ADD CONSTRAINT fk_artists_albums_to_artists FOREIGN KEY (artist_id) REFERENCES artists(id);
+    ALTER TABLE ONLY listens
+    ADD CONSTRAINT fk_listens_albums FOREIGN KEY (album_id) REFERENCES albums(id);
+    ALTER TABLE ONLY listens
+    ADD CONSTRAINT fk_listens_moods FOREIGN KEY (mood_id) REFERENCES moods(id);
+    ALTER TABLE ONLY listens
+    ADD CONSTRAINT fk_listens_places FOREIGN KEY (place_id) REFERENCES places(id);
+    ALTER TABLE ONLY tags_albums
+    ADD CONSTRAINT fk_tags_albums_to_albums FOREIGN KEY (album_id) REFERENCES albums(id);
+    ALTER TABLE ONLY tags_albums
+    ADD CONSTRAINT fk_tags_albums_to_tags FOREIGN KEY (tag_id) REFERENCES tags(id);
+    ALTER TABLE ONLY tags_artists
+    ADD CONSTRAINT fk_tags_artists_to_artists FOREIGN KEY (artist_id) REFERENCES artists(id);
+    ALTER TABLE ONLY tags_artists
+    ADD CONSTRAINT fk_tags_artists_to_tags FOREIGN KEY (tag_id) REFERENCES tags(id);
+    ALTER TABLE ONLY tracks
+    ADD CONSTRAINT fk_tracks_albums FOREIGN KEY (album_id) REFERENCES albums(id);
+    ALTER TABLE ONLY user_logins
+    ADD CONSTRAINT fk_user_logins_users FOREIGN KEY (user_id) REFERENCES users(id);
+    ALTER TABLE ONLY user_settings
+    ADD CONSTRAINT fk_user_settings_users FOREIGN KEY (user_id) REFERENCES users(id);
   </task>
-  <task name="Create table" description="none">
-
-  </task>-->
+  <task name="Fixing permissions" description="none">
+    REVOKE ALL ON SCHEMA public FROM PUBLIC;
+    REVOKE ALL ON SCHEMA public FROM \"user\";
+    GRANT ALL ON SCHEMA public TO \"user\";
+    GRANT ALL ON SCHEMA public TO PUBLIC;
+  </task>
 </config>

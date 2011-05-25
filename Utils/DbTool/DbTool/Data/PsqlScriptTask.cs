@@ -10,8 +10,10 @@ namespace DbTool.Data
 
         public IPsqlShell Shell { get; set; }
 
+        public bool DontUseDatabase { get; set; }
+
         public PsqlScriptTask(int index, string name, string description, string script, string dbName)
-            :base(index, name, description, script)
+            : base(index, name, description, script)
         {
             DbName = dbName;
         }
@@ -24,6 +26,9 @@ namespace DbTool.Data
 
             try
             {
+                if (DontUseDatabase)
+                    DbName = null;
+
                 Shell.ExecuteScript(Script, DbName);
                 success = true;
             }
