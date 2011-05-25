@@ -36,12 +36,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Common">
-      <HintPath>..\..\..\Common\bin\Debug\Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Common.Commands">
-      <HintPath>..\..\..\CommonCommands\bin\Debug\Common.Commands.dll</HintPath>
-    </Reference>
     <Reference Include="FolderPickerLib">
       <HintPath>..\..\..\FolderPickerLib\bin\Debug\FolderPickerLib.dll</HintPath>
     </Reference>
@@ -50,7 +44,7 @@
       <HintPath>..\..\..\Lib\NLog\NLog.dll</HintPath>
     </Reference>
     <Reference Include="PsqlDotnet">
-      <HintPath>..\..\..\..\psqldotnet\PsqlDotnet\PsqlDotnet\bin\Debug\PsqlDotnet.dll</HintPath>
+      <HintPath>..\..\..\Lib\PsqlDotnet\PsqlDotnet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -135,7 +129,16 @@
     <Resource Include="Icons\dialog-ok-2.png" />
     <Resource Include="Icons\hourglass-2.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\CommonCommands\Common.Commands.csproj">
+      <Project>{AF33854B-F0F2-4207-892D-2B288E4E37D5}</Project>
+      <Name>Common.Commands</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\Common.csproj">
+      <Project>{E66025A2-8077-40D1-B627-4D4945CEB365}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
