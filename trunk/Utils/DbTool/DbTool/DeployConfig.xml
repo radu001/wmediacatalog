@@ -364,9 +364,6 @@ $$;
     ADD CONSTRAINT fk_user_settings_users FOREIGN KEY (user_id) REFERENCES users(id);
   </task>
   <task name="Fixing permissions" description="none">
-    REVOKE ALL ON SCHEMA public FROM PUBLIC;
-    REVOKE ALL ON SCHEMA public FROM \"user\";
-    GRANT ALL ON SCHEMA public TO \"user\";
-    GRANT ALL ON SCHEMA public TO PUBLIC;
+    GRANT ALL PRIVILEGES ON DATABASE media to \"user\"
   </task>
 </config>
