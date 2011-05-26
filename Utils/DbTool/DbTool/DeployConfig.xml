@@ -363,7 +363,42 @@ $$;
     ALTER TABLE ONLY user_settings
     ADD CONSTRAINT fk_user_settings_users FOREIGN KEY (user_id) REFERENCES users(id);
   </task>
-  <task name="Fixing permissions" description="none">
-    GRANT ALL PRIVILEGES ON DATABASE media to \"user\"
+  <task name="Fixing permissions 1" description="none">
+    grant all on
+    users_id_seq,
+    albums_id_seq,
+    artists_id_seq,
+    genres_id_seq,
+    listens_id_seq,
+    moods_id_seq,
+    places_id_seq,
+    tags_id_seq,
+    user_logins_id_seq,
+    user_settings_id_seq,
+    users_id_seq
+    to \"user\";
+    GRANT ALL PRIVILEGES ON DATABASE media to \"user\";
+
+    grant all on function find_missing_genres(genresxml xml) to \"user\";
+    grant all on function import_media(xmlstr character varying) to \"user\";
+  </task>
+  <task name="Fixing permissions 2" description="none">
+    grant all on table users to \"user\";
+    grant all on table places to \"user\";
+    grant all on table tags to \"user\";
+    grant all on table tags_albums to \"user\";
+    grant all on table tags_artists to \"user\";
+    grant all on table tracks to \"user\";
+    grant all on table user_logins to \"user\";
+  </task>
+  <task name="Fixing permissions 3" description="none">
+    grant all on table user_settings to \"user\";
+    grant all on table albums to \"user\";
+    grant all on table albums_genres to \"user\";
+    grant all on table artists to \"user\";
+    grant all on table artists_albums to \"user\";
+    grant all on table genres to \"user\";
+    grant all on table listens to \"user\";
+    grant all on table moods to \"user\";
   </task>
 </config>
