@@ -36,9 +36,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FolderPickerLib">
-      <HintPath>..\..\..\FolderPickerLib\bin\Debug\FolderPickerLib.dll</HintPath>
-    </Reference>
     <Reference Include="NLog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Lib\NLog\NLog.dll</HintPath>
@@ -139,6 +136,13 @@
       <Project>{E66025A2-8077-40D1-B627-4D4945CEB365}</Project>
       <Name>Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\FolderPickerLib\FolderPickerLib.csproj">
+      <Project>{F53582DB-02B7-4864-B7AA-AAD055A591E4}</Project>
+      <Name>FolderPickerLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

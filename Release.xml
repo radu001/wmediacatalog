@@ -1,0 +1,23 @@
+﻿<Project DefaultTargets="BuildAll"
+         xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <ItemGroup>
+    <NpgsqlFiles Include="Lib\Npgsql\Npgsql.dll"/>
+    <NpgsqlFiles Include="Lib\Npgsql\Mono.Security.dll"/>
+    <NpgsqlFiles Include="Lib\NHibernate\NHibernate.ByteCode.LinFu.dll"/>
+    <NpgsqlFiles Include="Lib\NHibernate\NHibernate.dll"/>
+    <NpgsqlFiles Include="Lib\NHibernate\Antlr3.Runtime.dll"/>
+    <NpgsqlFiles Include="Lib\NHibernate\Iesi.Collections.dll"/>
+    <NpgsqlFiles Include="Lib\NHibernate\LinFu.DynamicProxy.dll"/>
+    <NpgsqlFiles Include="DataLayer\hibernate.cfg.xml"/>
+    <NpgsqlFiles Include="Lib\NHibernate.Logging\NHibernate.Logging.dll"/>
+  </ItemGroup>
+  
+  <Target Name="BuildAll" >
+    <MSBuild Projects="Utils\DbTool\DbTool\DbTool.csproj" Properties="Configuration=Release;Platform=x86;OutputPath=$(MSBuildProjectDirectory)\Release"/>
+  </Target>
+
+  <Target Name="CopyThirdParties" BeforeTargets="BuildAll">
+    <Copy SourceFiles="@(NpgsqlFiles)" DestinationFolder="$(MSBuildProjectDirectory)\Release"/>
+  </Target>
+</Project>
