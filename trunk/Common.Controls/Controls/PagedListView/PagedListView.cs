@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
+using System;
 
 namespace Common.Controls.Controls
 {
@@ -24,17 +27,31 @@ namespace Common.Controls.Controls
             }
         }
 
+        /// <summary>
+        /// Indicates whether to measure pageSize using first item container in PagedListView.
+        /// If set to false then pageSize will be measured using the height of max  item container
+        /// </summary>
+        public bool MeasureByFirstItem { get; set; }
 
         #endregion
 
         public PagedListView()
             : base()
         {
+            timer = new Timer(300);
+            timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
         }
 
-        protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
+        private void timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            base.OnRenderSizeChanged(sizeInfo);
+            Dispatcher.Invoke(
+                DispatcherPriority.Background,
+                new Action(UpdatePageSize));
+        }
+
+        private void UpdatePageSize()
+        {
+            timer.Stop();
 
             if (ItemsSource != null)
             {
@@ -51,7 +68,7 @@ namespace Common.Controls.Controls
 
                 if (sizes.Count > 0)
                 {
-                    int maxVisibleItems = (int)(sizeInfo.NewSize.Height / sizes.Max(s => s.Height));
+                    int maxVisibleItems = (int)(ActualHeight / sizes.Max(s => s.Height));
                     if (maxVisibleItems != PageSize)
                     {
                         if (maxVisibleItems > 2)
@@ -62,5 +79,15 @@ namespace Common.Controls.Controls
                 }
             }
         }
+
+        protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
+        {
+            base.OnRenderSizeChanged(sizeInfo);
+
+            timer.Stop();
+            timer.Start();
+        }
+
+        private Timer timer;
     }
 }
