@@ -97,7 +97,6 @@
 
         </ResourceDictionary>
     </UserControl.Resources>
-
     <Grid x:Name="LayoutRoot" 
           commonControls:BusyIndicatorBehavior.BusyState="{Binding IsBusy}"
           commonControls:BusyIndicatorBehavior.AddMargins="True">
@@ -212,21 +211,21 @@
         </ToolBarTray>
 
         <commonControls:FilterControl Grid.Row="1" Grid.ColumnSpan="2" Margin="4"
-                                          FilterFields="{Binding Fields}"
+                                          FilterFields="{Binding Fields}" ScrollViewer.VerticalScrollBarVisibility="Hidden"
                                           SelectedFilterField="{Binding SelectedField,Mode=TwoWay}"
                                           SelectedFilterValue="{Binding SelectedValue,Mode=TwoWay}"
                                           ItemContainerStyle="{StaticResource GeneralComboBoxItemStyle}"
                                           />
 
         <GroupBox Header="Artists" Grid.Row="2" Grid.Column="0">
-            <ListView x:Name="ArtistsListView" 
+            <commonControls:PagedListView x:Name="ArtistsListView"
+                      PageSize="{Binding VisibleArtistsCount, Mode=OneWayToSource}"
                       ItemsSource="{Binding ArtistsCollection}" 
                       SelectedItem="{Binding CurrentArtist,Mode=TwoWay}"
                       ItemContainerStyle="{StaticResource GeneralListViewItemStyle}"
                       ItemTemplate="{StaticResource ArtistTemplate}" ContextMenu="{StaticResource ArtistContextMenu}"
                       commands:MouseDoubleClick.Command="{Binding EditArtistCommand}"/>
         </GroupBox>
-
 
 
         <GroupBox Header="Albums" Grid.Row="2" Grid.Column="1">
@@ -240,13 +239,8 @@
                   ItemContainerStyle="{StaticResource GeneralListViewItemStyle}"
                   ItemTemplate="{StaticResource AlbumTemplate}"
                   commands:MouseDoubleClick.Command="{Binding EditAlbumCommand}"/>
-                <!--<TextBlock Text="Loading albums..." FontWeight="Bold" FontSize="14"
-                           VerticalAlignment="Center" HorizontalAlignment="Center"
-                           Style="{StaticResource AnimatedTextBlockStyle}"
-                           Grid.Row="0"/>-->
             </Grid>
         </GroupBox>
-
 
         <Grid x:Name="PagerLayout" Grid.Row="3" Grid.ColumnSpan="2">
             <commonControls:DataPager Margin="4"

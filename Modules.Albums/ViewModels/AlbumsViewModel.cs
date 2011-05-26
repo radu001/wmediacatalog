@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using BusinessObjects;
 using Common.Controls.Controls;
@@ -94,6 +95,34 @@ namespace Modules.Albums.ViewModels
             private set
             {
                 loadOptions = value;
+            }
+        }
+
+        public int VisibleAlbumsCount
+        {
+            get
+            {
+                return visibleAlbumsCount;
+            }
+            set
+            {
+                if (value > 0)
+                {
+                    visibleAlbumsCount = value;
+                    NotifyPropertyChanged(() => VisibleAlbumsCount);
+
+                    if (LoadOptions != null)
+                    {
+                        LoadOptions.MaxResults = value;
+                        NotifyPropertyChanged(() => LoadOptions);
+                        if (value <= AlbumsCollection.Count)
+                            AlbumsCollection = new ObservableCollection<Album>(AlbumsCollection.Take(value));
+                        else
+                        {
+                            LoadAlbums(); // due to page size is increased
+                        }
+                    }
+                }
             }
         }
 
@@ -397,6 +426,7 @@ namespace Modules.Albums.ViewModels
         private int albumsCount;
         private Album currentAlbum;
         private ILoadOptions loadOptions;
+        private int visibleAlbumsCount;
 
         #endregion
     }

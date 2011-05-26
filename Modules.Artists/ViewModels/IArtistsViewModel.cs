@@ -17,6 +17,7 @@ namespace Modules.Artists.ViewModels
         ILoadOptions LoadOptions { get; }
         bool IsBusy { get; }
         bool IsLoadingAlbums { get; }
+        int VisibleArtistsCount { get; set; }
 
         DelegateCommand<object> ViewLoadedCommand { get; }
         DelegateCommand<PageChangedArgs> PageChangedCommand { get; }
