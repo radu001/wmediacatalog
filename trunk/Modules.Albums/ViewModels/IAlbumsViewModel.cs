@@ -14,6 +14,7 @@ namespace Modules.Albums.ViewModels
         Album CurrentAlbum { get; set; }
         ILoadOptions LoadOptions { get; }
         bool IsBusy { get; }
+        int VisibleAlbumsCount { get; set; }
 
         DelegateCommand<object> ViewLoadedCommand { get; }
         DelegateCommand<object> EditAlbumCommand { get; }

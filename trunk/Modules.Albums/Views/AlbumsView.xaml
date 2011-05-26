@@ -118,13 +118,13 @@
                                           SelectedFilterValue="{Binding SelectedValue,Mode=TwoWay}"
                                           ItemContainerStyle="{StaticResource GeneralComboBoxItemStyle}"
                                           />
-        <ListView x:Name="AlbumsListView" Grid.Row="2"
-                  commands:MouseDoubleClick.Command="{Binding EditAlbumCommand}"
+        <commonControls:PagedListView x:Name="AlbumsListView" Grid.Row="2"
+                  PageSize="{Binding VisibleAlbumsCount, Mode=OneWayToSource}"
                   ItemsSource="{Binding AlbumsCollection}" ItemTemplate="{StaticResource AlbumTemplate}"
                   ItemContainerStyle="{StaticResource GeneralListViewItemStyle}"
-                  SelectedItem="{Binding CurrentAlbum}">
+                  SelectedItem="{Binding CurrentAlbum}"
+                  commands:MouseDoubleClick.Command="{Binding EditAlbumCommand}"/>
 
-        </ListView>
         <commonControls:DataPager Grid.Row="3" Margin="4"
                                   HorizontalAlignment="Left"
                                   ItemsPerPage="{Binding LoadOptions.MaxResults}" VisiblePagesCount="3" TotalItems="{Binding AlbumsCount}"

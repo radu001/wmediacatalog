@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using BusinessObjects;
 using Common.Controls.Controls;
@@ -178,6 +179,34 @@ namespace Modules.Artists.ViewModels
                 {
                     isLoadingAlbums = value;
                     NotifyPropertyChanged(() => IsLoadingAlbums);
+                }
+            }
+        }
+
+        public int VisibleArtistsCount
+        {
+            get
+            {
+                return visibleArtistsCount;
+            }
+            set
+            {
+                if (value > 0)
+                {
+                    visibleArtistsCount = value;
+                    NotifyPropertyChanged(() => VisibleArtistsCount);
+
+                    if (LoadOptions != null)
+                    {
+                        LoadOptions.MaxResults = value;
+                        NotifyPropertyChanged(() => LoadOptions);
+                        if (value <= ArtistsCollection.Count)
+                            ArtistsCollection = new ObservableCollection<Artist>(ArtistsCollection.Take(value));
+                        else
+                        {
+                            LoadArtists(); // due to page size is increased
+                        }
+                    }
                 }
             }
         }
@@ -510,6 +539,7 @@ namespace Modules.Artists.ViewModels
         private Artist currentArtist;
         private Album currentAlbum;
         private ILoadOptions loadOptions;
+        private int visibleArtistsCount;
 
         private bool isLoadingAlbums;
 
