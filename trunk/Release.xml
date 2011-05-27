@@ -58,9 +58,4 @@
     <Exec Condition="$(NoInstaller)=='False'" WorkingDirectory="$(InnoSetupFullPath)" Command="$(InnoSetupExecutable) /dOutDir=$(InstallerOutPath) /dSourceDir=$(OutputPath) $(InstallerSrc)"/>
   </Target>
   
-  <!--Debug-->
-  <Target Name="TestCondition">
-    <Message Text="$(NoInstaller)" />
-  </Target>
-  
 </Project>
