@@ -30,9 +30,6 @@ Source: "hibernate.cfg.xml"; DestDir: "{app}"
 Source: "*.license.txt"; DestDir: "{app}"
 Source: "*.dll"; DestDir: "{app}"
 
-[Dirs]
-Name: "{app}\"; Permissions: users-full
-
 [UninstallDelete]
 Type: files; Name: "{app}\*.*"
 Type: dirifempty; Name: "{app}"
