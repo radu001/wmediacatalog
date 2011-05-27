@@ -194,23 +194,21 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>copy "$(SolutionDir)\Lib\Npgsql\Npgsql.dll" "$(TargetDir)"
-copy "$(SolutionDir)\Lib\Npgsql\Mono.Security.dll" "$(TargetDir)"
-copy "$(SolutionDir)\Lib\NHibernate.Logging\NHibernate.Logging.dll" "$(TargetDir)"
-copy "$(SolutionDir)\Lib\NHibernate\NHibernate.ByteCode.LinFu.dll" "$(TargetDir)"
-copy "$(SolutionDir)\Lib\NHibernate\NHibernate.dll" "$(TargetDir)"
-copy "$(SolutionDir)\Lib\NHibernate\Antlr3.Runtime.dll" "$(TargetDir)"
-copy "$(SolutionDir)\Lib\NHibernate\Iesi.Collections.dll" "$(TargetDir)"
-copy "$(SolutionDir)\Lib\NHibernate\LinFu.DynamicProxy.dll" "$(TargetDir)"
-copy "$(SolutionDir)\DataLayer\hibernate.cfg.xml" "$(TargetDir)"
-$(SolutionDir)\Utils\ExCopy\V1\ExCopy.exe --base "$(SolutionDir)\Lib" --extension "license.txt" --output "$(TargetDir)"</PostBuildEvent>
-  </PropertyGroup>
+  <ItemGroup>
+    <ThirdParties Include="..\Lib\Npgsql\Npgsql.dll"/>
+    <ThirdParties Include="..\Lib\Npgsql\Mono.Security.dll"/>
+    <ThirdParties Include="..\Lib\NHibernate\NHibernate.ByteCode.LinFu.dll"/>
+    <ThirdParties Include="..\Lib\NHibernate\NHibernate.dll"/>
+    <ThirdParties Include="..\Lib\NHibernate\Antlr3.Runtime.dll"/>
+    <ThirdParties Include="..\Lib\NHibernate\Iesi.Collections.dll"/>
+    <ThirdParties Include="..\Lib\NHibernate\LinFu.DynamicProxy.dll"/>
+    <ThirdParties Include="..\DataLayer\hibernate.cfg.xml"/>
+  </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
-  </Target>
+  </Target>-->
   <Target Name="AfterBuild">
+	<Copy SourceFiles="@(ThirdParties)" DestinationFolder="$(OutputPath)"/>
   </Target>
-  -->
 </Project>
