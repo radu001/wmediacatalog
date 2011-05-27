@@ -1,6 +1,11 @@
 ﻿<Project DefaultTargets="BuildRelease"
          xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   
+  <!--
+  If no installer needed please call as following:
+  msbuild Release.xml /nologo /p:NoInstaller=True
+  -->
+  
   <!--Common properties-->
   <PropertyGroup>
     <Configuration>Release</Configuration>
@@ -12,13 +17,15 @@
 
   <!--Installer related properties-->
   <PropertyGroup>
-    <InnoSetupPath>C:\Program Files\Inno Setup 5\</InnoSetupPath>
+    <NoInstaller>False</NoInstaller>
+    <InnoSetupRootPath>Inno Setup 5\</InnoSetupRootPath>
+    <InnoSetupFullPath Condition="Exists('C:\Program Files\$(InnoSetupRootPath)')">C:\Program Files\$(InnoSetupRootPath)</InnoSetupFullPath>
+    <InnoSetupFullPath Condition="Exists('C:\Program Files(x86)\$(InnoSetupRootPath)')">C:\Program Files(x86)\$(InnoSetupRootPath)</InnoSetupFullPath>
+    <InnoSetupExecutable>ISCC.exe</InnoSetupExecutable>
     <InstallerSrc>$(MSBuildProjectDirectory)\Utils\Installer\wmediacatalog.iss</InstallerSrc>
     <InstallerOutPath>$(OutputPath)\Installer</InstallerOutPath>
   </PropertyGroup>
   
-  <!--ISCC.exe /d"OutDir=<path for output installer>" /d"SourceDir=<release source path>" "wmediacatalog.iss"-->
-
   <ItemGroup>
     <LicenseFiles Include="Lib\**\*.license.txt"/>
     <WasteFiles Include="$(OutputPath)\*.pdb"/>
@@ -47,12 +54,13 @@
     <Delete Files="@(WasteFiles)"/>
   </Target>
 
-  <!--TODO add command line switch for msbuil to allow skip building installer
-      using /noinstaller option for example-->
   <Target Name="CreateInstaller" AfterTargets="CopyLicenses">
-    <!--<Exec Command="'$(InnoSetupPath) /d'OutDir=d:\tmp\install123' /d'SourceDir=$(OutputPath)' $(InstallerSrc)'"/>-->
-    <Exec WorkingDirectory="$(InnoSetupPath)" Command="ISCC.exe /dOutDir=$(InstallerOutPath) /dSourceDir=$(OutputPath) $(InstallerSrc)"/>
-    <!--<Exec Command="notepad.exe '$(InstallerSrc)'"/>-->
+    <Exec Condition="$(NoInstaller)=='False'" WorkingDirectory="$(InnoSetupFullPath)" Command="$(InnoSetupExecutable) /dOutDir=$(InstallerOutPath) /dSourceDir=$(OutputPath) $(InstallerSrc)"/>
+  </Target>
+  
+  <!--Debug-->
+  <Target Name="TestCondition">
+    <Message Text="$(NoInstaller)" />
   </Target>
   
 </Project>
