@@ -20,7 +20,7 @@
     <NoInstaller>False</NoInstaller>
     <InnoSetupRootPath>Inno Setup 5\</InnoSetupRootPath>
     <InnoSetupFullPath Condition="Exists('C:\Program Files\$(InnoSetupRootPath)')">C:\Program Files\$(InnoSetupRootPath)</InnoSetupFullPath>
-    <InnoSetupFullPath Condition="Exists('C:\Program Files(x86)\$(InnoSetupRootPath)')">C:\Program Files(x86)\$(InnoSetupRootPath)</InnoSetupFullPath>
+    <InnoSetupFullPath Condition="Exists('C:\Program Files (x86)\$(InnoSetupRootPath)')">C:\Program Files (x86)\$(InnoSetupRootPath)</InnoSetupFullPath>
     <InnoSetupExecutable>ISCC.exe</InnoSetupExecutable>
     <InstallerSrc>$(MSBuildProjectDirectory)\Utils\Installer\wmediacatalog.iss</InstallerSrc>
     <InstallerOutPath>$(OutputPath)\Installer</InstallerOutPath>
