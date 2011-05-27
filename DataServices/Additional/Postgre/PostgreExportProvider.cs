@@ -47,7 +47,7 @@ namespace DataServices.Additional.Postgre
                 }
 
             }
-            catch (Exception ex)
+            catch
             {
                 return new TextResult()
                 {
@@ -83,7 +83,7 @@ namespace DataServices.Additional.Postgre
 
                     File.Delete(exportFileFullPath);
                 }
-                catch (Exception ex)
+                catch
                 {
                     return new TextResult()
                     {
