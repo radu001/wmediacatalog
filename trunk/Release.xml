@@ -1,5 +1,7 @@
 ﻿<Project DefaultTargets="BuildRelease"
          xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  
+  <!--Common properties-->
   <PropertyGroup>
     <Configuration>Release</Configuration>
     <Platform>x86</Platform>
@@ -8,12 +10,25 @@
     <MainAppPath>MediaCatalog\MediaCatalog.csproj</MainAppPath>
   </PropertyGroup>
 
+  <!--Installer related properties-->
+  <PropertyGroup>
+    <InnoSetupPath>C:\Program Files\Inno Setup 5\</InnoSetupPath>
+    <InstallerSrc>$(MSBuildProjectDirectory)\Utils\Installer\wmediacatalog.iss</InstallerSrc>
+    <InstallerOutPath>$(OutputPath)\Installer</InstallerOutPath>
+  </PropertyGroup>
+  
+  <!--ISCC.exe /d"OutDir=<path for output installer>" /d"SourceDir=<release source path>" "wmediacatalog.iss"-->
+
   <ItemGroup>
     <LicenseFiles Include="Lib\**\*.license.txt"/>
     <WasteFiles Include="$(OutputPath)\*.pdb"/>
+    <WasteFiles Include="$(OutputPath)\System.Windows.Interactivity.xml"/>
+    <WasteFiles Include="$(OutputPath)\Iesi.Collections.xml"/>
+    <WasteFiles Include="$(OutputPath)\NHibernate.xml"/>
+    <WasteFiles Include="$(OutputPath)\Npgsql.xml"/>
   </ItemGroup>
 
-  <Target Name="BuildRelease" DependsOnTargets="BuildMainApp;BuildDbTool;CopyLicenses;Cleanup"/>
+  <Target Name="BuildRelease" DependsOnTargets="BuildMainApp;BuildDbTool;CopyLicenses;Cleanup;CreateInstaller"/>
 
   <Target Name="BuildMainApp">
     <MSBuild Projects="$(MainAppPath)" Properties="Configuration=$(Configuration);Platform=$(Platform);OutputPath=$(OutputPath)"/>
@@ -31,4 +46,13 @@
     <Message Text="Perform cleanup" Importance="high"/>
     <Delete Files="@(WasteFiles)"/>
   </Target>
+
+  <!--TODO add command line switch for msbuil to allow skip building installer
+      using /noinstaller option for example-->
+  <Target Name="CreateInstaller" AfterTargets="CopyLicenses">
+    <!--<Exec Command="'$(InnoSetupPath) /d'OutDir=d:\tmp\install123' /d'SourceDir=$(OutputPath)' $(InstallerSrc)'"/>-->
+    <Exec WorkingDirectory="$(InnoSetupPath)" Command="ISCC.exe /dOutDir=$(InstallerOutPath) /dSourceDir=$(OutputPath) $(InstallerSrc)"/>
+    <!--<Exec Command="notepad.exe '$(InstallerSrc)'"/>-->
+  </Target>
+  
 </Project>

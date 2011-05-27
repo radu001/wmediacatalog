@@ -1,8 +1,9 @@
+; Please compile using following preprocessor parameters:
+; ISCC.exe /d"OutDir=<path for output installer>" /d"SourceDir=<release source path>" "wmediacatalog.iss"
+
 [Setup]
-;SourceDir=C:\Projects\WMediaCatalog\MediaCatalog\bin\Debug
-;OutputDir=C:\Projects\WMediaCatalog\Utils\Installer\Output
-SourceDir=D:\Projects\WMediaCatalog\MediaCatalog\bin\Debug
-OutputDir=D:\Projects\WMediaCatalog\Utils\Installer\Output
+SourceDir={#SourceDir}
+OutputDir={#OutDir}
 AppName=WMediaCatalog
 AppId=14776ff5-d54e-4624-ab41-a045a6843374
 AppVersion=1.0
@@ -23,10 +24,18 @@ Root: HKLM; Subkey: "Software\WMediacatalog"; Flags: uninsdeletekey
 
 [Files]
 Source: "MediaCatalog.exe"; DestDir: "{app}"
-Source: "MediaCatalog.exe.config"; DestDir: "{app}"
+Source: "DbTool.exe"; DestDir: "{app}"
+Source: "*.config"; DestDir: "{app}"
 Source: "hibernate.cfg.xml"; DestDir: "{app}"
 Source: "*.license.txt"; DestDir: "{app}"
 Source: "*.dll"; DestDir: "{app}"
+
+[Dirs]
+Name: "{app}\"; Permissions: users-full
+
+[UninstallDelete]
+Type: files; Name: "{app}\*.*"
+Type: dirifempty; Name: "{app}"
 
 [Code]
 function InitializeSetup(): Boolean;

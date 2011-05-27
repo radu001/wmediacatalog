@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
+using System.IO;
 using System.Windows;
-using DataLayer;
+using System.Windows.Threading;
 
 namespace MediaCatalog
 {
@@ -15,6 +16,7 @@ namespace MediaCatalog
             base.OnStartup(e);
 
             Application.Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+            Application.Current.DispatcherUnhandledException += new DispatcherUnhandledExceptionEventHandler(Current_DispatcherUnhandledException);
 
             BackgroundWorker worker = new BackgroundWorker();
             worker.DoWork += new DoWorkEventHandler(worker_DoWork);
@@ -23,6 +25,12 @@ namespace MediaCatalog
 
             splash = new SplashWindow();
             splash.ShowSplash();
+        }
+
+        void Current_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            if ( e.Exception != null )
+                File.WriteAllText("Unhandled.log", e.Exception.ToString());
         }
 
         void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

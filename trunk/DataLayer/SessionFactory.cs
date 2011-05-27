@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using Common;
 using DataLayer.Caching;
 using NHibernate;
 using NHibernate.Cfg;
@@ -26,6 +27,8 @@ namespace DataLayer
                 }
                 catch (Exception ex)
                 {
+                    Logger.Write(ex);
+
                     sessionFactory = null;
                     configurationCache.Cleanup(); // removed cache info since some errors with db connectivity
                     throw ex;
@@ -50,7 +53,10 @@ namespace DataLayer
 
                     configurationCache.SaveCachedConfiguration(config);
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    Logger.Write(ex);
+                }
             }
             else
             {
