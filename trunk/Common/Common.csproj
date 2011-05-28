@@ -50,9 +50,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\Prism\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernate.Logging">
-      <HintPath>..\Lib\NHibernate\Logging\NHibernate.Logging.dll</HintPath>
-    </Reference>
     <Reference Include="NLog">
       <HintPath>..\Lib\NLog\NLog.dll</HintPath>
     </Reference>

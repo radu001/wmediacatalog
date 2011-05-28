@@ -203,6 +203,8 @@
     <ThirdParties Include="..\Lib\NHibernate\Iesi.Collections.dll"/>
     <ThirdParties Include="..\Lib\NHibernate\LinFu.DynamicProxy.dll"/>
     <ThirdParties Include="..\DataLayer\hibernate.cfg.xml"/>
+    <ThirdParties Include="..\Lib\WPFToolkit\WPFToolkit.dll"/>
+    <ThirdParties Include="..\Lib\WPFToolkit\System.Windows.Controls.Input.Toolkit.dll"/>
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

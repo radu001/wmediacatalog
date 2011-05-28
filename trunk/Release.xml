@@ -1,4 +1,4 @@
-﻿<Project DefaultTargets="BuildRelease"
+﻿<Project DefaultTargets="CreateRelease"
          xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   
   <!--
@@ -19,8 +19,8 @@
   <PropertyGroup>
     <NoInstaller>False</NoInstaller>
     <InnoSetupRootPath>Inno Setup 5\</InnoSetupRootPath>
-    <InnoSetupFullPath Condition="Exists('C:\Program Files\$(InnoSetupRootPath)')">C:\Program Files\$(InnoSetupRootPath)</InnoSetupFullPath>
     <InnoSetupFullPath Condition="Exists('C:\Program Files (x86)\$(InnoSetupRootPath)')">C:\Program Files (x86)\$(InnoSetupRootPath)</InnoSetupFullPath>
+    <InnoSetupFullPath Condition="Exists('C:\Program Files\$(InnoSetupRootPath)')">C:\Program Files\$(InnoSetupRootPath)</InnoSetupFullPath>
     <InnoSetupExecutable>ISCC.exe</InnoSetupExecutable>
     <InstallerSrc>$(MSBuildProjectDirectory)\Utils\Installer\wmediacatalog.iss</InstallerSrc>
     <InstallerOutPath>$(OutputPath)\Installer</InstallerOutPath>
@@ -35,7 +35,7 @@
     <WasteFiles Include="$(OutputPath)\Npgsql.xml"/>
   </ItemGroup>
 
-  <Target Name="BuildRelease" DependsOnTargets="BuildMainApp;BuildDbTool;CopyLicenses;Cleanup;CreateInstaller"/>
+  <Target Name="CreateRelease" DependsOnTargets="PrepareBuild;Build;CopyLicenses;Cleanup;CreateInstaller"/>
 
   <Target Name="BuildMainApp">
     <MSBuild Projects="$(MainAppPath)" Properties="Configuration=$(Configuration);Platform=$(Platform);OutputPath=$(OutputPath)"/>
@@ -45,7 +45,18 @@
     <MSBuild Projects="$(DbToolPath)" Properties="Configuration=$(Configuration);Platform=$(Platform);OutputPath=$(OutputPath)"/>
   </Target>
 
-  <Target Name="CopyLicenses" AfterTargets="BuildMainApp;BuildDbTool">
+  <Target Name="Build" DependsOnTargets="BuildMainApp;BuildDbTool"/>
+
+  <Target Name="PrepareBuild" BeforeTargets="Build">
+    <ItemGroup>
+      <OldFiles Include="$(OutputPath)\*.*" />
+      <OldDirs Include="$(OutputPath)\Installer"/>
+    </ItemGroup>
+    <Delete Files="@(OldFiles)"/>
+    <RemoveDir Directories="@(OldDirs)"/>
+  </Target>
+
+  <Target Name="CopyLicenses" AfterTargets="Build">
     <Copy SourceFiles="@(LicenseFiles)" DestinationFolder="$(OutputPath)"/>
   </Target>
 
@@ -54,7 +65,7 @@
     <Delete Files="@(WasteFiles)"/>
   </Target>
 
-  <Target Name="CreateInstaller" AfterTargets="CopyLicenses">
+  <Target Name="CreateInstaller" AfterTargets="Cleanup">
     <Exec Condition="$(NoInstaller)=='False'" WorkingDirectory="$(InnoSetupFullPath)" Command="$(InnoSetupExecutable) /dOutDir=$(InstallerOutPath) /dSourceDir=$(OutputPath) $(InstallerSrc)"/>
   </Target>
   
