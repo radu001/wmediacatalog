@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
--- Started on 2011-05-30 13:00:53
+-- Started on 2011-05-30 15:41:46
 
 SET statement_timeout = 0;
 SET client_encoding = 'UTF8';
@@ -23,7 +23,7 @@ SET search_path = public, pg_catalog;
 
 --
 -- TOC entry 19 (class 1255 OID 70363)
--- Dependencies: 3 350
+-- Dependencies: 350 3
 -- Name: find_missing_genres(xml); Type: FUNCTION; Schema: public; Owner: -
 --
 
@@ -60,7 +60,7 @@ CREATE FUNCTION find_missing_genres(genresxml xml) RETURNS xml
 
 --
 -- TOC entry 20 (class 1255 OID 70391)
--- Dependencies: 350 3
+-- Dependencies: 3 350
 -- Name: import_media(character varying); Type: FUNCTION; Schema: public; Owner: -
 --
 
@@ -260,7 +260,7 @@ CREATE TABLE artists_albums (
 
 --
 -- TOC entry 1540 (class 1259 OID 70550)
--- Dependencies: 1541 3
+-- Dependencies: 3 1541
 -- Name: artists_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -298,7 +298,7 @@ CREATE TABLE genres (
 
 --
 -- TOC entry 1543 (class 1259 OID 70563)
--- Dependencies: 1544 3
+-- Dependencies: 3 1544
 -- Name: genres_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -340,7 +340,7 @@ CREATE TABLE listens (
 
 --
 -- TOC entry 1545 (class 1259 OID 70572)
--- Dependencies: 1546 3
+-- Dependencies: 3 1546
 -- Name: listens_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -378,7 +378,7 @@ CREATE TABLE moods (
 
 --
 -- TOC entry 1547 (class 1259 OID 70581)
--- Dependencies: 3 1548
+-- Dependencies: 1548 3
 -- Name: moods_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -561,13 +561,13 @@ CREATE TABLE users (
     id integer NOT NULL,
     user_name character varying NOT NULL,
     password character varying NOT NULL,
-    settings xml
+    settings text
 );
 
 
 --
 -- TOC entry 1558 (class 1259 OID 70635)
--- Dependencies: 3 1559
+-- Dependencies: 1559 3
 -- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -590,7 +590,7 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 
 --
 -- TOC entry 1837 (class 2604 OID 70542)
--- Dependencies: 1538 1537 1538
+-- Dependencies: 1537 1538 1538
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -599,7 +599,7 @@ ALTER TABLE albums ALTER COLUMN id SET DEFAULT nextval('albums_id_seq'::regclass
 
 --
 -- TOC entry 1839 (class 2604 OID 70555)
--- Dependencies: 1541 1540 1541
+-- Dependencies: 1540 1541 1541
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -617,7 +617,7 @@ ALTER TABLE genres ALTER COLUMN id SET DEFAULT nextval('genres_id_seq'::regclass
 
 --
 -- TOC entry 1842 (class 2604 OID 70577)
--- Dependencies: 1546 1545 1546
+-- Dependencies: 1545 1546 1546
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -644,7 +644,7 @@ ALTER TABLE places ALTER COLUMN id SET DEFAULT nextval('places_id_seq'::regclass
 
 --
 -- TOC entry 1845 (class 2604 OID 70604)
--- Dependencies: 1551 1552 1552
+-- Dependencies: 1552 1551 1552
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -840,7 +840,7 @@ CREATE INDEX fki_listens_places ON listens USING btree (place_id);
 
 --
 -- TOC entry 1881 (class 2606 OID 70980)
--- Dependencies: 1539 1848 1538
+-- Dependencies: 1848 1539 1538
 -- Name: albums_genres_to_albums; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -850,7 +850,7 @@ ALTER TABLE ONLY albums_genres
 
 --
 -- TOC entry 1882 (class 2606 OID 70985)
--- Dependencies: 1539 1854 1544
+-- Dependencies: 1854 1539 1544
 -- Name: albums_genres_to_genres; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -860,7 +860,7 @@ ALTER TABLE ONLY albums_genres
 
 --
 -- TOC entry 1883 (class 2606 OID 70990)
--- Dependencies: 1848 1542 1538
+-- Dependencies: 1542 1848 1538
 -- Name: fk_artists_albums_to_albums; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -880,7 +880,7 @@ ALTER TABLE ONLY artists_albums
 
 --
 -- TOC entry 1885 (class 2606 OID 71000)
--- Dependencies: 1546 1538 1848
+-- Dependencies: 1848 1546 1538
 -- Name: fk_listens_albums; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -890,7 +890,7 @@ ALTER TABLE ONLY listens
 
 --
 -- TOC entry 1886 (class 2606 OID 71005)
--- Dependencies: 1548 1861 1546
+-- Dependencies: 1861 1546 1548
 -- Name: fk_listens_moods; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -900,7 +900,7 @@ ALTER TABLE ONLY listens
 
 --
 -- TOC entry 1887 (class 2606 OID 71010)
--- Dependencies: 1865 1546 1550
+-- Dependencies: 1546 1865 1550
 -- Name: fk_listens_places; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -920,7 +920,7 @@ ALTER TABLE ONLY tags_albums
 
 --
 -- TOC entry 1889 (class 2606 OID 71020)
--- Dependencies: 1553 1552 1869
+-- Dependencies: 1869 1552 1553
 -- Name: fk_tags_albums_to_tags; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -930,7 +930,7 @@ ALTER TABLE ONLY tags_albums
 
 --
 -- TOC entry 1890 (class 2606 OID 71025)
--- Dependencies: 1850 1554 1541
+-- Dependencies: 1850 1541 1554
 -- Name: fk_tags_artists_to_artists; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -940,7 +940,7 @@ ALTER TABLE ONLY tags_artists
 
 --
 -- TOC entry 1891 (class 2606 OID 71030)
--- Dependencies: 1554 1552 1869
+-- Dependencies: 1552 1554 1869
 -- Name: fk_tags_artists_to_tags; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -960,7 +960,7 @@ ALTER TABLE ONLY tracks
 
 --
 -- TOC entry 1893 (class 2606 OID 71040)
--- Dependencies: 1559 1557 1877
+-- Dependencies: 1877 1559 1557
 -- Name: fk_user_logins_users; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1282,7 +1282,7 @@ GRANT ALL ON SEQUENCE users_id_seq TO postgres;
 GRANT ALL ON SEQUENCE users_id_seq TO "user";
 
 
--- Completed on 2011-05-30 13:00:53
+-- Completed on 2011-05-30 15:41:47
 
 --
 -- PostgreSQL database dump complete
