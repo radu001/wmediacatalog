@@ -85,6 +85,9 @@ namespace Modules.Import.ViewModels.Wizard
 
                     eventAggregator.GetEvent<ReloadAlbumsEvent>().Publish(null);
                     eventAggregator.GetEvent<ReloadArtistsEvent>().Publish(null);
+
+                    //automatically navigate to next step in wizard
+                    ContinueCommand.Execute(null);
                 }
                 else
                 {

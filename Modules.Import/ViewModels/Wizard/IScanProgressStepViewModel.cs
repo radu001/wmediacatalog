@@ -18,8 +18,8 @@ namespace Modules.Import.ViewModels.Wizard
         float CurrentProgress { get; }
         StringBuilder Log { get; }
 
-        DelegateCommand<object> BeginScanCommand { get; }
         DelegateCommand<object> PauseScanCommand { get; }
         DelegateCommand<object> CancelScanCommand { get; }
+        DelegateCommand<object> ViewLoadedCommand { get; }
     }
 }

@@ -53,8 +53,6 @@
             <Button Content="Begin import" Grid.Row="1" Width="75" Margin="8" HorizontalAlignment="Right" Style="{StaticResource DialogButtonStyle}"
                 Visibility="{Binding ImportCompleted,Converter={StaticResource InverseBoolToVisibilityConverter}}"
                 commands:Clicked.Command="{Binding BeginImportCommand}"/>
-            <Button Content="Continue" Grid.Row="1" Width="75" Margin="8" HorizontalAlignment="Right" Style="{StaticResource DialogButtonStyle}"
-                commands:Clicked.Command="{Binding ContinueCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>
