@@ -21,9 +21,9 @@ namespace Modules.Import.ViewModels.Wizard
         {
             this.dataService = dataService;
 
-            BeginScanCommand = new DelegateCommand<object>(OnBeginScanCommand);
             PauseScanCommand = new DelegateCommand<object>(OnPauseScanCommand);
             CancelScanCommand = new DelegateCommand<object>(OnCancelScanCommand);
+            ViewLoadedCommand = new DelegateCommand<object>(OnViewLoadedCommand);
         }
 
         public override void OnContinueCommand(object parameter)
@@ -129,17 +129,17 @@ namespace Modules.Import.ViewModels.Wizard
             }
         }
 
-        public DelegateCommand<object> BeginScanCommand { get; private set; }
-
         public DelegateCommand<object> PauseScanCommand { get; private set; }
 
         public DelegateCommand<object> CancelScanCommand { get; private set; }
+
+        public DelegateCommand<object> ViewLoadedCommand { get; private set; }
 
         #endregion
 
         #region Private methods
 
-        private void OnBeginScanCommand(object parameter)
+        private void OnViewLoadedCommand(object parameter)
         {
             var data = GetSharedData();
             ScanPath = data.ScanPath;
@@ -191,6 +191,7 @@ namespace Modules.Import.ViewModels.Wizard
 
         private void OnCancelScanCommand(object parameter)
         {
+            //TODO
         }
 
         private ScanSettings CreateScanSettings()
@@ -218,6 +219,9 @@ namespace Modules.Import.ViewModels.Wizard
             IsCompleted = true;
             var data = GetSharedData();
             data.ScannedArtists = artists;
+
+            //automatically navigate to next wizard step after scan is finished
+            ContinueCommand.Execute(null);
         }
 
         #region Scan progress handlers

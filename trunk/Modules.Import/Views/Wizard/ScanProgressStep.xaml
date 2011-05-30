@@ -7,7 +7,7 @@
              xmlns:localConverters="clr-namespace:Modules.Import.Converters"
              xmlns:converters="clr-namespace:Common.Controls.Converters;assembly=Common.Controls"
              xmlns:controls="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
-             mc:Ignorable="d" 
+             mc:Ignorable="d" commands:Loaded.Command="{Binding ViewLoadedCommand}" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -45,10 +45,6 @@
         <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1">
             <StackPanel Orientation="Horizontal"
                         Visibility="{Binding IsCompleted,Converter={StaticResource InverseBoolToVisibilityConverter}}">
-                <Button Style="{StaticResource DialogButtonStyle}" Width="75" Margin="8"
-                        Content="Begin scan" 
-                        Visibility="{Binding IsScanning,Converter={StaticResource InverseBoolToVisibilityConverter}}"
-                        commands:Clicked.Command="{Binding BeginScanCommand}"/>
                 <Button Style="{StaticResource DialogButtonStyle}" Width="75" Margin="8"
                         Visibility="{Binding IsScanning,Converter={StaticResource BoolToVisibilityConverter}}"
                         Content="{Binding IsPaused,Converter={StaticResource PauseButtonNameConverter}}" 
