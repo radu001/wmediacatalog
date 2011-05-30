@@ -8,20 +8,19 @@ namespace BusinessObjects
     {
         public static void Assign(User user)
         {
-            body = new User(user);
+            body = user;
+        }
+
+        public static User GetUser()
+        {
+            return body;
         }
 
         public static UserSettings GetSettings()
         {
-            return settings;
-        }
-
-        public static void SetSettings(UserSettings settings)
-        {
-            CurrentUser.settings = settings;
+            return body.Settings;
         }
 
         private static User body;
-        private static UserSettings settings;
     }
 }

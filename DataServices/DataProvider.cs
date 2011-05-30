@@ -171,6 +171,8 @@ namespace DataServices
 
             ISession session = SessionFactory.GetSession();
 
+            ITransaction tx = session.BeginTransaction();
+
             try
             {
                 EntityConverter converter = new EntityConverter();
@@ -179,6 +181,8 @@ namespace DataServices
 
                 session.SaveOrUpdate(dataEntity);
 
+                tx.Commit();
+
                 user.ID = dataEntity.ID;
 
                 result = true;
@@ -186,10 +190,12 @@ namespace DataServices
             catch (Exception ex)
             {
                 Logger.Write(ex);
+                tx.Rollback();
             }
             finally
             {
                 session.Close();
+                tx.Dispose();
             }
 
             return result;

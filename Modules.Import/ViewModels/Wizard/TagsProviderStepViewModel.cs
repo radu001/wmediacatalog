@@ -1,21 +1,28 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using BusinessObjects;
 using FolderPickerLib;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 using Modules.Import.Model;
+using Modules.Import.Services;
 using Modules.Import.ViewModels.Wizard.Common;
 using Prism.Wizards.Events;
 namespace Modules.Import.ViewModels.Wizard
 {
     public class TagsProviderStepViewModel : WizardViewModelBase, ITagsProviderStepViewModel
     {
-        public TagsProviderStepViewModel(IUnityContainer container, IEventAggregator eventAggregator)
+        public TagsProviderStepViewModel(IUnityContainer container, IEventAggregator eventAggregator, IDataService dataService)
             : base(container, eventAggregator)
         {
+            this.dataService = dataService;
+
             InitAvaliableProviders();
+            InitFromSavedSettings();
 
             SelectScanPathCommand = new DelegateCommand<object>(OnSelectScanPathCommand);
         }
@@ -25,6 +32,12 @@ namespace Modules.Import.ViewModels.Wizard
             var data = GetSharedData();
             data.ScanPath = ScanPath;
             data.TagsProvider = SelectedProvider;
+
+            var settings = CurrentUser.GetSettings();
+            settings.ImportPath = ScanPath;
+            settings.ImportProvider = SelectedProvider.Name;
+            dataService.SaveUserSettings();
+            
 
             eventAggregator.GetEvent<CompleteWizardStepEvent>().Publish(null);
         }
@@ -122,9 +135,32 @@ namespace Modules.Import.ViewModels.Wizard
             };
         }
 
+        private void InitFromSavedSettings()
+        {
+            var settings = CurrentUser.GetSettings();
+            if (settings != null)
+            {
+                var savedProvider = settings.ImportProvider;
+                var savedImportPath = settings.ImportPath;
+
+                if (!String.IsNullOrEmpty(savedProvider))
+                {
+                    SelectedProvider = AvaliableProviders.Where(p => p.Name == savedProvider).FirstOrDefault();
+                }
+
+                if (!String.IsNullOrEmpty(savedImportPath) && Directory.Exists(savedImportPath))
+                {
+                    ScanPath = savedImportPath;
+                }
+            }
+        }
+
         private void OnSelectScanPathCommand(object parameter)
         {
-            FolderPickerDialog dialog = new FolderPickerDialog();
+            FolderPickerDialog dialog = new FolderPickerDialog()
+            {
+                InitialPath = ScanPath
+            };
             if (dialog.ShowDialog() == true)
             {
                 ScanPath = dialog.SelectedPath;
@@ -146,6 +182,8 @@ namespace Modules.Import.ViewModels.Wizard
         #endregion
 
         #region Private fields
+
+        private IDataService dataService;
 
         private TagsProvider selectedProvider;
         private IEnumerable<TagsProvider> avaliableProviders;
