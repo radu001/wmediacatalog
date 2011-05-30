@@ -6,6 +6,7 @@ namespace DataLayer.Entities
     {
         public virtual string UserName { get; set; }
         public virtual string Password { get; set; }
+        public virtual string Settings { get; set; }
 
         public virtual IList<UserLoginEntity> Logins
         {
@@ -18,19 +19,7 @@ namespace DataLayer.Entities
                 logins = value;
             }
         }
-        public virtual IList<UserSettingsEntity> Settings
-        {
-            get
-            {
-                return settings;
-            }
-            set
-            {
-                settings = value;
-            }
-        }
 
         private IList<UserLoginEntity> logins = new List<UserLoginEntity>();
-        private IList<UserSettingsEntity> settings = new List<UserSettingsEntity>();
     }
 }

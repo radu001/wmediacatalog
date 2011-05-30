@@ -52,7 +52,18 @@ namespace Modules.Login.ViewModels
                 return dataService.SaveUser(newUser);
             }, TaskScheduler.Default);
 
-            Task finishTask = createUserTask.ContinueWith((t) =>
+            Task<bool> createUserSettingsTask = createUserTask.ContinueWith<bool>((r) =>
+                {
+                    if (!r.Result)
+                        return false;
+                    else
+                    {
+                        //TODO
+                        return true;
+                    }
+                }, CancellationToken.None, TaskContinuationOptions.None, TaskScheduler.Default);
+
+            Task finishTask = createUserSettingsTask.ContinueWith((t) =>
             {
                 IsBusy = false;
 

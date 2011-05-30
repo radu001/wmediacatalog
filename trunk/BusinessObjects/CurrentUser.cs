@@ -1,5 +1,4 @@
 ﻿
-using System.Collections.Generic;
 namespace BusinessObjects
 {
     /// <summary>
@@ -12,17 +11,17 @@ namespace BusinessObjects
             body = new User(user);
         }
 
-        public static IList<UserSettings> GetSettings()
+        public static UserSettings GetSettings()
         {
             return settings;
         }
 
-        public static void SetSettings(IList<UserSettings> settings)
+        public static void SetSettings(UserSettings settings)
         {
             CurrentUser.settings = settings;
         }
 
         private static User body;
-        private static IList<UserSettings> settings;
+        private static UserSettings settings;
     }
 }

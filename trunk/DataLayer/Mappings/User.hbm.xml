@@ -6,18 +6,12 @@
     </id>
     <property name="UserName" column="user_name" not-null="true"/>
     <property name="Password" column="password"/>
+    <property name="Settings" column="settings"/>
 
     <bag name="Logins" cascade="all" lazy="true">
       <key column="user_id"/>
       <one-to-many
          class="DataLayer.Entities.UserLoginEntity, NHibernateOneToMany"/>
     </bag>
-
-    <bag name="Settings" cascade="all" lazy="true">
-      <key column="user_id"/>
-      <one-to-many
-         class="DataLayer.Entities.UserSettingsEntity, NHibernateOneToMany"/>
-    </bag>
-    
   </class>
 </hibernate-mapping>

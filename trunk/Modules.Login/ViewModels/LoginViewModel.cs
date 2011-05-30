@@ -94,15 +94,11 @@ namespace Modules.Login.ViewModels
                 if (user != null)
                 {
                     dataService.UserLoggedIn(user);
-
-                    FillUserSettings(user);
-
                     eventAggregator.GetEvent<LoginSucceededEvent>().Publish(info);
                 }
                 else
                 {
                     eventAggregator.GetEvent<LoginFailedEvent>().Publish(info);
-
                     Notify("Authorization failed. Invalid user name and(or) password.", NotificationType.Error);
                 }
             }, TaskScheduler.FromCurrentSynchronizationContext());
@@ -135,15 +131,6 @@ namespace Modules.Login.ViewModels
                 HeaderText = HeaderTextHelper.CreateHeaderText(typeof(User), false)
             };
             dialog.ShowDialog();
-        }
-
-        private void FillUserSettings(User user)
-        {
-            if (user == null)
-                return;
-
-            CurrentUser.Assign(user);
-            CurrentUser.SetSettings(dataService.GetUserSettings(user));
         }
 
         #endregion

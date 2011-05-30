@@ -74,7 +74,6 @@
     <Compile Include="Entities\TrackEntity.cs" />
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="Entities\UserLoginEntity.cs" />
-    <Compile Include="Entities\UserSettingsEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -92,7 +91,6 @@
     </Content>
     <EmbeddedResource Include="Mappings\StoredProcedures.hbm.xml" />
     <EmbeddedResource Include="Mappings\Place.hbm.xml" />
-    <EmbeddedResource Include="Mappings\UserSettings.hbm.xml" />
     <EmbeddedResource Include="Mappings\UserLogin.hbm.xml" />
     <EmbeddedResource Include="Mappings\User.hbm.xml" />
     <EmbeddedResource Include="Mappings\Listening.hbm.xml" />

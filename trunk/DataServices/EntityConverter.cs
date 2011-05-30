@@ -17,21 +17,8 @@ namespace DataServices
             {
                 ID = dataEntity.ID,
                 UserName = dataEntity.UserName,
-                Password = dataEntity.Password
-            };
-
-            return businessEntity;
-        }
-
-        public UserSettings FromDataEntity(UserSettingsEntity dataEntity)
-        {
-            if (dataEntity == null)
-                return null;
-
-            UserSettings businessEntity = new UserSettings()
-            {
-                ID = dataEntity.ID,
-                Value1 = dataEntity.Value1
+                Password = dataEntity.Password,
+                Settings = new UserSettings(dataEntity.Settings)
             };
 
             return businessEntity;
@@ -46,7 +33,8 @@ namespace DataServices
             {
                 ID = businessEntity.ID,
                 UserName = businessEntity.UserName,
-                Password = businessEntity.Password
+                Password = businessEntity.Password,
+                Settings = businessEntity.Settings.ToXml()
             };
 
             return dataEntity;

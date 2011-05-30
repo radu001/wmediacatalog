@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" auto-import="true" assembly="DataLayer" namespace="DataLayer.Entities">
-  <class name="UserSettingsEntity" table="user_settings" lazy="true">
+  <class name="UserLoginEntity" table="user_logins" lazy="true">
     <id name="ID" column="id">
       <generator class="native" />
     </id>
-    <property name="Value1" column="value1" not-null="false"/>
+    <property name="LoginDate" column="login_date" not-null="true"/>
     
     <many-to-one name="User" class="DataLayer.Entities.UserEntity, NHibernateOneToMany" column="user_id"/>
   </class>
