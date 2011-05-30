@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Linq;
 using System.Xml.Linq;
 using Common.Data;
@@ -10,6 +11,7 @@ namespace BusinessObjects
 
         private const string ImportProviderBanner = "import_provider";
         private const string ImportPathBanner = "import_path";
+        private const string ImportFirstStepVisibleBanner = "import_first_step_visible";
 
         #endregion
 
@@ -18,6 +20,8 @@ namespace BusinessObjects
         public string ImportProvider { get; set; }
 
         public string ImportPath { get; set; }
+
+        public bool ImportFirstStepVisible { get; set; }
 
         #endregion
 
@@ -31,6 +35,7 @@ namespace BusinessObjects
             XElement element = new XElement("settings");
             element.Add(new XElement(ImportProviderBanner, ImportProvider));
             element.Add(new XElement(ImportPathBanner, ImportPath));
+            element.Add(new XElement(ImportFirstStepVisibleBanner, ImportFirstStepVisible));
 
             return element.ToString();
         }
@@ -47,6 +52,15 @@ namespace BusinessObjects
             if (e != null)
             {
                 ImportPath = e.Value;
+            }
+            e = element.Descendants(ImportFirstStepVisibleBanner).FirstOrDefault();
+            if (e != null)
+            {
+                ImportFirstStepVisible = Boolean.Parse(e.Value);
+            }
+            else
+            {
+                ImportFirstStepVisible = true;
             }
         }
     }

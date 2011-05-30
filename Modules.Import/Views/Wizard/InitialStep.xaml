@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:commands="clr-namespace:Common.Commands;assembly=Common.Commands"
-             mc:Ignorable="d" 
+             mc:Ignorable="d" commands:Loaded.Command="{Binding ViewLoadedCommand}"
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -17,9 +17,11 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <TextBlock Text="{Binding Message}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap"/> 
-        <Button Content="Continue" Grid.Row="1" Width="75" Margin="8" HorizontalAlignment="Right" Style="{StaticResource DialogButtonStyle}"
+        <CheckBox Content="Don't show again" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding IsStepDisabledNextTime}" />
+        <Button Content="Continue" Grid.Row="2" Width="75" Margin="8" HorizontalAlignment="Right" Style="{StaticResource DialogButtonStyle}"
                 commands:Clicked.Command="{Binding ContinueCommand}"/>
     </Grid>
 </UserControl>
