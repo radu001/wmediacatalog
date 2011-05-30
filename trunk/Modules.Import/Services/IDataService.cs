@@ -8,5 +8,6 @@ namespace Modules.Import.Services
     {
         IEnumerable<Artist> BeginScan(ScanSettings settings);
         bool BulkImportData(IEnumerable<Artist> artists);
+        bool SaveUserSettings();
     }
 }

@@ -1,24 +1,53 @@
 ﻿
-using System;
+using System.Linq;
+using System.Xml.Linq;
 using Common.Data;
 namespace BusinessObjects
 {
     public class UserSettings : NotificationObject
     {
+        #region Constants
+
+        private const string ImportProviderBanner = "import_provider";
+        private const string ImportPathBanner = "import_path";
+
+        #endregion
+
+        #region Properties
+
+        public string ImportProvider { get; set; }
+
+        public string ImportPath { get; set; }
+
+        #endregion
+
         public UserSettings(string xml)
         {
-            ParseSettings(xml);
+            FromXml(xml);
         }
 
         public string ToXml()
         {
-            //TODO
-            return String.Empty;
+            XElement element = new XElement("settings");
+            element.Add(new XElement(ImportProviderBanner, ImportProvider));
+            element.Add(new XElement(ImportPathBanner, ImportPath));
+
+            return element.ToString();
         }
 
-        private void ParseSettings(string xml)
+        private void FromXml(string xml)
         {
-            //TODO
+            XElement element = XElement.Parse(xml);
+            var e = element.Descendants(ImportProviderBanner).FirstOrDefault();
+            if (e != null)
+            {
+                ImportProvider = e.Value;
+            }
+            e = element.Descendants(ImportPathBanner).FirstOrDefault();
+            if (e != null)
+            {
+                ImportPath = e.Value;
+            }
         }
     }
 }

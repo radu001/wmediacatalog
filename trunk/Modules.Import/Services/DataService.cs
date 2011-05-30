@@ -23,6 +23,8 @@ namespace Modules.Import.Services
             this.fileSelector = fileSelector;
         }
 
+        #region IDataService Members
+
         public IEnumerable<Artist> BeginScan(ScanSettings settings)
         {
             fileSelector.Init(settings);
@@ -87,6 +89,14 @@ namespace Modules.Import.Services
             DataProvider provider = new DataProvider();
             return provider.BulkImportData(artists);
         }
+
+        public bool SaveUserSettings()
+        {
+            var provider = new DataProvider();
+            return provider.SaveUser(CurrentUser.GetUser());
+        }
+
+        #endregion
 
         #region Private fields
 

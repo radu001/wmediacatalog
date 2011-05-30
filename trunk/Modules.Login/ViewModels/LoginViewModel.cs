@@ -94,6 +94,7 @@ namespace Modules.Login.ViewModels
                 if (user != null)
                 {
                     dataService.UserLoggedIn(user);
+                    CurrentUser.Assign(user);
                     eventAggregator.GetEvent<LoginSucceededEvent>().Publish(info);
                 }
                 else

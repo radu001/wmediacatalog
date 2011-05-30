@@ -1,5 +1,4 @@
 ﻿
-using System;
 namespace BusinessObjects
 {
     public class User : BusinessObject
@@ -47,18 +46,6 @@ namespace BusinessObjects
                 settings = value;
                 NotifyPropertyChanged(() => Settings);
             }
-        }
-
-        public User() { }
-
-        public User(User u)
-        {
-            if (u == null)
-                throw new NullReferenceException("Argument can't be null");
-
-            this.ID = u.ID;
-            this.UserName = u.UserName;
-            this.Password = u.Password;
         }
 
         #region Private fields
