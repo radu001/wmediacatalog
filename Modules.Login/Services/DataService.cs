@@ -1,8 +1,7 @@
 ﻿
-using System.Collections.Generic;
+using System;
 using BusinessObjects;
 using DataServices;
-using System;
 namespace Modules.Login.Services
 {
     public class DataService : IDataService
@@ -25,12 +24,6 @@ namespace Modules.Login.Services
         {
             DataProvider provider = new DataProvider();
             provider.UserLoggedIn(user);
-        }
-
-        public IList<UserSettings> GetUserSettings(User user)
-        {
-            DataProvider provider = new DataProvider();
-            return provider.GetUserSettings(user);
         }
 
         public bool UserExists(string userName)

@@ -1,7 +1,6 @@
 ﻿
-using System.Collections.Generic;
-using BusinessObjects;
 using System;
+using BusinessObjects;
 namespace Modules.Login.Services
 {
     public interface IDataService
@@ -10,7 +9,6 @@ namespace Modules.Login.Services
         
         User ValidateCredentials(string userName, string password);
         void UserLoggedIn(User user);
-        IList<UserSettings> GetUserSettings(User user);
         
         bool UserExists(string userName);
         bool SaveUser(User user);

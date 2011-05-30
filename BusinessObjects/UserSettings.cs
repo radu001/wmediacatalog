@@ -1,28 +1,24 @@
 ﻿
+using System;
+using Common.Data;
 namespace BusinessObjects
 {
-    public class UserSettings : BusinessObject
+    public class UserSettings : NotificationObject
     {
-        public string Value1
+        public UserSettings(string xml)
         {
-            get
-            {
-                return value1;
-            }
-            set
-            {
-                if (value != value1)
-                {
-                    value1 = value;
-                    NotifyPropertyChanged(() => Value1);
-                }
-            }
+            ParseSettings(xml);
         }
 
-        #region Private fields
+        public string ToXml()
+        {
+            //TODO
+            return String.Empty;
+        }
 
-        private string value1;
-
-        #endregion
+        private void ParseSettings(string xml)
+        {
+            //TODO
+        }
     }
 }

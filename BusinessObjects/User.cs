@@ -36,6 +36,19 @@ namespace BusinessObjects
             }
         }
 
+        public UserSettings Settings
+        {
+            get
+            {
+                return settings;
+            }
+            set
+            {
+                settings = value;
+                NotifyPropertyChanged(() => Settings);
+            }
+        }
+
         public User() { }
 
         public User(User u)
@@ -52,6 +65,7 @@ namespace BusinessObjects
 
         private string userName;
         private string password;
+        private UserSettings settings;
 
         #endregion
     }

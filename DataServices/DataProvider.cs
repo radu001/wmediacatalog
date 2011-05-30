@@ -111,42 +111,6 @@ namespace DataServices
             }
         }
 
-        public IList<UserSettings> GetUserSettings(User user)
-        {
-            if (user == null)
-                return new List<UserSettings>();
-
-            IList<UserSettings> result = new List<UserSettings>();
-
-            ISession session = SessionFactory.GetSession();
-
-            try
-            {
-                var query = session.QueryOver<UserSettingsEntity>().
-                    Where(u => u.ID == user.ID);
-
-                IList<UserSettingsEntity> dataEntities = query.List<UserSettingsEntity>();
-
-                foreach (UserSettingsEntity de in dataEntities)
-                {
-                    EntityConverter converter = new EntityConverter();
-
-                    UserSettings businessEntity = converter.FromDataEntity(de);
-                    result.Add(businessEntity);
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.Write(ex);
-            }
-            finally
-            {
-                session.Close();
-            }
-
-            return result;
-        }
-
         public bool UserExists(string userName)
         {
             bool result = false;
