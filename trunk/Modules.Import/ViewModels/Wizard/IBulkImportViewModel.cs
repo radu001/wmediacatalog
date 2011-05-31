@@ -9,8 +9,12 @@ namespace Modules.Import.ViewModels.Wizard
     {
         bool ImportCompleted { get; }
         IEnumerable<Artist> Artists { get; }
+        string ArtistFilter { get; set; }
+        string AlbumFilter { get; set; }
+        string GenreFilter { get; set; }
 
         DelegateCommand<object> BeginImportCommand { get; }
         DelegateCommand<object> ViewLoadedCommand { get; }
+        DelegateCommand<object> MarkArtistCommand { get; }
     }
 }

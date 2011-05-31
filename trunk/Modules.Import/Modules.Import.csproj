@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Controllers\ImportController.cs" />
     <Compile Include="Converters\BoolToPauseResumeConverter.cs" />
+    <Compile Include="Converters\HighlightConverter.cs" />
     <Compile Include="Converters\ProgressPercentageConverter.cs" />
     <Compile Include="ImportModule.cs" />
     <Compile Include="Model\Comparers\GenreByNameComparer.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="Model\IImportDataModel.cs" />
     <Compile Include="Model\ImportDataModel.cs" />
     <Compile Include="Model\TagsProvider.cs" />
+    <Compile Include="Model\Tree\TreeItem.cs" />
     <Compile Include="Services\Utils\FileSystem\Dir.cs" />
     <Compile Include="Services\Utils\FileSystem\FsFile.cs" />
     <Compile Include="Services\Utils\FileSystem\FileByExtensionSelector.cs" />
