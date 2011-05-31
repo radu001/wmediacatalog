@@ -46,10 +46,24 @@ namespace BusinessObjects
             }
         }
 
+        public object OptionalTag
+        {
+            get
+            {
+                return optionalTag;
+            }
+            set
+            {
+                optionalTag = value;
+                NotifyPropertyChanged(() => OptionalTag);
+            }
+        }
+
         #region Private fields
 
         private int id;
         private bool needValidate;
+        private object optionalTag;
 
         #endregion
     }

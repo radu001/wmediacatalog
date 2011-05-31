@@ -6,6 +6,8 @@
              xmlns:controls="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
              xmlns:commands="clr-namespace:Common.Commands;assembly=Common.Commands"
              xmlns:converters="clr-namespace:Common.Controls.Converters;assembly=Common.Controls"
+             xmlns:localConverters="clr-namespace:Modules.Import.Converters"
+             x:Name="view"
              mc:Ignorable="d" commands:Loaded.Command="{Binding ViewLoadedCommand}"
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -15,18 +17,43 @@
             </ResourceDictionary.MergedDictionaries>
 
             <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter"/>
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+            <localConverters:HighlightConverter x:Key="HighlightConverter"/>
             
             <DataTemplate x:Key="GenreTemplate">
-                <TextBlock Text="{Binding Name}"/>
+                <TextBox Text="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" BorderThickness="0"
+                         Visibility="{Binding OptionalTag.IsVisible,Converter={StaticResource BoolToVisibilityConverter}}"/>
             </DataTemplate>
 
             <HierarchicalDataTemplate x:Key="AlbumTemplate" ItemsSource="{Binding Genres}" ItemTemplate="{StaticResource GenreTemplate}" >
-                <TextBlock Text="{Binding Name}"/>
+                    <CheckBox IsChecked="{Binding OptionalTag.MarkedForImport,Mode=TwoWay}">
+                        <CheckBox.Content>
+                            <TextBox Text="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" BorderThickness="0"
+                             Foreground="{Binding OptionalTag.IsHighlighted,Converter={StaticResource HighlightConverter}}"
+                             VerticalAlignment="Center"/>
+                        </CheckBox.Content>
+                    </CheckBox>
             </HierarchicalDataTemplate>
 
             <HierarchicalDataTemplate x:Key="ArtistTemplate" ItemsSource="{Binding Albums}" ItemTemplate="{StaticResource AlbumTemplate}" >
-                <TextBlock Text="{Binding Name}"/>
+                <CheckBox IsChecked="{Binding OptionalTag.MarkedForImport,Mode=TwoWay}"
+                          commands:Checked.Command="{Binding ElementName=view,Path=DataContext.MarkArtistCommand}"
+                          commands:Checked.CommandParameter="{Binding}"
+                          commands:Unchecked.Command="{Binding ElementName=view,Path=DataContext.MarkArtistCommand}"
+                          commands:Unchecked.CommandParameter="{Binding}">
+                    <CheckBox.Content>
+                        <TextBox Text="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" BorderThickness="0"
+                             VerticalAlignment="Center"/>
+                    </CheckBox.Content>
+                </CheckBox>
             </HierarchicalDataTemplate>
+            
+            <Style x:Key="TextBlockStyle" TargetType="{x:Type TextBlock}">
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="HorizontalAlignment" Value="Right"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Margin" Value="4"/>
+            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid x:Name="LayoutRoot" 
@@ -45,8 +72,29 @@
         </TextBlock>
         
         <GroupBox Header="Data import preview" Grid.Row="1" Margin="8">
-            <TreeView x:Name="ImportDataTreeView" ItemsSource="{Binding Artists}" Grid.Row="1"
-                      ItemTemplate="{StaticResource ArtistTemplate}"/>
+            <DockPanel>
+                <GroupBox Header="Filters" DockPanel.Dock="Right" Margin="8">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Artist:" Grid.Row="0" Grid.Column="0" Style="{StaticResource TextBlockStyle}"/>
+                        <TextBox Text="{Binding ArtistFilter,UpdateSourceTrigger=PropertyChanged}" MinWidth="175" Grid.Row="0" Grid.Column="1" Margin="4"/>
+                        <TextBlock Text="Album:" Grid.Row="1" Grid.Column="0" Style="{StaticResource TextBlockStyle}"/>
+                        <TextBox Text="{Binding AlbumFilter,UpdateSourceTrigger=PropertyChanged}" MinWidth="175" Grid.Row="1" Grid.Column="1" Margin="4"/>
+                        <TextBlock Text="Genre:" Grid.Row="2" Grid.Column="0" Style="{StaticResource TextBlockStyle}"/>
+                        <TextBox Text="{Binding GenreFilter,UpdateSourceTrigger=PropertyChanged}" MinWidth="175" Grid.Row="2" Grid.Column="1" Margin="4"/>
+                    </Grid>
+                </GroupBox>
+                <TreeView x:Name="ImportDataTreeView" ItemsSource="{Binding Artists}" Grid.Column="0" Margin="8"
+                      ItemTemplate="{StaticResource ArtistTemplate}" DockPanel.Dock="Left"/>
+            </DockPanel>
         </GroupBox>
         
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2" Margin="8">
