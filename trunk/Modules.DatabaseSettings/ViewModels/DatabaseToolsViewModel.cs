@@ -146,16 +146,13 @@ namespace Modules.DatabaseSettings.ViewModels
                 {
                     IsBusy = false;
                     OnExportCompleted(t.Result);
-                },TaskScheduler.FromCurrentSynchronizationContext());
+                }, TaskScheduler.FromCurrentSynchronizationContext());
             }
         }
 
         private void OnSelectProviderPathCommand(object parameter)
         {
-            var dialog = new FolderPickerDialog()
-            {
-                InitialPath = @"I:\Graphics\Tiffany Toth\PB- CGOM March 2006\02"
-            };
+            var dialog = new FolderPickerDialog();
             if (dialog.ShowDialog() == true)
             {
                 ProviderPath = dialog.SelectedPath;
@@ -202,7 +199,7 @@ namespace Modules.DatabaseSettings.ViewModels
             else
             {
                 Notify(
-                    String.Format( "Error while exporting database: [{0}]", result.Message),
+                    String.Format("Error while exporting database: [{0}]", result.Message),
                     NotificationType.Error);
             }
         }
@@ -260,7 +257,7 @@ namespace Modules.DatabaseSettings.ViewModels
             IsBusy = false;
             if (result.Success)
             {
-                Notify("Database has been successfully imported. It is recommended to restart " + 
+                Notify("Database has been successfully imported. It is recommended to restart " +
                        "application in order to apply data changes", NotificationType.Success);
             }
             else

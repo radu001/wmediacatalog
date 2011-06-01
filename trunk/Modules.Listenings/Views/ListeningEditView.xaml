@@ -49,6 +49,9 @@
                     <DatePicker Grid.Row="0" Grid.Column="1" Margin="{StaticResource DialogMargin}" Focusable="False"
                                         SelectedDate="{Binding Listening.Date,Mode=TwoWay}"
                                         Visibility="{Binding IsViewMode,Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
+                    <!--<extendedToolkit:DateTimePicker Grid.Row="0" Grid.Column="1" Margin="{StaticResource DialogMargin}" 
+                                                    Value="{Binding Listening.Date,Mode=TwoWay}"
+                                                    Visibility="{Binding IsViewMode,Converter={StaticResource InverseBoolToVisibilityConverter}}"/>-->
 
                     <TextBlock Text="Rating" Grid.Row="1" Grid.Column="0" Style="{StaticResource DialogLabelStyle}"/>
                     <toolkit:Rating Value="{Binding Listening.ListenRating,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource RatingConverter}}" 
