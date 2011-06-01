@@ -46,7 +46,8 @@ namespace Modules.Login.ViewModels
                 User newUser = new User()
                 {
                     UserName = this.UserName,
-                    Password = hashedPassword
+                    Password = hashedPassword,
+                    Settings = new UserSettings(null)
                 };
 
                 return dataService.SaveUser(newUser);

@@ -42,6 +42,9 @@ namespace BusinessObjects
 
         private void FromXml(string xml)
         {
+            if (String.IsNullOrEmpty(xml))
+                return;
+
             XElement element = XElement.Parse(xml);
             var e = element.Descendants(ImportProviderBanner).FirstOrDefault();
             if (e != null)
