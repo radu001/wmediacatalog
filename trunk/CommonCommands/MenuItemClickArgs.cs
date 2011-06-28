@@ -7,5 +7,6 @@ namespace Common.Commands
         public object Sender { get; set; }
         public object MenuOwner { get; set; }
         public RoutedEventArgs Settings { get; set; }
+        public object DataItem { get; set; }
     }
 }

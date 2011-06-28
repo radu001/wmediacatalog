@@ -27,7 +27,12 @@ namespace Common.Commands
                 ContextMenu parentMenu = menuItem.Parent as ContextMenu;
                 if (parentMenu != null)
                 {
-                    args.MenuOwner = ((Popup)parentMenu.Parent).PlacementTarget;
+                    var menuOwner = ((Popup)parentMenu.Parent).PlacementTarget as FrameworkElement;
+                    if (menuOwner != null)
+                    {
+                        args.MenuOwner = menuOwner;
+                        args.DataItem = menuOwner.DataContext;
+                    }
                 }
             }
 
