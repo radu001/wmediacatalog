@@ -1,6 +1,5 @@
 ﻿
 using System.Windows.Controls;
-using Microsoft.Practices.Prism.Commands;
 namespace Common.Commands
 {
     public class TextChangedBehavior : CommandBehaviorBase<TextBox>

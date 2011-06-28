@@ -26,7 +26,7 @@ namespace Common.Commands
 
         private static void CommandProperty_Changed(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            Control element = dependencyObject as Control;
+            var element = dependencyObject as FrameworkElement;
             if (element != null)
             {
                 MouseLeftButtonDownBehavior behavior = GetOrCreateBehavior(element);
@@ -62,7 +62,7 @@ namespace Common.Commands
 
         #endregion
 
-        private static MouseLeftButtonDownBehavior GetOrCreateBehavior(Control element)
+        private static MouseLeftButtonDownBehavior GetOrCreateBehavior(FrameworkElement element)
         {
             MouseLeftButtonDownBehavior behavior = element.GetValue(MouseLeftButtonDownBehaviorProperty) as MouseLeftButtonDownBehavior;
             if (behavior == null)
