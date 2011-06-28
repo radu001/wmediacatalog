@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using Microsoft.Practices.Prism.Commands;
 namespace Common.Commands
 {
     public class MenuItemClickBehavior : CommandBehaviorBase<MenuItem>

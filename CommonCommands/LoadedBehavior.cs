@@ -1,7 +1,6 @@
 ﻿
 using System.Windows;
 using System.Windows.Controls;
-using Microsoft.Practices.Prism.Commands;
 namespace Common.Commands
 {
     public class LoadedBehavior : CommandBehaviorBase<Control>

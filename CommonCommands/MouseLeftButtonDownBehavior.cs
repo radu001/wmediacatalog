@@ -1,12 +1,11 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
 using System.Windows.Input;
-using Microsoft.Practices.Prism.Commands;
 
 namespace Common.Commands
 {
-    public class MouseLeftButtonDownBehavior : CommandBehaviorBase<Control>
+    public class MouseLeftButtonDownBehavior : CommandBehaviorBase<FrameworkElement>
     {
-        public MouseLeftButtonDownBehavior(Control element)
+        public MouseLeftButtonDownBehavior(FrameworkElement element)
             : base(element)
         {
             element.MouseLeftButtonDown += new MouseButtonEventHandler(element_MouseLeftButtonDown);

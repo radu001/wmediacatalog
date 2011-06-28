@@ -1,7 +1,6 @@
 ﻿
 using System;
 using System.Windows;
-using Microsoft.Practices.Prism.Commands;
 namespace Common.Commands
 {
     public class ActivatedBehavior : CommandBehaviorBase<Window>
