@@ -26,7 +26,7 @@ namespace Common.Commands
 
         private static void CommandProperty_Changed(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            Control element = dependencyObject as Control;
+            var element = dependencyObject as FrameworkElement;
             if (element != null)
             {
                 DropBehavior behavior = GetOrCreateBehavior(element);
@@ -62,7 +62,7 @@ namespace Common.Commands
 
         #endregion
 
-        private static DropBehavior GetOrCreateBehavior(Control element)
+        private static DropBehavior GetOrCreateBehavior(FrameworkElement element)
         {
             DropBehavior behavior = element.GetValue(DropBehaviorProperty) as DropBehavior;
             if (behavior == null)
