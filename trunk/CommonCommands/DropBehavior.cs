@@ -1,11 +1,10 @@
 ﻿
 using System.Windows;
-using System.Windows.Controls;
 namespace Common.Commands
 {
-    public class DropBehavior : CommandBehaviorBase<Control>
+    public class DropBehavior : CommandBehaviorBase<FrameworkElement>
     {
-        public DropBehavior(Control element)
+        public DropBehavior(FrameworkElement element)
             : base(element)
         {
             element.Drop += new DragEventHandler(element_Drop);
