@@ -60,6 +60,11 @@ namespace DataServices
                 {
                     businessEntity.Tags.Add(FromDataEntity(tagDataEntity));
                 }
+
+                foreach (AlbumEntity albumEntity in dataEntity.Albums)
+                {
+                    businessEntity.Albums.Add(FromDataEntity(albumEntity, AlbumConvertOptions.Small));
+                }
             }
 
             return businessEntity;
@@ -85,6 +90,12 @@ namespace DataServices
                 {
                     TagEntity tagDataEntity = FromBusinessEntity(tagBusinessEntity);
                     dataEntity.Tags.Add(tagDataEntity);
+                }
+
+                foreach (Album albumBusinessEntity in businessEntity.Albums)
+                {
+                    AlbumEntity albumDataEntity = FromBusinessEntity(albumBusinessEntity);
+                    dataEntity.Albums.Add(albumDataEntity);
                 }
             }
 
