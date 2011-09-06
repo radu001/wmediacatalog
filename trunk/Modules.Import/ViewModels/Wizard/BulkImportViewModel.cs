@@ -12,6 +12,7 @@ using Microsoft.Practices.Unity;
 using Modules.Import.Services;
 using Modules.Import.ViewModels.Wizard.Common;
 using Prism.Wizards.Events;
+using System.Text;
 
 namespace Modules.Import.ViewModels.Wizard
 {
@@ -118,39 +119,48 @@ namespace Modules.Import.ViewModels.Wizard
 
         private void OnBeginImportCommand(object parameter)
         {
-            IsBusy = true;
 
             var markedItems = GetMarkedItems();
+            var validationResult = Validate(markedItems);
 
-            Task<bool> importTask = Task.Factory.StartNew<bool>(() =>
+            if (!validationResult.Success)
             {
-                if (markedItems.Count() == 0)
-                    return true;
-
-                return dataService.BulkImportData(markedItems);
-            }, TaskScheduler.Default);
-
-            Task finishImportTask = importTask.ContinueWith((r) =>
+                Notify(validationResult.Message, NotificationType.Error);
+            }
+            else
             {
-                IsBusy = false;
+                IsBusy = true;
 
-                if (r.Result)
+                Task<bool> importTask = Task.Factory.StartNew<bool>(() =>
                 {
-                    Notify("Import has been successful", NotificationType.Success);
+                    if (markedItems.Count() == 0)
+                        return true;
 
-                    ImportCompleted = true;
+                    return dataService.BulkImportData(markedItems);
+                }, TaskScheduler.Default);
 
-                    eventAggregator.GetEvent<ReloadAlbumsEvent>().Publish(null);
-                    eventAggregator.GetEvent<ReloadArtistsEvent>().Publish(null);
-
-                    //automatically navigate to next step in wizard
-                    ContinueCommand.Execute(null);
-                }
-                else
+                Task finishImportTask = importTask.ContinueWith((r) =>
                 {
-                    Notify("Errors occured during import. Please see log for details", NotificationType.Error);
-                }
-            }, TaskScheduler.FromCurrentSynchronizationContext());
+                    IsBusy = false;
+
+                    if (r.Result)
+                    {
+                        Notify("Import has been successful", NotificationType.Success);
+
+                        ImportCompleted = true;
+
+                        eventAggregator.GetEvent<ReloadAlbumsEvent>().Publish(null);
+                        eventAggregator.GetEvent<ReloadArtistsEvent>().Publish(null);
+
+                        //automatically navigate to next step in wizard
+                        ContinueCommand.Execute(null);
+                    }
+                    else
+                    {
+                        Notify("Errors occured during import. Please see log for details", NotificationType.Error);
+                    }
+                }, TaskScheduler.FromCurrentSynchronizationContext());
+            }
         }
 
         private void OnViewLoadedCommand(object parameter)
@@ -243,6 +253,41 @@ namespace Modules.Import.ViewModels.Wizard
             foreach (var al in a.Albums)
             {
                 ((TreeTag)al.OptionalTag).IsHighlighted = false;
+            }
+        }
+
+        #endregion
+
+        #region Validation
+
+        private ValidationResult Validate(IEnumerable<Artist> sourceData)
+        {
+            var success = new ValidationResult();
+
+            if (sourceData.Count() == 0)
+                return success;
+            else
+            {
+                //artists must have unique name
+                var groups = sourceData.GroupBy(a => a.Name).Where( g => g.Count() > 1 ).ToList();
+                if (groups.Count() > 0)
+                {
+                    var messageBuilder = new StringBuilder();
+                    messageBuilder.Append("Found duplicated artists: ");
+                    foreach (var g in groups)
+                    {
+                        messageBuilder.Append(g.Key);
+                        messageBuilder.Append(", ");
+                    }
+
+                    var failureMessage = messageBuilder.ToString().TrimEnd(new char[] { ',', ' ' });
+                    failureMessage += " . Please remove/rename duplicates in import data.";
+                    return new ValidationResult(false, failureMessage);
+                }
+                else
+                {
+                    return success;
+                }
             }
         }
 
@@ -371,6 +416,25 @@ namespace Modules.Import.ViewModels.Wizard
             }
 
             #endregion
+        }
+
+        private class ValidationResult
+        {
+            public bool Success { get; set; }
+
+            public string Message { get; set; }
+
+            public ValidationResult()
+            {
+                Success = true;
+                Message = String.Empty;
+            }
+
+            public ValidationResult(bool success, string message)
+            {
+                Success = success;
+                Message = message;
+            }
         }
 
         #endregion
