@@ -61,17 +61,24 @@
           controls:BusyIndicatorBehavior.BusyState="{Binding IsBusy}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBlock TextWrapping="Wrap" Grid.Row="0" Margin="16">
+        <TextBlock TextWrapping="Wrap" Grid.Row="0" Margin="16,16,16,4">
             <TextBlock.Text>
                 Filesystem scan is complete. Please review data that will be imported and click 'Begin import' in order to initiate import 
                 into media library. Please be patient since this process can't be interruped and can take a while.
             </TextBlock.Text>
         </TextBlock>
-        
-        <GroupBox Header="Data import preview" Grid.Row="1" Margin="8">
+
+        <TextBlock TextWrapping="Wrap" Grid.Row="1" Margin="16,4,16,4">
+            <TextBlock.Text>
+                You can rename data to be imported by selecting text for Artist/Album and typing new one.
+            </TextBlock.Text>
+        </TextBlock>
+
+        <GroupBox Header="Data import preview" Grid.Row="2" Margin="8">
             <DockPanel>
                 <GroupBox Header="Filters" DockPanel.Dock="Right" Margin="8">
                     <Grid>
@@ -97,7 +104,7 @@
             </DockPanel>
         </GroupBox>
         
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2" Margin="8">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="3" Margin="8">
             <Button Content="Begin import" Grid.Row="1" Width="75" Margin="8" HorizontalAlignment="Right" Style="{StaticResource DialogButtonStyle}"
                 Visibility="{Binding ImportCompleted,Converter={StaticResource InverseBoolToVisibilityConverter}}"
                 commands:Clicked.Command="{Binding BeginImportCommand}"/>
