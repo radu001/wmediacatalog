@@ -18,6 +18,7 @@ namespace MediaCatalog
     {
         protected override DependencyObject CreateShell()
         {
+
             Shell shell = Container.TryResolve<Shell>();
             shell.Show();
             return shell;

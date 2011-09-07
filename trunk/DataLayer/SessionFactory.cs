@@ -4,6 +4,7 @@ using Common;
 using DataLayer.Caching;
 using NHibernate;
 using NHibernate.Cfg;
+using Npgsql;
 
 namespace DataLayer
 {
@@ -38,6 +39,11 @@ namespace DataLayer
 
         private static ISessionFactory CreateSessionFactory()
         {
+            //NpgsqlEventLog.Level = LogLevel.Debug;
+            //NpgsqlEventLog.LogName = "NpgsqlTests.LogFile";
+            //NpgsqlEventLog.EchoMessages = true;
+
+
             if (configurationCache == null)
                 configurationCache = new ConfigurationCache();
             

@@ -25,6 +25,22 @@ namespace BusinessObjects
             }
         }
 
+        public int AssociatedEntitiesCount
+        {
+            get
+            {
+                return associatedEntitiesCount;
+            }
+            set
+            {
+                if (value != associatedEntitiesCount)
+                {
+                    associatedEntitiesCount = value;
+                    NotifyPropertyChanged(() => AssociatedEntitiesCount);
+                }
+            }
+        }
+
         #region IValueObject<Tag> Members
 
         public Tag Clone()
@@ -79,6 +95,7 @@ namespace BusinessObjects
             {
                 fHashCode = base.GetHashCode();
                 fHashCode = fHashCode * 37 + CreateDate.GetHashCode();
+                fHashCode = fHashCode * 19 + AssociatedEntitiesCount;
             }
 
             return fHashCode;
@@ -96,6 +113,7 @@ namespace BusinessObjects
             long targetTicks = tag.CreateDate.Ticks;
 
             result &= Math.Abs(thisTicks - targetTicks) < 10;
+            result &= AssociatedEntitiesCount == tag.AssociatedEntitiesCount;
 
             return result;
         }
@@ -105,6 +123,7 @@ namespace BusinessObjects
         #region Private fields
 
         private DateTime createDate;
+        private int associatedEntitiesCount;
 
         #endregion
     }

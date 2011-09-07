@@ -75,6 +75,7 @@
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="Entities\UserLoginEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TagResultTransformer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="DbSchema\DataScripts\english_adjectives.sql" />

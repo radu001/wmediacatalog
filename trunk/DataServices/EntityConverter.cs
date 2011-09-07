@@ -114,7 +114,8 @@ namespace DataServices
                 PrivateMarks = dataEntity.PrivateMarks,
                 Comments = dataEntity.Comments,
                 CreateDate = dataEntity.CreateDate,
-                Description = dataEntity.Description
+                Description = dataEntity.Description,
+                AssociatedEntitiesCount = dataEntity.AssociatedEntitiesCount
             };
 
             return businessEntity;

@@ -11,6 +11,7 @@ namespace DataLayer.Entities
         public virtual string Comments { get; set; }
         public virtual string Description { get; set; }
         public virtual DateTime CreateDate { get; set; }
+        public virtual int AssociatedEntitiesCount { get; set; }
         public virtual IList<AlbumEntity> Albums
         {
             get
