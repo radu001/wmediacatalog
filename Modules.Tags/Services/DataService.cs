@@ -2,6 +2,8 @@
 using BusinessObjects;
 using DataServices;
 using System.Collections.Generic;
+using TagCloudLib;
+using Modules.Tags.Model;
 namespace Modules.Tags.Services
 {
     public class DataService : IDataService
@@ -12,10 +14,20 @@ namespace Modules.Tags.Services
             return provider.SaveTag(tag);
         }
 
-        public IList<Tag> GetTagsWithAssociatedEntitiesCount()
+        public IList<ITag> GetTagsWithAssociatedEntitiesCount()
         {
             var provider = new DataProvider();
-            return provider.GetTagsWithAssociatedEntitiesCount();
+            var tags = provider.GetTagsWithAssociatedEntitiesCount();
+
+            var result = new List<ITag>();
+
+            foreach (var t in tags)
+            {
+                var ta = new TagAdapter(t);
+                result.Add(ta);
+            }
+
+            return result;
         }
     }
 }
