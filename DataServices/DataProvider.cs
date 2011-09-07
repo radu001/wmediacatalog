@@ -351,6 +351,37 @@ namespace DataServices
             return result;
         }
 
+        public IList<Tag> GetTagsWithAssociatedEntitiesCount()
+        {
+            var result = new List<Tag>();
+
+            ISession session = SessionFactory.GetSession();
+
+            try
+            {
+                var query = session.GetNamedQuery("GetTagsWithAssociatedEntitiesCount");
+                var dataEntities = query.SetResultTransformer(new TagResultTransformer()).List<TagEntity>();
+
+                EntityConverter converter = new EntityConverter();
+
+                foreach (var de in dataEntities)
+                {
+                    var tag = converter.FromDataEntity(de);
+                    result.Add(tag);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Write(ex);
+            }
+            finally
+            {
+                session.Close();
+            }
+
+            return result;
+        }
+
         public bool SaveTag(Tag tag)
         {
             bool result = false;

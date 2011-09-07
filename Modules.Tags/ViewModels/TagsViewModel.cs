@@ -3,6 +3,8 @@ using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 using Modules.Tags.Services;
 using Microsoft.Practices.Prism.Commands;
+using System.Collections.ObjectModel;
+using BusinessObjects;
 
 namespace Modules.Tags.ViewModels
 {
@@ -19,6 +21,19 @@ namespace Modules.Tags.ViewModels
 
         #region ITagsViewModel Members
 
+        public ObservableCollection<Tag> Tags
+        {
+            get
+            {
+                return tags;
+            }
+            private set
+            {
+                tags = value;
+                NotifyPropertyChanged(() => Tags);
+            }
+        }
+
         public DelegateCommand<object> ViewLoadedCommand { get; private set; }
 
         #endregion
@@ -27,12 +42,14 @@ namespace Modules.Tags.ViewModels
 
         private void OnViewLoadedCommand(object parameter)
         {
+            
+
             if (InitialDataLoaded)
                 return;
             else
             {
                 InitialDataLoaded = true;
-                //Do load data here for first time we open view
+                Tags = new ObservableCollection<Tag>(dataService.GetTagsWithAssociatedEntitiesCount());
             }
         }
 
@@ -42,6 +59,8 @@ namespace Modules.Tags.ViewModels
 
         private IDataService dataService;
         private IEventAggregator eventAggregator;
+
+        private ObservableCollection<Tag> tags;
 
         #endregion
     }
