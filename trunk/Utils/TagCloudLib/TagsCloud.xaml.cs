@@ -146,8 +146,8 @@ namespace TagCloudLib
         private void UpdateItemsTemplate()
         {
             int minRank = 0; 
-            int maxRank = 0; 
-            if (ItemsSource.Count() > 0)
+            int maxRank = 0;
+            if (ItemsSource != null && ItemsSource.Count() > 0)
             {
                 minRank = ItemsSource.Min((t) => t.Rank);
                 maxRank = ItemsSource.Max((t) => t.Rank);
@@ -181,9 +181,7 @@ namespace TagCloudLib
             });
 
             if (TagClick != null)
-            {
                 tbFactory.AddHandler(TextBlock.MouseUpEvent, TagClick);
-            }
 
             result.VisualTree = tbFactory;
 

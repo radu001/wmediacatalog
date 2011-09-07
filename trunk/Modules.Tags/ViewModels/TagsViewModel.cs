@@ -5,6 +5,7 @@ using Modules.Tags.Services;
 using Microsoft.Practices.Prism.Commands;
 using System.Collections.ObjectModel;
 using BusinessObjects;
+using TagCloudLib;
 
 namespace Modules.Tags.ViewModels
 {
@@ -17,11 +18,12 @@ namespace Modules.Tags.ViewModels
             this.eventAggregator = eventAggregator;
 
             ViewLoadedCommand = new DelegateCommand<object>(OnViewLoadedCommand);
+            TagClickedCommand = new DelegateCommand<object>(OnTagClickedCommand);
         }
 
         #region ITagsViewModel Members
 
-        public ObservableCollection<Tag> Tags
+        public ObservableCollection<ITag> Tags
         {
             get
             {
@@ -36,6 +38,8 @@ namespace Modules.Tags.ViewModels
 
         public DelegateCommand<object> ViewLoadedCommand { get; private set; }
 
+        public DelegateCommand<object> TagClickedCommand { get; private set; }
+
         #endregion
 
         #region Private methods
@@ -49,8 +53,18 @@ namespace Modules.Tags.ViewModels
             else
             {
                 InitialDataLoaded = true;
-                Tags = new ObservableCollection<Tag>(dataService.GetTagsWithAssociatedEntitiesCount());
+
+                LoadTags();
             }
+        }
+
+        private void LoadTags()
+        {
+            Tags = new ObservableCollection<ITag>(dataService.GetTagsWithAssociatedEntitiesCount());
+        }
+
+        private void OnTagClickedCommand(object parameter)
+        {
         }
 
         #endregion
@@ -60,7 +74,7 @@ namespace Modules.Tags.ViewModels
         private IDataService dataService;
         private IEventAggregator eventAggregator;
 
-        private ObservableCollection<Tag> tags;
+        private ObservableCollection<ITag> tags;
 
         #endregion
     }
