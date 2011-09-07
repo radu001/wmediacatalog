@@ -95,6 +95,10 @@
       <Project>{CAE942B3-324B-4B06-BCB3-AADFAC80A69C}</Project>
       <Name>Common.Dialogs</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CommonCommands\Common.Commands.csproj">
+      <Project>{AF33854B-F0F2-4207-892D-2B288E4E37D5}</Project>
+      <Name>Common.Commands</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{E66025A2-8077-40D1-B627-4D4945CEB365}</Project>
       <Name>Common</Name>

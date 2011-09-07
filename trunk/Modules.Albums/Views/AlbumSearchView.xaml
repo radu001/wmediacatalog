@@ -33,7 +33,7 @@
         <DockPanel LastChildFill="True" Grid.Row="0" Margin="4">
             <Button x:Name="CreateAlbumButton"
                                             Style="{StaticResource ToolbarImageButtonStyle}"  Margin="8"
-                                            ToolTip="Create new album" DockPanel.Dock="Right" Width="16" Height="16"
+                                            ToolTip="Create new album" DockPanel.Dock="Right" 
                                             commands:Clicked.Command="{Binding CreateAlbumCommand}">
                 <Button.Content>
                     <Image Source="/Common.Content;component/Images/add_15x15.png" Width="16" Height="16"/>
