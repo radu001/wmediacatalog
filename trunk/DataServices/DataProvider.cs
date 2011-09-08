@@ -469,6 +469,22 @@ namespace DataServices
                     Add(new InExpression("TagID", (idList)));
             }
 
+            if (options.ExcludeAlbums && options.ExcludeArtists)
+            {
+                criteria.Add(Restrictions.Eq("EntityType", -1)); // no records should be returned
+            }
+            else
+            {
+                if (options.ExcludeAlbums) // show only artists
+                {
+                    criteria.Add(Restrictions.Eq("EntityType", (int)TaggedObjectType.Artist));
+                }
+                if (options.ExcludeArtists) // show only albums
+                {
+                    criteria.Add(Restrictions.Eq("EntityType", (int)TaggedObjectType.Album));
+                }
+            }
+
             return criteria;
         }
 

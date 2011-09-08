@@ -11,6 +11,9 @@ using System.Windows.Input;
 using System.Windows;
 using Common.Entities.Pagination;
 using Common.Utilities;
+using BusinessObjects.Artificial;
+using DataServices;
+using Common.Controls.Controls;
 
 namespace Modules.Tags.ViewModels
 {
@@ -20,7 +23,6 @@ namespace Modules.Tags.ViewModels
             : base(container, eventAggregator)
         {
             this.dataService = dataService;
-            this.eventAggregator = eventAggregator;
 
             SubscribeEvents();
 
@@ -31,6 +33,7 @@ namespace Modules.Tags.ViewModels
             AllTagsDropCommand = new DelegateCommand<object>(OnAllTagsDropCommand);
             SelectedTagsDragCommand = new DelegateCommand<object>(OnSelectedTagsDragCommand);
             AllTagsDragCommand = new DelegateCommand<object>(OnAllTagsDragCommand);
+            PageChangedCommand = new DelegateCommand<PageChangedArgs>(OnPageChangedCommand);
         }
 
         #region ITagsViewModel Members
@@ -61,6 +64,19 @@ namespace Modules.Tags.ViewModels
             }
         }
 
+        public IPagedList<TaggedObject> TaggedObjects
+        {
+            get
+            {
+                return taggedObjects;
+            }
+            private set
+            {
+                taggedObjects = value;
+                NotifyPropertyChanged(() => TaggedObjects);
+            }
+        }
+
         public ITag AllTagsSelectedItem
         {
             get
@@ -85,6 +101,24 @@ namespace Modules.Tags.ViewModels
             }
         }
 
+        public ILoadOptions LoadOptions { get; private set; }
+
+        public int TaggedObjectsCount
+        {
+            get
+            {
+                return taggedObjectsCount;
+            }
+            private set
+            {
+                if (taggedObjectsCount != value)
+                {
+                    taggedObjectsCount = value;
+                    NotifyPropertyChanged(() => TaggedObjectsCount);
+                }
+            }
+        }
+
         public DelegateCommand<object> ViewLoadedCommand { get; private set; }
 
         public DelegateCommand<object> SelectedTagsDropCommand { get; private set; }
@@ -94,6 +128,8 @@ namespace Modules.Tags.ViewModels
         public DelegateCommand<object> SelectedTagsDragCommand { get; private set; }
 
         public DelegateCommand<object> AllTagsDragCommand { get; private set; }
+
+        public DelegateCommand<PageChangedArgs> PageChangedCommand { get; private set; } 
 
         #endregion
 
@@ -112,6 +148,7 @@ namespace Modules.Tags.ViewModels
             {
                 InitialDataLoaded = true;
 
+                InitLoadOptions();
                 LoadTags();
             }
         }
@@ -119,6 +156,19 @@ namespace Modules.Tags.ViewModels
         private void LoadTags()
         {
             Tags = new ObservableCollection<ITag>(dataService.GetTagsWithAssociatedEntitiesCount());
+        }
+
+        private void InitLoadOptions()
+        {
+            LoadOptions = new TagLoadOptions()
+            {
+                FilterField = new Field("TagID", "Tag id"),
+                FilterValue = "",
+                FirstResult = 0,
+                MaxResults = 25,
+            };
+
+            NotifyPropertyChanged(() => LoadOptions);
         }
 
         #region DragDrop
@@ -134,7 +184,7 @@ namespace Modules.Tags.ViewModels
                 if (control != null) 
                     control.Refresh();
 
-                Filter();
+                FilterTaggedObjects();
             }   
         }
 
@@ -149,7 +199,7 @@ namespace Modules.Tags.ViewModels
                 if (control != null)
                     control.Refresh();
 
-                Filter();
+                FilterTaggedObjects();
             }
         }
 
@@ -212,33 +262,23 @@ namespace Modules.Tags.ViewModels
 
         #region Filtering
 
-        private void Filter()
+        private void FilterTaggedObjects()
         {
-            var transformer = new IDListTransformer<ITag>();
-
-            var idList = transformer.TransformIDs(SelectedTags, (o) =>
+            if (SelectedTags == null || (SelectedTags != null && SelectedTags.Count == 0))
+                TaggedObjects = new PagedList<TaggedObject>();
+            else
             {
-                ITag tag = (ITag)o;
-                return tag.ID;
-            });
+                var transformer = new IDListTransformer<ITag>();
 
-            //var options = new TagLoadOptions()
-            //{
-            //    FilterField = new Field("TagName","Tag name"),
-            //    FilterValue = "",
-            //    FirstResult = 0,
-            //    MaxResults = 500
-            //};
+                LoadOptions.FilterValue = transformer.TransformIDs(SelectedTags, (o) =>
+                {
+                    ITag tag = (ITag)o;
+                    return tag.ID;
+                });
 
-            var options = new TagLoadOptions()
-            {
-                FilterField = new Field("TagID", "Tag id"),
-                FilterValue = idList,
-                FirstResult = 0,
-                MaxResults = 500
-            };
-
-            var list = dataService.GetTaggedObjects(options);
+                TaggedObjects = dataService.GetTaggedObjects(LoadOptions);
+                TaggedObjectsCount = TaggedObjects.TotalItems;
+            }
         }
 
         #endregion
@@ -248,20 +288,32 @@ namespace Modules.Tags.ViewModels
             LoadTags();
         }
 
+        private void OnPageChangedCommand(PageChangedArgs parameter)
+        {
+            if (parameter == null)
+                return;
+
+            PageChangedEventArgs e = parameter.Settings;
+
+            if (LoadOptions != null && e != null)
+            {
+                LoadOptions.FirstResult = e.PageIndex * e.ItemsPerPage;
+                FilterTaggedObjects();
+            }
+        }
+
         #endregion
 
         #region Private fields
 
         private IDataService dataService;
-        private IEventAggregator eventAggregator;
 
         private ObservableCollection<ITag> tags;
         private ObservableCollection<ITag> selectedTags;
+        private IPagedList<TaggedObject> taggedObjects;
         private ITag allTagsSelectedItem;
         private ITag selectedTagsSelectedItem;
-
-        private bool draggingItem1;
-        private bool draggingItem2;
+        private int taggedObjectsCount;
 
         #endregion
     }
