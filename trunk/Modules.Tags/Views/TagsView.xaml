@@ -4,12 +4,31 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:commands="clr-namespace:Common.Commands;assembly=Common.Commands"
+             xmlns:localModel="clr-namespace:Modules.Tags.Model"
              xmlns:tagLib="clr-namespace:TagCloudLib;assembly=TagCloudLib"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
-             commands:Loaded.Command="{Binding ViewLoadedCommand}"
-             >
+             commands:Loaded.Command="{Binding ViewLoadedCommand}">
     <Grid Background="Lavender">
-        <tagLib:TagsCloud ItemsSource="{Binding Tags}"/>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <GroupBox Header="All tags" Grid.Row="0" Margin="8" Grid.Column="0">
+            <tagLib:TagsCloud x:Name="allTagsCloud" ItemsSource="{Binding Tags}" AllowDrop="True"
+                              SelectedItem="{Binding AllTagsSelectedItem,Mode=TwoWay}"
+                              commands:MouseMove.Command="{Binding AllTagsDragCommand}"
+                              commands:Drop.Command="{Binding AllTagsDropCommand}"/>
+        </GroupBox>
+        <GroupBox Header="Selected tags" Grid.Row="1" Margin="8" Grid.Column="0">
+            <tagLib:TagsCloud x:Name="selectedTagsCloud" ItemsSource="{Binding SelectedTags}" AllowDrop="True" 
+                              SelectedItem="{Binding SelectedTagsSelectedItem,Mode=TwoWay}"
+                              commands:MouseMove.Command="{Binding SelectedTagsDragCommand}"
+                              commands:Drop.Command="{Binding SelectedTagsDropCommand}"/>
+        </GroupBox>
     </Grid>
 </UserControl>

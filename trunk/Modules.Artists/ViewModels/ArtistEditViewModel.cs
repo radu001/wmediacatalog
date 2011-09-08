@@ -70,12 +70,12 @@ namespace Modules.Artists.ViewModels
 
         public void SubscribeEvents()
         {
-            eventAggregator.GetEvent<TagsChangedEvent>().Subscribe(OnTagsChangedEvent, true);
+            eventAggregator.GetEvent<ReloadTagsEvent>().Subscribe(OnReloadTagsEvent, true);
         }
 
         public void UnsubscribeEvents()
         {
-            eventAggregator.GetEvent<TagsChangedEvent>().Unsubscribe(OnTagsChangedEvent);
+            eventAggregator.GetEvent<ReloadTagsEvent>().Unsubscribe(OnReloadTagsEvent);
         }
 
         #endregion
@@ -289,7 +289,7 @@ namespace Modules.Artists.ViewModels
             return Artist.Tags.Any(t => t.Name == tag.Name);
         }
 
-        private void OnTagsChangedEvent(object parameter)
+        private void OnReloadTagsEvent(object parameter)
         {
             LoadTags();
         }

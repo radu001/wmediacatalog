@@ -1,16 +1,20 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace TagCloudLib
 {
     /// <summary>
     /// Interaction logic for TagsCloud.xaml
     /// </summary>
-    public partial class TagsCloud : UserControl
+    public partial class TagsCloud : UserControl, INotifyPropertyChanged
     {
         #region Dependency properties
 
@@ -35,9 +39,62 @@ namespace TagCloudLib
         private static void OnItemsSourcePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             TagsCloud tc = d as TagsCloud;
+
+            NotifyCollectionChangedEventHandler nh = new NotifyCollectionChangedEventHandler((s, ea) =>
+                {
+                    tc.UpdateItemsTemplate();
+                });
+
+            if (e.NewValue != null)
+            {
+                var obsColl = e.NewValue as ObservableCollection<ITag>;
+                if (obsColl != null)
+                {
+                    var oldObsCollection = tc.ItemsSource as ObservableCollection<ITag>;
+                    if (oldObsCollection != null)
+                    {
+                        oldObsCollection.CollectionChanged -= ItemsSourceollectionChangedEventHandler;
+                    }
+
+                    obsColl.CollectionChanged += nh;
+                }
+            }
+            else if (tc.ItemsSource != null) // changing itemsSource from non-null to null
+            {
+                var obsColl = tc.ItemsSource as ObservableCollection<ITag>;
+                if (obsColl != null)
+                {
+                    obsColl.CollectionChanged -= ItemsSourceollectionChangedEventHandler;
+                }
+            }
+
+
             if (d != null)
             {
                 tc.UpdateItemsTemplate();
+            }
+        }
+
+        private static void ItemsSourceollectionChangedEventHandler(object sender, NotifyCollectionChangedEventArgs e)
+        {
+        }
+
+        #endregion
+
+        #region SelectedItem
+
+        public static readonly DependencyProperty SelectedItemProperty =
+            DependencyProperty.Register("SelectedItem", typeof(ITag), typeof(TagsCloud));
+
+        public ITag SelectedItem
+        {
+            get
+            {
+                return (ITag)GetValue(SelectedItemProperty);
+            }
+            set
+            {
+                SetValue(SelectedItemProperty, value);
             }
         }
 
@@ -46,7 +103,7 @@ namespace TagCloudLib
         #region MinFontSize
 
         public static readonly DependencyProperty MinFontSizeProperty =
-            DependencyProperty.Register("MinFontSize", typeof(int), typeof(TagsCloud), 
+            DependencyProperty.Register("MinFontSize", typeof(int), typeof(TagsCloud),
             new PropertyMetadata(14, OnMinFontSizePropertyChanged));
 
         public int MinFontSize
@@ -75,7 +132,7 @@ namespace TagCloudLib
         #region MaxFontSize
 
         public static readonly DependencyProperty MaxFontSizeProperty =
-            DependencyProperty.Register("MaxFontSize", typeof(int), typeof(TagsCloud), 
+            DependencyProperty.Register("MaxFontSize", typeof(int), typeof(TagsCloud),
             new PropertyMetadata(24, OnMaxFontSizePropertyChanged));
 
         public int MaxFontSize
@@ -104,7 +161,7 @@ namespace TagCloudLib
         #region TagDataTemplate
 
         public static readonly DependencyProperty TagDataTemplateProperty =
-            DependencyProperty.Register("TagDataTemplate", typeof(DataTemplate), typeof(TagsCloud), 
+            DependencyProperty.Register("TagDataTemplate", typeof(DataTemplate), typeof(TagsCloud),
             new PropertyMetadata(null, OnTagDataTemplatePropertyChanged));
 
         public DataTemplate TagDataTemplate
@@ -130,11 +187,60 @@ namespace TagCloudLib
 
         #endregion
 
+        #region TagClickedCommand
+
+        public static readonly DependencyProperty TagClickedCommandProperty =
+            DependencyProperty.Register("TagClickedCommand", typeof(ICommand), typeof(TagsCloud));
+
+        public ICommand TagClickedCommand
+        {
+            get
+            {
+                return (ICommand)GetValue(TagClickedCommandProperty);
+            }
+            set
+            {
+                SetValue(TagClickedCommandProperty, value);
+            }
+        }
+
         #endregion
 
-        #region Events
+        #endregion
 
-        public event MouseButtonEventHandler TagClick;
+        #region Properties
+
+        public int MinRank
+        {
+            get
+            {
+                return minRank;
+            }
+            private set
+            {
+                if (value != minRank)
+                {
+                    minRank = value;
+                    OnPropertyChanged("MinRank");
+                }
+            }
+        }
+
+        public int MaxRank
+        {
+            get
+            {
+                return maxRank;
+            }
+            private set
+            {
+                if (value != maxRank)
+                {
+                    maxRank = value;
+                    OnPropertyChanged("MaxRank");
+                }
+            }
+        }
 
         #endregion
 
@@ -143,18 +249,30 @@ namespace TagCloudLib
             InitializeComponent();
         }
 
+        #region INotifyPropertyChanged Members
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        #endregion
+
         private void UpdateItemsTemplate()
         {
-            int minRank = 0; 
-            int maxRank = 0;
             if (ItemsSource != null && ItemsSource.Count() > 0)
             {
-                minRank = ItemsSource.Min((t) => t.Rank);
-                maxRank = ItemsSource.Max((t) => t.Rank);
+                MinRank = ItemsSource.Min((t) => t.Rank);
+                MaxRank = ItemsSource.Max((t) => t.Rank);
             }
 
-            var dataTemplate = TagDataTemplate == null ? 
-                   CreateDataTemplate(minRank, maxRank) : TagDataTemplate;
+            var dataTemplate = TagDataTemplate == null ?
+                   CreateDataTemplate(MinRank, MaxRank) : TagDataTemplate;
 
             TagsListView.ItemTemplate = dataTemplate;
         }
@@ -180,12 +298,50 @@ namespace TagCloudLib
                 }
             });
 
-            if (TagClick != null)
-                tbFactory.AddHandler(TextBlock.MouseUpEvent, TagClick);
+            //if (TagClick != null)
+            //    tbFactory.AddHandler(TextBlock.MouseUpEvent, TagClick);
 
             result.VisualTree = tbFactory;
 
             return result;
         }
+
+        private void TagsListView_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var listView = sender as ListView;
+            var clickPoint = e.GetPosition(listView);
+
+            DependencyObject nav = e.OriginalSource as DependencyObject;
+            while ((nav != null) && !(nav is ListViewItem))
+            {
+                nav = VisualTreeHelper.GetParent(nav);
+            }
+
+            if (nav == null)
+                return;
+            else
+            {
+                var lvi = (ListViewItem)nav;
+                var dc = lvi.DataContext as ITag;
+                if (dc != null)
+                {
+                    SelectedItem = dc;
+
+                    if (TagClickedCommand != null)
+                    {
+                        TagClickedCommand.Execute(dc);
+                    }
+                }
+            }
+        }
+
+        #region Private fields
+
+        private int minRank;
+        private int maxRank;
+
+        #endregion
+
+
     }
 }

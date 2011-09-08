@@ -2,7 +2,7 @@
 
 namespace Common.Events
 {
-    public class TagsChangedEvent : CompositePresentationEvent<object>
+    public class ReloadTagsEvent : CompositePresentationEvent<object>
     {
     }
 }

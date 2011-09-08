@@ -104,7 +104,7 @@
     <Compile Include="Events\RemoveAlbumEvent.cs" />
     <Compile Include="Events\SearchAlbumEvent.cs" />
     <Compile Include="Events\SetupDatabaseEvent.cs" />
-    <Compile Include="Events\TagsChangedEvent.cs" />
+    <Compile Include="Events\ReloadTagsEvent.cs" />
     <Compile Include="Events\WorkspaceActivatedEvent.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="MarkupExtensions\ViewModelSource.cs" />
