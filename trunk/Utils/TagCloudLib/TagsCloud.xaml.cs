@@ -40,44 +40,11 @@ namespace TagCloudLib
         {
             TagsCloud tc = d as TagsCloud;
 
-            //NotifyCollectionChangedEventHandler nh = new NotifyCollectionChangedEventHandler((s, ea) =>
-            //    {
-            //        tc.UpdateItemsTemplate();
-            //    });
-
-            //if (e.NewValue != null)
-            //{
-            //    var obsColl = e.NewValue as ObservableCollection<ITag>;
-            //    if (obsColl != null)
-            //    {
-            //        var oldObsCollection = tc.ItemsSource as ObservableCollection<ITag>;
-            //        if (oldObsCollection != null)
-            //        {
-            //            oldObsCollection.CollectionChanged -= ItemsSourceollectionChangedEventHandler;
-            //        }
-
-            //        obsColl.CollectionChanged += nh;
-            //    }
-            //}
-            //else if (tc.ItemsSource != null) // changing itemsSource from non-null to null
-            //{
-            //    var obsColl = tc.ItemsSource as ObservableCollection<ITag>;
-            //    if (obsColl != null)
-            //    {
-            //        obsColl.CollectionChanged -= ItemsSourceollectionChangedEventHandler;
-            //    }
-            //}
-
-
             if (d != null)
             {
                 tc.UpdateItemsTemplate();
             }
         }
-
-        //private static void ItemsSourceollectionChangedEventHandler(object sender, NotifyCollectionChangedEventArgs e)
-        //{
-        //}
 
         #endregion
 
@@ -160,30 +127,30 @@ namespace TagCloudLib
 
         #region TagDataTemplate
 
-        public static readonly DependencyProperty TagDataTemplateProperty =
-            DependencyProperty.Register("TagDataTemplate", typeof(DataTemplate), typeof(TagsCloud),
-            new PropertyMetadata(null, OnTagDataTemplatePropertyChanged));
+        //public static readonly DependencyProperty TagDataTemplateProperty =
+        //    DependencyProperty.Register("TagDataTemplate", typeof(DataTemplate), typeof(TagsCloud),
+        //    new PropertyMetadata(null, OnTagDataTemplatePropertyChanged));
 
-        public DataTemplate TagDataTemplate
-        {
-            get
-            {
-                return (DataTemplate)GetValue(TagDataTemplateProperty);
-            }
-            set
-            {
-                SetValue(TagDataTemplateProperty, value);
-            }
-        }
+        //public DataTemplate TagDataTemplate
+        //{
+        //    get
+        //    {
+        //        return (DataTemplate)GetValue(TagDataTemplateProperty);
+        //    }
+        //    set
+        //    {
+        //        SetValue(TagDataTemplateProperty, value);
+        //    }
+        //}
 
-        private static void OnTagDataTemplatePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            TagsCloud tc = d as TagsCloud;
-            if (tc != null)
-            {
-                tc.UpdateItemsTemplate();
-            }
-        }
+        //private static void OnTagDataTemplatePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //{
+        //    TagsCloud tc = d as TagsCloud;
+        //    if (tc != null)
+        //    {
+        //        tc.UpdateItemsTemplate();
+        //    }
+        //}
 
         #endregion
 
@@ -276,8 +243,10 @@ namespace TagCloudLib
                 MaxRank = ItemsSource.Max((t) => t.Rank);
             }
 
-            var dataTemplate = TagDataTemplate == null ?
-                   CreateDataTemplate(MinRank, MaxRank) : TagDataTemplate;
+            //var dataTemplate = TagDataTemplate == null ?
+            //       CreateDataTemplate(MinRank, MaxRank) : TagDataTemplate;
+
+            var dataTemplate = CreateDataTemplate(MinRank, MaxRank);
 
             TagsListView.ItemTemplate = dataTemplate;
         }
@@ -287,12 +256,27 @@ namespace TagCloudLib
             DataTemplate result = new DataTemplate();
             result.DataType = typeof(ITag);
 
-            var tbFactory = new FrameworkElementFactory(typeof(TextBlock));
-            tbFactory.SetBinding(TextBlock.TextProperty, new Binding()
+            //Border b;
+            //b.CornerRadius = new CornerRadius(8d);
+            //b.Margin = new Thickness(4d);
+            //b.BorderBrush = Brushes.Black;
+
+            //BorderFactory
+            var borderFactory = new FrameworkElementFactory(typeof(Border));
+            borderFactory.SetValue(Border.CornerRadiusProperty, new CornerRadius(8d));
+            borderFactory.SetValue(Border.MarginProperty, new Thickness(4d));
+            borderFactory.SetValue(Border.BorderThicknessProperty, new Thickness(1d));
+            borderFactory.SetValue(Border.BorderBrushProperty, Brushes.Black);
+
+
+            //TextBlock
+            var textBlockFactory = new FrameworkElementFactory(typeof(TextBlock));
+            textBlockFactory.SetValue(TextBlock.MarginProperty, new Thickness(4d));
+            textBlockFactory.SetBinding(TextBlock.TextProperty, new Binding()
             {
                 Path = new PropertyPath("Name")
             });
-            tbFactory.SetBinding(TextBlock.FontSizeProperty, new Binding()
+            textBlockFactory.SetBinding(TextBlock.FontSizeProperty, new Binding()
             {
                 Converter = new TagFontConverter()
                 {
@@ -303,10 +287,9 @@ namespace TagCloudLib
                 }
             });
 
-            //if (TagClick != null)
-            //    tbFactory.AddHandler(TextBlock.MouseUpEvent, TagClick);
+            borderFactory.AppendChild(textBlockFactory);
 
-            result.VisualTree = tbFactory;
+            result.VisualTree = borderFactory;
 
             return result;
         }
