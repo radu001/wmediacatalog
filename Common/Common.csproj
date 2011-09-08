@@ -113,6 +113,7 @@
     <Compile Include="RegionNames.cs" />
     <Compile Include="Utilities\Async\ParallelExtensions.cs" />
     <Compile Include="Utilities\Async\StaTaskScheduler.cs" />
+    <Compile Include="Utilities\BrushesHelper.cs" />
     <Compile Include="Utilities\IDListTransformer.cs" />
     <Compile Include="Utilities\NHibernate\ConfigurationProperty.cs" />
     <Compile Include="Utilities\NHibernate\ConfigurationValue.cs" />

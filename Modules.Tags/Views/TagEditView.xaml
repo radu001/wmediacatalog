@@ -5,7 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:dialogs="clr-namespace:Common.Dialogs;assembly=Common.Dialogs"
              xmlns:controls="clr-namespace:Common.Controls.Controls;assembly=Common.Controls"
+             xmlns:commonConverters="clr-namespace:Common.Controls.Converters;assembly=Common.Controls"
              xmlns:converters="clr-namespace:Common.Dialogs.Converters;assembly=Common.Dialogs"
+             xmlns:toolkit="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit.Extended"
              mc:Ignorable="d" 
              x:Name="dialogWindow"
              Height="520" Width="500">
@@ -14,41 +16,48 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Common.Content;component/Styles/CommonStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
+            <commonConverters:ColorConverter x:Key="ColorConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
-        <Grid x:Name="LayoutRoot" DataContext="{Binding Tag}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="Tag name" FontWeight="Bold" Grid.Row="0" Grid.Column="0" Margin="8" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                    <TextBox Text="{Binding Name,ValidatesOnExceptions=True}" Grid.Row="0" Grid.Column="1" Margin="8" VerticalAlignment="Center"/>
-            
-                    <TextBlock Text="Private marks" FontWeight="Bold" Grid.Row="1" Grid.RowSpan="2"  Grid.Column="0" Margin="8" VerticalAlignment="Top" HorizontalAlignment="Right"/>
-                    <TextBox Text="{Binding PrivateMarks}" Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Margin="8" 
-                             AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap"/>
-            
-                    <TextBlock Text="Comments" FontWeight="Bold" Grid.Row="3" Grid.RowSpan="3"  Grid.Column="0" Margin="8" VerticalAlignment="Top" HorizontalAlignment="Right"/>
-                    <TextBox Text="{Binding Comments}" Grid.Row="3" Grid.RowSpan="3" Grid.Column="1" Margin="8" 
-                             AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap"/>
-            
-                    <TextBlock Text="Description" FontWeight="Bold" Grid.Row="6" Grid.RowSpan="2"  Grid.Column="0" Margin="8" VerticalAlignment="Top" HorizontalAlignment="Right"/>
-                    <TextBox Text="{Binding Description}" Grid.Row="6" Grid.RowSpan="3" Grid.Column="1" Margin="8" 
-                             AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap"/>
-                    <TextBlock Text="Create date" FontWeight="Bold" Grid.Row="9" Grid.Column="0" Margin="8" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                    <TextBox Text="{Binding CreateDate}" Grid.Row="9" Grid.Column="1" Margin="8" VerticalAlignment="Center" IsReadOnly="True"/>
+    <Grid x:Name="LayoutRoot" DataContext="{Binding Tag}">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="Tag name" FontWeight="Bold" Grid.Row="0" Grid.Column="0" Margin="8" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <TextBox Text="{Binding Name,ValidatesOnExceptions=True}" Grid.Row="0" Grid.Column="1" Margin="8" VerticalAlignment="Center"/>
 
-                </Grid>
+        <TextBlock Text="Color" FontWeight="Bold" Grid.Row="1" Grid.Column="0" Margin="8" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <toolkit:ColorPicker Grid.Row="1" SelectedColor="{Binding Color,Converter={StaticResource ColorConverter}}" DisplayColorAndName="True" Grid.Column="1" Margin="8" VerticalAlignment="Center"/>
+
+        <TextBlock Text="Private marks" FontWeight="Bold" Grid.Row="2" Grid.RowSpan="2"  Grid.Column="0" Margin="8" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+        <TextBox Text="{Binding PrivateMarks}" Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" Margin="8" 
+                             AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap"/>
+
+        <TextBlock Text="Comments" FontWeight="Bold" Grid.Row="4" Grid.RowSpan="3"  Grid.Column="0" Margin="8" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+        <TextBox Text="{Binding Comments}" Grid.Row="4" Grid.RowSpan="3" Grid.Column="1" Margin="8" 
+                             AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap"/>
+
+        <TextBlock Text="Description" FontWeight="Bold" Grid.Row="7" Grid.RowSpan="2"  Grid.Column="0" Margin="8" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+        <TextBox Text="{Binding Description}" Grid.Row="7" Grid.RowSpan="3" Grid.Column="1" Margin="8" 
+                             AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap"/>
+        <TextBlock Text="Create date" FontWeight="Bold" Grid.Row="10" Grid.Column="0" Margin="8" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <TextBox Text="{Binding CreateDate}" Grid.Row="10" Grid.Column="1" Margin="8" VerticalAlignment="Center" IsReadOnly="True"/>
+
+    </Grid>
 </UserControl>
