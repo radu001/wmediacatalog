@@ -52,7 +52,7 @@ namespace Modules.Albums.ViewModels
 
         public void SubscribeEvents()
         {
-            eventAggregator.GetEvent<TagsChangedEvent>().Subscribe(OnTagsChangedEvent, true);
+            eventAggregator.GetEvent<ReloadTagsEvent>().Subscribe(OnReloadTagsEvent, true);
             eventAggregator.GetEvent<AttachGenresEvent>().Subscribe(OnAttachGenresEvent, true);
             eventAggregator.GetEvent<DetachGenresEvent>().Subscribe(OnDetachGenresEvent, true);
             eventAggregator.GetEvent<AttachArtistsEvent>().Subscribe(OnAttachArtistsEvent, true);
@@ -61,7 +61,7 @@ namespace Modules.Albums.ViewModels
 
         public void UnsubscribeEvents()
         {
-            eventAggregator.GetEvent<TagsChangedEvent>().Unsubscribe(OnTagsChangedEvent);
+            eventAggregator.GetEvent<ReloadTagsEvent>().Unsubscribe(OnReloadTagsEvent);
             eventAggregator.GetEvent<AttachGenresEvent>().Unsubscribe(OnAttachGenresEvent);
             eventAggregator.GetEvent<DetachGenresEvent>().Unsubscribe(OnDetachGenresEvent);
             eventAggregator.GetEvent<AttachArtistsEvent>().Unsubscribe(OnAttachArtistsEvent);
@@ -373,7 +373,7 @@ namespace Modules.Albums.ViewModels
             eventAggregator.GetEvent<ReloadAlbumsEvent>().Publish(null);
         }
 
-        private void OnTagsChangedEvent(object parameter)
+        private void OnReloadTagsEvent(object parameter)
         {
             LoadTags();
         }

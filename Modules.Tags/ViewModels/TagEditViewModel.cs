@@ -87,7 +87,7 @@ namespace Modules.Tags.ViewModels
 
         private void RaiseTagsChanged()
         {
-            eventAggregator.GetEvent<TagsChangedEvent>().Publish(null);
+            eventAggregator.GetEvent<ReloadTagsEvent>().Publish(null);
         }
 
         #endregion

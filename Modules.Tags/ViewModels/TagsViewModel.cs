@@ -1,24 +1,34 @@
-﻿using Common.ViewModels;
+﻿using System.Collections.ObjectModel;
+using Common.Events;
+using Common.ViewModels;
+using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 using Modules.Tags.Services;
-using Microsoft.Practices.Prism.Commands;
-using System.Collections.ObjectModel;
-using BusinessObjects;
 using TagCloudLib;
+using Common.Commands;
+using System.Windows.Input;
+using System.Windows;
 
 namespace Modules.Tags.ViewModels
 {
     public class TagsViewModel : ViewModelBase, ITagsViewModel
     {
         public TagsViewModel(IUnityContainer container, IEventAggregator eventAggregator, IDataService dataService)
-            :base(container, eventAggregator)
+            : base(container, eventAggregator)
         {
             this.dataService = dataService;
             this.eventAggregator = eventAggregator;
 
+            SubscribeEvents();
+
+            SelectedTags = new ObservableCollection<ITag>();
+
             ViewLoadedCommand = new DelegateCommand<object>(OnViewLoadedCommand);
-            TagClickedCommand = new DelegateCommand<object>(OnTagClickedCommand);
+            SelectedTagsDropCommand = new DelegateCommand<object>(OnSelectedTagsDropCommand);
+            AllTagsDropCommand = new DelegateCommand<object>(OnAllTagsDropCommand);
+            SelectedTagsDragCommand = new DelegateCommand<object>(OnSelectedTagsDragCommand);
+            AllTagsDragCommand = new DelegateCommand<object>(OnAllTagsDragCommand);
         }
 
         #region ITagsViewModel Members
@@ -36,18 +46,64 @@ namespace Modules.Tags.ViewModels
             }
         }
 
+        public ObservableCollection<ITag> SelectedTags
+        {
+            get
+            {
+                return selectedTags;
+            }
+            private set
+            {
+                selectedTags = value;
+                NotifyPropertyChanged(() => SelectedTags);
+            }
+        }
+
+        public ITag AllTagsSelectedItem
+        {
+            get
+            {
+                return allTagsSelectedItem;
+            }
+            set
+            {
+                allTagsSelectedItem = value;
+            }
+        }
+
+        public ITag SelectedTagsSelectedItem
+        {
+            get
+            {
+                return selectedTagsSelectedItem;
+            }
+            set
+            {
+                selectedTagsSelectedItem = value;
+            }
+        }
+
         public DelegateCommand<object> ViewLoadedCommand { get; private set; }
 
-        public DelegateCommand<object> TagClickedCommand { get; private set; }
+        public DelegateCommand<object> SelectedTagsDropCommand { get; private set; }
+
+        public DelegateCommand<object> AllTagsDropCommand { get; private set; }
+
+        public DelegateCommand<object> SelectedTagsDragCommand { get; private set; }
+
+        public DelegateCommand<object> AllTagsDragCommand { get; private set; }
 
         #endregion
 
         #region Private methods
 
+        private void SubscribeEvents()
+        {
+            eventAggregator.GetEvent<ReloadTagsEvent>().Subscribe(OnReloadTagsEvent);
+        }
+
         private void OnViewLoadedCommand(object parameter)
         {
-            
-
             if (InitialDataLoaded)
                 return;
             else
@@ -63,8 +119,73 @@ namespace Modules.Tags.ViewModels
             Tags = new ObservableCollection<ITag>(dataService.GetTagsWithAssociatedEntitiesCount());
         }
 
-        private void OnTagClickedCommand(object parameter)
+        private void OnAllTagsDropCommand(object parameter)
         {
+            if (SelectedTagsSelectedItem != null)
+            {
+                Tags.Add(SelectedTagsSelectedItem);
+                SelectedTags.Remove(SelectedTagsSelectedItem);
+            }   
+        }
+
+        private void OnSelectedTagsDropCommand(object parameter)
+        {
+            if (AllTagsSelectedItem != null)
+            {
+                SelectedTags.Add(AllTagsSelectedItem);
+                Tags.Remove(AllTagsSelectedItem);
+            }
+        }
+
+        private void OnSelectedTagsDragCommand(object parameter)
+        {
+            MouseMoveArgs args = parameter as MouseMoveArgs;
+            if (args == null)
+                return;
+
+            var dragSource = args.Sender as TagsCloud;
+            if (dragSource == null)
+                return;
+
+            if (args.Settings.LeftButton == MouseButtonState.Pressed)
+            {
+                if (SelectedTagsSelectedItem != null)
+                {
+                    DataObject dataObject = new DataObject(typeof(ITag), SelectedTagsSelectedItem);
+
+                    DragDrop.DoDragDrop(dragSource, dataObject, DragDropEffects.Copy);
+
+                    SelectedTagsSelectedItem = null;
+                }
+            }
+        }
+
+        private void OnAllTagsDragCommand(object parameter)
+        {
+            MouseMoveArgs args = parameter as MouseMoveArgs;
+            if (args == null)
+                return;
+
+            var dragSource = args.Sender as TagsCloud;
+            if (dragSource == null)
+                return;
+
+            if (args.Settings.LeftButton == MouseButtonState.Pressed)
+            {
+                if (AllTagsSelectedItem != null)
+                {
+                    DataObject dataObject = new DataObject(typeof(ITag), AllTagsSelectedItem);
+
+                    DragDrop.DoDragDrop(dragSource, dataObject, DragDropEffects.Copy);
+
+                    AllTagsSelectedItem = null;
+                }
+            }
+        }
+
+        private void OnReloadTagsEvent(object parameter)
+        {
+            LoadTags();
         }
 
         #endregion
@@ -75,6 +196,12 @@ namespace Modules.Tags.ViewModels
         private IEventAggregator eventAggregator;
 
         private ObservableCollection<ITag> tags;
+        private ObservableCollection<ITag> selectedTags;
+        private ITag allTagsSelectedItem;
+        private ITag selectedTagsSelectedItem;
+
+        private bool draggingItem1;
+        private bool draggingItem2;
 
         #endregion
     }
