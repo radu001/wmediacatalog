@@ -9,6 +9,8 @@ using TagCloudLib;
 using Common.Commands;
 using System.Windows.Input;
 using System.Windows;
+using Common.Entities.Pagination;
+using Common.Utilities;
 
 namespace Modules.Tags.ViewModels
 {
@@ -119,12 +121,20 @@ namespace Modules.Tags.ViewModels
             Tags = new ObservableCollection<ITag>(dataService.GetTagsWithAssociatedEntitiesCount());
         }
 
+        #region DragDrop
+
         private void OnAllTagsDropCommand(object parameter)
         {
             if (SelectedTagsSelectedItem != null)
             {
                 Tags.Add(SelectedTagsSelectedItem);
                 SelectedTags.Remove(SelectedTagsSelectedItem);
+
+                var control = GetTagsCloud(parameter); // update control due to itemsSource collection changed
+                if (control != null) 
+                    control.Refresh();
+
+                Filter();
             }   
         }
 
@@ -134,7 +144,22 @@ namespace Modules.Tags.ViewModels
             {
                 SelectedTags.Add(AllTagsSelectedItem);
                 Tags.Remove(AllTagsSelectedItem);
+
+                var control = GetTagsCloud(parameter); // update control due to itemsSource collection changed
+                if (control != null)
+                    control.Refresh();
+
+                Filter();
             }
+        }
+
+        private TagsCloud GetTagsCloud(object parameter)
+        {
+            DragArgs da = parameter as DragArgs;
+            if (da == null)
+                return null;
+
+            return da.Sender as TagsCloud;
         }
 
         private void OnSelectedTagsDragCommand(object parameter)
@@ -182,6 +207,41 @@ namespace Modules.Tags.ViewModels
                 }
             }
         }
+
+        #endregion
+
+        #region Filtering
+
+        private void Filter()
+        {
+            var transformer = new IDListTransformer<ITag>();
+
+            var idList = transformer.TransformIDs(SelectedTags, (o) =>
+            {
+                ITag tag = (ITag)o;
+                return tag.ID;
+            });
+
+            //var options = new TagLoadOptions()
+            //{
+            //    FilterField = new Field("TagName","Tag name"),
+            //    FilterValue = "",
+            //    FirstResult = 0,
+            //    MaxResults = 500
+            //};
+
+            var options = new TagLoadOptions()
+            {
+                FilterField = new Field("TagID", "Tag id"),
+                FilterValue = idList,
+                FirstResult = 0,
+                MaxResults = 500
+            };
+
+            var list = dataService.GetTaggedObjects(options);
+        }
+
+        #endregion
 
         private void OnReloadTagsEvent(object parameter)
         {

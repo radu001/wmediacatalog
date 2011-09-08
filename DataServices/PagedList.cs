@@ -21,6 +21,18 @@ namespace DataServices
 
         #endregion
 
+        public void Assign(IEnumerable<T> source)
+        {
+            if (source == null)
+                return;
+
+            foreach (T i in source)
+            {
+                this.Add(i);
+            }
+        }
+
+
         #region Private fields
 
         private int totalItems;

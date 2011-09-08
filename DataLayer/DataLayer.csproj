@@ -63,6 +63,7 @@
     <Compile Include="Caching\ConfigurationCache.cs" />
     <Compile Include="Caching\IConfigurationCache.cs" />
     <Compile Include="Entities\PlaceEntity.cs" />
+    <Compile Include="Entities\TaggedBindingEntity.cs" />
     <Compile Include="SessionFactory.cs" />
     <Compile Include="Entities\AlbumEntity.cs" />
     <Compile Include="Entities\ArtistEntity.cs" />
@@ -90,6 +91,7 @@
     <Content Include="hibernate.cfg.xml">
       <SubType>Designer</SubType>
     </Content>
+    <EmbeddedResource Include="Mappings\TaggedBindingEntity.hbm.xml" />
     <EmbeddedResource Include="Mappings\StoredProcedures.hbm.xml" />
     <EmbeddedResource Include="Mappings\Place.hbm.xml" />
     <EmbeddedResource Include="Mappings\UserLogin.hbm.xml" />

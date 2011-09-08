@@ -11,6 +11,9 @@ using DataLayer.Entities;
 using DataServices.Enums;
 using NHibernate;
 using NHibernate.Criterion;
+using BusinessObjects.Artificial;
+using Common.Utilities;
+using System.Linq;
 namespace DataServices
 {
     public class DataProvider
@@ -359,6 +362,7 @@ namespace DataServices
 
             try
             {
+
                 var query = session.GetNamedQuery("GetTagsWithAssociatedEntitiesCount");
                 var dataEntities = query.SetResultTransformer(new TagResultTransformer()).List<TagEntity>();
 
@@ -380,6 +384,92 @@ namespace DataServices
             }
 
             return result;
+        }
+
+        public IPagedList<TaggedObject> GetTaggedObjects(ILoadOptions loadOptions)
+        {
+            var options = loadOptions as TagLoadOptions;
+
+            if (options == null)
+                throw new OperationCanceledException("Illegal load options type. Expected TagLoadOptions type");
+
+            var result = new PagedList<TaggedObject>();
+
+            ISession session = SessionFactory.GetSession();
+
+            try
+            {
+                DetachedCriteria countCriteria = GetTaggedObjectsImpl(options);
+                DetachedCriteria listCriteria = GetTaggedObjectsImpl(options);
+
+                countCriteria.SetProjection(Projections.RowCount());
+                countCriteria.ClearOrders();
+
+                listCriteria.
+                    SetFirstResult(options.FirstResult).
+                    SetMaxResults(options.MaxResults);
+
+                IMultiCriteria multiCriteria = session.CreateMultiCriteria();
+                multiCriteria.Add(countCriteria);
+                multiCriteria.Add(listCriteria);
+
+
+                IList queryResult = multiCriteria.List();
+
+                result.TotalItems = (int)((IList)queryResult[0])[0];
+
+                IList recordsList = (IList)queryResult[1];
+
+                EntityConverter entityConverter = new EntityConverter();
+
+                foreach (var e in recordsList)
+                {
+                    TaggedBindingEntity dataEntity = e as TaggedBindingEntity;
+                    TaggedObject businessEntity = entityConverter.FromDataEntity(dataEntity);
+                    result.Add(businessEntity);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Write(ex);
+            }
+
+            return result;
+        }
+
+        private DetachedCriteria GetTaggedObjectsImpl(ILoadOptions loadOptions)
+        {
+            TagLoadOptions options = (TagLoadOptions)loadOptions;
+
+            if (options == null)
+                return null;
+
+            if (options.MaxResults <= 0)
+                return null;
+
+            string fieldName = options.FilterField.FieldName;
+            string filterValue = options.FilterValue;
+
+            DetachedCriteria criteria = DetachedCriteria.For<TaggedBindingEntity>();
+
+            //if (!options.IncludeWaste)
+            //    criteria.Add(Restrictions.Eq("IsWaste", false));
+
+            if (fieldName != "TagID")
+            {
+                criteria.
+                    Add(Restrictions.InsensitiveLike(fieldName, filterValue, MatchMode.Anywhere)).
+                    AddOrder(new Order(fieldName, true));
+            }
+            else
+            {
+                object[] idList = new IDListTransformer<TaggedBindingEntity>().TransformIDs(filterValue);
+
+                criteria.
+                    Add(new InExpression("TagID", (idList)));
+            }
+
+            return criteria;
         }
 
         public bool SaveTag(Tag tag)

@@ -79,6 +79,7 @@
     <Compile Include="Entities\Pagination\ILoadOptions.cs" />
     <Compile Include="Entities\Pagination\IPagedList.cs" />
     <Compile Include="Entities\Pagination\LoadOptions.cs" />
+    <Compile Include="Entities\Pagination\TagLoadOptions.cs" />
     <Compile Include="Entities\TextResult.cs" />
     <Compile Include="Enums\NotificationType.cs" />
     <Compile Include="Enums\WorkspaceNameEnum.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="RegionNames.cs" />
     <Compile Include="Utilities\Async\ParallelExtensions.cs" />
     <Compile Include="Utilities\Async\StaTaskScheduler.cs" />
+    <Compile Include="Utilities\IDListTransformer.cs" />
     <Compile Include="Utilities\NHibernate\ConfigurationProperty.cs" />
     <Compile Include="Utilities\NHibernate\ConfigurationValue.cs" />
     <Compile Include="Utilities\NHibernate\INHibernateConfig.cs" />
