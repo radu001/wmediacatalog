@@ -4,6 +4,8 @@ using DataServices;
 using System.Collections.Generic;
 using TagCloudLib;
 using Modules.Tags.Model;
+using Common.Entities.Pagination;
+using BusinessObjects.Artificial;
 namespace Modules.Tags.Services
 {
     public class DataService : IDataService
@@ -28,6 +30,12 @@ namespace Modules.Tags.Services
             }
 
             return result;
+        }
+
+        public IPagedList<TaggedObject> GetTaggedObjects(ILoadOptions loadOptions)
+        {
+            var provider = new DataProvider();
+            return provider.GetTaggedObjects(loadOptions);
         }
     }
 }

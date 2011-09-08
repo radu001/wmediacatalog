@@ -40,33 +40,33 @@ namespace TagCloudLib
         {
             TagsCloud tc = d as TagsCloud;
 
-            NotifyCollectionChangedEventHandler nh = new NotifyCollectionChangedEventHandler((s, ea) =>
-                {
-                    tc.UpdateItemsTemplate();
-                });
+            //NotifyCollectionChangedEventHandler nh = new NotifyCollectionChangedEventHandler((s, ea) =>
+            //    {
+            //        tc.UpdateItemsTemplate();
+            //    });
 
-            if (e.NewValue != null)
-            {
-                var obsColl = e.NewValue as ObservableCollection<ITag>;
-                if (obsColl != null)
-                {
-                    var oldObsCollection = tc.ItemsSource as ObservableCollection<ITag>;
-                    if (oldObsCollection != null)
-                    {
-                        oldObsCollection.CollectionChanged -= ItemsSourceollectionChangedEventHandler;
-                    }
+            //if (e.NewValue != null)
+            //{
+            //    var obsColl = e.NewValue as ObservableCollection<ITag>;
+            //    if (obsColl != null)
+            //    {
+            //        var oldObsCollection = tc.ItemsSource as ObservableCollection<ITag>;
+            //        if (oldObsCollection != null)
+            //        {
+            //            oldObsCollection.CollectionChanged -= ItemsSourceollectionChangedEventHandler;
+            //        }
 
-                    obsColl.CollectionChanged += nh;
-                }
-            }
-            else if (tc.ItemsSource != null) // changing itemsSource from non-null to null
-            {
-                var obsColl = tc.ItemsSource as ObservableCollection<ITag>;
-                if (obsColl != null)
-                {
-                    obsColl.CollectionChanged -= ItemsSourceollectionChangedEventHandler;
-                }
-            }
+            //        obsColl.CollectionChanged += nh;
+            //    }
+            //}
+            //else if (tc.ItemsSource != null) // changing itemsSource from non-null to null
+            //{
+            //    var obsColl = tc.ItemsSource as ObservableCollection<ITag>;
+            //    if (obsColl != null)
+            //    {
+            //        obsColl.CollectionChanged -= ItemsSourceollectionChangedEventHandler;
+            //    }
+            //}
 
 
             if (d != null)
@@ -75,9 +75,9 @@ namespace TagCloudLib
             }
         }
 
-        private static void ItemsSourceollectionChangedEventHandler(object sender, NotifyCollectionChangedEventArgs e)
-        {
-        }
+        //private static void ItemsSourceollectionChangedEventHandler(object sender, NotifyCollectionChangedEventArgs e)
+        //{
+        //}
 
         #endregion
 
@@ -263,6 +263,11 @@ namespace TagCloudLib
 
         #endregion
 
+        public void Refresh()
+        {
+            UpdateItemsTemplate();
+        }
+
         private void UpdateItemsTemplate()
         {
             if (ItemsSource != null && ItemsSource.Count() > 0)
@@ -341,7 +346,5 @@ namespace TagCloudLib
         private int maxRank;
 
         #endregion
-
-
     }
 }

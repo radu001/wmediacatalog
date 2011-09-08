@@ -7,8 +7,7 @@ namespace BusinessObjects.Artificial
 {
     public enum TaggedObjectType
     {
-        Unknown = 0,
-        Artist = 1,
-        Album = 2
+        Artist = 0,
+        Album = 1
     }
 }

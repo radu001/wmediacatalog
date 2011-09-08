@@ -4,6 +4,7 @@ using System.Linq;
 using BusinessObjects;
 using DataLayer.Entities;
 using DataServices.Enums;
+using BusinessObjects.Artificial;
 namespace DataServices
 {
     public class EntityConverter
@@ -404,6 +405,21 @@ namespace DataServices
                 Comments = place.Comments,
                 PrivateMarks = place.PrivateMarks
             };
+        }
+
+        public TaggedObject FromDataEntity(TaggedBindingEntity dataEntity)
+        {
+            if (dataEntity == null)
+                return null;
+
+            var businessEntity = new  TaggedObject()
+            {
+                ID = dataEntity.EntityID,
+                Name = dataEntity.EntityName,
+                ObjectType = (TaggedObjectType)dataEntity.EntityType
+            };
+
+            return businessEntity;
         }
     }
 }
