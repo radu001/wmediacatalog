@@ -2,9 +2,9 @@
 using System;
 using System.Linq;
 using BusinessObjects;
+using BusinessObjects.Artificial;
 using DataLayer.Entities;
 using DataServices.Enums;
-using BusinessObjects.Artificial;
 namespace DataServices
 {
     public class EntityConverter
@@ -116,7 +116,8 @@ namespace DataServices
                 Comments = dataEntity.Comments,
                 CreateDate = dataEntity.CreateDate,
                 Description = dataEntity.Description,
-                AssociatedEntitiesCount = dataEntity.AssociatedEntitiesCount
+                AssociatedEntitiesCount = dataEntity.AssociatedEntitiesCount,
+                Color = dataEntity.Color
             };
 
             return businessEntity;
@@ -124,7 +125,7 @@ namespace DataServices
 
         public TagEntity FromBusinessEntity(Tag businessEntity)
         {
-            if ( businessEntity == null )
+            if (businessEntity == null)
                 return null;
 
             TagEntity dataEntity = new TagEntity()
@@ -134,7 +135,8 @@ namespace DataServices
                 PrivateMarks = businessEntity.PrivateMarks,
                 Description = businessEntity.Description,
                 CreateDate = businessEntity.CreateDate,
-                Comments = businessEntity.Comments
+                Comments = businessEntity.Comments,
+                Color = businessEntity.Color
             };
 
             return dataEntity;
@@ -183,7 +185,7 @@ namespace DataServices
             {
                 ID = dataEntity.ID,
                 Index = dataEntity.Index,
-                Length = new TimeSpan(0,0,0,dataEntity.Length,0),
+                Length = new TimeSpan(0, 0, 0, dataEntity.Length, 0),
                 Name = dataEntity.Name,
                 Album = parent
             };
@@ -381,7 +383,7 @@ namespace DataServices
 
         public MoodEntity FromBusinessEntity(Mood mood)
         {
-            if ( mood == null )
+            if (mood == null)
                 return null;
 
             return new MoodEntity()
@@ -412,7 +414,7 @@ namespace DataServices
             if (dataEntity == null)
                 return null;
 
-            var businessEntity = new  TaggedObject()
+            var businessEntity = new TaggedObject()
             {
                 ID = dataEntity.EntityID,
                 Name = dataEntity.EntityName,

@@ -5,12 +5,13 @@ namespace DataLayer.Entities
 {
     public class TagEntity : PersistentObject
     {
-        
+
         public virtual string Name { get; set; }
         public virtual string PrivateMarks { get; set; }
         public virtual string Comments { get; set; }
         public virtual string Description { get; set; }
         public virtual DateTime CreateDate { get; set; }
+        public virtual string Color { get; set; }
         public virtual int AssociatedEntitiesCount { get; set; }
         public virtual IList<AlbumEntity> Albums
         {

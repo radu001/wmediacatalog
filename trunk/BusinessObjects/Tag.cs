@@ -41,6 +41,22 @@ namespace BusinessObjects
             }
         }
 
+        public string Color
+        {
+            get
+            {
+                return color;
+            }
+            set
+            {
+                if (value != color)
+                {
+                    color = value;
+                    NotifyPropertyChanged(() => Color);
+                }
+            }
+        }
+
         #region IValueObject<Tag> Members
 
         public Tag Clone()
@@ -124,6 +140,7 @@ namespace BusinessObjects
 
         private DateTime createDate;
         private int associatedEntitiesCount;
+        private string color;
 
         #endregion
     }

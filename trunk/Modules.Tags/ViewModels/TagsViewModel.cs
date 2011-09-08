@@ -14,6 +14,7 @@ using Common.Utilities;
 using BusinessObjects.Artificial;
 using DataServices;
 using Common.Controls.Controls;
+using System.Drawing;
 
 namespace Modules.Tags.ViewModels
 {
@@ -34,6 +35,8 @@ namespace Modules.Tags.ViewModels
             SelectedTagsDragCommand = new DelegateCommand<object>(OnSelectedTagsDragCommand);
             AllTagsDragCommand = new DelegateCommand<object>(OnAllTagsDragCommand);
             PageChangedCommand = new DelegateCommand<PageChangedArgs>(OnPageChangedCommand);
+
+            
         }
 
         #region ITagsViewModel Members

@@ -9,6 +9,7 @@
     <property name="Comments" column="comments"/>
     <property name="Description" column="description"/>
     <property name="CreateDate" column="create_date"/>
+    <property name="Color" column="color"/>
 
     <bag name="Albums" table="tags_albums">
       <key column="tag_id"/>

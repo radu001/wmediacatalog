@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -177,13 +175,15 @@ namespace TagCloudLib
 
         #region Properties
 
+        public bool AutoSize { get; set; }
+
         public int MinRank
         {
             get
             {
                 return minRank;
             }
-            private set
+            set
             {
                 if (value != minRank)
                 {
@@ -199,7 +199,7 @@ namespace TagCloudLib
             {
                 return maxRank;
             }
-            private set
+            set
             {
                 if (value != maxRank)
                 {
@@ -214,6 +214,8 @@ namespace TagCloudLib
         public TagsCloud()
         {
             InitializeComponent();
+
+            AutoSize = true;
         }
 
         #region INotifyPropertyChanged Members
@@ -239,8 +241,11 @@ namespace TagCloudLib
         {
             if (ItemsSource != null && ItemsSource.Count() > 0)
             {
-                MinRank = ItemsSource.Min((t) => t.Rank);
-                MaxRank = ItemsSource.Max((t) => t.Rank);
+                if (AutoSize)
+                {
+                    MinRank = ItemsSource.Min((t) => t.Rank);
+                    MaxRank = ItemsSource.Max((t) => t.Rank);
+                }
             }
 
             //var dataTemplate = TagDataTemplate == null ?
