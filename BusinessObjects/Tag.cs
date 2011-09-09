@@ -57,6 +57,28 @@ namespace BusinessObjects
             }
         }
 
+        public string TextColor
+        {
+            get
+            {
+                return textColor;
+            }
+            set
+            {
+                if (value != textColor)
+                {
+                    textColor = value;
+                    NotifyPropertyChanged(() => TextColor);
+                }
+            }
+        }
+
+        public Tag()
+        {
+            Color = DefaultColor;
+            TextColor = DefaultTextColor;
+        }
+
         #region IValueObject<Tag> Members
 
         public Tag Clone()
@@ -141,6 +163,10 @@ namespace BusinessObjects
         private DateTime createDate;
         private int associatedEntitiesCount;
         private string color;
+        private string textColor;
+
+        private static readonly string DefaultColor = "#FFB0C4DE"; //LightSteelBlue
+        private static readonly string DefaultTextColor = "#FF000000"; //Black
 
         #endregion
     }

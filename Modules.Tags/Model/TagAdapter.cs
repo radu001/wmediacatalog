@@ -14,6 +14,8 @@ namespace Modules.Tags.Model
         public int ID { get; private set; }
         public string Name { get; private set; }
         public int Rank { get; private set; }
+        public string Color { get; private set; }
+        public string TextColor { get; private set; }
 
         #endregion
 
@@ -22,6 +24,8 @@ namespace Modules.Tags.Model
             ID = tag.ID;
             Name = tag.Name;
             Rank = tag.AssociatedEntitiesCount;
+            Color = tag.Color;
+            TextColor = tag.TextColor;
         }
     }
 }

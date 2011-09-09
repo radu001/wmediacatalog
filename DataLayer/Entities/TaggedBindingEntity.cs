@@ -11,6 +11,8 @@ namespace DataLayer.Entities
         public virtual int EntityID { get; set; }
         public virtual int EntityType { get; set; }
         public virtual string TagName { get; set; }
+        public virtual string TagColor { get; set; }
+        public virtual string TagTextColor { get; set; }
         public virtual string EntityName { get; set; }
 
         public override bool Equals(object obj)
@@ -23,6 +25,8 @@ namespace DataLayer.Entities
             result &= EntityID == te.EntityID;
             result &= EntityType == te.EntityType;
             result &= TagName == te.TagName;
+            result &= TagColor == te.TagColor;
+            result &= TagTextColor == te.TagTextColor;
             result &= EntityName == te.EntityName;
 
             return result;
@@ -38,6 +42,12 @@ namespace DataLayer.Entities
 
                 if (!String.IsNullOrEmpty(TagName))
                     fHashCode ^= TagName.GetHashCode();
+
+                if (!String.IsNullOrEmpty(TagColor))
+                    fHashCode ^= TagColor.GetHashCode();
+
+                if (!String.IsNullOrEmpty(TagTextColor))
+                    fHashCode ^= TagTextColor.GetHashCode();
 
                 if (!String.IsNullOrEmpty(EntityName))
                     fHashCode ^= EntityName.GetHashCode();

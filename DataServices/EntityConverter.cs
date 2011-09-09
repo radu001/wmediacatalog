@@ -117,7 +117,8 @@ namespace DataServices
                 CreateDate = dataEntity.CreateDate,
                 Description = dataEntity.Description,
                 AssociatedEntitiesCount = dataEntity.AssociatedEntitiesCount,
-                Color = dataEntity.Color
+                Color = dataEntity.Color,
+                TextColor = dataEntity.TextColor
             };
 
             return businessEntity;
@@ -136,7 +137,8 @@ namespace DataServices
                 Description = businessEntity.Description,
                 CreateDate = businessEntity.CreateDate,
                 Comments = businessEntity.Comments,
-                Color = businessEntity.Color
+                Color = businessEntity.Color,
+                TextColor = businessEntity.TextColor
             };
 
             return dataEntity;

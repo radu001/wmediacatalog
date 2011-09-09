@@ -7,6 +7,8 @@
     </composite-id>
     <property name="EntityType" column="entity_type"/>
     <property name="TagName" column="tag_name"/>
+    <property name="TagColor" column="tag_color"/>
+    <property name="TagTextColor" column="tag_text_color"/>
     <property name="EntityName" column="entity_name"/>
   </class>
 </hibernate-mapping>
