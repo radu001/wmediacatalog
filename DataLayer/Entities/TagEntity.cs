@@ -14,30 +14,30 @@ namespace DataLayer.Entities
         public virtual string Color { get; set; }
         public virtual string TextColor { get; set; }
         public virtual int AssociatedEntitiesCount { get; set; }
-        public virtual IList<AlbumEntity> Albums
-        {
-            get
-            {
-                return albums;
-            }
-            set
-            {
-                albums = value;
-            }
-        }
-        public virtual IList<ArtistEntity> Artists
-        {
-            get
-            {
-                return artists;
-            }
-            set
-            {
-                artists = value;
-            }
-        }
+        //public virtual IList<AlbumEntity> Albums
+        //{
+        //    get
+        //    {
+        //        return albums;
+        //    }
+        //    set
+        //    {
+        //        albums = value;
+        //    }
+        //}
+        //public virtual IList<ArtistEntity> Artists
+        //{
+        //    get
+        //    {
+        //        return artists;
+        //    }
+        //    set
+        //    {
+        //        artists = value;
+        //    }
+        //}
 
-        private IList<AlbumEntity> albums = new List<AlbumEntity>();
-        private IList<ArtistEntity> artists = new List<ArtistEntity>();
+        //private IList<AlbumEntity> albums = new List<AlbumEntity>();
+        //private IList<ArtistEntity> artists = new List<ArtistEntity>();
     }
 }

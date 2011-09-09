@@ -15,6 +15,12 @@ using BusinessObjects.Artificial;
 using DataServices;
 using Common.Controls.Controls;
 using System.Drawing;
+using System.Threading.Tasks;
+using BusinessObjects;
+using System.Threading;
+using Common.Dialogs;
+using Modules.Tags.Views;
+using Common.Dialogs.Helpers;
 
 namespace Modules.Tags.ViewModels
 {
@@ -308,7 +314,41 @@ namespace Modules.Tags.ViewModels
 
         private void OnTagDoubleClickedCommand(object parameter)
         {
-            ITag tag = parameter as ITag;
+            ITag tagProxy = parameter as ITag;
+            if (tagProxy == null)
+                return;
+
+            IsBusy = true;
+
+            Task<Tag> loadTagTask = Task.Factory.StartNew<Tag>(() =>
+            {
+                return dataService.GetTag(tagProxy.ID);
+            }, TaskScheduler.Default);
+
+            Task finishTask = loadTagTask.ContinueWith((t) =>
+            {
+                IsBusy = false;
+
+                Tag tag = t.Result;
+
+                if (tag == null)
+                    return;
+
+                //TODO
+                var viewModel = container.Resolve<ITagEditViewModel>();
+                viewModel.Tag = tag;
+                viewModel.IsEditMode = true;
+                viewModel.Tag.NeedValidate = true;
+
+
+                var dialog = new CommonDialog()
+                {
+                    DialogContent = new TagEditView(viewModel),
+                    HeaderText = HeaderTextHelper.CreateHeaderText(typeof(Tag), true)
+                };
+                dialog.ShowDialog();
+
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         #endregion

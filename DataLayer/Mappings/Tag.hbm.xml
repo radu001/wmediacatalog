@@ -11,17 +11,16 @@
     <property name="CreateDate" column="create_date"/>
     <property name="Color" column="color"/>
     <property name="TextColor" column="text_color"/>
-
-    <bag name="Albums" table="tags_albums">
+    <!--<bag name="Albums" table="tags_albums" cascade="none">
       <key column="tag_id"/>
       <many-to-many column="album_id"
          class="DataLayer.Entities.AlbumEntity, NHibernateManyToMany"/>
     </bag>
 
-    <bag name="Artists" table="tags_artists">
+    <bag name="Artists" table="tags_artists" cascade="none">
       <key column="tag_id"/>
       <many-to-many column="artist_id"
          class="DataLayer.Entities.ArtistEntity, NHibernateManyToMany"/>
-    </bag>
+    </bag>-->
   </class>
 </hibernate-mapping>

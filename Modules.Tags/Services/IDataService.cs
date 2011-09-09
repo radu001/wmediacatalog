@@ -8,6 +8,7 @@ namespace Modules.Tags.Services
 {
     public interface IDataService
     {
+        Tag GetTag(int tagID);
         bool SaveTag(Tag tag);
         IList<ITag> GetTagsWithAssociatedEntitiesCount();
         IPagedList<TaggedObject> GetTaggedObjects(ILoadOptions loadOptions);

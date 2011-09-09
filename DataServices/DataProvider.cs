@@ -354,6 +354,33 @@ namespace DataServices
             return result;
         }
 
+        public Tag GetTag(int tagID)
+        {
+            Tag result = null;
+
+            ISession session = SessionFactory.GetSession();
+
+            try
+            {
+                TagEntity dataEntity = session.QueryOver<TagEntity>().
+                    Where(t => t.ID == tagID).SingleOrDefault();
+
+                EntityConverter entityConverter = new EntityConverter();
+
+                result = entityConverter.FromDataEntity(dataEntity);
+            }
+            catch (Exception ex)
+            {
+                Logger.Write(ex);
+            }
+            finally
+            {
+                session.Close();
+            }
+
+            return result;
+        }
+
         public IList<Tag> GetTagsWithAssociatedEntitiesCount()
         {
             var result = new List<Tag>();

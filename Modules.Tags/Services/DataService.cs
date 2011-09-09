@@ -10,6 +10,12 @@ namespace Modules.Tags.Services
 {
     public class DataService : IDataService
     {
+        public Tag GetTag(int tagID)
+        {
+            var provider = new DataProvider();
+            return provider.GetTag(tagID);
+        }
+
         public bool SaveTag(Tag tag)
         {
             var provider = new DataProvider();
