@@ -7,4 +7,14 @@
   <sql-query name="GetTagsWithAssociatedEntitiesCount">
     select tag_id, tag_name, tag_color, tag_text_color, count(entity_id) as cnt from tagged_objects group by tag_id, tag_name, tag_color, tag_text_color
   </sql-query>
+  <sql-query name="GetTaggedObjects">
+    <query-param name="tagIDs" type="string" />
+    <query-param name="ioffset" type="integer" />
+    <query-param name="ilimit" type="integer" />
+    select * from get_tagged_entities(:tagIDs, :ioffset, :ilimit);
+  </sql-query>
+  <sql-query name="GetTaggedObjectsCount">
+    <query-param name="tagIDs" type="string" />
+    select get_tagged_entities_count(:tagIDs);
+  </sql-query>
 </hibernate-mapping>

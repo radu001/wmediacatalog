@@ -166,6 +166,7 @@ namespace Modules.Tags.ViewModels
         private void LoadTags()
         {
             Tags = new ObservableCollection<ITag>(dataService.GetTagsWithAssociatedEntitiesCount());
+            SelectedTags.Clear();
         }
 
         private void InitLoadOptions()
@@ -176,6 +177,7 @@ namespace Modules.Tags.ViewModels
                 FilterValue = "",
                 FirstResult = 0,
                 MaxResults = 25,
+                DistinctByEntityID = true
             };
 
             NotifyPropertyChanged(() => LoadOptions);
@@ -275,7 +277,10 @@ namespace Modules.Tags.ViewModels
         private void FilterTaggedObjects()
         {
             if (SelectedTags == null || (SelectedTags != null && SelectedTags.Count == 0))
+            {
                 TaggedObjects = new PagedList<TaggedObject>();
+                TaggedObjectsCount = 0;
+            }
             else
             {
                 var transformer = new IDListTransformer<ITag>();
@@ -296,6 +301,7 @@ namespace Modules.Tags.ViewModels
         private void OnReloadTagsEvent(object parameter)
         {
             LoadTags();
+            FilterTaggedObjects();
         }
 
         private void OnPageChangedCommand(PageChangedArgs parameter)

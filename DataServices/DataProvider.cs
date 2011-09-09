@@ -389,7 +389,6 @@ namespace DataServices
 
             try
             {
-
                 var query = session.GetNamedQuery("GetTagsWithAssociatedEntitiesCount");
                 var dataEntities = query.SetResultTransformer(new TagResultTransformer()).List<TagEntity>();
 
@@ -415,105 +414,99 @@ namespace DataServices
 
         public IPagedList<TaggedObject> GetTaggedObjects(ILoadOptions loadOptions)
         {
-            var options = loadOptions as TagLoadOptions;
-
-            if (options == null)
-                throw new OperationCanceledException("Illegal load options type. Expected TagLoadOptions type");
-
             var result = new PagedList<TaggedObject>();
 
             ISession session = SessionFactory.GetSession();
 
             try
             {
-                DetachedCriteria countCriteria = GetTaggedObjectsImpl(options);
-                DetachedCriteria listCriteria = GetTaggedObjectsImpl(options);
+                var query = session.GetNamedQuery("GetTaggedObjects");
+                query.SetParameter("tagIDs", loadOptions.FilterValue);
+                query.SetParameter("ioffset", loadOptions.FirstResult);
+                query.SetParameter("ilimit", loadOptions.MaxResults);
+                var dataEntities = query.SetResultTransformer(new TaggedObjectResultTransformer()).List<TaggedObjectEntity>();
 
-                countCriteria.SetProjection(Projections.RowCount());
-                countCriteria.ClearOrders();
+                var countQuery = session.GetNamedQuery("GetTaggedObjectsCount");
+                countQuery.SetParameter("tagIDs", loadOptions.FilterValue);
+                var totalEntitiesCount = (int)countQuery.UniqueResult();
 
-                listCriteria.
-                    SetFirstResult(options.FirstResult).
-                    SetMaxResults(options.MaxResults);
+                EntityConverter converter = new EntityConverter();
 
-                IMultiCriteria multiCriteria = session.CreateMultiCriteria();
-                multiCriteria.Add(countCriteria);
-                multiCriteria.Add(listCriteria);
-
-
-                IList queryResult = multiCriteria.List();
-
-                result.TotalItems = (int)((IList)queryResult[0])[0];
-
-                IList recordsList = (IList)queryResult[1];
-
-                EntityConverter entityConverter = new EntityConverter();
-
-                foreach (var e in recordsList)
+                foreach (var de in dataEntities)
                 {
-                    TaggedBindingEntity dataEntity = e as TaggedBindingEntity;
-                    TaggedObject businessEntity = entityConverter.FromDataEntity(dataEntity);
-                    result.Add(businessEntity);
+                    var tag = converter.FromDataEntity(de);
+                    result.Add(tag);
                 }
+
+                result.TotalItems = totalEntitiesCount;
             }
             catch (Exception ex)
             {
                 Logger.Write(ex);
             }
+            finally
+            {
+                session.Close();
+            }
 
             return result;
         }
 
-        private DetachedCriteria GetTaggedObjectsImpl(ILoadOptions loadOptions)
-        {
-            TagLoadOptions options = (TagLoadOptions)loadOptions;
+        //private DetachedCriteria GetTaggedObjectsImpl(ILoadOptions loadOptions, bool isCountQuery)
+        //{
+        //    TagLoadOptions options = (TagLoadOptions)loadOptions;
 
-            if (options == null)
-                return null;
+        //    if (options == null)
+        //        return null;
 
-            if (options.MaxResults <= 0)
-                return null;
+        //    if (options.MaxResults <= 0)
+        //        return null;
 
-            string fieldName = options.FilterField.FieldName;
-            string filterValue = options.FilterValue;
+        //    string fieldName = options.FilterField.FieldName;
+        //    string filterValue = options.FilterValue;
 
-            DetachedCriteria criteria = DetachedCriteria.For<TaggedBindingEntity>();
+        //    DetachedCriteria criteria = DetachedCriteria.For<TaggedBindingEntity>();
 
-            //if (!options.IncludeWaste)
-            //    criteria.Add(Restrictions.Eq("IsWaste", false));
+        //    //if (!options.IncludeWaste)
+        //    //    criteria.Add(Restrictions.Eq("IsWaste", false));
 
-            if (fieldName != "TagID")
-            {
-                criteria.
-                    Add(Restrictions.InsensitiveLike(fieldName, filterValue, MatchMode.Anywhere)).
-                    AddOrder(new Order(fieldName, true));
-            }
-            else
-            {
-                object[] idList = new IDListTransformer<TaggedBindingEntity>().TransformIDs(filterValue);
+        //    if (fieldName != "TagID")
+        //    {
+        //        criteria.
+        //            Add(Restrictions.InsensitiveLike(fieldName, filterValue, MatchMode.Anywhere)).
+        //            AddOrder(new Order(fieldName, true));
+        //    }
+        //    else
+        //    {
+        //        object[] idList = new IDListTransformer<TaggedBindingEntity>().TransformIDs(filterValue);
 
-                criteria.
-                    Add(new InExpression("TagID", (idList)));
-            }
+        //        criteria.
+        //            Add(new InExpression("TagID", (idList)));
+        //    }
 
-            if (options.ExcludeAlbums && options.ExcludeArtists)
-            {
-                criteria.Add(Restrictions.Eq("EntityType", -1)); // no records should be returned
-            }
-            else
-            {
-                if (options.ExcludeAlbums) // show only artists
-                {
-                    criteria.Add(Restrictions.Eq("EntityType", (int)TaggedObjectType.Artist));
-                }
-                if (options.ExcludeArtists) // show only albums
-                {
-                    criteria.Add(Restrictions.Eq("EntityType", (int)TaggedObjectType.Album));
-                }
-            }
+        //    if (options.ExcludeAlbums && options.ExcludeArtists)
+        //    {
+        //        criteria.Add(Restrictions.Eq("EntityType", -1)); // no records should be returned
+        //    }
+        //    else
+        //    {
+        //        if (options.ExcludeAlbums) // show only artists
+        //        {
+        //            criteria.Add(Restrictions.Eq("EntityType", (int)TaggedObjectType.Artist));
+        //        }
+        //        if (options.ExcludeArtists) // show only albums
+        //        {
+        //            criteria.Add(Restrictions.Eq("EntityType", (int)TaggedObjectType.Album));
+        //        }
+        //    }
 
-            return criteria;
-        }
+        //    if (options.DistinctByEntityID && isCountQuery)
+        //    {
+
+        //    }
+
+        //    return criteria;
+        //}
 
         public bool SaveTag(Tag tag)
         {

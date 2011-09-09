@@ -411,16 +411,16 @@ namespace DataServices
             };
         }
 
-        public TaggedObject FromDataEntity(TaggedBindingEntity dataEntity)
+        public TaggedObject FromDataEntity(TaggedObjectEntity dataEntity)
         {
             if (dataEntity == null)
                 return null;
 
             var businessEntity = new TaggedObject()
             {
-                ID = dataEntity.EntityID,
-                Name = dataEntity.EntityName,
-                ObjectType = (TaggedObjectType)dataEntity.EntityType
+                ID = dataEntity.ID,
+                Name = dataEntity.Name,
+                ObjectType = (TaggedObjectType)dataEntity.ObjectType
             };
 
             return businessEntity;

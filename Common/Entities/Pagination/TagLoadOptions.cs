@@ -15,5 +15,7 @@ namespace Common.Entities.Pagination
         public bool ExcludeAlbums { get; set; }
 
         public bool ExcludeArtists { get; set; }
+
+        public bool DistinctByEntityID { get; set; }
     }
 }
