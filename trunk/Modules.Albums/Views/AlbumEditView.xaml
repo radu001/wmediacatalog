@@ -384,7 +384,7 @@
                                       ItemsSource="{Binding Album.Tags}"
                                       IsSynchronizedWithCurrentItem="True"
                                       commands:MouseDoubleClick.Command="{Binding EditTagCommand}"
-                                      ItemContainerStyle="{StaticResource ListViewItemCommonStyle}">
+                                      ItemContainerStyle="{StaticResource TransparentSelectionListViewItemStyle}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Border BorderBrush="LightSteelBlue" Background="{Binding Color}" BorderThickness="1" CornerRadius="8" Margin="2,1,2,1">
