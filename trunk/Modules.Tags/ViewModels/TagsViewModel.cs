@@ -35,8 +35,7 @@ namespace Modules.Tags.ViewModels
             SelectedTagsDragCommand = new DelegateCommand<object>(OnSelectedTagsDragCommand);
             AllTagsDragCommand = new DelegateCommand<object>(OnAllTagsDragCommand);
             PageChangedCommand = new DelegateCommand<PageChangedArgs>(OnPageChangedCommand);
-
-            
+            TagDoubleClickedCommand = new DelegateCommand<object>(OnTagDoubleClickedCommand);
         }
 
         #region ITagsViewModel Members
@@ -132,7 +131,9 @@ namespace Modules.Tags.ViewModels
 
         public DelegateCommand<object> AllTagsDragCommand { get; private set; }
 
-        public DelegateCommand<PageChangedArgs> PageChangedCommand { get; private set; } 
+        public DelegateCommand<PageChangedArgs> PageChangedCommand { get; private set; }
+
+        public DelegateCommand<object> TagDoubleClickedCommand { get; private set; }
 
         #endregion
 
@@ -303,6 +304,11 @@ namespace Modules.Tags.ViewModels
                 LoadOptions.FirstResult = e.PageIndex * e.ItemsPerPage;
                 FilterTaggedObjects();
             }
+        }
+
+        private void OnTagDoubleClickedCommand(object parameter)
+        {
+            ITag tag = parameter as ITag;
         }
 
         #endregion

@@ -25,7 +25,7 @@
             </Setter>
         </Style>
     </UserControl.Resources>
-    <ListView x:Name="TagsListView" PreviewMouseLeftButtonDown="TagsListView_PreviewMouseLeftButtonDown" BorderThickness="0"
+    <ListView x:Name="TagsListView" PreviewMouseLeftButtonDown="TagsListView_PreviewMouseLeftButtonDown" MouseDoubleClick="TagsListView_MouseDoubleClick" BorderThickness="0"
         Style="{StaticResource TagsListViewStyle}" ItemsSource="{Binding ElementName=tagsCloud,Path=ItemsSource}">
     </ListView>
 </UserControl>

@@ -171,6 +171,25 @@ namespace TagCloudLib
 
         #endregion
 
+        #region TagDoubleClickedCommand
+
+        public static readonly DependencyProperty TagDoubleClickedCommandProperty =
+            DependencyProperty.Register("TagDoubleClickedCommand", typeof(ICommand), typeof(TagsCloud));
+
+        public ICommand TagDoubleClickedCommand
+        {
+            get
+            {
+                return (ICommand)GetValue(TagDoubleClickedCommandProperty);
+            }
+            set
+            {
+                SetValue(TagDoubleClickedCommandProperty, value);
+            }
+        }
+
+        #endregion
+
         #endregion
 
         #region Properties
@@ -261,10 +280,6 @@ namespace TagCloudLib
             DataTemplate result = new DataTemplate();
             result.DataType = typeof(ITag);
 
-            //Border b;
-            //b.CornerRadius = new CornerRadius(8d);
-            //b.Margin = new Thickness(4d);
-            //b.BorderBrush = Brushes.Black;
 
             //BorderFactory
             var borderFactory = new FrameworkElementFactory(typeof(Border));
@@ -272,14 +287,23 @@ namespace TagCloudLib
             borderFactory.SetValue(Border.MarginProperty, new Thickness(4d));
             borderFactory.SetValue(Border.BorderThicknessProperty, new Thickness(1d));
             borderFactory.SetValue(Border.BorderBrushProperty, Brushes.Black);
+            borderFactory.SetBinding(Border.BackgroundProperty, new Binding()
+            {
+                Path = new PropertyPath("Color")
+            });
 
 
             //TextBlock
             var textBlockFactory = new FrameworkElementFactory(typeof(TextBlock));
             textBlockFactory.SetValue(TextBlock.MarginProperty, new Thickness(4d));
+            textBlockFactory.SetValue(TextBlock.FontWeightProperty, FontWeights.Bold);
             textBlockFactory.SetBinding(TextBlock.TextProperty, new Binding()
             {
                 Path = new PropertyPath("Name")
+            });
+            textBlockFactory.SetBinding(TextBlock.ForegroundProperty, new Binding()
+            {
+                Path = new PropertyPath("TextColor")
             });
             textBlockFactory.SetBinding(TextBlock.FontSizeProperty, new Binding()
             {
@@ -301,6 +325,47 @@ namespace TagCloudLib
 
         private void TagsListView_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            var lvi = FindMouseEventItem(sender, e);
+            if (lvi == null)
+                return;
+
+            var dc = GetTagFromListViewItem(lvi);
+            if (dc != null)
+            {
+                SelectedItem = dc;
+
+                if (TagClickedCommand != null)
+                {
+                    TagClickedCommand.Execute(dc);
+                }
+            }
+        }
+
+        private void TagsListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var lvi = FindMouseEventItem(sender, e);
+            if (lvi == null)
+                return;
+
+            var dc = GetTagFromListViewItem(lvi);
+            if (dc != null)
+            {
+                if (TagDoubleClickedCommand != null)
+                {
+                    TagDoubleClickedCommand.Execute(dc);
+                }
+            }
+
+        }
+
+        private ITag GetTagFromListViewItem(ListViewItem lvi)
+        {
+        
+            return lvi.DataContext as ITag;
+        }
+
+        private ListViewItem FindMouseEventItem(object sender, MouseButtonEventArgs e)
+        {
             var listView = sender as ListView;
             var clickPoint = e.GetPosition(listView);
 
@@ -311,20 +376,11 @@ namespace TagCloudLib
             }
 
             if (nav == null)
-                return;
+                return null;
             else
             {
                 var lvi = (ListViewItem)nav;
-                var dc = lvi.DataContext as ITag;
-                if (dc != null)
-                {
-                    SelectedItem = dc;
-
-                    if (TagClickedCommand != null)
-                    {
-                        TagClickedCommand.Execute(dc);
-                    }
-                }
+                return lvi;
             }
         }
 

@@ -18,6 +18,7 @@ using Microsoft.Practices.Unity;
 using Modules.Artists.Services;
 using Modules.Tags.ViewModels;
 using Modules.Tags.Views;
+using System.Windows.Media;
 namespace Modules.Artists.ViewModels
 {
     public class ArtistEditViewModel : DialogViewModelBase, IArtistEditViewModel, IEventSubscriber
@@ -206,7 +207,7 @@ namespace Modules.Artists.ViewModels
             {
                 Name = tagName,
                 CreateDate = DateTime.Now,
-                Comments = "Created from Artist edit/create dialog"
+                Comments = "Created from Artist edit/create dialog",
             };
 
             IsBusy = true;

@@ -21,13 +21,17 @@ namespace DataLayer
         {
             int tagID = Convert.ToInt32(tuple[0]);
             string tagName = Convert.ToString(tuple[1]);
-            int entitiesCount = Convert.ToInt32(tuple[2]);
+            string tagColor = Convert.ToString(tuple[2]);
+            string tagTextColor = Convert.ToString(tuple[3]);
+            int entitiesCount = Convert.ToInt32(tuple[4]);
 
             return new TagEntity()
             {
                 ID = tagID,
                 Name = tagName,
-                AssociatedEntitiesCount = entitiesCount
+                AssociatedEntitiesCount = entitiesCount,
+                Color = tagColor,
+                TextColor = tagTextColor
             };
         }
 

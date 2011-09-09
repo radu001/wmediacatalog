@@ -23,5 +23,6 @@ namespace Modules.Tags.ViewModels
         DelegateCommand<object> SelectedTagsDragCommand { get; }
         DelegateCommand<object> AllTagsDragCommand { get; }
         DelegateCommand<PageChangedArgs> PageChangedCommand { get; }
+        DelegateCommand<object> TagDoubleClickedCommand { get; }
     }
 }

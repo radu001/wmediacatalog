@@ -18,6 +18,7 @@ using Modules.Albums.Events;
 using Modules.Albums.Services;
 using Modules.Tags.ViewModels;
 using Modules.Tags.Views;
+using System.Windows.Media;
 namespace Modules.Albums.ViewModels
 {
     public class AlbumEditViewModel : DialogViewModelBase, IAlbumEditViewModel, IEventSubscriber
@@ -286,7 +287,7 @@ namespace Modules.Albums.ViewModels
             {
                 Name = tagName,
                 CreateDate = DateTime.Now,
-                Comments = "Created from Artist edit/create dialog"
+                Comments = "Created from Artist edit/create dialog",
             };
 
             IsBusy = true;

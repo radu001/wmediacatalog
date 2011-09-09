@@ -23,14 +23,17 @@
         <GroupBox Header="All tags" Grid.Row="0" Margin="8" Grid.Column="0">
             <tagLib:TagsCloud x:Name="allTagsCloud" ItemsSource="{Binding Tags}" AllowDrop="True"
                               SelectedItem="{Binding AllTagsSelectedItem,Mode=TwoWay}"
+                              TagDoubleClickedCommand="{Binding TagDoubleClickedCommand}"
                               commands:MouseMove.Command="{Binding AllTagsDragCommand}"
                               commands:Drop.Command="{Binding AllTagsDropCommand}"/>
         </GroupBox>
         <GroupBox Header="Selected tags" Grid.Row="1" Margin="8" Grid.Column="0">
             <tagLib:TagsCloud x:Name="selectedTagsCloud" ItemsSource="{Binding SelectedTags}" AllowDrop="True" 
                               SelectedItem="{Binding SelectedTagsSelectedItem,Mode=TwoWay}"
+                              TagDoubleClickedCommand="{Binding TagDoubleClickedCommand}"
                               commands:MouseMove.Command="{Binding SelectedTagsDragCommand}"
-                              commands:Drop.Command="{Binding SelectedTagsDropCommand}"/>
+                              commands:Drop.Command="{Binding SelectedTagsDropCommand}"
+                              />
         </GroupBox>
         <Grid Grid.Column="1" Grid.RowSpan="2">
             <Grid.RowDefinitions>
