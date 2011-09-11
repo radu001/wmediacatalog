@@ -1,10 +1,10 @@
 ﻿
 using System.Collections.ObjectModel;
+using BusinessObjects.Artificial;
+using Common.Controls.Controls;
+using Common.Entities.Pagination;
 using Microsoft.Practices.Prism.Commands;
 using TagCloudLib;
-using BusinessObjects.Artificial;
-using Common.Entities.Pagination;
-using Common.Controls.Controls;
 namespace Modules.Tags.ViewModels
 {
     public interface ITagsViewModel
@@ -24,5 +24,8 @@ namespace Modules.Tags.ViewModels
         DelegateCommand<object> AllTagsDragCommand { get; }
         DelegateCommand<PageChangedArgs> PageChangedCommand { get; }
         DelegateCommand<object> TagDoubleClickedCommand { get; }
+        DelegateCommand<object> MoveTagUpCommand { get; }
+        DelegateCommand<object> MoveTagDownCommand { get; }
+        DelegateCommand<object> ClearSelectedTagsCommand { get; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -38,9 +39,18 @@ namespace TagCloudLib
         {
             TagsCloud tc = d as TagsCloud;
 
-            if (d != null)
+            if (tc != null)
             {
-                tc.UpdateItemsTemplate();
+                tc.MeasureRanks();
+
+                var obsColl = e.NewValue as ObservableCollection<ITag>;
+                if (obsColl != null)
+                {
+                    obsColl.CollectionChanged += (o, ec) =>
+                    {
+                        tc.MeasureRanks();
+                    };
+                }
             }
         }
 
@@ -62,93 +72,6 @@ namespace TagCloudLib
                 SetValue(SelectedItemProperty, value);
             }
         }
-
-        #endregion
-
-        #region MinFontSize
-
-        public static readonly DependencyProperty MinFontSizeProperty =
-            DependencyProperty.Register("MinFontSize", typeof(int), typeof(TagsCloud),
-            new PropertyMetadata(14, OnMinFontSizePropertyChanged));
-
-        public int MinFontSize
-        {
-            get
-            {
-                return (int)GetValue(MinFontSizeProperty);
-            }
-            set
-            {
-                SetValue(MinFontSizeProperty, value);
-            }
-        }
-
-        private static void OnMinFontSizePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            TagsCloud tc = d as TagsCloud;
-            if (d != null)
-            {
-                tc.UpdateItemsTemplate();
-            }
-        }
-
-        #endregion
-
-        #region MaxFontSize
-
-        public static readonly DependencyProperty MaxFontSizeProperty =
-            DependencyProperty.Register("MaxFontSize", typeof(int), typeof(TagsCloud),
-            new PropertyMetadata(24, OnMaxFontSizePropertyChanged));
-
-        public int MaxFontSize
-        {
-            get
-            {
-                return (int)GetValue(MaxFontSizeProperty);
-            }
-            set
-            {
-                SetValue(MaxFontSizeProperty, value);
-            }
-        }
-
-        private static void OnMaxFontSizePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            TagsCloud tc = d as TagsCloud;
-            if (d != null)
-            {
-                tc.UpdateItemsTemplate();
-            }
-        }
-
-        #endregion
-
-        #region TagDataTemplate
-
-        //public static readonly DependencyProperty TagDataTemplateProperty =
-        //    DependencyProperty.Register("TagDataTemplate", typeof(DataTemplate), typeof(TagsCloud),
-        //    new PropertyMetadata(null, OnTagDataTemplatePropertyChanged));
-
-        //public DataTemplate TagDataTemplate
-        //{
-        //    get
-        //    {
-        //        return (DataTemplate)GetValue(TagDataTemplateProperty);
-        //    }
-        //    set
-        //    {
-        //        SetValue(TagDataTemplateProperty, value);
-        //    }
-        //}
-
-        //private static void OnTagDataTemplatePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        //{
-        //    TagsCloud tc = d as TagsCloud;
-        //    if (tc != null)
-        //    {
-        //        tc.UpdateItemsTemplate();
-        //    }
-        //}
 
         #endregion
 
@@ -194,20 +117,18 @@ namespace TagCloudLib
 
         #region Properties
 
-        public bool AutoSize { get; set; }
-
         public int MinRank
         {
             get
             {
                 return minRank;
             }
-            set
+            private set
             {
                 if (value != minRank)
                 {
                     minRank = value;
-                    OnPropertyChanged("MinRank");
+                    UpdateConverter();
                 }
             }
         }
@@ -218,13 +139,42 @@ namespace TagCloudLib
             {
                 return maxRank;
             }
-            set
+            private set
             {
                 if (value != maxRank)
                 {
                     maxRank = value;
-                    OnPropertyChanged("MaxRank");
+                    UpdateConverter();
                 }
+            }
+        }
+
+        public int MinFontSize
+        {
+            get
+            {
+                return minFontSize;
+            }
+            set
+            {
+                if (value != minFontSize)
+                {
+                    minFontSize = value;
+                    UpdateConverter();
+                }
+            }
+        }
+
+        public int MaxFontSize
+        {
+            get
+            {
+                return maxFontSize;
+            }
+            set
+            {
+                maxFontSize = value;
+                UpdateConverter();
             }
         }
 
@@ -234,7 +184,16 @@ namespace TagCloudLib
         {
             InitializeComponent();
 
-            AutoSize = true;
+            converter = new TagFontConverter()
+            {
+                MinRank = MinRank,
+                MaxRank = MaxRank,
+                MinSize = MinFontSize,
+                MaxSize = MaxFontSize
+            };
+
+            var dataTemplate = CreateDataTemplate(MinRank, MaxRank);
+            TagsListView.ItemTemplate = dataTemplate;
         }
 
         #region INotifyPropertyChanged Members
@@ -251,28 +210,58 @@ namespace TagCloudLib
 
         #endregion
 
-        public void Refresh()
-        {
-            UpdateItemsTemplate();
-        }
-
-        private void UpdateItemsTemplate()
+        private void MeasureRanks()
         {
             if (ItemsSource != null && ItemsSource.Count() > 0)
             {
-                if (AutoSize)
+                MinRank = ItemsSource.Min(i => i.Rank);
+                MaxRank = ItemsSource.Max(i => i.Rank);
+            }
+        }
+
+        private void UpdateConverter()
+        {
+            converter.MinRank = MinRank;
+            converter.MaxRank = MaxRank;
+            converter.MinSize = MinFontSize;
+            converter.MaxSize = MaxFontSize;
+
+            if (ItemsSource != null)
+            {
+                foreach (var i in ItemsSource)
                 {
-                    MinRank = ItemsSource.Min((t) => t.Rank);
-                    MaxRank = ItemsSource.Max((t) => t.Rank);
+                    var container = TagsListView.ItemContainerGenerator.ContainerFromItem(i);
+                    if (container != null)
+                    {
+                        FrameworkElement fe = container as FrameworkElement;
+                        if (fe != null)
+                        {
+                            var textBlock = FindVisualChildByType<TextBlock>(fe);
+                            if (textBlock != null)
+                            {
+                                var binding = BindingOperations.GetBindingExpression(textBlock, TextBlock.FontSizeProperty);
+                                if (binding != null)
+                                {
+                                    binding.UpdateTarget();
+                                }
+                            }
+                        }
+                    }
                 }
             }
+        }
 
-            //var dataTemplate = TagDataTemplate == null ?
-            //       CreateDataTemplate(MinRank, MaxRank) : TagDataTemplate;
-
-            var dataTemplate = CreateDataTemplate(MinRank, MaxRank);
-
-            TagsListView.ItemTemplate = dataTemplate;
+        public static T FindVisualChildByType<T>(DependencyObject dependencyObject) where T : DependencyObject
+        {
+            if (dependencyObject == null) return default(T);
+            if (dependencyObject is T) return (T)dependencyObject;
+            T child = default(T);
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(dependencyObject); i++)
+            {
+                child = FindVisualChildByType<T>(VisualTreeHelper.GetChild(dependencyObject, i));
+                if (child != null) return child;
+            }
+            return null;
         }
 
         private DataTemplate CreateDataTemplate(int minRank, int maxRank)
@@ -307,13 +296,7 @@ namespace TagCloudLib
             });
             textBlockFactory.SetBinding(TextBlock.FontSizeProperty, new Binding()
             {
-                Converter = new TagFontConverter()
-                {
-                    MinSize = MinFontSize,
-                    MaxSize = MaxFontSize,
-                    MinRank = minRank,
-                    MaxRank = maxRank
-                }
+                Converter = converter
             });
 
             borderFactory.AppendChild(textBlockFactory);
@@ -360,7 +343,7 @@ namespace TagCloudLib
 
         private ITag GetTagFromListViewItem(ListViewItem lvi)
         {
-        
+
             return lvi.DataContext as ITag;
         }
 
@@ -386,8 +369,11 @@ namespace TagCloudLib
 
         #region Private fields
 
-        private int minRank;
-        private int maxRank;
+        private TagFontConverter converter;
+        public int minRank;
+        public int maxRank;
+        public int minFontSize;
+        public int maxFontSize;
 
         #endregion
     }

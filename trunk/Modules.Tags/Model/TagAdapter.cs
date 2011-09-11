@@ -27,5 +27,42 @@ namespace Modules.Tags.Model
             Color = tag.Color;
             TextColor = tag.TextColor;
         }
+
+        public override bool Equals(object obj)
+        {
+            TagAdapter ta = obj as TagAdapter;
+            if (ta == null)
+                return false;
+
+            bool result = ID == ta.ID;
+            result &= Name == ta.Name;
+            result &= Rank == ta.Rank;
+            result &= Color == ta.Color;
+            result &= TextColor == ta.TextColor;
+
+            return result;
+        }
+
+        public override int GetHashCode()
+        {
+            if (fHashCode == 0)
+            {
+                fHashCode = 7 + 11 * ID;
+                fHashCode ^= 11 + 13 * Rank;
+
+                if (Name != null)
+                    fHashCode ^= 23 * Name.GetHashCode();
+
+                if (Color != null)
+                    fHashCode ^= 19 * Color.GetHashCode();
+
+                if (TextColor != null)
+                    fHashCode ^= 11 * TextColor.GetHashCode();
+            }
+
+            return fHashCode;
+        }
+
+        private int fHashCode;
     }
 }

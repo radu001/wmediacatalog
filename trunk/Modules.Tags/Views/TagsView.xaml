@@ -11,11 +11,23 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              commands:Loaded.Command="{Binding ViewLoadedCommand}">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Common.Content;component/Styles/CommonStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            
+            <DataTemplate x:Key="TaggedObjectTemplate">
+                <TextBlock Text="{Binding Name}"/>
+            </DataTemplate>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid x:Name="LayoutRoot"
             commonControls:BusyIndicatorBehavior.BusyState="{Binding IsBusy}"
             commonControls:BusyIndicatorBehavior.AddMargins="True">
         <Grid.RowDefinitions>
             <RowDefinition/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -24,31 +36,45 @@
         </Grid.ColumnDefinitions>
         <GroupBox Header="All tags" Grid.Row="0" Margin="8" Grid.Column="0">
             <tagLib:TagsCloud x:Name="allTagsCloud" ItemsSource="{Binding Tags}" AllowDrop="True"
-                              SelectedItem="{Binding AllTagsSelectedItem,Mode=TwoWay}"
+                              SelectedItem="{Binding AllTagsSelectedItem,Mode=TwoWay}" MinFontSize="10" MaxFontSize="22"
                               TagDoubleClickedCommand="{Binding TagDoubleClickedCommand}"
                               commands:MouseMove.Command="{Binding AllTagsDragCommand}"
                               commands:Drop.Command="{Binding AllTagsDropCommand}"/>
         </GroupBox>
-        <GroupBox Header="Selected tags" Grid.Row="1" Margin="8" Grid.Column="0">
+        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="1">
+            <Button Style="{StaticResource ImageButtonStyle}" commands:Clicked.Command="{Binding MoveTagUpCommand}"
+                    ToolTip="Remove from selected tags">
+                <Button.Content>
+                    <Image Source="/Common.Content;component/Images/arrow-up-3_24x24.png" Width="16" Height="16"/>
+                </Button.Content>
+            </Button>
+            <Button Style="{StaticResource ImageButtonStyle}" commands:Clicked.Command="{Binding MoveTagDownCommand}"
+                    ToolTip="Move to selected tags">
+                <Button.Content>
+                    <Image Source="/Common.Content;component/Images/arrow-down-3_24x24.png" Width="16" Height="16"/>
+                </Button.Content>
+            </Button>
+            <Button Style="{StaticResource ImageButtonStyle}" commands:Clicked.Command="{Binding ClearSelectedTagsCommand}"
+                    ToolTip="Clear selected tags">
+                <Button.Content>
+                    <Image Source="/Common.Content;component/Images/Remove_16x16.png" Width="16" Height="16"/>
+                </Button.Content>
+            </Button>
+        </StackPanel>
+        <GroupBox Header="Selected tags" Grid.Row="2" Margin="8" Grid.Column="0">
             <tagLib:TagsCloud x:Name="selectedTagsCloud" ItemsSource="{Binding SelectedTags}" AllowDrop="True" 
-                              SelectedItem="{Binding SelectedTagsSelectedItem,Mode=TwoWay}"
+                              SelectedItem="{Binding SelectedTagsSelectedItem,Mode=TwoWay}" MinFontSize="10" MaxFontSize="22"
                               TagDoubleClickedCommand="{Binding TagDoubleClickedCommand}"
                               commands:MouseMove.Command="{Binding SelectedTagsDragCommand}"
-                              commands:Drop.Command="{Binding SelectedTagsDropCommand}"
-                              />
+                              commands:Drop.Command="{Binding SelectedTagsDropCommand}"/>
         </GroupBox>
-        <Grid Grid.Column="1" Grid.RowSpan="2">
+        <Grid Grid.Column="1" Grid.RowSpan="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <ListView ItemsSource="{Binding TaggedObjects}" Margin="16">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Name}"/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+            <ListView ItemsSource="{Binding TaggedObjects}" Margin="16" ItemContainerStyle="{StaticResource ListViewItemCommonStyle}"
+                      ItemTemplate="{StaticResource TaggedObjectTemplate}"/>
 
             <commonControls:DataPager Grid.Row="1" ItemsPerPage="{Binding LoadOptions.MaxResults}" VisiblePagesCount="3" TotalItems="{Binding TaggedObjectsCount}"
                                        pagerCommands:PageChanged.Command="{Binding PageChangedCommand}" Margin="16,0,16,16"/>

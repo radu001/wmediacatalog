@@ -1,26 +1,24 @@
 ﻿using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
+using BusinessObjects;
+using BusinessObjects.Artificial;
+using Common.Commands;
+using Common.Controls.Controls;
+using Common.Dialogs;
+using Common.Dialogs.Helpers;
+using Common.Entities.Pagination;
 using Common.Events;
+using Common.Utilities;
 using Common.ViewModels;
+using DataServices;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 using Modules.Tags.Services;
-using TagCloudLib;
-using Common.Commands;
-using System.Windows.Input;
-using System.Windows;
-using Common.Entities.Pagination;
-using Common.Utilities;
-using BusinessObjects.Artificial;
-using DataServices;
-using Common.Controls.Controls;
-using System.Drawing;
-using System.Threading.Tasks;
-using BusinessObjects;
-using System.Threading;
-using Common.Dialogs;
 using Modules.Tags.Views;
-using Common.Dialogs.Helpers;
+using TagCloudLib;
 
 namespace Modules.Tags.ViewModels
 {
@@ -42,6 +40,9 @@ namespace Modules.Tags.ViewModels
             AllTagsDragCommand = new DelegateCommand<object>(OnAllTagsDragCommand);
             PageChangedCommand = new DelegateCommand<PageChangedArgs>(OnPageChangedCommand);
             TagDoubleClickedCommand = new DelegateCommand<object>(OnTagDoubleClickedCommand);
+            MoveTagDownCommand = new DelegateCommand<object>(OnMoveTagDownCommand);
+            MoveTagUpCommand = new DelegateCommand<object>(OnMoveTagUpCommand);
+            ClearSelectedTagsCommand = new DelegateCommand<object>(OnClearSelectedTagsCommand);
         }
 
         #region ITagsViewModel Members
@@ -141,6 +142,12 @@ namespace Modules.Tags.ViewModels
 
         public DelegateCommand<object> TagDoubleClickedCommand { get; private set; }
 
+        public DelegateCommand<object> MoveTagUpCommand { get; private set; }
+
+        public DelegateCommand<object> MoveTagDownCommand { get; private set; }
+
+        public DelegateCommand<object> ClearSelectedTagsCommand { get; private set; }
+
         #endregion
 
         #region Private methods
@@ -187,41 +194,12 @@ namespace Modules.Tags.ViewModels
 
         private void OnAllTagsDropCommand(object parameter)
         {
-            if (SelectedTagsSelectedItem != null)
-            {
-                Tags.Add(SelectedTagsSelectedItem);
-                SelectedTags.Remove(SelectedTagsSelectedItem);
-
-                var control = GetTagsCloud(parameter); // update control due to itemsSource collection changed
-                if (control != null) 
-                    control.Refresh();
-
-                FilterTaggedObjects();
-            }   
+            RemoveFromSelectedTags();
         }
 
         private void OnSelectedTagsDropCommand(object parameter)
         {
-            if (AllTagsSelectedItem != null)
-            {
-                SelectedTags.Add(AllTagsSelectedItem);
-                Tags.Remove(AllTagsSelectedItem);
-
-                var control = GetTagsCloud(parameter); // update control due to itemsSource collection changed
-                if (control != null)
-                    control.Refresh();
-
-                FilterTaggedObjects();
-            }
-        }
-
-        private TagsCloud GetTagsCloud(object parameter)
-        {
-            DragArgs da = parameter as DragArgs;
-            if (da == null)
-                return null;
-
-            return da.Sender as TagsCloud;
+            MoveToSelectedTags();
         }
 
         private void OnSelectedTagsDragCommand(object parameter)
@@ -296,6 +274,53 @@ namespace Modules.Tags.ViewModels
             }
         }
 
+        private void OnClearSelectedTagsCommand(object parameter)
+        {
+            if (SelectedTags == null)
+                return;
+
+            if (SelectedTags.Count == 0)
+                return;
+
+            foreach (var st in SelectedTags)
+            {
+                if (!Tags.Contains(st))
+                    Tags.Add(st);
+            }
+
+            SelectedTags.Clear();
+
+            FilterTaggedObjects();
+        }
+
+        private void MoveToSelectedTags()
+        {
+            if (AllTagsSelectedItem != null)
+            {
+                if (!SelectedTags.Contains(AllTagsSelectedItem))
+                {
+                    SelectedTags.Add(AllTagsSelectedItem);
+                    Tags.Remove(AllTagsSelectedItem);
+
+                    FilterTaggedObjects();
+                }
+            }
+        }
+
+        private void RemoveFromSelectedTags()
+        {
+            if (SelectedTagsSelectedItem != null)
+            {
+                if (!Tags.Contains(SelectedTagsSelectedItem))
+                {
+                    Tags.Add(SelectedTagsSelectedItem);
+                    SelectedTags.Remove(SelectedTagsSelectedItem);
+
+                    FilterTaggedObjects();
+                }
+            }
+        }
+
         #endregion
 
         private void OnReloadTagsEvent(object parameter)
@@ -355,6 +380,16 @@ namespace Modules.Tags.ViewModels
                 dialog.ShowDialog();
 
             }, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        private void OnMoveTagUpCommand(object parameter)
+        {
+            RemoveFromSelectedTags();
+        }
+
+        private void OnMoveTagDownCommand(object parameter)
+        {
+            MoveToSelectedTags();
         }
 
         #endregion

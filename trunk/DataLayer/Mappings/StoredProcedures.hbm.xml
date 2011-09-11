@@ -13,8 +13,4 @@
     <query-param name="ilimit" type="integer" />
     select * from get_tagged_entities(:tagIDs, :ioffset, :ilimit);
   </sql-query>
-  <sql-query name="GetTaggedObjectsCount">
-    <query-param name="tagIDs" type="string" />
-    select get_tagged_entities_count(:tagIDs);
-  </sql-query>
 </hibernate-mapping>
