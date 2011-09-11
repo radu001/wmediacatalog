@@ -34,7 +34,7 @@
             <ColumnDefinition Width="60*"/>
             <ColumnDefinition Width="40*"/>
         </Grid.ColumnDefinitions>
-        <GroupBox Header="All tags" Grid.Row="0" Margin="8" Grid.Column="0">
+        <GroupBox Header="All attached tags" Grid.Row="0" Margin="8" Grid.Column="0">
             <tagLib:TagsCloud x:Name="allTagsCloud" ItemsSource="{Binding Tags}" AllowDrop="True"
                               SelectedItem="{Binding AllTagsSelectedItem,Mode=TwoWay}" MinFontSize="10" MaxFontSize="22"
                               TagDoubleClickedCommand="{Binding TagDoubleClickedCommand}"
@@ -73,7 +73,7 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <ListView ItemsSource="{Binding TaggedObjects}" Margin="16" ItemContainerStyle="{StaticResource ListViewItemCommonStyle}"
+            <ListView ItemsSource="{Binding TaggedObjects}" Margin="16"
                       ItemTemplate="{StaticResource TaggedObjectTemplate}"/>
 
             <commonControls:DataPager Grid.Row="1" ItemsPerPage="{Binding LoadOptions.MaxResults}" VisiblePagesCount="3" TotalItems="{Binding TaggedObjectsCount}"

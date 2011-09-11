@@ -288,7 +288,8 @@ namespace TagCloudLib
             textBlockFactory.SetValue(TextBlock.FontWeightProperty, FontWeights.Bold);
             textBlockFactory.SetBinding(TextBlock.TextProperty, new Binding()
             {
-                Path = new PropertyPath("Name")
+                //Path = new PropertyPath("Name")
+                Converter = new TagTextConverter()
             });
             textBlockFactory.SetBinding(TextBlock.ForegroundProperty, new Binding()
             {

@@ -155,6 +155,8 @@ namespace Modules.Tags.ViewModels
         private void SubscribeEvents()
         {
             eventAggregator.GetEvent<ReloadTagsEvent>().Subscribe(OnReloadTagsEvent);
+            eventAggregator.GetEvent<ReloadArtistsEvent>().Subscribe(OnReloadArtistsEvent);
+            eventAggregator.GetEvent<ReloadAlbumsEvent>().Subscribe(OnReloadAlbumsEvent);
         }
 
         private void OnViewLoadedCommand(object parameter)
@@ -324,6 +326,23 @@ namespace Modules.Tags.ViewModels
         #endregion
 
         private void OnReloadTagsEvent(object parameter)
+        {
+            RefreshTags();
+        }
+
+        private void OnReloadArtistsEvent(object parameter)
+        {
+            //tags might be attached/detached
+            RefreshTags();
+        }
+
+        private void OnReloadAlbumsEvent(object parameter)
+        {
+            //tags might be attached/detached
+            RefreshTags();
+        }
+
+        private void RefreshTags()
         {
             LoadTags();
             FilterTaggedObjects();
