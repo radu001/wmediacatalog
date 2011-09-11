@@ -65,6 +65,7 @@
     <Compile Include="Model\ImportDataModel.cs" />
     <Compile Include="Model\TagsProvider.cs" />
     <Compile Include="Model\Tree\TreeItem.cs" />
+    <Compile Include="Services\Utils\CueSharp.cs" />
     <Compile Include="Services\Utils\FileSystem\Dir.cs" />
     <Compile Include="Services\Utils\FileSystem\FsFile.cs" />
     <Compile Include="Services\Utils\FileSystem\FileByExtensionSelector.cs" />
