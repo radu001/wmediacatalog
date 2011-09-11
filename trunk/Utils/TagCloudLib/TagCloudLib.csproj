@@ -51,6 +51,7 @@
     <Compile Include="TagsCloud.xaml.cs">
       <DependentUpon>TagsCloud.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TagTextConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="TagsCloud.xaml">
