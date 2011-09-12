@@ -2,9 +2,9 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.0.4
--- Dumped by pg_dump version 9.0.4
--- Started on 2011-09-09 19:54:48
+-- Dumped from database version 9.0.3
+-- Dumped by pg_dump version 9.0.3
+-- Started on 2011-09-12 22:21:34
 
 SET statement_timeout = 0;
 SET client_encoding = 'UTF8';
@@ -14,7 +14,7 @@ SET client_min_messages = warning;
 SET escape_string_warning = off;
 
 --
--- TOC entry 359 (class 2612 OID 11574)
+-- TOC entry 358 (class 2612 OID 11574)
 -- Name: plpgsql; Type: PROCEDURAL LANGUAGE; Schema: -; Owner: -
 --
 
@@ -24,8 +24,8 @@ CREATE OR REPLACE PROCEDURAL LANGUAGE plpgsql;
 SET search_path = public, pg_catalog;
 
 --
--- TOC entry 357 (class 1247 OID 16812)
--- Dependencies: 6 1575
+-- TOC entry 308 (class 1247 OID 21724)
+-- Dependencies: 5 1550
 -- Name: tagged_entity; Type: TYPE; Schema: public; Owner: -
 --
 
@@ -37,8 +37,8 @@ CREATE TYPE tagged_entity AS (
 
 
 --
--- TOC entry 18 (class 1255 OID 16599)
--- Dependencies: 6 359
+-- TOC entry 18 (class 1255 OID 21725)
+-- Dependencies: 5 358
 -- Name: find_missing_genres(xml); Type: FUNCTION; Schema: public; Owner: -
 --
 
@@ -74,58 +74,47 @@ CREATE FUNCTION find_missing_genres(genresxml xml) RETURNS xml
 
 
 --
--- TOC entry 19 (class 1255 OID 16822)
--- Dependencies: 357 359 6
--- Name: get_tagged_entities(character varying, integer, integer); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 20 (class 1255 OID 21933)
+-- Dependencies: 308 358 5
+-- Name: get_tagged_entities(character varying, character varying, integer, integer, character varying); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION get_tagged_entities(tagids character varying, ioffset integer, ilimit integer) RETURNS SETOF tagged_entity
+CREATE FUNCTION get_tagged_entities(tagids character varying, entitytypes character varying, ioffset integer, ilimit integer, entityname character varying) RETURNS SETOF tagged_entity
     LANGUAGE plpgsql
     AS $$
 declare
   cdelim text;
   trimmedIdsStr text;
+  trimmedEntityTypesStr text;
   idList int[];
+  entityTypesList int[];
+  totalCount int;
 begin
   cdelim = ',';
   trimmedIdsStr = btrim(tagIDs, ',');
   idList = string_to_array(trimmedIdsStr, cdelim)::int[];
+  trimmedEntityTypesStr = btrim(entityTypes, ',');
+  entityTypesList = string_to_array(trimmedEntityTypesStr, cdelim)::int[];
+  entityName = '%' || entityName || '%';
 
-  return query select distinct on(entity_id,entity_type) entity_id, entity_name, entity_type from tagged_objects
-    where tag_id in (select unnest(idList))
-    offset ioffset limit ilimit;
+  totalCount = (select count(1) from 
+	(select distinct on(entity_id,entity_type) * from tagged_objects where tag_id in (select unnest(idList))
+		and entity_type in (select unnest(entityTypesList)) and entity_name ilike entityName) t);
+
+  --return first stub row needed for pagination (stores total items count in entity_id attribute)
+  return query 
+    select totalCount as entity_id, '' as entity_name, -1 as entity_type
+    union all
+    select distinct on(entity_id,entity_type) entity_id, entity_name, entity_type from tagged_objects
+      where tag_id in (select unnest(idList)) and entity_type in (select unnest(entityTypesList)) and entity_name ilike entityName
+      offset ioffset limit ilimit + 1;
 end;
 $$;
 
 
 --
--- TOC entry 20 (class 1255 OID 16824)
--- Dependencies: 6 359
--- Name: get_tagged_entities_count(character varying); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION get_tagged_entities_count(tagids character varying) RETURNS integer
-    LANGUAGE plpgsql
-    AS $$
-declare
-  cdelim text;
-  trimmedIdsStr text;
-  idList int[];
-  result integer;
-begin
-  cdelim = ',';
-  trimmedIdsStr = btrim(tagIDs, ',');
-  idList = string_to_array(trimmedIdsStr, cdelim)::int[];
-
-  --select count(1) from (select distinct on(entity_id,entity_type) * from tagged_objects where tag_id in (select unnest(ARRAY[1,2]))) t
-  return (select count(1) from (select distinct on(entity_id,entity_type) * from tagged_objects where tag_id in (select unnest(idList))) t);
-end;
-$$;
-
-
---
--- TOC entry 21 (class 1255 OID 16600)
--- Dependencies: 359 6
+-- TOC entry 19 (class 1255 OID 21728)
+-- Dependencies: 5 358
 -- Name: import_media(character varying); Type: FUNCTION; Schema: public; Owner: -
 --
 
@@ -241,8 +230,8 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- TOC entry 1551 (class 1259 OID 16601)
--- Dependencies: 1854 6
+-- TOC entry 1551 (class 1259 OID 21729)
+-- Dependencies: 1853 5
 -- Name: albums; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -262,8 +251,8 @@ CREATE TABLE albums (
 
 
 --
--- TOC entry 1552 (class 1259 OID 16608)
--- Dependencies: 6
+-- TOC entry 1552 (class 1259 OID 21736)
+-- Dependencies: 5
 -- Name: albums_genres; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -274,8 +263,8 @@ CREATE TABLE albums_genres (
 
 
 --
--- TOC entry 1553 (class 1259 OID 16611)
--- Dependencies: 6 1551
+-- TOC entry 1553 (class 1259 OID 21739)
+-- Dependencies: 5 1551
 -- Name: albums_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -288,7 +277,7 @@ CREATE SEQUENCE albums_id_seq
 
 
 --
--- TOC entry 1915 (class 0 OID 0)
+-- TOC entry 1914 (class 0 OID 0)
 -- Dependencies: 1553
 -- Name: albums_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
@@ -297,8 +286,8 @@ ALTER SEQUENCE albums_id_seq OWNED BY albums.id;
 
 
 --
--- TOC entry 1554 (class 1259 OID 16613)
--- Dependencies: 1856 6
+-- TOC entry 1554 (class 1259 OID 21741)
+-- Dependencies: 1855 5
 -- Name: artists; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -312,8 +301,8 @@ CREATE TABLE artists (
 
 
 --
--- TOC entry 1555 (class 1259 OID 16620)
--- Dependencies: 6
+-- TOC entry 1555 (class 1259 OID 21748)
+-- Dependencies: 5
 -- Name: artists_albums; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -324,8 +313,8 @@ CREATE TABLE artists_albums (
 
 
 --
--- TOC entry 1556 (class 1259 OID 16623)
--- Dependencies: 6 1554
+-- TOC entry 1556 (class 1259 OID 21751)
+-- Dependencies: 5 1554
 -- Name: artists_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -338,7 +327,7 @@ CREATE SEQUENCE artists_id_seq
 
 
 --
--- TOC entry 1916 (class 0 OID 0)
+-- TOC entry 1915 (class 0 OID 0)
 -- Dependencies: 1556
 -- Name: artists_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
@@ -347,8 +336,8 @@ ALTER SEQUENCE artists_id_seq OWNED BY artists.id;
 
 
 --
--- TOC entry 1557 (class 1259 OID 16625)
--- Dependencies: 6
+-- TOC entry 1557 (class 1259 OID 21753)
+-- Dependencies: 5
 -- Name: genres; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -362,8 +351,8 @@ CREATE TABLE genres (
 
 
 --
--- TOC entry 1558 (class 1259 OID 16631)
--- Dependencies: 6 1557
+-- TOC entry 1558 (class 1259 OID 21759)
+-- Dependencies: 5 1557
 -- Name: genres_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -376,7 +365,7 @@ CREATE SEQUENCE genres_id_seq
 
 
 --
--- TOC entry 1917 (class 0 OID 0)
+-- TOC entry 1916 (class 0 OID 0)
 -- Dependencies: 1558
 -- Name: genres_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
@@ -385,8 +374,8 @@ ALTER SEQUENCE genres_id_seq OWNED BY genres.id;
 
 
 --
--- TOC entry 1559 (class 1259 OID 16633)
--- Dependencies: 6
+-- TOC entry 1559 (class 1259 OID 21761)
+-- Dependencies: 5
 -- Name: listens; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -404,8 +393,8 @@ CREATE TABLE listens (
 
 
 --
--- TOC entry 1560 (class 1259 OID 16639)
--- Dependencies: 1559 6
+-- TOC entry 1560 (class 1259 OID 21767)
+-- Dependencies: 1559 5
 -- Name: listens_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -418,7 +407,7 @@ CREATE SEQUENCE listens_id_seq
 
 
 --
--- TOC entry 1918 (class 0 OID 0)
+-- TOC entry 1917 (class 0 OID 0)
 -- Dependencies: 1560
 -- Name: listens_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
@@ -427,8 +416,8 @@ ALTER SEQUENCE listens_id_seq OWNED BY listens.id;
 
 
 --
--- TOC entry 1561 (class 1259 OID 16641)
--- Dependencies: 6
+-- TOC entry 1561 (class 1259 OID 21769)
+-- Dependencies: 5
 -- Name: moods; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -442,8 +431,8 @@ CREATE TABLE moods (
 
 
 --
--- TOC entry 1562 (class 1259 OID 16647)
--- Dependencies: 1561 6
+-- TOC entry 1562 (class 1259 OID 21775)
+-- Dependencies: 1561 5
 -- Name: moods_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -456,7 +445,7 @@ CREATE SEQUENCE moods_id_seq
 
 
 --
--- TOC entry 1919 (class 0 OID 0)
+-- TOC entry 1918 (class 0 OID 0)
 -- Dependencies: 1562
 -- Name: moods_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
@@ -465,8 +454,8 @@ ALTER SEQUENCE moods_id_seq OWNED BY moods.id;
 
 
 --
--- TOC entry 1563 (class 1259 OID 16649)
--- Dependencies: 6
+-- TOC entry 1563 (class 1259 OID 21777)
+-- Dependencies: 5
 -- Name: places; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -480,8 +469,8 @@ CREATE TABLE places (
 
 
 --
--- TOC entry 1564 (class 1259 OID 16655)
--- Dependencies: 1563 6
+-- TOC entry 1564 (class 1259 OID 21783)
+-- Dependencies: 5 1563
 -- Name: places_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -494,7 +483,7 @@ CREATE SEQUENCE places_id_seq
 
 
 --
--- TOC entry 1920 (class 0 OID 0)
+-- TOC entry 1919 (class 0 OID 0)
 -- Dependencies: 1564
 -- Name: places_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
@@ -503,8 +492,8 @@ ALTER SEQUENCE places_id_seq OWNED BY places.id;
 
 
 --
--- TOC entry 1565 (class 1259 OID 16657)
--- Dependencies: 6
+-- TOC entry 1565 (class 1259 OID 21785)
+-- Dependencies: 5
 -- Name: tags; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -521,8 +510,8 @@ CREATE TABLE tags (
 
 
 --
--- TOC entry 1566 (class 1259 OID 16663)
--- Dependencies: 6
+-- TOC entry 1566 (class 1259 OID 21791)
+-- Dependencies: 5
 -- Name: tags_albums; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -533,8 +522,8 @@ CREATE TABLE tags_albums (
 
 
 --
--- TOC entry 1567 (class 1259 OID 16666)
--- Dependencies: 6
+-- TOC entry 1567 (class 1259 OID 21794)
+-- Dependencies: 5
 -- Name: tags_artists; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -545,8 +534,8 @@ CREATE TABLE tags_artists (
 
 
 --
--- TOC entry 1574 (class 1259 OID 16806)
--- Dependencies: 1662 6
+-- TOC entry 1568 (class 1259 OID 21797)
+-- Dependencies: 1661 5
 -- Name: tagged_objects; Type: VIEW; Schema: public; Owner: -
 --
 
@@ -555,8 +544,8 @@ CREATE VIEW tagged_objects AS
 
 
 --
--- TOC entry 1568 (class 1259 OID 16673)
--- Dependencies: 6 1565
+-- TOC entry 1569 (class 1259 OID 21801)
+-- Dependencies: 5 1565
 -- Name: tags_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -569,8 +558,8 @@ CREATE SEQUENCE tags_id_seq
 
 
 --
--- TOC entry 1921 (class 0 OID 0)
--- Dependencies: 1568
+-- TOC entry 1920 (class 0 OID 0)
+-- Dependencies: 1569
 -- Name: tags_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
@@ -578,8 +567,8 @@ ALTER SEQUENCE tags_id_seq OWNED BY tags.id;
 
 
 --
--- TOC entry 1569 (class 1259 OID 16675)
--- Dependencies: 6
+-- TOC entry 1570 (class 1259 OID 21803)
+-- Dependencies: 5
 -- Name: tracks; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -593,8 +582,8 @@ CREATE TABLE tracks (
 
 
 --
--- TOC entry 1570 (class 1259 OID 16681)
--- Dependencies: 6
+-- TOC entry 1571 (class 1259 OID 21809)
+-- Dependencies: 5
 -- Name: user_logins; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -606,8 +595,8 @@ CREATE TABLE user_logins (
 
 
 --
--- TOC entry 1571 (class 1259 OID 16684)
--- Dependencies: 6 1570
+-- TOC entry 1572 (class 1259 OID 21812)
+-- Dependencies: 1571 5
 -- Name: user_logins_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -620,8 +609,8 @@ CREATE SEQUENCE user_logins_id_seq
 
 
 --
--- TOC entry 1922 (class 0 OID 0)
--- Dependencies: 1571
+-- TOC entry 1921 (class 0 OID 0)
+-- Dependencies: 1572
 -- Name: user_logins_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
@@ -629,8 +618,8 @@ ALTER SEQUENCE user_logins_id_seq OWNED BY user_logins.id;
 
 
 --
--- TOC entry 1572 (class 1259 OID 16686)
--- Dependencies: 6
+-- TOC entry 1573 (class 1259 OID 21814)
+-- Dependencies: 5
 -- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -643,8 +632,8 @@ CREATE TABLE users (
 
 
 --
--- TOC entry 1573 (class 1259 OID 16692)
--- Dependencies: 6 1572
+-- TOC entry 1574 (class 1259 OID 21820)
+-- Dependencies: 5 1573
 -- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -657,8 +646,8 @@ CREATE SEQUENCE users_id_seq
 
 
 --
--- TOC entry 1923 (class 0 OID 0)
--- Dependencies: 1573
+-- TOC entry 1922 (class 0 OID 0)
+-- Dependencies: 1574
 -- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
@@ -666,7 +655,7 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 
 
 --
--- TOC entry 1855 (class 2604 OID 16694)
+-- TOC entry 1854 (class 2604 OID 21822)
 -- Dependencies: 1553 1551
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
@@ -675,7 +664,7 @@ ALTER TABLE albums ALTER COLUMN id SET DEFAULT nextval('albums_id_seq'::regclass
 
 
 --
--- TOC entry 1857 (class 2604 OID 16695)
+-- TOC entry 1856 (class 2604 OID 21823)
 -- Dependencies: 1556 1554
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
@@ -684,7 +673,7 @@ ALTER TABLE artists ALTER COLUMN id SET DEFAULT nextval('artists_id_seq'::regcla
 
 
 --
--- TOC entry 1858 (class 2604 OID 16696)
+-- TOC entry 1857 (class 2604 OID 21824)
 -- Dependencies: 1558 1557
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
@@ -693,7 +682,7 @@ ALTER TABLE genres ALTER COLUMN id SET DEFAULT nextval('genres_id_seq'::regclass
 
 
 --
--- TOC entry 1859 (class 2604 OID 16697)
+-- TOC entry 1858 (class 2604 OID 21825)
 -- Dependencies: 1560 1559
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
@@ -702,7 +691,7 @@ ALTER TABLE listens ALTER COLUMN id SET DEFAULT nextval('listens_id_seq'::regcla
 
 
 --
--- TOC entry 1860 (class 2604 OID 16698)
+-- TOC entry 1859 (class 2604 OID 21826)
 -- Dependencies: 1562 1561
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
@@ -711,7 +700,7 @@ ALTER TABLE moods ALTER COLUMN id SET DEFAULT nextval('moods_id_seq'::regclass);
 
 
 --
--- TOC entry 1861 (class 2604 OID 16699)
+-- TOC entry 1860 (class 2604 OID 21827)
 -- Dependencies: 1564 1563
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
@@ -720,8 +709,8 @@ ALTER TABLE places ALTER COLUMN id SET DEFAULT nextval('places_id_seq'::regclass
 
 
 --
--- TOC entry 1862 (class 2604 OID 16700)
--- Dependencies: 1568 1565
+-- TOC entry 1861 (class 2604 OID 21828)
+-- Dependencies: 1569 1565
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -729,8 +718,8 @@ ALTER TABLE tags ALTER COLUMN id SET DEFAULT nextval('tags_id_seq'::regclass);
 
 
 --
--- TOC entry 1863 (class 2604 OID 16701)
--- Dependencies: 1571 1570
+-- TOC entry 1862 (class 2604 OID 21829)
+-- Dependencies: 1572 1571
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -738,8 +727,8 @@ ALTER TABLE user_logins ALTER COLUMN id SET DEFAULT nextval('user_logins_id_seq'
 
 
 --
--- TOC entry 1864 (class 2604 OID 16702)
--- Dependencies: 1573 1572
+-- TOC entry 1863 (class 2604 OID 21830)
+-- Dependencies: 1574 1573
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -747,7 +736,7 @@ ALTER TABLE users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
 
 
 --
--- TOC entry 1866 (class 2606 OID 16704)
+-- TOC entry 1865 (class 2606 OID 21832)
 -- Dependencies: 1551 1551
 -- Name: pk_albums; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
@@ -757,7 +746,7 @@ ALTER TABLE ONLY albums
 
 
 --
--- TOC entry 1868 (class 2606 OID 16706)
+-- TOC entry 1867 (class 2606 OID 21834)
 -- Dependencies: 1554 1554
 -- Name: pk_artists; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
@@ -767,7 +756,7 @@ ALTER TABLE ONLY artists
 
 
 --
--- TOC entry 1872 (class 2606 OID 16708)
+-- TOC entry 1871 (class 2606 OID 21836)
 -- Dependencies: 1557 1557
 -- Name: pk_genres; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
@@ -777,7 +766,7 @@ ALTER TABLE ONLY genres
 
 
 --
--- TOC entry 1877 (class 2606 OID 16710)
+-- TOC entry 1876 (class 2606 OID 21838)
 -- Dependencies: 1559 1559
 -- Name: pk_listens; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
@@ -787,7 +776,7 @@ ALTER TABLE ONLY listens
 
 
 --
--- TOC entry 1879 (class 2606 OID 16712)
+-- TOC entry 1878 (class 2606 OID 21840)
 -- Dependencies: 1561 1561
 -- Name: pk_moods; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
@@ -797,7 +786,7 @@ ALTER TABLE ONLY moods
 
 
 --
--- TOC entry 1883 (class 2606 OID 16714)
+-- TOC entry 1882 (class 2606 OID 21842)
 -- Dependencies: 1563 1563
 -- Name: pk_places; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
@@ -807,7 +796,7 @@ ALTER TABLE ONLY places
 
 
 --
--- TOC entry 1887 (class 2606 OID 16716)
+-- TOC entry 1886 (class 2606 OID 21844)
 -- Dependencies: 1565 1565
 -- Name: pk_tags; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
@@ -817,8 +806,8 @@ ALTER TABLE ONLY tags
 
 
 --
--- TOC entry 1891 (class 2606 OID 16718)
--- Dependencies: 1569 1569
+-- TOC entry 1890 (class 2606 OID 21846)
+-- Dependencies: 1570 1570
 -- Name: pk_tracks; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -827,8 +816,8 @@ ALTER TABLE ONLY tracks
 
 
 --
--- TOC entry 1893 (class 2606 OID 16720)
--- Dependencies: 1570 1570
+-- TOC entry 1892 (class 2606 OID 21848)
+-- Dependencies: 1571 1571
 -- Name: pk_user_logins; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -837,8 +826,8 @@ ALTER TABLE ONLY user_logins
 
 
 --
--- TOC entry 1895 (class 2606 OID 16722)
--- Dependencies: 1572 1572
+-- TOC entry 1894 (class 2606 OID 21850)
+-- Dependencies: 1573 1573
 -- Name: pk_users; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -847,7 +836,7 @@ ALTER TABLE ONLY users
 
 
 --
--- TOC entry 1870 (class 2606 OID 16724)
+-- TOC entry 1869 (class 2606 OID 21852)
 -- Dependencies: 1554 1554
 -- Name: uq_artists(name); Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
@@ -857,7 +846,7 @@ ALTER TABLE ONLY artists
 
 
 --
--- TOC entry 1874 (class 2606 OID 16726)
+-- TOC entry 1873 (class 2606 OID 21854)
 -- Dependencies: 1557 1557
 -- Name: uq_genres(name); Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
@@ -867,7 +856,7 @@ ALTER TABLE ONLY genres
 
 
 --
--- TOC entry 1881 (class 2606 OID 16728)
+-- TOC entry 1880 (class 2606 OID 21856)
 -- Dependencies: 1561 1561
 -- Name: uq_moods(name); Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
@@ -877,7 +866,7 @@ ALTER TABLE ONLY moods
 
 
 --
--- TOC entry 1885 (class 2606 OID 16730)
+-- TOC entry 1884 (class 2606 OID 21858)
 -- Dependencies: 1563 1563
 -- Name: uq_places(name); Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
@@ -887,7 +876,7 @@ ALTER TABLE ONLY places
 
 
 --
--- TOC entry 1889 (class 2606 OID 16732)
+-- TOC entry 1888 (class 2606 OID 21860)
 -- Dependencies: 1565 1565
 -- Name: uq_tags(name); Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
@@ -897,8 +886,8 @@ ALTER TABLE ONLY tags
 
 
 --
--- TOC entry 1897 (class 2606 OID 16734)
--- Dependencies: 1572 1572
+-- TOC entry 1896 (class 2606 OID 21862)
+-- Dependencies: 1573 1573
 -- Name: uq_users(user_name); Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -907,7 +896,7 @@ ALTER TABLE ONLY users
 
 
 --
--- TOC entry 1875 (class 1259 OID 16735)
+-- TOC entry 1874 (class 1259 OID 21863)
 -- Dependencies: 1559
 -- Name: fki_listens_places; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
@@ -916,8 +905,8 @@ CREATE INDEX fki_listens_places ON listens USING btree (place_id);
 
 
 --
--- TOC entry 1898 (class 2606 OID 16736)
--- Dependencies: 1552 1865 1551
+-- TOC entry 1897 (class 2606 OID 21864)
+-- Dependencies: 1551 1552 1864
 -- Name: albums_genres_to_albums; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -926,8 +915,8 @@ ALTER TABLE ONLY albums_genres
 
 
 --
--- TOC entry 1899 (class 2606 OID 16741)
--- Dependencies: 1871 1552 1557
+-- TOC entry 1898 (class 2606 OID 21869)
+-- Dependencies: 1557 1552 1870
 -- Name: albums_genres_to_genres; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -936,8 +925,8 @@ ALTER TABLE ONLY albums_genres
 
 
 --
--- TOC entry 1900 (class 2606 OID 16746)
--- Dependencies: 1555 1551 1865
+-- TOC entry 1899 (class 2606 OID 21874)
+-- Dependencies: 1555 1864 1551
 -- Name: fk_artists_albums_to_albums; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -946,8 +935,8 @@ ALTER TABLE ONLY artists_albums
 
 
 --
--- TOC entry 1901 (class 2606 OID 16751)
--- Dependencies: 1555 1867 1554
+-- TOC entry 1900 (class 2606 OID 21879)
+-- Dependencies: 1866 1555 1554
 -- Name: fk_artists_albums_to_artists; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -956,8 +945,8 @@ ALTER TABLE ONLY artists_albums
 
 
 --
--- TOC entry 1902 (class 2606 OID 16756)
--- Dependencies: 1865 1551 1559
+-- TOC entry 1901 (class 2606 OID 21884)
+-- Dependencies: 1551 1559 1864
 -- Name: fk_listens_albums; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -966,8 +955,8 @@ ALTER TABLE ONLY listens
 
 
 --
--- TOC entry 1903 (class 2606 OID 16761)
--- Dependencies: 1559 1878 1561
+-- TOC entry 1902 (class 2606 OID 21889)
+-- Dependencies: 1877 1559 1561
 -- Name: fk_listens_moods; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -976,8 +965,8 @@ ALTER TABLE ONLY listens
 
 
 --
--- TOC entry 1904 (class 2606 OID 16766)
--- Dependencies: 1882 1559 1563
+-- TOC entry 1903 (class 2606 OID 21894)
+-- Dependencies: 1559 1881 1563
 -- Name: fk_listens_places; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -986,8 +975,8 @@ ALTER TABLE ONLY listens
 
 
 --
--- TOC entry 1905 (class 2606 OID 16771)
--- Dependencies: 1865 1566 1551
+-- TOC entry 1904 (class 2606 OID 21899)
+-- Dependencies: 1864 1566 1551
 -- Name: fk_tags_albums_to_albums; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -996,8 +985,8 @@ ALTER TABLE ONLY tags_albums
 
 
 --
--- TOC entry 1906 (class 2606 OID 16776)
--- Dependencies: 1565 1886 1566
+-- TOC entry 1905 (class 2606 OID 21904)
+-- Dependencies: 1565 1566 1885
 -- Name: fk_tags_albums_to_tags; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1006,8 +995,8 @@ ALTER TABLE ONLY tags_albums
 
 
 --
--- TOC entry 1907 (class 2606 OID 16781)
--- Dependencies: 1867 1567 1554
+-- TOC entry 1906 (class 2606 OID 21909)
+-- Dependencies: 1866 1567 1554
 -- Name: fk_tags_artists_to_artists; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1016,8 +1005,8 @@ ALTER TABLE ONLY tags_artists
 
 
 --
--- TOC entry 1908 (class 2606 OID 16786)
--- Dependencies: 1565 1886 1567
+-- TOC entry 1907 (class 2606 OID 21914)
+-- Dependencies: 1567 1885 1565
 -- Name: fk_tags_artists_to_tags; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1026,8 +1015,8 @@ ALTER TABLE ONLY tags_artists
 
 
 --
--- TOC entry 1909 (class 2606 OID 16791)
--- Dependencies: 1551 1569 1865
+-- TOC entry 1908 (class 2606 OID 21919)
+-- Dependencies: 1864 1570 1551
 -- Name: fk_tracks_albums; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1036,8 +1025,8 @@ ALTER TABLE ONLY tracks
 
 
 --
--- TOC entry 1910 (class 2606 OID 16796)
--- Dependencies: 1570 1572 1894
+-- TOC entry 1909 (class 2606 OID 21924)
+-- Dependencies: 1573 1571 1893
 -- Name: fk_user_logins_users; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1045,7 +1034,7 @@ ALTER TABLE ONLY user_logins
     ADD CONSTRAINT fk_user_logins_users FOREIGN KEY (user_id) REFERENCES users(id);
 
 
--- Completed on 2011-09-09 19:54:49
+-- Completed on 2011-09-12 22:21:35
 
 --
 -- PostgreSQL database dump complete

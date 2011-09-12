@@ -186,7 +186,7 @@ namespace Modules.Tags.ViewModels
                 FilterValue = "",
                 FirstResult = 0,
                 MaxResults = 25,
-                DistinctByEntityID = true
+                EntityName = ""
             };
 
             NotifyPropertyChanged(() => LoadOptions);
