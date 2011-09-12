@@ -9,8 +9,10 @@
   </sql-query>
   <sql-query name="GetTaggedObjects">
     <query-param name="tagIDs" type="string" />
+    <query-param name="entityTypes" type="string" />
     <query-param name="ioffset" type="integer" />
     <query-param name="ilimit" type="integer" />
-    select * from get_tagged_entities(:tagIDs, :ioffset, :ilimit);
+    <query-param name="entityName" type="string"/>
+    select * from get_tagged_entities(:tagIDs, :entityTypes, :ioffset, :ilimit, :entityName);
   </sql-query>
 </hibernate-mapping>
