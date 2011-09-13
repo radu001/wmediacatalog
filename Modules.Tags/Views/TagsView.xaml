@@ -72,12 +72,28 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <ListView ItemsSource="{Binding TaggedObjects}" Margin="16"
+            <ListView ItemsSource="{Binding TaggedObjects}" Margin="16,16,16,4"
                       ItemTemplate="{StaticResource TaggedObjectTemplate}"/>
 
             <commonControls:DataPager Grid.Row="1" ItemsPerPage="{Binding LoadOptions.MaxResults}" VisiblePagesCount="3" TotalItems="{Binding TaggedObjectsCount}"
                                        pagerCommands:PageChanged.Command="{Binding PageChangedCommand}" Margin="16,0,16,16"/>
+
+            <Grid Grid.Row="2" Margin="16,4,16,16">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <DockPanel Grid.Row="0" LastChildFill="True" >
+                    <TextBlock Text="Filter: " VerticalAlignment="Center" FontWeight="Bold"/>
+                    <TextBox Text="{Binding EntityNameFilter, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                </DockPanel>
+                
+                <CheckBox Grid.Row="1" Content="Show albums" IsChecked="{Binding ShowAlbumsFilter,Mode=TwoWay}" Margin="0,16,0,4"/>
+                <CheckBox Grid.Row="2" Content="Show artists" IsChecked="{Binding ShowArtistsFilter,Mode=TwoWay}" Margin="0,4,0,4"/>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>

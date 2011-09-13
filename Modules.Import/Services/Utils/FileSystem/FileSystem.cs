@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Common;
 
 namespace Modules.Import.Services.Utils.FileSystem
 {
@@ -44,11 +45,18 @@ namespace Modules.Import.Services.Utils.FileSystem
             {
                 DirectoryInfo top = stack.Pop();
 
-                var subDirs = top.GetDirectories();
-                foreach (var sd in subDirs)
-                    stack.Push(sd);
+                try
+                {
+                    var subDirs = top.GetDirectories();
+                    foreach (var sd in subDirs)
+                        stack.Push(sd);
 
-                result += selector.SelectFiles(top.FullName).Count();
+                    result += selector.SelectFiles(top.FullName).Count();
+                }
+                catch (Exception ex)
+                {
+                    Logger.Write(ex);
+                }
             }
 
             return result;

@@ -22,7 +22,7 @@ namespace Modules.Import
         {
             container.RegisterType<IDataService, DataService>();
             container.RegisterType<ITagsAccumulator, TagsAccumulator>();
-            container.RegisterType<IScanner, VorbisCommentsScanner>();
+            container.RegisterType<IScanner, CompositeScanner>();
             container.RegisterType<IFileSystem, FileSystem>();
             container.RegisterType<IFileSelector, FileByExtensionSelector>();
 

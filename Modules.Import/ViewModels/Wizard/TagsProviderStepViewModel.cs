@@ -126,11 +126,18 @@ namespace Modules.Import.ViewModels.Wizard
             {
                 new TagsProvider()
                 {
-                    Name = "FLAC"
+                    Name = "FLAC",
+                    FileMasks = new string[] { "*.flac" }
                 },
                 new TagsProvider()
                 {
-                    Name = "MP3"
+                    Name = "MP3",
+                    FileMasks = new string[] { "*.mp3" }
+                },
+                new TagsProvider()
+                {
+                    Name = "CUE",
+                    FileMasks = new string[] { "*.cue" }
                 }
             };
         }
@@ -171,6 +178,9 @@ namespace Modules.Import.ViewModels.Wizard
         {
             if (SelectedProvider != null && !String.IsNullOrWhiteSpace(ScanPath))
             {
+                var data = GetSharedData();
+                data.TagsProvider = SelectedProvider;
+
                 CanContinue = true;
             }
             else

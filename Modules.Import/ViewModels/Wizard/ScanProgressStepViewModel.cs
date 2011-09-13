@@ -196,10 +196,12 @@ namespace Modules.Import.ViewModels.Wizard
 
         private ScanSettings CreateScanSettings()
         {
+            var data = GetSharedData();
+
             return new ScanSettings()
             {
                 ScanPath = ScanPath,
-                FileMasks = new string[] { "*.flac" }, // todo from provider
+                FileMasks = data.TagsProvider.FileMasks,
                 BeginFileScan = OnBeginFileScan,
                 BeginDirectoryScan = OnBeginDirectoryScan,
                 BeforeScan = OnBeforeScan

@@ -16,6 +16,9 @@ namespace Modules.Tags.ViewModels
         ITag SelectedTagsSelectedItem { get; set; }
         ILoadOptions LoadOptions { get; }
         int TaggedObjectsCount { get; }
+        string EntityNameFilter { get; set; }
+        bool ShowAlbumsFilter { get; set; }
+        bool ShowArtistsFilter { get; set; }
 
         DelegateCommand<object> ViewLoadedCommand { get; }
         DelegateCommand<object> SelectedTagsDropCommand { get; }
