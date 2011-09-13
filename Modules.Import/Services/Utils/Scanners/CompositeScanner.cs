@@ -6,7 +6,7 @@ using Modules.Import.Model;
 using System.Text.RegularExpressions;
 using System.IO;
 
-namespace Modules.Import.Services.Utils
+namespace Modules.Import.Services.Utils.Scanners
 {
     public class CompositeScanner : IScanner
     {
@@ -25,7 +25,7 @@ namespace Modules.Import.Services.Utils
                 return scanner.GetTags(filePath);
             }
 
-            return null;
+            return new FileTagCollection();
         }
 
         private void InitScannersChain()

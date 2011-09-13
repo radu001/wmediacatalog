@@ -5,6 +5,7 @@ using Modules.Import.Controllers;
 using Modules.Import.Services;
 using Modules.Import.Services.Utils;
 using Modules.Import.Services.Utils.FileSystem;
+using Modules.Import.Services.Utils.Scanners;
 
 namespace Modules.Import
 {

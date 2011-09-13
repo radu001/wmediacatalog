@@ -2,7 +2,7 @@
 using System;
 using Modules.Import.Model;
 using SharpFlac;
-namespace Modules.Import.Services.Utils
+namespace Modules.Import.Services.Utils.Scanners
 {
     public class VorbisCommentsScanner : IScanner
     {

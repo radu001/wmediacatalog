@@ -25,7 +25,18 @@ namespace Modules.Import.Services.Utils.FileSystem
 
             var dirInfo = new DirectoryInfo(dir.FullName);
 
-            return dirInfo.GetDirectories().Select<DirectoryInfo, Dir>(d => new Dir(d.FullName));
+            IEnumerable<Dir> result = null;
+
+            try
+            {
+                result = dirInfo.GetDirectories().Select<DirectoryInfo, Dir>(d => new Dir(d.FullName));
+            }
+            catch (Exception ex)
+            {
+                result = new Dir[] { };
+            }
+
+            return result;
         }
 
         public int CountFilesRecursively(Dir dir, IFileSelector selector)
