@@ -43,6 +43,9 @@ namespace Modules.Tags.ViewModels
             MoveTagDownCommand = new DelegateCommand<object>(OnMoveTagDownCommand);
             MoveTagUpCommand = new DelegateCommand<object>(OnMoveTagUpCommand);
             ClearSelectedTagsCommand = new DelegateCommand<object>(OnClearSelectedTagsCommand);
+
+            ShowArtistsFilter = true;
+            ShowAlbumsFilter = true;
         }
 
         #region ITagsViewModel Members
@@ -128,6 +131,60 @@ namespace Modules.Tags.ViewModels
             }
         }
 
+        public string EntityNameFilter
+        {
+            get
+            {
+                return entityNameFilter;
+            }
+            set
+            {
+                if (value != entityNameFilter)
+                {
+                    entityNameFilter = value;
+                    NotifyPropertyChanged(() => EntityNameFilter);
+
+                    FilterTaggedObjects();
+                }
+            }
+        }
+
+        public bool ShowAlbumsFilter
+        {
+            get
+            {
+                return showAlbumsFilter;
+            }
+            set
+            {
+                if (value != showAlbumsFilter)
+                {
+                    showAlbumsFilter = value;
+                    NotifyPropertyChanged(() => ShowAlbumsFilter);
+
+                    FilterTaggedObjects();
+                }
+            }
+        }
+
+        public bool ShowArtistsFilter
+        {
+            get
+            {
+                return showArtistsFilter;
+            }
+            set
+            {
+                if (value != showArtistsFilter)
+                {
+                    showArtistsFilter = value;
+                    NotifyPropertyChanged(() => ShowArtistsFilter);
+
+                    FilterTaggedObjects();
+                }
+            }
+        }
+
         public DelegateCommand<object> ViewLoadedCommand { get; private set; }
 
         public DelegateCommand<object> SelectedTagsDropCommand { get; private set; }
@@ -174,6 +231,9 @@ namespace Modules.Tags.ViewModels
 
         private void LoadTags()
         {
+            if (!InitialDataLoaded)
+                return;
+
             Tags = new ObservableCollection<ITag>(dataService.GetTagsWithAssociatedEntitiesCount());
             SelectedTags.Clear();
         }
@@ -256,6 +316,13 @@ namespace Modules.Tags.ViewModels
 
         private void FilterTaggedObjects()
         {
+            if (!InitialDataLoaded)
+                return;
+
+            ((TagLoadOptions)LoadOptions).EntityName = EntityNameFilter;
+            ((TagLoadOptions)LoadOptions).ExcludeAlbums = !ShowAlbumsFilter;
+            ((TagLoadOptions)LoadOptions).ExcludeArtists = !ShowArtistsFilter;
+
             if (SelectedTags == null || (SelectedTags != null && SelectedTags.Count == 0))
             {
                 TaggedObjects = new PagedList<TaggedObject>();
@@ -423,6 +490,9 @@ namespace Modules.Tags.ViewModels
         private ITag allTagsSelectedItem;
         private ITag selectedTagsSelectedItem;
         private int taggedObjectsCount;
+        private string entityNameFilter;
+        private bool showAlbumsFilter;
+        private bool showArtistsFilter;
 
         #endregion
     }

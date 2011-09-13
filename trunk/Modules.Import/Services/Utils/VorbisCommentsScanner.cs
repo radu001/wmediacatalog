@@ -6,12 +6,8 @@ namespace Modules.Import.Services.Utils
 {
     public class VorbisCommentsScanner : IScanner
     {
-        public VorbisCommentsScanner(ScanSettings settings)
+        public VorbisCommentsScanner()
         {
-            if (settings == null)
-                throw new NullReferenceException("Illegal null-reference settings");
-
-            this.settings = settings;
             flacParser = new FlacParser();
         }
 
@@ -40,7 +36,6 @@ namespace Modules.Import.Services.Utils
 
         #region Private fields
 
-        private ScanSettings settings;
         private FlacParser flacParser;
 
         #endregion

@@ -439,7 +439,7 @@ namespace DataServices
                     else if (!specialOptions.ExcludeArtists)
                         entityTypeFilter = String.Format("{0}", (int)TaggedObjectType.Artist);
 
-                    entityNameFilter = specialOptions.EntityName;
+                    entityNameFilter = specialOptions.EntityName == null ? String.Empty : specialOptions.EntityName;
                 }
 
                 var query = session.GetNamedQuery("GetTaggedObjects");
