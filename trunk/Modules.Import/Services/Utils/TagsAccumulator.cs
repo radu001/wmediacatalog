@@ -8,10 +8,7 @@ namespace Modules.Import.Services.Utils
 {
     public class TagsAccumulator : ITagsAccumulator
     {
-        public static readonly string ArtistTagKey = "ARTIST";
-        public static readonly string AlbumTagKey = "ALBUM";
-        public static readonly string GenreTagKey = "GENRE";
-        public static readonly string[] YearTagKeys = new string[] { "YEAR", "DATE" };
+
 
         public TagsAccumulator()
         {
@@ -30,7 +27,7 @@ namespace Modules.Import.Services.Utils
             Artist artist = null;
             Album album = null;
 
-            var artistTags = tags.Where(t => t.Key.ToUpper() == ArtistTagKey);
+            var artistTags = tags.Where(t => t.Key.ToUpper() == TagMatchingConstants.ArtistTagKey);
             if ( artistTags == null )
                 return;
 
@@ -69,7 +66,7 @@ namespace Modules.Import.Services.Utils
 
         private void ProcessAlbum(IEnumerable<FileTag> tags, Artist artist, Album album)
         {
-            var albumTags = tags.Where(t => t.Key.ToUpper() == AlbumTagKey);
+            var albumTags = tags.Where(t => t.Key.ToUpper() == TagMatchingConstants.AlbumTagKey);
             if (albumTags != null)
             {
                 foreach (var albumTag in albumTags)
@@ -106,7 +103,7 @@ namespace Modules.Import.Services.Utils
 
         private void ProcessYear(IEnumerable<FileTag> tags, Album album)
         {
-            var yearTag = tags.Where(t => YearTagKeys.Contains(t.Key.ToUpper())).FirstOrDefault();
+            var yearTag = tags.Where(t => TagMatchingConstants.YearTagKeys.Contains(t.Key.ToUpper())).FirstOrDefault();
             if (yearTag != null)
             {
                 int yearValue = 1900;
@@ -117,7 +114,7 @@ namespace Modules.Import.Services.Utils
 
         private void ProcessGenres(IEnumerable<FileTag> tags, Album album)
         {
-            var genreTags = tags.Where(t => t.Key.ToUpper() == GenreTagKey);
+            var genreTags = tags.Where(t => t.Key.ToUpper() == TagMatchingConstants.GenreTagKey);
             foreach (var genreTag in genreTags)
             {
                 if (genreTag != null)

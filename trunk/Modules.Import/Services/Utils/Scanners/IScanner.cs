@@ -1,6 +1,6 @@
 ﻿
 using Modules.Import.Model;
-namespace Modules.Import.Services.Utils
+namespace Modules.Import.Services.Utils.Scanners
 {
     public interface IScanner
     {

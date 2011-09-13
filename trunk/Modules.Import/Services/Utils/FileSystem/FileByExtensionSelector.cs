@@ -23,8 +23,19 @@ namespace Modules.Import.Services.Utils.FileSystem
         public IEnumerable<FsFile> SelectFiles(string dirPath)
         {
             DirectoryInfo dir = new DirectoryInfo(dirPath);
-            return dir.GetFiles(Settings.FileMasks.First()).
-                Select<FileInfo, FsFile>(f => new FsFile(f.FullName)); // temporary dirty hack
+            IEnumerable<FsFile> result = null;
+
+            try
+            {
+                result = dir.GetFiles(Settings.FileMasks.First()).
+                    Select<FileInfo, FsFile>(f => new FsFile(f.FullName)); // temporary dirty hack
+            }
+            catch (Exception ex)
+            {
+                result = new FsFile[] { };
+            }
+
+            return result;
         }
 
         #endregion
